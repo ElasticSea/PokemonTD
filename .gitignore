@@ -1,0 +1,8 @@
+*.class
+*.iml
+.settings
+out/
+bin/
+gen/
+.idea/
+test-output/
