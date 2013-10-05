@@ -7,8 +7,10 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="gwt" level="project" />
     <orderEntry type="module" module-name="PokemonTD" />
+    <orderEntry type="module" module-name="PokemonTD-android" />
+    <orderEntry type="module" module-name="PokemonTD-desktop" />
+    <orderEntry type="library" name="html" level="project" />
   </component>
 </module>
 
