@@ -9,6 +9,7 @@ import com.xkings.core.entity.ConcreteEntity;
 import com.xkings.pokemontd.component.HealthComponent;
 import com.xkings.pokemontd.component.PathComponent;
 import com.xkings.pokemontd.component.SpriteComponent;
+import com.xkings.pokemontd.component.TreasureComponent;
 
 /**
  * Created by Tomas on 10/5/13.
@@ -24,6 +25,7 @@ public class Creep extends ConcreteEntity {
         addComponent(new SizeComponent(creepType.getSize(), creepType.getSize(), 0));
         addComponent(new SpeedComponent(creepType.getSpeed()));
         addComponent(new HealthComponent(creepType.getHealth()));
+        addComponent(new TreasureComponent(creepType.getTreasure()));
     }
 
     public static void registerCreep(World world, CreepType creepType, float x, float y) {
