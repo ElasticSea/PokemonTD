@@ -51,9 +51,9 @@ public class Treasure {
 
     public void transferTo(Treasure treasure) {
         for (Map.Entry<Element, Integer> element : this.elementSet.entrySet()) {
-            treasure.addElement(element.getKey(), Math.min(element.getValue(), 0));
+            treasure.addElement(element.getKey(), Math.max(element.getValue(), 0));
         }
-        treasure.addGold(Math.min(this.gold, 0));
+        treasure.addGold(Math.max(this.gold, 0));
     }
 
     public void transferFrom(Treasure treasure) {
