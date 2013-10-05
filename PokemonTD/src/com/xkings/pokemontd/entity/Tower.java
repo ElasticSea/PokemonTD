@@ -3,25 +3,25 @@ package com.xkings.pokemontd.entity;
 import com.artemis.World;
 import com.xkings.core.component.PositionComponent;
 import com.xkings.core.component.SizeComponent;
+import com.xkings.core.component.SpeedComponent;
 import com.xkings.core.entity.ConcreteEntity;
 import com.xkings.pokemontd.component.SpriteComponent;
-
-import static com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 
 /**
  * Created by Tomas on 10/5/13.
  */
 public class Tower extends ConcreteEntity {
 
-    public Tower(World world, AtlasRegion texture, int x, int y, int size) {
+    public Tower(TowerType towerType, World world, int x, int y) {
         super(world);
         addComponent(new PositionComponent(x, y, 0));
-        addComponent(new SpriteComponent(texture));
-        addComponent(new SizeComponent(size, size, 0));
+        addComponent(new SpriteComponent(towerType.getTexture()));
+        addComponent(new SizeComponent(towerType.getSize(), towerType.getSize(), 0));
+        addComponent(new SpeedComponent(towerType.getSpeed()));
     }
 
-    public static void registerTower(World world, TowerType towerType, int x, int y, int size) {
-        Tower tower = new Tower(world, towerType.getTexture(), x, y, size);
+    public static void registerTower(World world, TowerType towerType, int x, int y) {
+        Tower tower = new Tower(towerType, world, x, y);
         tower.register();
     }
 }

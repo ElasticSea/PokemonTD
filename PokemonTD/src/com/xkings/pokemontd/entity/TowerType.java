@@ -9,14 +9,26 @@ import static com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
  */
 public enum TowerType {
 
-    DefaultTower("default");
+    DefaultTower("default", 1, 1);
     private final AtlasRegion texture;
+    private final float speed;
+    private final int size;
 
-    private TowerType(String texture) {
+    private TowerType(String texture, float speed, int size) {
         this.texture = AbstractAssets.getTexture(texture);
+        this.speed = speed;
+        this.size = size;
     }
 
     public AtlasRegion getTexture() {
         return texture;
+    }
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public int getSize() {
+        return size;
     }
 }
