@@ -1,4 +1,4 @@
-package com.xkings.pokemontd.component;
+package com.xkings.pokemontd;
 
 /**
  * Created by Tomas on 10/5/13.

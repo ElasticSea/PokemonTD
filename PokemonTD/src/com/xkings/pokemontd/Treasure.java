@@ -1,7 +1,5 @@
 package com.xkings.pokemontd;
 
-import com.xkings.pokemontd.component.Element;
-
 import java.util.EnumMap;
 import java.util.Map;
 
