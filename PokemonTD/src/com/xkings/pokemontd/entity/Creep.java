@@ -15,7 +15,7 @@ import com.xkings.pokemontd.component.SpriteComponent;
  */
 public class Creep extends ConcreteEntity {
 
-    public Creep(CreepType creepType, World world, float x, float y) {
+    private Creep(CreepType creepType, World world, float x, float y) {
         super(world);
         addComponent(new PositionComponent(x, y, 0));
         addComponent(new RotationComponent(0, 0, 0));
