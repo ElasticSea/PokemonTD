@@ -10,7 +10,7 @@ import static com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
  */
 public enum CreepType {
 
-    DefaultCreep("default", 1, 1, 100, new Treasure(5));
+    DefaultCreep("default", 0.1f, 1, 100, new Treasure(5));
     private final AtlasRegion texture;
     private final float speed;
     private final int size;

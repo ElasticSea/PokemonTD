@@ -11,13 +11,14 @@ import com.xkings.core.graphics.camera.BoundedCameraHandler;
 import com.xkings.core.graphics.camera.CameraHandler;
 import com.xkings.core.graphics.camera.Renderer;
 import com.xkings.core.input.EnhancedGestureDetector;
-import com.xkings.core.input.GestureProcessor;
 import com.xkings.core.logic.Clock;
 import com.xkings.core.logic.WorldUpdater;
 import com.xkings.core.main.Assets;
 import com.xkings.core.main.Game2D;
 import com.xkings.core.pathfinding.Blueprint;
 import com.xkings.pokemontd.graphics.TileMap;
+import com.xkings.pokemontd.input.EnhancedGestureProcessor;
+import com.xkings.pokemontd.manager.TowerManager;
 import com.xkings.pokemontd.manager.WaveManager;
 import com.xkings.pokemontd.map.MapData;
 import com.xkings.pokemontd.map.Path;
@@ -35,8 +36,10 @@ public class App extends Game2D {
     private World world;
     private Clock clock;
     private WaveManager waveManager;
+    private TowerManager towerManager;
     private RenderSpriteSystem renderSpriteSystem;
     private Path path;
+    private Blueprint blueprint;
 
     @Override
     protected void renderInternal() {
@@ -52,18 +55,20 @@ public class App extends Game2D {
         renderer = new DefaultRenderer(camera);
         MapData map = createTestMap();
         tileMap = map.getTileMap();
+        blueprint = map.getBlueprint();
         path = map.getPath();
         this.cameraHandler = new BoundedCameraHandler(camera, tileMap.getWidth() * tileMap.TILE_SIZE,
                 tileMap.getHeight() * tileMap.TILE_SIZE, 0.0001f);
-        initializeInput();
         initializeWorld();
         initializeManagers();
         initializeSystems();
+        initializeInput();
 
     }
 
     private void initializeInput() {
-        Gdx.input.setInputProcessor(new EnhancedGestureDetector(new GestureProcessor(cameraHandler)));
+        Gdx.input.setInputProcessor(
+                new EnhancedGestureDetector(new EnhancedGestureProcessor(towerManager, cameraHandler)));
     }
 
     private void initializeWorld() {
@@ -73,6 +78,7 @@ public class App extends Game2D {
 
     private void initializeManagers() {
         this.waveManager = WaveManager.createInstance(world, clock, path, 5f);
+        this.towerManager = new TowerManager(world, blueprint);
     }
 
     private void initializeSystems() {
