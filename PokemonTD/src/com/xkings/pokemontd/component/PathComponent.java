@@ -1,7 +1,6 @@
 package com.xkings.pokemontd.component;
 
 import com.artemis.Component;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.xkings.pokemontd.map.Path;
 
@@ -30,7 +29,7 @@ public class PathComponent extends Component {
         return path;
     }
 
-    public boolean isFinished(){
+    public boolean isFinished() {
         return position == path.getPath().size();
     }
 }

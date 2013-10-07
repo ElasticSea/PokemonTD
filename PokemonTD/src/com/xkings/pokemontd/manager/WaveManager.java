@@ -1,7 +1,6 @@
 package com.xkings.pokemontd.manager;
 
 import com.artemis.World;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.logic.Clock;
 import com.xkings.core.logic.UpdateFilter;
@@ -25,8 +24,7 @@ public class WaveManager implements Updateable {
     private boolean active;
 
     /**
-     * @param clock    internal update timer
-     * @param interval time in seconds between wave calls
+     * @param clock internal update timer
      */
     private WaveManager(World world, Clock clock, Path path) {
         this.world = world;
@@ -50,9 +48,14 @@ public class WaveManager implements Updateable {
     }
 
     private void fireNextWave(CreepType next) {
-        System.out.println("Fire Wave: " + next);
-        Vector3 point = path.getPath().get(0);
-        Creep.registerCreep(world, path,new WaveComponent(), next, point.x, point.y);
+        Vector3 startPoint = path.getPath().get(0);
+        Vector3 nextPoint = path.getPath().get(1);
+        double angleToNextPoint = Math.atan2(nextPoint.y - startPoint.y, nextPoint.x - startPoint.x);
+        for (int i = 0; i < next.getCreepsInWave(); i++) {
+            float xOffset = (float) (Math.cos(angleToNextPoint + Math.PI) * next.getSize() * i);
+            float yOffset = (float) (Math.sin(angleToNextPoint + Math.PI) * next.getSize() * i);
+            Creep.registerCreep(world, path, new WaveComponent(), next, startPoint.x + xOffset, startPoint.y + yOffset);
+        }
     }
 
     @Override

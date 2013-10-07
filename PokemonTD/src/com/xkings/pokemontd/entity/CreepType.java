@@ -10,19 +10,21 @@ import static com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
  */
 public enum CreepType {
 
-    DefaultCreep("default", 0.1f, 1, 100, new Treasure(5));
+    DefaultCreep("default", 10f, 1, 100, new Treasure(5), 5);
     private final AtlasRegion texture;
     private final float speed;
     private final int size;
     private final int health;
     private final Treasure treasure;
+    private final int creepsInWave;
 
-    private CreepType(String texture, float speed, int size, int health, Treasure treasure) {
+    private CreepType(String texture, float speed, int size, int health, Treasure treasure,int creepsInWave) {
         this.texture = Assets.getTexture(texture);
         this.speed = speed;
         this.size = size;
         this.health = health;
         this.treasure = treasure;
+        this.creepsInWave = creepsInWave;
     }
 
     public AtlasRegion getTexture() {
@@ -43,5 +45,9 @@ public enum CreepType {
 
     public Treasure getTreasure() {
         return treasure;
+    }
+
+    public int getCreepsInWave() {
+        return creepsInWave;
     }
 }

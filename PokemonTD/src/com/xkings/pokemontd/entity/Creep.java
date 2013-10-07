@@ -3,6 +3,7 @@ package com.xkings.pokemontd.entity;
 import com.artemis.World;
 import com.xkings.core.component.*;
 import com.xkings.core.entity.ConcreteEntity;
+import com.xkings.pokemontd.Health;
 import com.xkings.pokemontd.component.*;
 import com.xkings.pokemontd.map.Path;
 
@@ -19,15 +20,17 @@ public class Creep extends ConcreteEntity {
         addComponent(new SpriteComponent(creepType.getTexture()));
         addComponent(new SizeComponent(creepType.getSize(), creepType.getSize(), 0));
         addComponent(new SpeedComponent(creepType.getSpeed()));
-        addComponent(new HealthComponent(creepType.getHealth()));
+        addComponent(new HealthComponent(new Health(creepType.getHealth())));
         addComponent(new TreasureComponent(creepType.getTreasure()));
         addComponent(new CreepStateComponent());
+        addComponent(new AttackComponent(1));
         addComponent(waveComponent);
     }
 
-    public static void registerCreep(World world, Path path, WaveComponent waveComponent, CreepType creepType,
-                                     float x, float y) {
-        Creep creep = new Creep(creepType,path, waveComponent, world, x, y);
+    public static void registerCreep(World world, Path path, WaveComponent waveComponent, CreepType creepType, float x,
+                                     float y) {
+        Creep creep = new Creep(creepType, path, waveComponent, world, x, y);
         creep.register();
+        waveComponent.addCreep(creep.entity);
     }
 }

@@ -1,16 +1,17 @@
 package com.xkings.pokemontd.component;
 
 import com.artemis.Component;
+import com.xkings.pokemontd.Health;
 
 public class HealthComponent extends Component {
 
-    private final int health;
+    private Health health;
 
-    public HealthComponent(int health) {
+    public HealthComponent(Health health) {
         this.health = health;
     }
 
-    public int getHealth() {
+    public Health getHealth() {
         return health;
     }
 }

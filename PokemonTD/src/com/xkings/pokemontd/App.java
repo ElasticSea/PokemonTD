@@ -4,9 +4,12 @@ import com.artemis.World;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector3;
+import com.xkings.core.graphics.ScreenText;
+import com.xkings.core.graphics.Shader;
 import com.xkings.core.graphics.camera.BoundedCameraHandler;
 import com.xkings.core.graphics.camera.CameraHandler;
 import com.xkings.core.graphics.camera.Renderer;
@@ -16,6 +19,7 @@ import com.xkings.core.logic.WorldUpdater;
 import com.xkings.core.main.Assets;
 import com.xkings.core.main.Game2D;
 import com.xkings.core.pathfinding.Blueprint;
+import com.xkings.pokemontd.entity.Player;
 import com.xkings.pokemontd.graphics.TileMap;
 import com.xkings.pokemontd.input.EnhancedGestureProcessor;
 import com.xkings.pokemontd.manager.TowerManager;
@@ -24,6 +28,7 @@ import com.xkings.pokemontd.map.MapData;
 import com.xkings.pokemontd.map.Path;
 import com.xkings.pokemontd.system.MovementSystem;
 import com.xkings.pokemontd.system.RenderSpriteSystem;
+import com.xkings.pokemontd.system.WaveSystem;
 
 import static com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 
@@ -41,6 +46,9 @@ public class App extends Game2D {
     private Path path;
     private Blueprint blueprint;
 
+    private Player player;
+    private PokemonAssets assets;
+
     @Override
     protected void renderInternal() {
         clock.run();
@@ -49,7 +57,7 @@ public class App extends Game2D {
 
     @Override
     protected void init(OrthographicCamera camera) {
-        new Assets().addAtlas(new TextureAtlas("data/textures/packed.atlas"));
+        assets = new PokemonAssets();
         this.clock = Clock.createInstance("Logic", true, true);
         spriteBatch = new SpriteBatch();
         renderer = new DefaultRenderer(camera);
@@ -60,6 +68,7 @@ public class App extends Game2D {
         this.cameraHandler = new BoundedCameraHandler(camera, tileMap.getWidth() * tileMap.TILE_SIZE,
                 tileMap.getHeight() * tileMap.TILE_SIZE, 0.0001f);
         initializeWorld();
+        initializeContent();
         initializeManagers();
         initializeSystems();
         initializeInput();
@@ -76,6 +85,10 @@ public class App extends Game2D {
         this.clock.addService(new WorldUpdater(world));
     }
 
+    private void initializeContent() {
+        player = new Player(20, 5000);
+    }
+
     private void initializeManagers() {
         this.waveManager = WaveManager.createInstance(world, clock, path, 5f);
         this.towerManager = new TowerManager(world, blueprint);
@@ -85,6 +98,7 @@ public class App extends Game2D {
         renderSpriteSystem = new RenderSpriteSystem(cameraHandler.getCamera());
         world.setSystem(renderSpriteSystem, true);
         world.setSystem(new MovementSystem());
+        world.setSystem(new WaveSystem(player));
         world.initialize();
     }
 
@@ -127,8 +141,15 @@ public class App extends Game2D {
 
     private class DefaultRenderer extends Renderer {
 
+        private final ScreenText lifes;
+        private final SpriteBatch onScreenRasterRender;
+
         protected DefaultRenderer(Camera camera) {
             super(camera);
+            lifes = new ScreenText(assets.getSmoothFont(), BitmapFont.HAlignment.RIGHT);
+            onScreenRasterRender = new SpriteBatch();
+            onScreenRasterRender.setShader(Shader.getShader("smoothText"));
+            onScreenRasterRender.enableBlending();
         }
 
         @Override
@@ -143,6 +164,10 @@ public class App extends Game2D {
             }
             spriteBatch.end();
             renderSpriteSystem.process();
+
+
+            lifes.addInfo("Lifes: " + player.getHealth().getHealth());
+            lifes.render(onScreenRasterRender);
         }
     }
 }

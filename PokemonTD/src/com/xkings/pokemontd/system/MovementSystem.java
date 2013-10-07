@@ -3,16 +3,11 @@ package com.xkings.pokemontd.system;
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
-import com.artemis.World;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.component.*;
 import com.xkings.pokemontd.component.PathComponent;
-import com.xkings.pokemontd.component.SpriteComponent;
 
 /**
  * Created by Tomas on 10/4/13.
@@ -37,8 +32,8 @@ public class MovementSystem extends EntityProcessingSystem {
     private RotationComponent rotation;
 
     public MovementSystem() {
-        super(Aspect.getAspectForAll(PositionComponent.class, SizeComponent.class, SpeedComponent.class, RotationComponent.class,
-                CreepStateComponent.class));
+        super(Aspect.getAspectForAll(PositionComponent.class, SizeComponent.class, SpeedComponent.class,
+                RotationComponent.class, CreepStateComponent.class));
     }
 
 
@@ -54,13 +49,18 @@ public class MovementSystem extends EntityProcessingSystem {
         timeHolder.increase(world.getDelta());
 
         while (timeHolder.getAvailableTime() > 0) {
-            Vector3 goal = pathComponent.get();
-            rotation.getPoint().x = (float) (Math.atan2(goal.y - position.y, goal.x - position.x) * 180 / Math.PI + 90);
-            if (moveTowards(position, goal, speed, timeHolder)) {
-                pathComponent.next();
-                if(pathComponent.isFinished()){
-                      return;
+            if (!pathComponent.isFinished()) {
+                Vector3 goal = pathComponent.get();
+                rotation.getPoint().x =
+                        (float) (Math.atan2(goal.y - position.y, goal.x - position.x) * 180 / Math.PI + 90);
+                if (moveTowards(position, goal, speed, timeHolder)) {
+                    pathComponent.next();
+                    if (pathComponent.isFinished()) {
+                        return;
+                    }
                 }
+            } else {
+                return;
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.xkings.pokemontd.component;
 
 import com.artemis.Component;
+import com.artemis.Entity;
 import com.xkings.pokemontd.entity.Creep;
 
 import java.util.LinkedList;
@@ -8,15 +9,19 @@ import java.util.List;
 
 public class WaveComponent extends Component {
 
-    private final List<Creep> wave = new LinkedList<Creep>();
+    private final List<Entity> wave = new LinkedList<Entity>();
 
 
-    public void addCreep(Creep creep) {
-        wave.add(creep);
+    public boolean addCreep(Entity creep) {
+        return wave.add(creep);
     }
 
-    public void removeCreep(Creep creep) {
-        wave.remove(creep);
+    public boolean removeCreep(Entity creep) {
+        return wave.remove(creep);
+    }
+
+    public boolean isEmpty(){
+        return wave.size() == 0;
     }
 
 }
