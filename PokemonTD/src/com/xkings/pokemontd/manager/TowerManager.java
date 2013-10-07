@@ -21,7 +21,7 @@ public class TowerManager {
     public boolean createTower(TowerType towerType, int x, int y) {
         System.out.println(x+" "+y);
         if (blueprint.isWalkable(x, y )) {
-            Tower.registerTower(world, towerType, x, y);
+            Tower.registerTower(world, towerType, x+0.5f, y+0.5f);
             return true;
         }
         return false;

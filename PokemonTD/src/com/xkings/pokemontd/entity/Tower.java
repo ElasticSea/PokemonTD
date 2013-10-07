@@ -12,7 +12,7 @@ import com.xkings.pokemontd.component.SpriteComponent;
  */
 public class Tower extends ConcreteEntity {
 
-    private Tower(TowerType towerType, World world, int x, int y) {
+    private Tower(TowerType towerType, World world, float x, float y) {
         super(world);
         addComponent(new PositionComponent(x, y, 0));
         addComponent(new SpriteComponent(towerType.getTexture()));
@@ -20,7 +20,7 @@ public class Tower extends ConcreteEntity {
         addComponent(new SpeedComponent(towerType.getSpeed()));
     }
 
-    public static void registerTower(World world, TowerType towerType, int x, int y) {
+    public static void registerTower(World world, TowerType towerType, float x, float y) {
         Tower tower = new Tower(towerType, world, x, y);
         tower.register();
     }
