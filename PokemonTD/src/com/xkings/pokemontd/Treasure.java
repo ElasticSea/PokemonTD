@@ -17,12 +17,12 @@ public class Treasure {
 
     public Treasure(int gold, int water, int fire, int nature, int light, int darkness, int pure) {
         this.gold = gold;
-        this.addElement(Element.WATER, water);
-        this.addElement(Element.FIRE, fire);
-        this.addElement(Element.NATURE, nature);
-        this.addElement(Element.LIGHT, light);
-        this.addElement(Element.DARKNESS, darkness);
-        this.addElement(Element.PURE, pure);
+        elementSet.put(Element.WATER, water);
+        elementSet.put(Element.FIRE, fire);
+        elementSet.put(Element.NATURE, nature);
+        elementSet.put(Element.LIGHT, light);
+        elementSet.put(Element.DARKNESS, darkness);
+        elementSet.put(Element.PURE, pure);
     }
 
     public void addElement(Element element, int count) {

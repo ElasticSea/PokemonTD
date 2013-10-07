@@ -1,22 +1,28 @@
 package com.xkings.pokemontd;
 
+import com.artemis.World;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.graphics.camera.BoundedCameraHandler;
 import com.xkings.core.graphics.camera.CameraHandler;
 import com.xkings.core.graphics.camera.Renderer;
 import com.xkings.core.input.EnhancedGestureDetector;
 import com.xkings.core.input.GestureProcessor;
+import com.xkings.core.logic.Clock;
+import com.xkings.core.logic.WorldUpdater;
 import com.xkings.core.main.Assets;
 import com.xkings.core.main.Game2D;
 import com.xkings.core.pathfinding.Blueprint;
 import com.xkings.pokemontd.graphics.TileMap;
+import com.xkings.pokemontd.manager.WaveManager;
 import com.xkings.pokemontd.map.MapData;
 import com.xkings.pokemontd.map.Path;
+import com.xkings.pokemontd.system.MovementSystem;
+import com.xkings.pokemontd.system.RenderSpriteSystem;
 
 import static com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 
@@ -26,27 +32,54 @@ public class App extends Game2D {
     private SpriteBatch spriteBatch;
     private TileMap tileMap;
     private CameraHandler cameraHandler;
+    private World world;
+    private Clock clock;
+    private WaveManager waveManager;
+    private RenderSpriteSystem renderSpriteSystem;
+    private Path path;
 
     @Override
     protected void renderInternal() {
+        clock.run();
         renderer.render();
     }
 
     @Override
     protected void init(OrthographicCamera camera) {
         new Assets().addAtlas(new TextureAtlas("data/textures/packed.atlas"));
+        this.clock = Clock.createInstance("Logic", true, true);
         spriteBatch = new SpriteBatch();
         renderer = new DefaultRenderer(camera);
         MapData map = createTestMap();
         tileMap = map.getTileMap();
-       this.cameraHandler = new BoundedCameraHandler(camera, tileMap.getWidth()* tileMap.TILE_SIZE,
-                tileMap.getHeight()* tileMap.TILE_SIZE, 0.0001f);
+        path = map.getPath();
+        this.cameraHandler = new BoundedCameraHandler(camera, tileMap.getWidth() * tileMap.TILE_SIZE,
+                tileMap.getHeight() * tileMap.TILE_SIZE, 0.0001f);
         initializeInput();
-    }
+        initializeWorld();
+        initializeManagers();
+        initializeSystems();
 
+    }
 
     private void initializeInput() {
         Gdx.input.setInputProcessor(new EnhancedGestureDetector(new GestureProcessor(cameraHandler)));
+    }
+
+    private void initializeWorld() {
+        this.world = new World();
+        this.clock.addService(new WorldUpdater(world));
+    }
+
+    private void initializeManagers() {
+        this.waveManager = WaveManager.createInstance(world, clock, path, 5f);
+    }
+
+    private void initializeSystems() {
+        renderSpriteSystem = new RenderSpriteSystem(cameraHandler.getCamera());
+        world.setSystem(renderSpriteSystem, true);
+        world.setSystem(new MovementSystem());
+        world.initialize();
     }
 
 
@@ -69,16 +102,14 @@ public class App extends Game2D {
         AtlasRegion pathHorizontal = Assets.getTexture("pathHorizontal");
         AtlasRegion pathVertical = Assets.getTexture("pathVertical");
         TileMap tileMap = new TileMap(
-                new AtlasRegion[][]{
-                        {grassTexture, grassTexture, pathHorizontal, grassTexture, grassTexture},
+                new AtlasRegion[][]{{grassTexture, grassTexture, pathHorizontal, grassTexture, grassTexture},
                         {grassTexture, pathRound1, pathRound3, grassTexture, grassTexture},
                         {grassTexture, pathHorizontal, grassTexture, pathRound1, pathVertical},
                         {grassTexture, pathRound0, pathVertical, pathRound3, grassTexture},
                         {grassTexture, grassTexture, grassTexture, grassTexture, grassTexture}}, 2);
         Blueprint testBlueprint = new Blueprint(booleanMap);
-        Path testPath =
-                new Path(new Vector2(5, 0), new Vector2(5, 3), new Vector2(3, 7), new Vector2(7, 7), new Vector2(7, 5),
-                        new Vector2(10, 5));
+        Path testPath = new Path(new Vector3(0, 5, 0), new Vector3(3, 5, 0), new Vector3(3, 3, 0), new Vector3(7, 3, 0),
+                new Vector3(7, 7, 0), new Vector3(5, 7, 0), new Vector3(5, 10, 0));
         return new MapData(testBlueprint, testPath, tileMap);
     }
 
@@ -100,11 +131,12 @@ public class App extends Game2D {
             spriteBatch.begin();
             for (int i = 0; i < tileMap.getWidth(); i++) {
                 for (int j = 0; j < tileMap.getHeight(); j++) {
-                    spriteBatch.draw(tileMap.get(i, j), i * tileMap.TILE_SIZE, j * tileMap.TILE_SIZE,
-                            tileMap.TILE_SIZE, tileMap.TILE_SIZE);
+                    spriteBatch.draw(tileMap.get(i, j), i * tileMap.TILE_SIZE, j * tileMap.TILE_SIZE, tileMap.TILE_SIZE,
+                            tileMap.TILE_SIZE);
                 }
             }
             spriteBatch.end();
+            renderSpriteSystem.process();
         }
     }
 }
