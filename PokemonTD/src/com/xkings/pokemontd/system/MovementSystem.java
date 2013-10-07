@@ -71,7 +71,7 @@ public class MovementSystem extends EntityProcessingSystem {
         float travelTime = timeHolder.getAvailableTime();
         if (travelAbility >= distance) {
             from.set(to);
-            timeHolder.decrease((travelAbility - distance) / speed);
+            timeHolder.decrease(distance / speed);
             return true;
         } else {
             double ang = getRotation(from, to);
