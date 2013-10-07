@@ -6,3 +6,4 @@ bin/
 gen/
 .idea/
 test-output/
+*/assets/data/textures/packed.*
