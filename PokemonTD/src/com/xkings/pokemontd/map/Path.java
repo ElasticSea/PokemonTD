@@ -1,6 +1,8 @@
 package com.xkings.pokemontd.map;
 
-import java.util.LinkedList;
+import com.badlogic.gdx.math.Vector2;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,5 +12,17 @@ import java.util.List;
  */
 
 public class Path {
-    private final List<collection> commands = new LinkedList<collection>();
+    private final List<Vector2> path;
+
+    public Path(Vector2... path) {
+        this(new ArrayList<Vector2>());
+    }
+
+    public Path(List<Vector2> path) {
+        this.path = path;
+    }
+
+    public List<Vector2> getPath() {
+        return path;
+    }
 }

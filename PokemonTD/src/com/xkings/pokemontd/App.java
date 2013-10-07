@@ -1,66 +1,53 @@
 package com.xkings.pokemontd;
 
-import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
+import com.xkings.core.main.Game2D;
+import com.xkings.core.pathfinding.Blueprint;
+import com.xkings.pokemontd.map.MapData;
+import com.xkings.pokemontd.map.Path;
 
-public class App implements ApplicationListener {
-	private OrthographicCamera camera;
-	private SpriteBatch batch;
-	private Texture texture;
-	private Sprite sprite;
-	
-	@Override
-	public void create() {		
-		float w = Gdx.graphics.getWidth();
-		float h = Gdx.graphics.getHeight();
-		
-		camera = new OrthographicCamera(1, h/w);
-		batch = new SpriteBatch();
-		
-		texture = new Texture(Gdx.files.internal("data/libgdx.png"));
-		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		
-		TextureRegion region = new TextureRegion(texture, 0, 0, 512, 275);
-		
-		sprite = new Sprite(region);
-		sprite.setSize(0.9f, 0.9f * sprite.getHeight() / sprite.getWidth());
-		sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
-		sprite.setPosition(-sprite.getWidth()/2, -sprite.getHeight()/2);
-	}
+public class App extends Game2D{
 
-	@Override
-	public void dispose() {
-		batch.dispose();
-		texture.dispose();
-	}
+    private MapData map;
 
-	@Override
-	public void render() {		
-		Gdx.gl.glClearColor(1, 1, 1, 1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		
-		batch.setProjectionMatrix(camera.combined);
-		batch.begin();
-		sprite.draw(batch);
-		batch.end();
-	}
+    @Override
+    protected void renderInternal() {
 
-	@Override
-	public void resize(int width, int height) {
-	}
+    }
 
-	@Override
-	public void pause() {
-	}
+    @Override
+    protected void init(OrthographicCamera camera) {
+         this.map = createTestMap();
+    }
 
-	@Override
-	public void resume() {
-	}
+    private MapData createTestMap() {
+        boolean[][] booleanMap = new boolean[][]{
+                {true, true, true,  true,  false, false, true,  true,  true,  true },
+                {true, true, true,  true,  false, false, true,  true,  true,  true },
+                {true, true, false, false, false, false, true,  true,  true,  true },
+                {true, true, false, false, false, false, true,  true,  true,  true },
+                {true, true, false, false,  true,  true, false, false, false, false},
+                {true, true, false, false,  true,  true, false, false, false, false},
+                {true, true, false, false, false, false, false, false, true,  true },
+                {true, true, false, false, false, false, false, false, true,  true },
+                {true, true, true,  true,  true,  true,  true,  true,  true,  true },
+                {true, true, true,  true,  true,  true,  true,  true,  true,  true }
+        };
+        Blueprint testBlueprint = new Blueprint(booleanMap);
+        Path testPath = new Path(
+                new Vector2(5,0),
+                new Vector2(5,3),
+                new Vector2(3,7),
+                new Vector2(7,7),
+                new Vector2(7,5),
+                new Vector2(10,5)
+                );
+        return new MapData(testBlueprint, testPath);
+    }
+
+    @Override
+    public void dispose() {
+
+    }
 }
