@@ -66,13 +66,12 @@ public class App extends Game2D {
         blueprint = map.getBlueprint();
         path = map.getPath();
         this.cameraHandler = new BoundedCameraHandler(camera, tileMap.getWidth() * tileMap.TILE_SIZE,
-                tileMap.getHeight() * tileMap.TILE_SIZE, 0.0001f);
+                tileMap.getHeight() * tileMap.TILE_SIZE, 0.001f);
         initializeWorld();
         initializeContent();
         initializeManagers();
         initializeSystems();
         initializeInput();
-
     }
 
     private void initializeInput() {
@@ -90,7 +89,7 @@ public class App extends Game2D {
     }
 
     private void initializeManagers() {
-        this.waveManager = WaveManager.createInstance(world, clock, path, 5f);
+        this.waveManager = new WaveManager(world, clock, path, 5f);
         this.towerManager = new TowerManager(world, blueprint);
     }
 
@@ -167,6 +166,7 @@ public class App extends Game2D {
 
 
             lifes.addInfo("Lifes: " + player.getHealth().getHealth());
+            lifes.addInfo("Next Wave in: " + waveManager.getRemainingTime());
             lifes.render(onScreenRasterRender);
         }
     }

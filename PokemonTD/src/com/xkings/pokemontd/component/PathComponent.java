@@ -32,4 +32,8 @@ public class PathComponent extends Component {
     public boolean isFinished() {
         return position == path.getPath().size();
     }
+
+    public void reset() {
+        position = 0;
+    }
 }
