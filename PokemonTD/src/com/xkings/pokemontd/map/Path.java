@@ -14,12 +14,12 @@ import java.util.List;
 public class Path {
     private final List<Vector2> path;
 
-    public Path(Vector2... path) {
-        this(new ArrayList<Vector2>());
-    }
-
     public Path(List<Vector2> path) {
         this.path = path;
+    }
+
+    public Path(Vector2... path) {
+        this(new ArrayList<Vector2>());
     }
 
     public List<Vector2> getPath() {

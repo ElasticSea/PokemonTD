@@ -14,8 +14,8 @@ public class Vector {
     private int x;
     private int y;
 
-    public static final int X_DIRECTION 1;
-    public static final int Y_DIRECTION 2;
+    public static final int X_DIRECTION = 1;
+    public static final int Y_DIRECTION = 2;
 
     public Vector(int x, int y){
         this.x = ( x==0 ? ++x : x);

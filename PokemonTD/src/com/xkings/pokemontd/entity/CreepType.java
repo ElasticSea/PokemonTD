@@ -1,6 +1,6 @@
 package com.xkings.pokemontd.entity;
 
-import com.xkings.core.main.AbstractAssets;
+import com.xkings.core.main.Assets;
 import com.xkings.pokemontd.Treasure;
 
 import static com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
@@ -18,7 +18,7 @@ public enum CreepType {
     private final Treasure treasure;
 
     private CreepType(String texture, float speed, int size, int health, Treasure treasure) {
-        this.texture = AbstractAssets.getTexture(texture);
+        this.texture = Assets.getTexture(texture);
         this.speed = speed;
         this.size = size;
         this.health = health;

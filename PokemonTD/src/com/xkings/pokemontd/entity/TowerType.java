@@ -1,6 +1,6 @@
 package com.xkings.pokemontd.entity;
 
-import com.xkings.core.main.AbstractAssets;
+import com.xkings.core.main.Assets;
 
 import static com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 
@@ -15,7 +15,7 @@ public enum TowerType {
     private final int size;
 
     private TowerType(String texture, float speed, int size) {
-        this.texture = AbstractAssets.getTexture(texture);
+        this.texture = Assets.getTexture(texture);
         this.speed = speed;
         this.size = size;
     }

@@ -1,6 +1,5 @@
 package com.xkings.pokemontd.manager;
 
-import com.xkings.core.behavior.task.UpdateFilter;
 import com.xkings.core.logic.Clock;
 import com.xkings.core.logic.UpdateFilter;
 import com.xkings.core.logic.Updateable;
