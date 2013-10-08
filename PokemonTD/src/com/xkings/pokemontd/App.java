@@ -22,6 +22,7 @@ import com.xkings.core.main.Assets;
 import com.xkings.core.main.Game2D;
 import com.xkings.core.pathfinding.GenericBlueprint;
 import com.xkings.pokemontd.component.TreasureComponent;
+import com.xkings.pokemontd.component.WaveComponent;
 import com.xkings.pokemontd.entity.Player;
 import com.xkings.pokemontd.graphics.TileMap;
 import com.xkings.pokemontd.graphics.ui.Ui;
@@ -113,7 +114,7 @@ public class App extends Game2D {
     private void initializeSystems() {
         renderSpriteSystem = new RenderSpriteSystem(cameraHandler.getCamera());
         renderDebugSystem = new RenderDebugSystem(cameraHandler);
-        closestEnemySystem = new ClosestEnemySystem(TreasureComponent.class);
+        closestEnemySystem = new ClosestEnemySystem(WaveComponent.class);
         world.setSystem(closestEnemySystem, true);
         world.setSystem(renderSpriteSystem, true);
         world.setSystem(renderDebugSystem, true);
@@ -129,7 +130,7 @@ public class App extends Game2D {
     private MapData createTestMap() {
         // FIXME nasty hack
         Entity pathBlock = world.createEntity();
-        Entity[][] booleanMap = new Entity[][]{{null, null, null, null, pathBlock, pathBlock, null, null, null, null},
+        Entity[][] entityMap = new Entity[][]{{null, null, null, null, pathBlock, pathBlock, null, null, null, null},
                 {null, null, null, null, pathBlock, pathBlock, null, null, null, null},
                 {null, null, pathBlock, pathBlock, pathBlock, pathBlock, null, null, null, null},
                 {null, null, pathBlock, pathBlock, pathBlock, pathBlock, null, null, null, null},
@@ -152,7 +153,7 @@ public class App extends Game2D {
                         {grassTexture, pathHorizontal, grassTexture, pathRound1, pathVertical},
                         {grassTexture, pathRound0, pathVertical, pathRound3, grassTexture},
                         {grassTexture, grassTexture, grassTexture, grassTexture, grassTexture}}, 2);
-        GenericBlueprint testBlueprint = new GenericBlueprint(booleanMap);
+        GenericBlueprint<Entity>  testBlueprint = new GenericBlueprint<Entity> (entityMap);
         Path testPath = new Path(new Vector3(0, 5, 0), new Vector3(3, 5, 0), new Vector3(3, 3, 0), new Vector3(7, 3, 0),
                 new Vector3(7, 7, 0), new Vector3(5, 7, 0), new Vector3(5, 10, 0));
         return new MapData(testBlueprint, testPath, tileMap);

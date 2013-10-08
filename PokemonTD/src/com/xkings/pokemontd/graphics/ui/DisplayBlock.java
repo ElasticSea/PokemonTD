@@ -14,8 +14,6 @@ abstract class DisplayBlock implements Renderable {
     }
 
     public boolean hit(float x, float y) {
-        System.out.println(x + " " + y);
-        System.out.println(rectangle);
         if (rectangle.contains(x, y)) {
             process(x - rectangle.width, y - rectangle.height);
             return true;
