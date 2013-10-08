@@ -59,4 +59,23 @@ public class Treasure {
     public void transferFrom(Treasure treasure) {
         treasure.transferTo(this);
     }
+
+    /**
+     * Checks whether a treasure is greater or equal then another treasure.
+     * @param treasure to be checked
+     * @return {@code True} if this treasure is greater or equal to another treasure, {@code false} otherwise
+     */
+    public boolean includes(Treasure treasure) {
+        if (hasGold(treasure.gold)) {
+            for (Map.Entry<Element, Integer> entry : elementSet.entrySet()) {
+                Element element = entry.getKey();
+                if (!hasElement(element, treasure.elementSet.get(element))) {
+                    return false;
+                }
+            }
+        } else {
+            return false;
+        }
+        return true;
+    }
 }
