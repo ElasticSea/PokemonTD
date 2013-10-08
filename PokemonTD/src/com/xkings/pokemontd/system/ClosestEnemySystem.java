@@ -1,6 +1,7 @@
 package com.xkings.pokemontd.system;
 
 import com.artemis.Aspect;
+import com.artemis.Component;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
@@ -24,8 +25,13 @@ public class ClosestEnemySystem extends EntityProcessingSystem {
     private float entityRange;
     private Entity entity;
 
-    public ClosestEnemySystem() {
-        super(Aspect.getAspectForAll(PositionComponent.class));
+    /**
+     * Finds closest enemy
+     *
+     * @param enemyType only enemy has this type
+     */
+    public ClosestEnemySystem(Class<? extends Component> enemyType) {
+        super(Aspect.getAspectForAll(PositionComponent.class, enemyType));
     }
 
     @Override

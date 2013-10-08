@@ -18,6 +18,7 @@ import com.xkings.core.logic.WorldUpdater;
 import com.xkings.core.main.Assets;
 import com.xkings.core.main.Game2D;
 import com.xkings.core.pathfinding.Blueprint;
+import com.xkings.pokemontd.component.TreasureComponent;
 import com.xkings.pokemontd.entity.Player;
 import com.xkings.pokemontd.graphics.TileMap;
 import com.xkings.pokemontd.input.EnhancedGestureProcessor;
@@ -98,7 +99,7 @@ public class App extends Game2D {
     private void initializeSystems() {
         renderSpriteSystem = new RenderSpriteSystem(cameraHandler.getCamera());
         renderDebugSystem = new RenderDebugSystem(cameraHandler);
-        closestEnemySystem = new ClosestEnemySystem();
+        closestEnemySystem = new ClosestEnemySystem(TreasureComponent.class);
         world.setSystem(closestEnemySystem, true);
         world.setSystem(renderSpriteSystem, true);
         world.setSystem(renderDebugSystem, true);
@@ -106,6 +107,7 @@ public class App extends Game2D {
         world.setSystem(new WaveSystem(player));
         world.setSystem(new FireProjectilSystem(closestEnemySystem, projectileManager));
         world.setSystem(new HitProjectileSystem());
+        world.setSystem(new DeathSystem());
         world.initialize();
     }
 

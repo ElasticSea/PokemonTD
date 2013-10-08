@@ -41,6 +41,10 @@ public class HitProjectileSystem extends EntityProcessingSystem {
     protected void process(Entity entity) {
         Entity target = targetMapper.get(entity).getTarget();
 
+        if (positionMapper.get(target) == null) {
+            entity.deleteFromWorld();
+            return;
+        }
         Vector3 position = positionMapper.get(entity).getPoint();
         Vector3 position1 = positionMapper.get(target).getPoint();
         Vector3 size = sizeMapper.get(entity).getPoint();
