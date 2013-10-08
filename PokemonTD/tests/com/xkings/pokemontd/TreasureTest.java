@@ -25,5 +25,7 @@ public class TreasureTest {
         Assert.assertTrue(TreasureA.includes(TreasureA));
         Assert.assertFalse(TreasureB.includes(TreasureA));
         Assert.assertFalse(TreasureC.includes(TreasureA));
+        Assert.assertTrue(TreasureA.includes(TreasureB));
+        Assert.assertFalse(TreasureA.includes(TreasureC));
     }
 }
