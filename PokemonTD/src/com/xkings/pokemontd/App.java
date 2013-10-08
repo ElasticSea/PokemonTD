@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.graphics.ScreenText;
 import com.xkings.core.graphics.Shader;
@@ -22,13 +21,12 @@ import com.xkings.core.pathfinding.Blueprint;
 import com.xkings.pokemontd.entity.Player;
 import com.xkings.pokemontd.graphics.TileMap;
 import com.xkings.pokemontd.input.EnhancedGestureProcessor;
+import com.xkings.pokemontd.manager.ProjectileManager;
 import com.xkings.pokemontd.manager.TowerManager;
 import com.xkings.pokemontd.manager.WaveManager;
 import com.xkings.pokemontd.map.MapData;
 import com.xkings.pokemontd.map.Path;
-import com.xkings.pokemontd.system.MovementSystem;
-import com.xkings.pokemontd.system.RenderSpriteSystem;
-import com.xkings.pokemontd.system.WaveSystem;
+import com.xkings.pokemontd.system.*;
 
 import static com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 
@@ -43,11 +41,14 @@ public class App extends Game2D {
     private WaveManager waveManager;
     private TowerManager towerManager;
     private RenderSpriteSystem renderSpriteSystem;
+    private RenderDebugSystem renderDebugSystem;
+    private ClosestEnemySystem closestEnemySystem;
+
     private Path path;
     private Blueprint blueprint;
-
     private Player player;
     private PokemonAssets assets;
+    private ProjectileManager projectileManager;
 
     @Override
     protected void renderInternal() {
@@ -91,13 +92,20 @@ public class App extends Game2D {
     private void initializeManagers() {
         this.waveManager = new WaveManager(world, clock, path, 5f);
         this.towerManager = new TowerManager(world, blueprint);
+        this.projectileManager = new ProjectileManager(world, blueprint);
     }
 
     private void initializeSystems() {
         renderSpriteSystem = new RenderSpriteSystem(cameraHandler.getCamera());
+        renderDebugSystem = new RenderDebugSystem(cameraHandler);
+        closestEnemySystem = new ClosestEnemySystem();
+        world.setSystem(closestEnemySystem, true);
         world.setSystem(renderSpriteSystem, true);
+        world.setSystem(renderDebugSystem, true);
         world.setSystem(new MovementSystem());
         world.setSystem(new WaveSystem(player));
+        world.setSystem(new FireProjectilSystem(closestEnemySystem, projectileManager));
+        world.setSystem(new HitProjectileSystem());
         world.initialize();
     }
 
@@ -163,6 +171,7 @@ public class App extends Game2D {
             }
             spriteBatch.end();
             renderSpriteSystem.process();
+            renderDebugSystem.process();
 
 
             lifes.addInfo("Lifes: " + player.getHealth().getHealth());

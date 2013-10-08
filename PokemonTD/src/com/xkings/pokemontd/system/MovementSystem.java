@@ -21,39 +21,34 @@ public class MovementSystem extends EntityProcessingSystem {
     @Mapper
     ComponentMapper<RotationComponent> rotationMapper;
     @Mapper
-    ComponentMapper<CreepStateComponent> creepStateMapper;
+    ComponentMapper<TimeComponent> timeMapper;
     @Mapper
     ComponentMapper<PositionComponent> positionMapper;
 
-    private PathComponent pathComponent;
-    private Vector3 position;
-    private CreepStateComponent creepStateComponent;
-    private float speed;
-    private RotationComponent rotation;
 
     public MovementSystem() {
         super(Aspect.getAspectForAll(PositionComponent.class, SizeComponent.class, SpeedComponent.class,
-                RotationComponent.class, CreepStateComponent.class));
+                RotationComponent.class, TimeComponent.class));
     }
 
 
     @Override
     protected void process(Entity entity) {
-        pathComponent = pathMapper.get(entity);
-        position = positionMapper.get(entity).getPoint();
-        creepStateComponent = creepStateMapper.get(entity);
-        speed = speedMapper.get(entity).getSpeed();
-        rotation = rotationMapper.get(entity);
+        PathComponent pathComponent = pathMapper.get(entity);
+        Vector3 position = positionMapper.get(entity).getPoint();
+        TimeComponent timeComponent = timeMapper.get(entity);
+        float speed = speedMapper.get(entity).getSpeed();
+        RotationComponent rotation = rotationMapper.get(entity);
 
-        TimeHolder timeHolder = creepStateComponent.getTimeHolder();
-        timeHolder.increase(world.getDelta());
+        Time time = timeComponent.getTime();
+        time.increase(world.getDelta());
 
-        while (timeHolder.getAvailableTime() > 0) {
+        while (time.getAvailableTime() > 0) {
             if (!pathComponent.isFinished()) {
                 Vector3 goal = pathComponent.get();
                 rotation.getPoint().x =
                         (float) (Math.atan2(goal.y - position.y, goal.x - position.x) * 180 / Math.PI + 90);
-                if (moveTowards(position, goal, speed, timeHolder)) {
+                if (moveTowards(position, goal, speed, time)) {
                     pathComponent.next();
                     if (pathComponent.isFinished()) {
                         return;
@@ -65,19 +60,19 @@ public class MovementSystem extends EntityProcessingSystem {
         }
     }
 
-    private boolean moveTowards(Vector3 from, Vector3 to, float speed, TimeHolder timeHolder) {
+    private boolean moveTowards(Vector3 from, Vector3 to, float speed, Time time) {
         float distance = getDistance(from, to);
-        float travelAbility = speed * timeHolder.getAvailableTime();
-        float travelTime = timeHolder.getAvailableTime();
+        float travelAbility = speed * time.getAvailableTime();
+        float travelTime = time.getAvailableTime();
         if (travelAbility >= distance) {
             from.set(to);
-            timeHolder.decrease(distance / speed);
+            time.decrease(distance / speed);
             return true;
         } else {
             double ang = getRotation(from, to);
             from.x = from.x + (float) (Math.cos(ang) * travelAbility);
             from.y = from.y + (float) (Math.sin(ang) * travelAbility);
-            timeHolder.decrease(travelTime);
+            time.decrease(travelTime);
             return false;
         }
     }

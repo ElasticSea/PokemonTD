@@ -22,7 +22,7 @@ public class Creep extends ConcreteEntity {
         addComponent(new SpeedComponent(creepType.getSpeed()));
         addComponent(new HealthComponent(new Health(creepType.getHealth())));
         addComponent(new TreasureComponent(creepType.getTreasure()));
-        addComponent(new CreepStateComponent());
+        addComponent(new TimeComponent());
         addComponent(new AttackComponent(1));
         addComponent(waveComponent);
     }
