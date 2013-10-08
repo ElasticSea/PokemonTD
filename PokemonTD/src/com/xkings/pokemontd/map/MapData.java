@@ -1,6 +1,6 @@
 package com.xkings.pokemontd.map;
 
-import com.xkings.core.pathfinding.Blueprint;
+import com.xkings.core.pathfinding.GenericBlueprint;
 import com.xkings.pokemontd.graphics.TileMap;
 
 /**
@@ -11,11 +11,11 @@ import com.xkings.pokemontd.graphics.TileMap;
 
 public class MapData {
 
-    private final Blueprint blueprint;
+    private final GenericBlueprint blueprint;
     private final Path path;
     private final TileMap tileMap;
 
-    public MapData(Blueprint blueprint, Path path, TileMap tileMap) {
+    public MapData(GenericBlueprint blueprint, Path path, TileMap tileMap) {
         this.blueprint = blueprint;
         this.path = path;
         this.tileMap = tileMap;
@@ -25,7 +25,7 @@ public class MapData {
         return path;
     }
 
-    public Blueprint getBlueprint() {
+    public GenericBlueprint getBlueprint() {
         return blueprint;
     }
 

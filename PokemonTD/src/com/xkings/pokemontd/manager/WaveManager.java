@@ -21,24 +21,20 @@ public class WaveManager implements Updateable {
     private final Path path;
 
     private final Iterator<CreepType> creeps;
+    private final UpdateFilter filter;
     private boolean active;
 
     /**
      * @param clock internal update timer
      */
-    private WaveManager(World world, Clock clock, Path path) {
+    public WaveManager(World world, Clock clock, Path path, float interval) {
         this.world = world;
         this.path = path;
         this.creeps = Arrays.asList(CreepType.values()).iterator();
         this.active = true;
+        this.filter = new UpdateFilter(this, interval);
+        clock.addService(filter);
     }
-
-    public static WaveManager createInstance(World world, Clock clock, Path path, float interval) {
-        WaveManager instance = new WaveManager(world, clock, path);
-        clock.addService(new UpdateFilter(instance, interval));
-        return instance;
-    }
-
 
     @Override
     public void update(float delta) {
@@ -66,6 +62,10 @@ public class WaveManager implements Updateable {
     @Override
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public int getRemainingTime() {
+        return (int) filter.getRemainingTime() + 1;
     }
 
 }

@@ -1,10 +1,10 @@
 package com.xkings.pokemontd.entity;
 
+import com.artemis.Entity;
 import com.artemis.World;
-import com.xkings.core.component.PositionComponent;
-import com.xkings.core.component.SizeComponent;
-import com.xkings.core.component.SpeedComponent;
+import com.xkings.core.component.*;
 import com.xkings.core.entity.ConcreteEntity;
+import com.xkings.pokemontd.component.ProjectileComponent;
 import com.xkings.pokemontd.component.SpriteComponent;
 
 /**
@@ -18,10 +18,14 @@ public class Tower extends ConcreteEntity {
         addComponent(new SpriteComponent(towerType.getTexture()));
         addComponent(new SizeComponent(towerType.getSize(), towerType.getSize(), 0));
         addComponent(new SpeedComponent(towerType.getSpeed()));
+        addComponent(new ProjectileComponent(towerType.getProjectile()));
+        addComponent(new RangeComponent(towerType.getRange()));
+        addComponent(new TimeComponent());
     }
 
-    public static void registerTower(World world, TowerType towerType, float x, float y) {
+    public static Entity registerTower(World world, TowerType towerType, float x, float y) {
         Tower tower = new Tower(towerType, world, x, y);
         tower.register();
+        return tower.entity;
     }
 }
