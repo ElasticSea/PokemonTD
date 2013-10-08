@@ -118,7 +118,7 @@ public class App extends Game2D {
         world.setSystem(new WaveSystem(player));
         world.setSystem(new FireProjectilSystem(closestEnemySystem, projectileManager));
         world.setSystem(new HitProjectileSystem());
-        world.setSystem(new DeathSystem());
+        world.setSystem(new DeathSystem(player));
         world.initialize();
     }
 
