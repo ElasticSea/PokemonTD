@@ -69,7 +69,7 @@ public enum TowerType {
     public static Map<TowerType, List<TowerType>> getHierarchy() {
         if (map == null) {
             map = new HashMap<TowerType, List<TowerType>>();
-            map.put(null, Arrays.asList(Needle, Pinch));
+            map.put(null, Arrays.asList(Needle, Scratch));
             map.put(Needle, Collections.unmodifiableList(Arrays.asList(Pinch)));
             map.put(Pinch, Collections.unmodifiableList(Arrays.asList(Sting)));
             map.put(Scratch, Collections.unmodifiableList(Arrays.asList(Bite)));

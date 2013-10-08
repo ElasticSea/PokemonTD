@@ -7,11 +7,14 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Rectangle;
 import com.xkings.core.graphics.Renderable;
+import com.xkings.core.main.Assets;
 import com.xkings.pokemontd.entity.TowerType;
 import com.xkings.pokemontd.manager.TowerManager;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.xkings.pokemontd.manager.TowerManager.Status.*;
 
 /**
  * Created by Tomas on 10/8/13.
@@ -25,8 +28,10 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
     private final ArrayList<DisplayBlock> displayBlocks;
     private final int width;
     private final int height;
+    private final GuiBox menuBar;
     private DisplayBlock displayBar;
     private DisplayBlock towerTable;
+    private Icon sellBlock;
 
     public Ui(TowerManager towerManager, Camera camera) {
         this.camera = camera;
@@ -37,20 +42,41 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
 
 
         width = Gdx.graphics.getWidth();
-        height = Gdx.graphics.getHeight() / 3;
+        height = Gdx.graphics.getHeight();
+        int guiHeight = Gdx.graphics.getHeight() / 3;
 
-        int stripHeight = height / 3 * 2;
-        int squareHeight = height;
-        int offset = height / 35;
+        int stripHeight = guiHeight / 3 * 2;
+        int squareHeight = guiHeight;
+        int offset = guiHeight / 35;
+        float iconSize = (squareHeight - offset) / 3f;
 
+        menuBar = new GuiBox(new Rectangle(width / 2f - iconSize * 1.5f, height - iconSize, iconSize * 3, iconSize), 0,
+                shapeRenderer);
         displayBar = new GuiBox(new Rectangle(0, 0, width, stripHeight), offset, shapeRenderer);
         towerTable =
                 new GuiBox(new Rectangle(width - squareHeight, 0, squareHeight, squareHeight), offset, shapeRenderer);
         displayBlocks.add(displayBar);
         displayBlocks.add(towerTable);
+        displayBlocks.add(menuBar);
 
-        placeTowerIcons(towerManager.getCurrentTree(), (towerTable.rectangle.width - offset) / 3f,
-                towerTable.rectangle);
+        placeTowerIcons(towerManager.getCurrentTree(), iconSize, towerTable.rectangle);
+
+        placeMenuIcons(iconSize, menuBar.rectangle);
+
+    }
+
+    private void placeMenuIcons(float size, Rectangle rect) {
+        sellBlock = new Icon(new Rectangle(rect.x, rect.y, size, size), spriteBatch, Assets.getTexture("coin")) {
+            @Override
+            public void process(float x, float y) {
+                if (towerManager.getStatus() != SELLING_TOWER) {
+                    towerManager.setStatus(SELLING_TOWER);
+                } else {
+                    towerManager.setStatus(NONE);
+                }
+            }
+        };
+        displayBlocks.add(sellBlock);
 
     }
 
@@ -78,6 +104,7 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
                     @Override
                     public void process(float x, float y) {
                         towerManager.setCurrentTower(towerType);
+                        towerManager.setStatus(PLACING_TOWER);
                     }
                 });
     }
