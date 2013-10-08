@@ -6,8 +6,8 @@ import com.xkings.core.main.Assets;
 /**
  * Created by Tomas on 10/8/13.
  */
-public enum ProjectileType {
-    DefaultProjectile("default", Type.FOLLOW_TARGET, 10, 0.2f, 1);
+public class ProjectileType {
+    //DefaultProjectile("default", Type.FOLLOW_TARGET, 10, 0.2f, 1);
 
     public enum Type {
         FOLLOW_TARGET, LAST_KNOWN_PLACE, AHEAD_TARGET,
@@ -19,7 +19,7 @@ public enum ProjectileType {
     private final float size;
     private final float damage;
 
-    private ProjectileType(String texture, Type type, float speed, float size, float damage) {
+    public ProjectileType(String texture, Type type, float speed, float size, float damage) {
         this.texture = Assets.getTexture(texture);
         this.type = type;
         this.speed = speed;
