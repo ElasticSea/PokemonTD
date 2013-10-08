@@ -26,22 +26,29 @@ public class TowerManager {
 
     public boolean createTower(int x, int y) {
         if (selectedTower != null && blueprint.isWalkable(x, y)) {
-            Tower.registerTower(world, selectedTower, x + 0.5f, y + 0.5f);
-            return true;
+            if (canAfford(selectedTower)) {
+                buyTower(selectedTower);
+                Tower.registerTower(world, selectedTower, x + 0.5f, y + 0.5f);
+                return true;
+            }
         }
         return false;
+    }
+
+    private void buyTower(TowerType towerType) {
+        player.getTreasure().subtract(towerType.getCost());
     }
 
     public List<TowerType> getCurrentTree() {
         return TowerType.getHierarchy().get(selectedTower);
     }
 
-    public boolean canAffort(TowerType towerType) {
+    public boolean canAfford(TowerType towerType) {
         return player.getTreasure().includes(towerType.getCost());
     }
 
     public void setCurrentTower(TowerType currentTower) {
-        if (canAffort(currentTower)) {
+        if (canAfford(currentTower)) {
             selectedTower = currentTower;
         }
     }

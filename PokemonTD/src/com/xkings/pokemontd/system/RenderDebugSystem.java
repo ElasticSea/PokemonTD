@@ -16,7 +16,7 @@ import com.xkings.core.graphics.camera.CameraHandler;
  */
 public class RenderDebugSystem extends EntityProcessingSystem {
     private final CameraHandler camera;
-    private final ShapeRenderer shapeRenderer = new ShapeRenderer();
+    private final ShapeRenderer shapeRenderer = new ShapeRenderer(5000);
 
     @Mapper
     ComponentMapper<PositionComponent> positionMapper;
@@ -35,8 +35,7 @@ public class RenderDebugSystem extends EntityProcessingSystem {
 
         shapeRenderer.setProjectionMatrix(camera.getCamera().combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.circle(position.x, position.y, range,
-                (int) (12 * (float) Math.cbrt(range) / camera.getCamera().zoom));
+        shapeRenderer.circle(position.x, position.y, range, (int) (12 * (float) Math.cbrt(range)) * 4);
         shapeRenderer.end();
     }
 

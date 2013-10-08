@@ -26,11 +26,11 @@ public class Treasure {
     }
 
     public void addElement(Element element, int count) {
-        elementSet.put(element, elementSet.get(element) + count);
+        elementSet.put(element, getElement(element) + count);
     }
 
     public boolean hasElement(Element element, int count) {
-        return elementSet.get(element) >= count;
+        return getElement(element) >= count;
     }
 
     public void removeElement(Element element, int count) {
@@ -49,6 +49,14 @@ public class Treasure {
         addGold(-count);
     }
 
+    public int getGold() {
+        return gold;
+    }
+
+    public int getElement(Element element) {
+        return elementSet.get(element);
+    }
+
     public void transferTo(Treasure treasure) {
         for (Map.Entry<Element, Integer> element : this.elementSet.entrySet()) {
             treasure.addElement(element.getKey(), Math.max(element.getValue(), 0));
@@ -62,6 +70,7 @@ public class Treasure {
 
     /**
      * Checks whether a treasure is greater or equal then another treasure.
+     *
      * @param treasure to be checked
      * @return {@code True} if this treasure is greater or equal to another treasure, {@code false} otherwise
      */
@@ -77,5 +86,12 @@ public class Treasure {
             return false;
         }
         return true;
+    }
+
+    public void subtract(Treasure treasure) {
+        for (Map.Entry<Element, Integer> entry : elementSet.entrySet()) {
+            this.removeElement(entry.getKey(), entry.getValue());
+        }
+        this.removeGold(treasure.getGold());
     }
 }

@@ -98,7 +98,7 @@ public class App extends Game2D {
     }
 
     private void initializeContent() {
-        player = new Player(20, 5000);
+        player = new Player(20, 100);
     }
 
     private void initializeManagers() {
@@ -192,6 +192,7 @@ public class App extends Game2D {
             renderer.render();
 
             lifes.addInfo("Lifes: " + player.getHealth().getHealth());
+            lifes.addInfo("Gold: " + player.getTreasure().getGold());
             lifes.addInfo("Next Wave in: " + waveManager.getRemainingTime());
             lifes.render(onScreenRasterRender);
         }

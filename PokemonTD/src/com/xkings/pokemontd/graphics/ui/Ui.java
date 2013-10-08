@@ -57,7 +57,7 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
     private void placeTowerIcons(List<TowerType> hierarchy, float size, Rectangle rect) {
         for (int i = 0; i < hierarchy.size(); i++) {
             TowerType tower = hierarchy.get(i);
-            if (towerManager.canAffort(tower)) {
+            if (towerManager.canAfford(tower)) {
                 placeTowerIcon(rect, i, tower, size);
             }
         }
