@@ -13,11 +13,11 @@ public class ProjectileType {
         FOLLOW_TARGET, LAST_KNOWN_PLACE, AHEAD_TARGET,
     }
 
-    private final TextureAtlas.AtlasRegion texture;
-    private final Type type;
-    private final float speed;
-    private final float size;
-    private final float damage;
+    private  TextureAtlas.AtlasRegion texture;
+    private  Type type;
+    private  float speed;
+    private  float size;
+    private  float damage;
 
     public ProjectileType(String texture, Type type, float speed, float size, float damage) {
         this.texture = Assets.getTexture(texture);
@@ -45,5 +45,25 @@ public class ProjectileType {
 
     public float getDamage() {
         return damage;
+    }
+
+    public void setTexture(TextureAtlas.AtlasRegion texture) {
+        this.texture = texture;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public void setSpeed(float speed) {
+        this.speed = speed;
+    }
+
+    public void setSize(float size) {
+        this.size = size;
+    }
+
+    public void setDamage(float damage) {
+        this.damage = damage;
     }
 }
