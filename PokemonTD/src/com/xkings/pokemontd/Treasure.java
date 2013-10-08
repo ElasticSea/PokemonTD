@@ -3,6 +3,8 @@ package com.xkings.pokemontd;
 import java.util.EnumMap;
 import java.util.Map;
 
+import static com.xkings.pokemontd.Element.*;
+
 /**
  * Created by Tomas on 10/5/13.
  */
@@ -11,18 +13,23 @@ public class Treasure {
     private int gold;
     private final Map<Element, Integer> elementSet = new EnumMap<Element, Integer>(Element.class);
 
+    public Treasure(Treasure treasure) {
+        this(treasure.getGold(), treasure.getElement(WATER), treasure.getElement(FIRE), treasure.getElement(NATURE),
+                treasure.getElement(LIGHT), treasure.getElement(DARKNESS), treasure.getElement(PURE));
+    }
+
     public Treasure(int gold) {
         this(gold, 0, 0, 0, 0, 0, 0);
     }
 
     public Treasure(int gold, int water, int fire, int nature, int light, int darkness, int pure) {
         this.gold = gold;
-        elementSet.put(Element.WATER, water);
-        elementSet.put(Element.FIRE, fire);
-        elementSet.put(Element.NATURE, nature);
-        elementSet.put(Element.LIGHT, light);
-        elementSet.put(Element.DARKNESS, darkness);
-        elementSet.put(Element.PURE, pure);
+        elementSet.put(WATER, water);
+        elementSet.put(FIRE, fire);
+        elementSet.put(NATURE, nature);
+        elementSet.put(LIGHT, light);
+        elementSet.put(DARKNESS, darkness);
+        elementSet.put(PURE, pure);
     }
 
     public void addElement(Element element, int count) {

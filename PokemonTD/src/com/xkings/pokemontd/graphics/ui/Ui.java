@@ -73,12 +73,13 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
     private void placeTowerIcon(Rectangle rect, int position, TowerType tower, float size) {
         int x = (int) (rect.x + position % 3 * size);
         int y = (int) (rect.y + position / 3 * size);
-        displayBlocks.add(new TowerIcon(new Rectangle(x, rect.height - y - size, size, size), tower, spriteBatch) {
-            @Override
-            public void process(float x, float y) {
-                towerManager.setCurrentTower(towerType);
-            }
-        });
+        displayBlocks.add(
+                new TowerIcon(new Rectangle(x, rect.height - y - size, size, size), tower, spriteBatch, towerManager) {
+                    @Override
+                    public void process(float x, float y) {
+                        towerManager.setCurrentTower(towerType);
+                    }
+                });
     }
 
 

@@ -1,5 +1,6 @@
 package com.xkings.pokemontd.entity;
 
+import com.artemis.Entity;
 import com.artemis.World;
 import com.xkings.core.component.*;
 import com.xkings.core.entity.ConcreteEntity;
@@ -22,8 +23,9 @@ public class Tower extends ConcreteEntity {
         addComponent(new TimeComponent());
     }
 
-    public static void registerTower(World world, TowerType towerType, float x, float y) {
+    public static Entity registerTower(World world, TowerType towerType, float x, float y) {
         Tower tower = new Tower(towerType, world, x, y);
         tower.register();
+        return tower.entity;
     }
 }

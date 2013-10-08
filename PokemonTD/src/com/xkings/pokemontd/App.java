@@ -1,5 +1,6 @@
 package com.xkings.pokemontd;
 
+import com.artemis.Entity;
 import com.artemis.World;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -19,7 +20,7 @@ import com.xkings.core.logic.Clock;
 import com.xkings.core.logic.WorldUpdater;
 import com.xkings.core.main.Assets;
 import com.xkings.core.main.Game2D;
-import com.xkings.core.pathfinding.Blueprint;
+import com.xkings.core.pathfinding.GenericBlueprint;
 import com.xkings.pokemontd.component.TreasureComponent;
 import com.xkings.pokemontd.entity.Player;
 import com.xkings.pokemontd.graphics.TileMap;
@@ -51,7 +52,7 @@ public class App extends Game2D {
     private ClosestEnemySystem closestEnemySystem;
 
     private Path path;
-    private Blueprint blueprint;
+    private GenericBlueprint blueprint;
     private Player player;
     private PokemonAssets assets;
     private ProjectileManager projectileManager;
@@ -65,20 +66,22 @@ public class App extends Game2D {
 
     @Override
     protected void init(OrthographicCamera camera) {
-        assets = new PokemonAssets();
         this.clock = Clock.createInstance("Logic", true, true);
+        initializeWorld();
+        assets = new PokemonAssets();
         spriteBatch = new SpriteBatch();
+
+
         MapData map = createTestMap();
         tileMap = map.getTileMap();
         blueprint = map.getBlueprint();
         path = map.getPath();
         this.cameraHandler = new BoundedCameraHandler(camera, tileMap.getWidth() * tileMap.TILE_SIZE,
                 tileMap.getHeight() * tileMap.TILE_SIZE, 0.001f);
-        initializeWorld();
+
         initializeContent();
         initializeManagers();
         initializeSystems();
-
         ui = new Ui(towerManager, camera);
         renderer = new DefaultRenderer(ui, camera);
         initializeInput();
@@ -124,16 +127,18 @@ public class App extends Game2D {
 
 
     private MapData createTestMap() {
-        boolean[][] booleanMap = new boolean[][]{{true, true, true, true, false, false, true, true, true, true},
-                {true, true, true, true, false, false, true, true, true, true},
-                {true, true, false, false, false, false, true, true, true, true},
-                {true, true, false, false, false, false, true, true, true, true},
-                {true, true, false, false, true, true, false, false, false, false},
-                {true, true, false, false, true, true, false, false, false, false},
-                {true, true, false, false, false, false, false, false, true, true},
-                {true, true, false, false, false, false, false, false, true, true},
-                {true, true, true, true, true, true, true, true, true, true},
-                {true, true, true, true, true, true, true, true, true, true}};
+        // FIXME nasty hack
+        Entity pathBlock = world.createEntity();
+        Entity[][] booleanMap = new Entity[][]{{null, null, null, null, pathBlock, pathBlock, null, null, null, null},
+                {null, null, null, null, pathBlock, pathBlock, null, null, null, null},
+                {null, null, pathBlock, pathBlock, pathBlock, pathBlock, null, null, null, null},
+                {null, null, pathBlock, pathBlock, pathBlock, pathBlock, null, null, null, null},
+                {null, null, pathBlock, pathBlock, null, null, pathBlock, pathBlock, pathBlock, pathBlock},
+                {null, null, pathBlock, pathBlock, null, null, pathBlock, pathBlock, pathBlock, pathBlock},
+                {null, null, pathBlock, pathBlock, pathBlock, pathBlock, pathBlock, pathBlock, null, null},
+                {null, null, pathBlock, pathBlock, pathBlock, pathBlock, pathBlock, pathBlock, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}};
         AtlasRegion grassTexture = Assets.getTexture("grass");
         AtlasRegion pathRound0 = Assets.getTexture("pathRound0");
         AtlasRegion pathRound1 = Assets.getTexture("pathRound1");
@@ -147,7 +152,7 @@ public class App extends Game2D {
                         {grassTexture, pathHorizontal, grassTexture, pathRound1, pathVertical},
                         {grassTexture, pathRound0, pathVertical, pathRound3, grassTexture},
                         {grassTexture, grassTexture, grassTexture, grassTexture, grassTexture}}, 2);
-        Blueprint testBlueprint = new Blueprint(booleanMap);
+        GenericBlueprint testBlueprint = new GenericBlueprint(booleanMap);
         Path testPath = new Path(new Vector3(0, 5, 0), new Vector3(3, 5, 0), new Vector3(3, 3, 0), new Vector3(7, 3, 0),
                 new Vector3(7, 7, 0), new Vector3(5, 7, 0), new Vector3(5, 10, 0));
         return new MapData(testBlueprint, testPath, tileMap);

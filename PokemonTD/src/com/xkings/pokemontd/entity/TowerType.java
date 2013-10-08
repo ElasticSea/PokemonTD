@@ -26,9 +26,11 @@ public enum TowerType {
     private final ProjectileType projectile;
     private final float range;
     private final Treasure cost;
+    private final AtlasRegion blockedTexture;
 
     private TowerType(String texture, float speed, int size, ProjectileType projectile, float range, Treasure cost) {
         this.texture = Assets.getTexture(texture);
+        this.blockedTexture = Assets.getTexture("blocked");
         this.speed = speed;
         this.size = size;
         this.projectile = projectile;
@@ -58,6 +60,10 @@ public enum TowerType {
 
     public Treasure getCost() {
         return cost;
+    }
+
+    public AtlasRegion getBlockedTexture() {
+        return blockedTexture;
     }
 
     public static Map<TowerType, List<TowerType>> getHierarchy() {

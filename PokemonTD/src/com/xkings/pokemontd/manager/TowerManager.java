@@ -1,7 +1,7 @@
 package com.xkings.pokemontd.manager;
 
 import com.artemis.World;
-import com.xkings.core.pathfinding.Blueprint;
+import com.xkings.core.pathfinding.GenericBlueprint;
 import com.xkings.pokemontd.entity.Player;
 import com.xkings.pokemontd.entity.Tower;
 import com.xkings.pokemontd.entity.TowerType;
@@ -13,12 +13,12 @@ import java.util.List;
  */
 public class TowerManager {
 
-    private final Blueprint blueprint;
+    private final GenericBlueprint blueprint;
     private final World world;
     private final Player player;
     private TowerType selectedTower = null;
 
-    public TowerManager(World world, Blueprint blueprint, Player player) {
+    public TowerManager(World world, GenericBlueprint blueprint, Player player) {
         this.world = world;
         this.blueprint = blueprint;
         this.player = player;
@@ -28,7 +28,7 @@ public class TowerManager {
         if (selectedTower != null && blueprint.isWalkable(x, y)) {
             if (canAfford(selectedTower)) {
                 buyTower(selectedTower);
-                Tower.registerTower(world, selectedTower, x + 0.5f, y + 0.5f);
+                blueprint.setWalkable(Tower.registerTower(world, selectedTower, x + 0.5f, y + 0.5f), x, y);
                 return true;
             }
         }
