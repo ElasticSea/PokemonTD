@@ -20,6 +20,6 @@ public class EnhancedGestureProcessor extends GestureProcessor {
     @Override
     public boolean tap(float x, float y, int count, int button) {
         Vector2 scaledCoordinates = camera.screenToWorld(x, y);
-        return towerManager.createTower(TowerType.Needle, (int) scaledCoordinates.x, (int) scaledCoordinates.y);
+        return towerManager.createTower((int) scaledCoordinates.x, (int) scaledCoordinates.y);
     }
 }

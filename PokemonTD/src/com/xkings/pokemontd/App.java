@@ -2,16 +2,18 @@ package com.xkings.pokemontd;
 
 import com.artemis.World;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector3;
+import com.xkings.core.graphics.Renderable;
 import com.xkings.core.graphics.ScreenText;
 import com.xkings.core.graphics.Shader;
 import com.xkings.core.graphics.camera.BoundedCameraHandler;
 import com.xkings.core.graphics.camera.CameraHandler;
-import com.xkings.core.graphics.camera.Renderer;
 import com.xkings.core.input.EnhancedGestureDetector;
 import com.xkings.core.logic.Clock;
 import com.xkings.core.logic.WorldUpdater;
@@ -21,6 +23,7 @@ import com.xkings.core.pathfinding.Blueprint;
 import com.xkings.pokemontd.component.TreasureComponent;
 import com.xkings.pokemontd.entity.Player;
 import com.xkings.pokemontd.graphics.TileMap;
+import com.xkings.pokemontd.graphics.ui.Ui;
 import com.xkings.pokemontd.input.EnhancedGestureProcessor;
 import com.xkings.pokemontd.manager.ProjectileManager;
 import com.xkings.pokemontd.manager.TowerManager;
@@ -33,6 +36,8 @@ import static com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 
 public class App extends Game2D {
 
+
+    public static final float WAVE_INTERVAL = 5f;
     private DefaultRenderer renderer;
     private SpriteBatch spriteBatch;
     private TileMap tileMap;
@@ -50,6 +55,7 @@ public class App extends Game2D {
     private Player player;
     private PokemonAssets assets;
     private ProjectileManager projectileManager;
+    private Ui ui;
 
     @Override
     protected void renderInternal() {
@@ -62,7 +68,6 @@ public class App extends Game2D {
         assets = new PokemonAssets();
         this.clock = Clock.createInstance("Logic", true, true);
         spriteBatch = new SpriteBatch();
-        renderer = new DefaultRenderer(camera);
         MapData map = createTestMap();
         tileMap = map.getTileMap();
         blueprint = map.getBlueprint();
@@ -73,12 +78,18 @@ public class App extends Game2D {
         initializeContent();
         initializeManagers();
         initializeSystems();
+
+        ui = new Ui(towerManager, camera);
+        renderer = new DefaultRenderer(ui, camera);
         initializeInput();
     }
 
     private void initializeInput() {
-        Gdx.input.setInputProcessor(
+        InputMultiplexer inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(new GestureDetector(ui));
+        inputMultiplexer.addProcessor(
                 new EnhancedGestureDetector(new EnhancedGestureProcessor(towerManager, cameraHandler)));
+        Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     private void initializeWorld() {
@@ -91,8 +102,8 @@ public class App extends Game2D {
     }
 
     private void initializeManagers() {
-        this.waveManager = new WaveManager(world, clock, path, 5f);
-        this.towerManager = new TowerManager(world, blueprint);
+        this.waveManager = new WaveManager(world, clock, path, WAVE_INTERVAL);
+        this.towerManager = new TowerManager(world, blueprint, player);
         this.projectileManager = new ProjectileManager(world, blueprint);
     }
 
@@ -148,17 +159,20 @@ public class App extends Game2D {
     }
 
 
-    private class DefaultRenderer extends Renderer {
+    private class DefaultRenderer implements Renderable {
 
         private final ScreenText lifes;
         private final SpriteBatch onScreenRasterRender;
+        private final Renderable renderer;
+        private final Camera camera;
 
-        protected DefaultRenderer(Camera camera) {
-            super(camera);
+        protected DefaultRenderer(Ui Ui, Camera camera) {
+            this.camera = camera;
             lifes = new ScreenText(assets.getSmoothFont(), BitmapFont.HAlignment.RIGHT);
             onScreenRasterRender = new SpriteBatch();
             onScreenRasterRender.setShader(Shader.getShader("smoothText"));
             onScreenRasterRender.enableBlending();
+            renderer = Ui;
         }
 
         @Override
@@ -175,10 +189,15 @@ public class App extends Game2D {
             renderSpriteSystem.process();
             renderDebugSystem.process();
 
+            renderer.render();
 
             lifes.addInfo("Lifes: " + player.getHealth().getHealth());
             lifes.addInfo("Next Wave in: " + waveManager.getRemainingTime());
             lifes.render(onScreenRasterRender);
         }
+
+
     }
+
+
 }

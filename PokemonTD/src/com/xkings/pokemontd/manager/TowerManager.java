@@ -24,9 +24,9 @@ public class TowerManager {
         this.player = player;
     }
 
-    public boolean createTower(TowerType towerType, int x, int y) {
-        if (blueprint.isWalkable(x, y)) {
-            Tower.registerTower(world, towerType, x + 0.5f, y + 0.5f);
+    public boolean createTower(int x, int y) {
+        if (selectedTower != null && blueprint.isWalkable(x, y)) {
+            Tower.registerTower(world, selectedTower, x + 0.5f, y + 0.5f);
             return true;
         }
         return false;
@@ -38,5 +38,11 @@ public class TowerManager {
 
     public boolean canAffort(TowerType towerType) {
         return player.getTreasure().includes(towerType.getCost());
+    }
+
+    public void setCurrentTower(TowerType currentTower) {
+        if (canAffort(currentTower)) {
+            selectedTower = currentTower;
+        }
     }
 }
