@@ -12,9 +12,8 @@ import com.xkings.pokemontd.entity.TowerType;
 import com.xkings.pokemontd.manager.TowerManager;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-
-import static com.xkings.pokemontd.manager.TowerManager.Status.*;
 
 /**
  * Created by Tomas on 10/8/13.
@@ -29,9 +28,11 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
     private final int width;
     private final int height;
     private final GuiBox menuBar;
+    private final List<TowerIcon> towerIcons;
     private DisplayBlock displayBar;
     private DisplayBlock towerTable;
     private Icon sellBlock;
+    private List<TowerType> lastHierarchy;
 
     public Ui(TowerManager towerManager, Camera camera) {
         this.camera = camera;
@@ -59,54 +60,69 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         displayBlocks.add(towerTable);
         displayBlocks.add(menuBar);
 
-        placeTowerIcons(towerManager.getCurrentTree(), iconSize, towerTable.rectangle);
+        towerIcons = createTowerIcons(iconSize, towerTable.rectangle);
 
+        for (TowerIcon towerIcon : towerIcons) {
+            displayBlocks.add(towerIcon);
+        }
         placeMenuIcons(iconSize, menuBar.rectangle);
-
+        // update(lastHierarchy);
     }
 
     private void placeMenuIcons(float size, Rectangle rect) {
         sellBlock = new Icon(new Rectangle(rect.x, rect.y, size, size), spriteBatch, Assets.getTexture("coin")) {
             @Override
             public void process(float x, float y) {
-                if (towerManager.getStatus() != SELLING_TOWER) {
-                    towerManager.setStatus(SELLING_TOWER);
-                } else {
-                    towerManager.setStatus(NONE);
-                }
+                towerManager.toggleSellingTowers();
             }
         };
         displayBlocks.add(sellBlock);
 
     }
 
-    private void placeTowerIcons(List<TowerType> hierarchy, float size, Rectangle rect) {
-        for (int i = 0; i < hierarchy.size(); i++) {
-            TowerType tower = hierarchy.get(i);
-            if (towerManager.canAfford(tower)) {
-                placeTowerIcon(rect, i, tower, size);
-            }
+    private List<TowerIcon> createTowerIcons(float size, Rectangle rect) {
+        List<TowerIcon> towerIcons = new ArrayList<TowerIcon>();
+        for (int i = 0; i < 9; i++) {
+            towerIcons.add(createTowerIcon(rect, i, null, size));
         }
+        return towerIcons;
     }
+
+    private TowerIcon createTowerIcon(Rectangle rect, int position, TowerType tower, float size) {
+        int x = (int) (rect.x + position % 3 * size);
+        int y = (int) (rect.y + position / 3 * size);
+        TowerIcon towerIcon =
+                new TowerIcon(new Rectangle(x, rect.height - y - size, size, size), tower, spriteBatch, towerManager) {
+                    @Override
+                    public void process(float x, float y) {
+                        towerManager.setPickedTower(towerType);
+                    }
+                };
+
+        return towerIcon;
+    }
+
 
     @Override
     public void render() {
+        if (lastHierarchy != towerManager.getCurrentTree()) {
+            lastHierarchy = towerManager.getCurrentTree();
+            update(lastHierarchy);
+        }
         for (DisplayBlock displayBlock : displayBlocks) {
             displayBlock.render();
         }
     }
 
-    private void placeTowerIcon(Rectangle rect, int position, TowerType tower, float size) {
-        int x = (int) (rect.x + position % 3 * size);
-        int y = (int) (rect.y + position / 3 * size);
-        displayBlocks.add(
-                new TowerIcon(new Rectangle(x, rect.height - y - size, size, size), tower, spriteBatch, towerManager) {
-                    @Override
-                    public void process(float x, float y) {
-                        towerManager.setCurrentTower(towerType);
-                        towerManager.setStatus(PLACING_TOWER);
-                    }
-                });
+    private void update(List<TowerType> hierarchy) {
+        Iterator<TowerType> hierarchyIterator = hierarchy.iterator();
+        for (TowerIcon towerIcon : towerIcons) {
+            if (hierarchyIterator.hasNext()) {
+                towerIcon.towerType = hierarchyIterator.next();
+            } else {
+                towerIcon.towerType = null;
+            }
+        }
     }
 
 

@@ -51,7 +51,7 @@ public class App extends Game2D {
     private RenderSpriteSystem renderSpriteSystem;
     private RenderDebugSystem renderDebugSystem;
     private ClosestEnemySystem closestEnemySystem;
-
+    private GetTowerInfoSystem getTowerInfoSystem;
     private Path path;
     private GenericBlueprint blueprint;
     private Player player;
@@ -115,6 +115,7 @@ public class App extends Game2D {
         renderSpriteSystem = new RenderSpriteSystem(cameraHandler.getCamera());
         renderDebugSystem = new RenderDebugSystem(cameraHandler);
         closestEnemySystem = new ClosestEnemySystem(WaveComponent.class);
+
         world.setSystem(closestEnemySystem, true);
         world.setSystem(renderSpriteSystem, true);
         world.setSystem(renderDebugSystem, true);

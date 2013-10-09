@@ -72,8 +72,10 @@ public enum TowerType {
             map.put(null, Arrays.asList(Needle, Scratch));
             map.put(Needle, Collections.unmodifiableList(Arrays.asList(Pinch)));
             map.put(Pinch, Collections.unmodifiableList(Arrays.asList(Sting)));
+            map.put(Sting, Collections.<TowerType>unmodifiableList(Arrays.<TowerType>asList()));
             map.put(Scratch, Collections.unmodifiableList(Arrays.asList(Bite)));
             map.put(Bite, Collections.unmodifiableList(Arrays.asList(Smash)));
+            map.put(Smash, Collections.<TowerType>unmodifiableList(Arrays.<TowerType>asList()));
             map = Collections.unmodifiableMap(map);
         }
         return map;

@@ -101,4 +101,11 @@ public class Treasure {
         }
         this.removeGold(treasure.getGold());
     }
+
+    public void add(Treasure treasure) {
+        for (Map.Entry<Element, Integer> entry : elementSet.entrySet()) {
+            this.addElement(entry.getKey(), entry.getValue());
+        }
+        this.addGold(treasure.getGold());
+    }
 }
