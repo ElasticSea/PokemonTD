@@ -55,7 +55,7 @@ public class App extends Game2D {
     private Path path;
     private GenericBlueprint blueprint;
     private Player player;
-    private PokemonAssets assets;
+    private static PokemonAssets assets;
     private ProjectileManager projectileManager;
     private Ui ui;
 
@@ -207,5 +207,7 @@ public class App extends Game2D {
 
     }
 
-
+    public static PokemonAssets getAssets() {
+        return assets;
+    }
 }

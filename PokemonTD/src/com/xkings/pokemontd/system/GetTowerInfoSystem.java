@@ -5,14 +5,22 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
+import com.xkings.core.component.RangeComponent;
+import com.xkings.pokemontd.component.AttackComponent;
+import com.xkings.pokemontd.component.ProjectileComponent;
 import com.xkings.pokemontd.component.SpriteComponent;
+import com.xkings.pokemontd.component.TowerTypeComponent;
 import com.xkings.pokemontd.entity.CurrentTowerInfo;
 import com.xkings.pokemontd.entity.TowerType;
 import com.xkings.pokemontd.manager.SelectedTower;
 
 public class GetTowerInfoSystem extends EntityProcessingSystem {
     @Mapper
-    ComponentMapper<SpriteComponent> spriteMapper;
+    ComponentMapper<TowerTypeComponent> towerTypwMapper;
+    @Mapper
+    ComponentMapper<ProjectileComponent> projectileMapper;
+    @Mapper
+    ComponentMapper<RangeComponent> rangeMapper;
 
     public GetTowerInfoSystem() {
         super(Aspect.getAspectForAll(SpriteComponent.class));
@@ -29,12 +37,16 @@ public class GetTowerInfoSystem extends EntityProcessingSystem {
     }
 
     private void fillInfoFromEntity(CurrentTowerInfo currentTowerInfo, SelectedTower selectedTower) {
-        currentTowerInfo.setAtlasRegion(spriteMapper.get(selectedTower.getTower()).getSprite());
+        fillIntoFromType(currentTowerInfo, towerTypwMapper.get(selectedTower.getTower()).getTowerType());
+        currentTowerInfo.setAttack((int) projectileMapper.get(selectedTower.getTower()).getProjectileType().getDamage());
+        currentTowerInfo.setRange((int) rangeMapper.get(selectedTower.getTower()).getRange());
     }
 
     private void fillIntoFromType(CurrentTowerInfo currentTowerInfo, TowerType tower) {
+        currentTowerInfo.setName(tower.getName());
         currentTowerInfo.setAtlasRegion(tower.getTexture());
-
+        currentTowerInfo.setAttack((int) tower.getProjectile().getDamage());
+        currentTowerInfo.setRange((int) tower.getRange());
     }
 
     @Override
