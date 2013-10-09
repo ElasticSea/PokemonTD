@@ -2,10 +2,12 @@ package com.xkings.pokemontd.manager;
 
 import com.artemis.Entity;
 import com.artemis.World;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.xkings.core.pathfinding.GenericBlueprint;
 import com.xkings.pokemontd.component.TowerTypeComponent;
 import com.xkings.pokemontd.component.TreasureComponent;
 import com.xkings.pokemontd.component.UpgradeComponent;
+import com.xkings.pokemontd.entity.CurrentTowerInfo;
 import com.xkings.pokemontd.entity.Player;
 import com.xkings.pokemontd.entity.Tower;
 import com.xkings.pokemontd.entity.TowerType;
@@ -19,6 +21,7 @@ import java.util.List;
 public class TowerManager {
 
     private final GetTowerInfoSystem getTowerInfoSystem;
+    private CurrentTowerInfo currentTowerInfo = new CurrentTowerInfo();
 
     public void toggleSellingTowers() {
         if (status == Status.SELLING_TOWER) {
@@ -37,6 +40,11 @@ public class TowerManager {
             }
             this.selectedTower = towerType;
         }
+        update();
+    }
+
+    private void update() {
+        getTowerInfoSystem.getInfo(currentTowerInfo, selectedTowerEntity, selectedTower);
     }
 
     public enum Status {
@@ -67,13 +75,17 @@ public class TowerManager {
                 selectedTowerEntity.setTower(getTower(x, y));
                 selectedTowerEntity.setX(x);
                 selectedTowerEntity.setY(y);
+                selectedTower = null;
                 // return none(x, y);
                 break;
             case PLACING_TOWER:
-                return placeTower(x, y);
+                 placeTower(x, y);
+                break;
             case SELLING_TOWER:
-                return sellTower(x, y);
+                 sellTower(x, y);
+                break;
         }
+        update();
 
         return false;
     }
@@ -88,6 +100,7 @@ public class TowerManager {
                 selectedTowerEntity.setX(x);
                 selectedTowerEntity.setY(y);
                 this.setStatus(Status.NONE);
+                selectedTower = null;
                 return true;
             }
         }
@@ -187,41 +200,9 @@ public class TowerManager {
     public TowerType getSelectedTower() {
         return selectedTower;
     }
-}
 
-final class SelectedTower {
-    private int x;
-    private int y;
-    private Entity tower;
-
-    SelectedTower(int x, int y, Entity tower) {
-        this.x = x;
-        this.y = y;
-        this.tower = tower;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public Entity getTower() {
-        return tower;
-    }
-
-    public void setTower(Entity tower) {
-        this.tower = tower;
+    public CurrentTowerInfo getCurrentTowerInfo() {
+        return currentTowerInfo;
     }
 }
 

@@ -29,6 +29,7 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
     private final int height;
     private final GuiBox menuBar;
     private final List<TowerIcon> towerIcons;
+    private final EntityInfo entityInfo;
     private DisplayBlock displayBar;
     private DisplayBlock towerTable;
     private Icon sellBlock;
@@ -56,9 +57,11 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         displayBar = new GuiBox(new Rectangle(0, 0, width, stripHeight), offset, shapeRenderer);
         towerTable =
                 new GuiBox(new Rectangle(width - squareHeight, 0, squareHeight, squareHeight), offset, shapeRenderer);
+        entityInfo = new EntityInfo(menuBar.rectangle,spriteBatch,towerManager.getCurrentTowerInfo());
         displayBlocks.add(displayBar);
         displayBlocks.add(towerTable);
         displayBlocks.add(menuBar);
+        displayBlocks.add(entityInfo);
 
         towerIcons = createTowerIcons(iconSize, towerTable.rectangle);
 
