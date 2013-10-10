@@ -8,5 +8,5 @@ package com.xkings.pokemontd.map;
 
 public enum BuilderCommand {
 
-    LEFT, RIGHT, STRAIGHT;
+    LEFT, RIGHT, STRAIGHT,DOWN;
 }

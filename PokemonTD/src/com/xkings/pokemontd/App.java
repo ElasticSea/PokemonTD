@@ -30,6 +30,7 @@ import com.xkings.pokemontd.input.EnhancedGestureProcessor;
 import com.xkings.pokemontd.manager.ProjectileManager;
 import com.xkings.pokemontd.manager.TowerManager;
 import com.xkings.pokemontd.manager.WaveManager;
+import com.xkings.pokemontd.map.MapBuilder;
 import com.xkings.pokemontd.map.MapData;
 import com.xkings.pokemontd.map.Path;
 import com.xkings.pokemontd.system.*;
@@ -40,6 +41,7 @@ public class App extends Game2D {
 
 
     public static final float WAVE_INTERVAL = 5f;
+    public static Entity pathBlock;
     private DefaultRenderer renderer;
     private SpriteBatch spriteBatch;
     private TileMap tileMap;
@@ -73,7 +75,7 @@ public class App extends Game2D {
         spriteBatch = new SpriteBatch();
 
 
-        MapData map = createTestMap();
+        MapData map = buildMap();
         tileMap = map.getTileMap();
         blueprint = map.getBlueprint();
         path = map.getPath();
@@ -98,6 +100,7 @@ public class App extends Game2D {
 
     private void initializeWorld() {
         this.world = new World();
+        pathBlock = world.createEntity();
         this.clock.addService(new WorldUpdater(world));
     }
 
@@ -126,11 +129,12 @@ public class App extends Game2D {
         world.initialize();
     }
 
-
+/*
     private MapData createTestMap() {
         // FIXME nasty hack
         Entity pathBlock = world.createEntity();
-        Entity[][] entityMap = new Entity[][]{{null, null, null, null, pathBlock, pathBlock, null, null, null, null},
+        Entity[][] entityMap = new Entity[][]{
+                {null, null, null, null, pathBlock, pathBlock, null, null, null, null},
                 {null, null, null, null, pathBlock, pathBlock, null, null, null, null},
                 {null, null, pathBlock, pathBlock, pathBlock, pathBlock, null, null, null, null},
                 {null, null, pathBlock, pathBlock, pathBlock, pathBlock, null, null, null, null},
@@ -157,6 +161,11 @@ public class App extends Game2D {
         Path testPath = new Path(new Vector3(0, 5, 0), new Vector3(3, 5, 0), new Vector3(3, 3, 0), new Vector3(7, 3, 0),
                 new Vector3(7, 7, 0), new Vector3(5, 7, 0), new Vector3(5, 10, 0));
         return new MapData(testBlueprint, testPath, tileMap);
+    }
+*/
+
+    public MapData buildMap(){
+        return new MapBuilder(15, 15, 0, 8, MapBuilder.Direction.RIGHT).addStraight().addLeft().addStraight().addRight().build();
     }
 
     @Override
