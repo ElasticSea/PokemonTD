@@ -165,7 +165,11 @@ public class App extends Game2D {
 */
 
     public MapData buildMap(){
+<<<<<<< HEAD
         return new MapBuilder(15, 15, 0, 8, MapBuilder.Direction.RIGHT).addStraight().addLeft().addStraight().addRight().build();
+=======
+        return new MapBuilder(15, 15, 0, 8, MapBuilder.Direction.RIGHT).addStraight().addStraight().addStraight().addStraight().build();
+>>>>>>> mapBuilder function Straight has been created.
     }
 
     @Override
