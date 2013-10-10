@@ -168,7 +168,6 @@ public class TowerManager {
         return false;
     }
 
-
     private void buyTower(TowerType towerType) {
         player.getTreasure().subtract(towerType.getCost());
     }
@@ -183,22 +182,8 @@ public class TowerManager {
         return player.getTreasure().includes(towerType.getCost());
     }
 
-    public void setCurrentTower(TowerType currentTower) {
-        if (canAfford(currentTower)) {
-            selectedTower = currentTower;
-        }
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
+    private void setStatus(Status status) {
         this.status = status;
-    }
-
-    public TowerType getSelectedTower() {
-        return selectedTower;
     }
 
     public CurrentTowerInfo getCurrentTowerInfo() {
