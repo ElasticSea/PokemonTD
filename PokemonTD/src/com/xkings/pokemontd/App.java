@@ -27,7 +27,6 @@ import com.xkings.pokemontd.input.EnhancedGestureProcessor;
 import com.xkings.pokemontd.manager.ProjectileManager;
 import com.xkings.pokemontd.manager.TowerManager;
 import com.xkings.pokemontd.manager.WaveManager;
-import com.xkings.pokemontd.map.MapBuilder;
 import com.xkings.pokemontd.map.MapData;
 import com.xkings.pokemontd.map.Path;
 import com.xkings.pokemontd.system.*;
