@@ -103,10 +103,10 @@ public class MapBuilder {
     }
 
     private void createStraight() {
-        moveTo((float) Math.cos(direction)*BLOCK_SIZE, (float) Math.sin(direction)*BLOCK_SIZE);
         Vector3 center = new Vector3(position.x + BLOCK_SIZE/2f, position.y + BLOCK_SIZE/2f, 0);
         Vector3 next = new Vector3(center.x + (float) Math.cos(this.direction) * BLOCK_SIZE/2f, center.y + (float) Math.sin(this.direction) * BLOCK_SIZE/2f, 0);
         points.add(next);
+        moveTo((float) Math.cos(direction)*BLOCK_SIZE, (float) Math.sin(direction)*BLOCK_SIZE);
     }
 
     private void moveTo(float x, float y) {
@@ -123,19 +123,26 @@ public class MapBuilder {
 
     private void createRight() {
         direction -= QUADRANT;
-        moveTo((float) Math.cos(direction)*BLOCK_SIZE, (float) Math.sin(direction)*BLOCK_SIZE);
         Vector3 center = new Vector3(position.x + BLOCK_SIZE/2f, position.y + BLOCK_SIZE/2f, 0);
-        Vector3 next = new Vector3(center.x + (float) Math.cos(this.direction) * BLOCK_SIZE/2f, center.y + (float) Math.sin(this.direction) * BLOCK_SIZE/2f, 0);
+        Vector3 next = new Vector3(center.x + BLOCK_SIZE/2f, center.y + (float) Math.sin(this.direction) * BLOCK_SIZE/2f, 0);
         points.add(next);
+        moveTo((float) Math.cos(direction)*BLOCK_SIZE, (float) Math.sin(direction)*BLOCK_SIZE);
 
     }
 
     private void createLeft() {
         direction += QUADRANT;
-        moveTo((float) Math.cos(direction)*BLOCK_SIZE, (float) Math.sin(direction)*BLOCK_SIZE);
-        Vector3 center = new Vector3(position.x + BLOCK_SIZE/2f, position.y + BLOCK_SIZE/2f, 0);
+        Vector3 center = new Vector3(position.x + (float) Math.sin(direction)*BLOCK_SIZE/2f, position.y + BLOCK_SIZE/2f, 0);
         Vector3 next = new Vector3(center.x + (float) Math.cos(this.direction) * BLOCK_SIZE/2f, center.y + (float) Math.sin(this.direction) * BLOCK_SIZE/2f, 0);
         points.add(next);
+        moveTo((float) Math.cos(direction)*BLOCK_SIZE, (float) Math.sin(direction)*BLOCK_SIZE);
+        // bod + new Point(Math.cos(uhel)*BlockSize,Math.sin(uhel)*BlockSize)
+        /* segment = 90 / segments;
+        for(int i = 0; i < segments; i++){
+            uhel = minulejUhel + i*segment;
+            p = new point();  */
+        /* p.x = Math.cos(uhel)*blockSIze/2
+        p.y = Math.sin(uhel)*blocksize/2 */
     }
 
 
