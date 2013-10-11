@@ -17,27 +17,27 @@ class EntityInfo extends DisplayBlock {
         super(rectangle);
         this.spriteBatch = spriteBatch;
         this.currentTowerInfo = currentTowerInfo;
-        App.getAssets().getPixelFont().setScale(rectangle.height/8/32);
     }
 
     @Override
     public void render() {
+        App.getAssets().getPixelFont().setScale(rectangle.height / 8 / 32);
         spriteBatch.begin();
         float offset = rectangle.height / 4;
         if (currentTowerInfo.getAtlasRegion() != null) {
-            spriteBatch.draw(currentTowerInfo.getAtlasRegion(), offset, offset, offset * 2, offset * 2);
+            spriteBatch.draw(currentTowerInfo.getAtlasRegion(), rectangle.x + offset, rectangle.y + offset, offset * 2,
+                    offset * 2);
             drawText(currentTowerInfo.getName(), rectangle.height, rectangle.height - offset);
             drawText("Atk: " + String.valueOf(currentTowerInfo.getAttack()), rectangle.height,
                     rectangle.height - offset * 2);
-            drawText("Rng: "+String.valueOf(currentTowerInfo.getRange()), rectangle.height+offset*3,
-                    rectangle.height - offset*2);
+            drawText("Rng: " + String.valueOf(currentTowerInfo.getRange()), rectangle.height + offset * 3,
+                    rectangle.height - offset * 2);
         }
         spriteBatch.end();
     }
 
-    private void drawText(String text, float x, float y)
-    {
-        App.getAssets().getPixelFont().draw(spriteBatch, text, x, y);
+    private void drawText(String text, float x, float y) {
+        App.getAssets().getPixelFont().draw(spriteBatch, text, rectangle.x + x, rectangle.y + y);
     }
 
     @Override

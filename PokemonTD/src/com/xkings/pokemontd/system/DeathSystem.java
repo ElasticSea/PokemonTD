@@ -5,11 +5,7 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
-import com.badlogic.gdx.math.Vector3;
-import com.xkings.core.component.*;
-import com.xkings.core.utils.Collision;
 import com.xkings.pokemontd.Health;
-import com.xkings.pokemontd.component.AttackComponent;
 import com.xkings.pokemontd.component.HealthComponent;
 import com.xkings.pokemontd.component.TreasureComponent;
 import com.xkings.pokemontd.entity.Player;
@@ -40,7 +36,7 @@ public class DeathSystem extends EntityProcessingSystem {
     }
 
     private boolean isAlive(Health health) {
-        return health.getHealth() > 0;
+        return health.getLives() > 0;
     }
 
 }

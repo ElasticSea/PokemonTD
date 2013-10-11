@@ -8,7 +8,7 @@ public class Health {
         this.health = health;
     }
 
-    public int getHealth() {
+    public int getLives() {
         return health;
     }
 

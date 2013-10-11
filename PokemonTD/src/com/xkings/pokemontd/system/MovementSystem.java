@@ -46,8 +46,7 @@ public class MovementSystem extends EntityProcessingSystem {
         while (time.getAvailableTime() > 0) {
             if (!pathComponent.isFinished()) {
                 Vector3 goal = pathComponent.get();
-                rotation.getPoint().x =
-                        (float) (Math.atan2(goal.y - position.y, goal.x - position.x) * 180 / Math.PI + 90);
+                rotation.getPoint().x = (float) (Math.atan2(goal.y - position.y, goal.x - position.x) * 180 / Math.PI);
                 if (moveTowards(position, goal, speed, time)) {
                     pathComponent.next();
                     if (pathComponent.isFinished()) {

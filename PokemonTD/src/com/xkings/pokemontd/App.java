@@ -21,7 +21,6 @@ import com.xkings.core.logic.WorldUpdater;
 import com.xkings.core.main.Assets;
 import com.xkings.core.main.Game2D;
 import com.xkings.core.pathfinding.GenericBlueprint;
-import com.xkings.pokemontd.component.TreasureComponent;
 import com.xkings.pokemontd.component.WaveComponent;
 import com.xkings.pokemontd.entity.Player;
 import com.xkings.pokemontd.graphics.TileMap;
@@ -83,7 +82,7 @@ public class App extends Game2D {
         initializeContent();
         initializeManagers();
         initializeSystems();
-        ui = new Ui(towerManager, camera);
+        ui = new Ui(player, waveManager,towerManager, camera);
         renderer = new DefaultRenderer(ui, camera);
         initializeInput();
     }
@@ -102,7 +101,7 @@ public class App extends Game2D {
     }
 
     private void initializeContent() {
-        player = new Player(20, 100);
+        player = new Player(9999, 9999, 1, 2, 3, 0, 2, 1, 1);
     }
 
     private void initializeManagers() {
@@ -154,7 +153,7 @@ public class App extends Game2D {
                         {grassTexture, pathHorizontal, grassTexture, pathRound1, pathVertical},
                         {grassTexture, pathRound0, pathVertical, pathRound3, grassTexture},
                         {grassTexture, grassTexture, grassTexture, grassTexture, grassTexture}}, 2);
-        GenericBlueprint<Entity>  testBlueprint = new GenericBlueprint<Entity> (entityMap);
+        GenericBlueprint<Entity> testBlueprint = new GenericBlueprint<Entity>(entityMap);
         Path testPath = new Path(new Vector3(0, 5, 0), new Vector3(3, 5, 0), new Vector3(3, 3, 0), new Vector3(7, 3, 0),
                 new Vector3(7, 7, 0), new Vector3(5, 7, 0), new Vector3(5, 10, 0));
         return new MapData(testBlueprint, testPath, tileMap);
@@ -198,9 +197,9 @@ public class App extends Game2D {
 
             renderer.render();
 
-            lifes.addInfo("Lifes: " + player.getHealth().getHealth());
+         /*   lifes.addInfo("Lifes: " + player.getHealth().getLives());
             lifes.addInfo("Gold: " + player.getTreasure().getGold());
-            lifes.addInfo("Next Wave in: " + waveManager.getRemainingTime());
+            lifes.addInfo("Next Wave in: " + waveManager.getRemainingTime());     */
             lifes.render(onScreenRasterRender);
         }
 

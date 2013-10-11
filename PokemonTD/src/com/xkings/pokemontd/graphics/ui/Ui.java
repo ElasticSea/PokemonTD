@@ -8,8 +8,10 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Rectangle;
 import com.xkings.core.graphics.Renderable;
 import com.xkings.core.main.Assets;
+import com.xkings.pokemontd.entity.Player;
 import com.xkings.pokemontd.entity.TowerType;
 import com.xkings.pokemontd.manager.TowerManager;
+import com.xkings.pokemontd.manager.WaveManager;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -30,12 +32,14 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
     private final GuiBox menuBar;
     private final List<TowerIcon> towerIcons;
     private final EntityInfo entityInfo;
+    private final GuiBox statusBar;
+    private final GuiBox nextWaveInfo;
     private DisplayBlock displayBar;
     private DisplayBlock towerTable;
     private Icon sellBlock;
     private List<TowerType> lastHierarchy;
 
-    public Ui(TowerManager towerManager, Camera camera) {
+    public Ui(Player player, WaveManager waveManager, TowerManager towerManager, Camera camera) {
         this.camera = camera;
         this.towerManager = towerManager;
         shapeRenderer = new ShapeRenderer();
@@ -52,23 +56,31 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         int offset = guiHeight / 35;
         float iconSize = (squareHeight - offset) / 3f;
 
+        int statusSize = 48;
+        statusBar = new StatusBar(player, new Rectangle(0, height - statusSize, width, statusSize), statusSize / 8,
+                shapeRenderer, spriteBatch);
         menuBar = new GuiBox(new Rectangle(width / 2f - iconSize * 1.5f, height - iconSize, iconSize * 3, iconSize), 0,
                 shapeRenderer);
-        displayBar = new GuiBox(new Rectangle(0, 0, width, stripHeight), offset, shapeRenderer);
+        nextWaveInfo = new WaveInfo(new Rectangle(0, 0, squareHeight, squareHeight), offset, shapeRenderer,
+                spriteBatch,waveManager);
+        displayBar = new GuiBox(new Rectangle(squareHeight-offset, 0, width-squareHeight+offset, stripHeight), offset,
+                shapeRenderer);
         towerTable =
                 new GuiBox(new Rectangle(width - squareHeight, 0, squareHeight, squareHeight), offset, shapeRenderer);
-        entityInfo = new EntityInfo(displayBar.rectangle,spriteBatch,towerManager.getCurrentTowerInfo());
+        entityInfo = new EntityInfo(displayBar.rectangle, spriteBatch, towerManager.getCurrentTowerInfo());
         displayBlocks.add(displayBar);
         displayBlocks.add(towerTable);
-        displayBlocks.add(menuBar);
+      //  displayBlocks.add(menuBar);
         displayBlocks.add(entityInfo);
+        displayBlocks.add(statusBar);
+        displayBlocks.add(nextWaveInfo);
 
         towerIcons = createTowerIcons(iconSize, towerTable.rectangle);
 
         for (TowerIcon towerIcon : towerIcons) {
             displayBlocks.add(towerIcon);
         }
-        placeMenuIcons(iconSize, menuBar.rectangle);
+       // placeMenuIcons(iconSize, menuBar.rectangle);
         // update(lastHierarchy);
     }
 
