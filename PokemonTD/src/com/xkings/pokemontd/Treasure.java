@@ -15,20 +15,22 @@ public class Treasure {
 
     public Treasure(Treasure treasure) {
         this(treasure.getGold(), treasure.getElement(WATER), treasure.getElement(FIRE), treasure.getElement(NATURE),
-                treasure.getElement(LIGHT), treasure.getElement(DARKNESS), treasure.getElement(PURE));
+                treasure.getElement(LIGHT), treasure.getElement(DARKNESS), treasure.getElement(NEUTRAL),
+                treasure.getElement(PURE));
     }
 
     public Treasure(int gold) {
-        this(gold, 0, 0, 0, 0, 0, 0);
+        this(gold, 0, 0, 0, 0, 0, 0, 0);
     }
 
-    public Treasure(int gold, int water, int fire, int nature, int light, int darkness, int pure) {
+    public Treasure(int gold, int water, int fire, int nature, int light, int darkness, int neutral, int pure) {
         this.gold = gold;
         elementSet.put(WATER, water);
         elementSet.put(FIRE, fire);
         elementSet.put(NATURE, nature);
         elementSet.put(LIGHT, light);
         elementSet.put(DARKNESS, darkness);
+        elementSet.put(NEUTRAL, neutral);
         elementSet.put(PURE, pure);
     }
 
@@ -97,7 +99,7 @@ public class Treasure {
 
     public void subtract(Treasure treasure) {
         for (Map.Entry<Element, Integer> entry : elementSet.entrySet()) {
-            this.removeElement(entry.getKey(), entry.getValue());
+            this.removeElement(entry.getKey(), treasure.getElement(entry.getKey()));
         }
         this.removeGold(treasure.getGold());
     }
