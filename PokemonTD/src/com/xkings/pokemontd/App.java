@@ -39,6 +39,7 @@ public class App extends Game2D {
 
 
     public static final float WAVE_INTERVAL = 5f;
+    public static Entity pathBlock;
     private DefaultRenderer renderer;
     private SpriteBatch spriteBatch;
     private TileMap tileMap;
@@ -82,7 +83,7 @@ public class App extends Game2D {
         initializeContent();
         initializeManagers();
         initializeSystems();
-        ui = new Ui(player, waveManager,towerManager, camera);
+        ui = new Ui(player, waveManager, towerManager, camera);
         renderer = new DefaultRenderer(ui, camera);
         initializeInput();
     }
@@ -97,6 +98,7 @@ public class App extends Game2D {
 
     private void initializeWorld() {
         this.world = new World();
+        this.pathBlock = world.createEntity();
         this.clock.addService(new WorldUpdater(world));
     }
 
