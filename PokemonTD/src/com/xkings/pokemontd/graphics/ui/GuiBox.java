@@ -9,7 +9,11 @@ import com.badlogic.gdx.math.Rectangle;
  */
 class GuiBox extends DisplayBlock {
 
-    private final int offset;
+    public static final float darker = 0.0f;
+    public static final float lighter = 0.1f;
+    public static final Color darkerColor = new Color(darker, darker, darker, 1);
+    public static final Color lighterColor = new Color(lighter, lighter, lighter, 1);
+    protected final int offset;
     private final ShapeRenderer shapeRenderer;
 
     GuiBox(Rectangle rectangle, int offset, ShapeRenderer shapeRenderer) {
@@ -25,9 +29,9 @@ class GuiBox extends DisplayBlock {
 
     private void drawRect(Rectangle rect, int offset) {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.DARK_GRAY);
+        shapeRenderer.setColor(darkerColor);
         shapeRenderer.rect(rect.x, rect.y, rect.width, rect.height);
-        shapeRenderer.setColor(Color.GRAY);
+        shapeRenderer.setColor(lighterColor);
         shapeRenderer.rect(rect.x + offset, rect.y + offset, rect.width - offset * 2, rect.height - offset * 2);
         shapeRenderer.end();
     }

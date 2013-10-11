@@ -15,9 +15,9 @@ public class TreasureTest {
 
     @BeforeTest
     public void setUp() {
-        TreasureA = new Treasure(50, 1, 2, 4, 2, 5, 0);
-        TreasureB = new Treasure(40, 1, 2, 4, 2, 5, 0);
-        TreasureC = new Treasure(50, 1, 1, 6, 5, 4, 1);
+        TreasureA = new Treasure(50, 1, 2, 4, 2, 5, 0, 0);
+        TreasureB = new Treasure(40, 1, 2, 4, 2, 5, 0, 0);
+        TreasureC = new Treasure(50, 1, 1, 6, 5, 4, 0, 1);
     }
 
     @Test

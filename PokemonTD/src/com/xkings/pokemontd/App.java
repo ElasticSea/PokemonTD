@@ -48,11 +48,11 @@ public class App extends Game2D {
     private RenderSpriteSystem renderSpriteSystem;
     private RenderDebugSystem renderDebugSystem;
     private ClosestEnemySystem closestEnemySystem;
-
+    private GetTowerInfoSystem getTowerInfoSystem;
     private Path path;
     private GenericBlueprint blueprint;
     private Player player;
-    private PokemonAssets assets;
+    private static PokemonAssets assets;
     private ProjectileManager projectileManager;
     private Ui ui;
 
@@ -80,7 +80,7 @@ public class App extends Game2D {
         initializeContent();
         initializeManagers();
         initializeSystems();
-        ui = new Ui(towerManager, camera);
+        ui = new Ui(player, waveManager,towerManager, camera);
         renderer = new DefaultRenderer(ui, camera);
         initializeInput();
     }
@@ -100,7 +100,7 @@ public class App extends Game2D {
     }
 
     private void initializeContent() {
-        player = new Player(20, 100);
+        player = new Player(9999, 9999, 1, 2, 3, 0, 2, 1, 1);
     }
 
     private void initializeManagers() {
@@ -113,6 +113,7 @@ public class App extends Game2D {
         renderSpriteSystem = new RenderSpriteSystem(cameraHandler.getCamera());
         renderDebugSystem = new RenderDebugSystem(cameraHandler);
         closestEnemySystem = new ClosestEnemySystem(WaveComponent.class);
+
         world.setSystem(closestEnemySystem, true);
         world.setSystem(renderSpriteSystem, true);
         world.setSystem(renderDebugSystem, true);
@@ -152,7 +153,7 @@ public class App extends Game2D {
                         {grassTexture, pathHorizontal, grassTexture, pathRound1, pathVertical},
                         {grassTexture, pathRound0, pathVertical, pathRound3, grassTexture},
                         {grassTexture, grassTexture, grassTexture, grassTexture, grassTexture}}, 2);
-        GenericBlueprint<Entity>  testBlueprint = new GenericBlueprint<Entity> (entityMap);
+        GenericBlueprint<Entity> testBlueprint = new GenericBlueprint<Entity>(entityMap);
         Path testPath = new Path(new Vector3(0, 5, 0), new Vector3(3, 5, 0), new Vector3(3, 3, 0), new Vector3(7, 3, 0),
                 new Vector3(7, 7, 0), new Vector3(5, 7, 0), new Vector3(5, 10, 0));
         return new MapData(testBlueprint, testPath, tileMap);
@@ -202,14 +203,16 @@ public class App extends Game2D {
 
             renderer.render();
 
-            lifes.addInfo("Lifes: " + player.getHealth().getHealth());
+         /*   lifes.addInfo("Lifes: " + player.getHealth().getLives());
             lifes.addInfo("Gold: " + player.getTreasure().getGold());
-            lifes.addInfo("Next Wave in: " + waveManager.getRemainingTime());
+            lifes.addInfo("Next Wave in: " + waveManager.getRemainingTime());     */
             lifes.render(onScreenRasterRender);
         }
 
 
     }
 
-
+    public static PokemonAssets getAssets() {
+        return assets;
+    }
 }

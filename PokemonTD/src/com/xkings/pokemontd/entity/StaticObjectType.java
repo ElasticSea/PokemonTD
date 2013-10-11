@@ -7,7 +7,7 @@ import static com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 /**
  * Created by Tomas on 10/5/13.
  */
-public enum StaticObjectType {
+public enum StaticObjectType implements CommonDataType {
 
     DefaultStaticObject("default", 1);
     private final AtlasRegion texture;
@@ -22,7 +22,7 @@ public enum StaticObjectType {
         return texture;
     }
 
-    public int getSize() {
+    public float getSize() {
         return size;
     }
 

@@ -8,13 +8,14 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Rectangle;
 import com.xkings.core.graphics.Renderable;
 import com.xkings.core.main.Assets;
+import com.xkings.pokemontd.entity.Player;
 import com.xkings.pokemontd.entity.TowerType;
 import com.xkings.pokemontd.manager.TowerManager;
+import com.xkings.pokemontd.manager.WaveManager;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-
-import static com.xkings.pokemontd.manager.TowerManager.Status.*;
 
 /**
  * Created by Tomas on 10/8/13.
@@ -29,11 +30,16 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
     private final int width;
     private final int height;
     private final GuiBox menuBar;
+    private final List<TowerIcon> towerIcons;
+    private final EntityInfo entityInfo;
+    private final GuiBox statusBar;
+    private final GuiBox nextWaveInfo;
     private DisplayBlock displayBar;
     private DisplayBlock towerTable;
     private Icon sellBlock;
+    private List<TowerType> lastHierarchy;
 
-    public Ui(TowerManager towerManager, Camera camera) {
+    public Ui(Player player, WaveManager waveManager, TowerManager towerManager, Camera camera) {
         this.camera = camera;
         this.towerManager = towerManager;
         shapeRenderer = new ShapeRenderer();
@@ -50,63 +56,88 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         int offset = guiHeight / 35;
         float iconSize = (squareHeight - offset) / 3f;
 
+        int statusSize = 48;
+        statusBar = new StatusBar(player, new Rectangle(0, height - statusSize, width, statusSize), statusSize / 8,
+                shapeRenderer, spriteBatch);
         menuBar = new GuiBox(new Rectangle(width / 2f - iconSize * 1.5f, height - iconSize, iconSize * 3, iconSize), 0,
                 shapeRenderer);
-        displayBar = new GuiBox(new Rectangle(0, 0, width, stripHeight), offset, shapeRenderer);
+        nextWaveInfo = new WaveInfo(new Rectangle(0, 0, squareHeight, squareHeight), offset, shapeRenderer,
+                spriteBatch,waveManager);
+        displayBar = new GuiBox(new Rectangle(squareHeight-offset, 0, width-squareHeight+offset, stripHeight), offset,
+                shapeRenderer);
         towerTable =
                 new GuiBox(new Rectangle(width - squareHeight, 0, squareHeight, squareHeight), offset, shapeRenderer);
+        entityInfo = new EntityInfo(displayBar.rectangle, spriteBatch, towerManager.getCurrentTowerInfo());
         displayBlocks.add(displayBar);
         displayBlocks.add(towerTable);
-        displayBlocks.add(menuBar);
+      //  displayBlocks.add(menuBar);
+        displayBlocks.add(entityInfo);
+        displayBlocks.add(statusBar);
+        displayBlocks.add(nextWaveInfo);
 
-        placeTowerIcons(towerManager.getCurrentTree(), iconSize, towerTable.rectangle);
+        towerIcons = createTowerIcons(iconSize, towerTable.rectangle);
 
-        placeMenuIcons(iconSize, menuBar.rectangle);
-
+        for (TowerIcon towerIcon : towerIcons) {
+            displayBlocks.add(towerIcon);
+        }
+       // placeMenuIcons(iconSize, menuBar.rectangle);
+        // update(lastHierarchy);
     }
 
     private void placeMenuIcons(float size, Rectangle rect) {
         sellBlock = new Icon(new Rectangle(rect.x, rect.y, size, size), spriteBatch, Assets.getTexture("coin")) {
             @Override
             public void process(float x, float y) {
-                if (towerManager.getStatus() != SELLING_TOWER) {
-                    towerManager.setStatus(SELLING_TOWER);
-                } else {
-                    towerManager.setStatus(NONE);
-                }
+                towerManager.toggleSellingTowers();
             }
         };
         displayBlocks.add(sellBlock);
 
     }
 
-    private void placeTowerIcons(List<TowerType> hierarchy, float size, Rectangle rect) {
-        for (int i = 0; i < hierarchy.size(); i++) {
-            TowerType tower = hierarchy.get(i);
-            if (towerManager.canAfford(tower)) {
-                placeTowerIcon(rect, i, tower, size);
-            }
+    private List<TowerIcon> createTowerIcons(float size, Rectangle rect) {
+        List<TowerIcon> towerIcons = new ArrayList<TowerIcon>();
+        for (int i = 0; i < 9; i++) {
+            towerIcons.add(createTowerIcon(rect, i, null, size));
         }
+        return towerIcons;
     }
+
+    private TowerIcon createTowerIcon(Rectangle rect, int position, TowerType tower, float size) {
+        int x = (int) (rect.x + position % 3 * size);
+        int y = (int) (rect.y + position / 3 * size);
+        TowerIcon towerIcon =
+                new TowerIcon(new Rectangle(x, rect.height - y - size, size, size), tower, spriteBatch, towerManager) {
+                    @Override
+                    public void process(float x, float y) {
+                        towerManager.setPickedTower(towerType);
+                    }
+                };
+
+        return towerIcon;
+    }
+
 
     @Override
     public void render() {
+        if (lastHierarchy != towerManager.getCurrentTree()) {
+            lastHierarchy = towerManager.getCurrentTree();
+            update(lastHierarchy);
+        }
         for (DisplayBlock displayBlock : displayBlocks) {
             displayBlock.render();
         }
     }
 
-    private void placeTowerIcon(Rectangle rect, int position, TowerType tower, float size) {
-        int x = (int) (rect.x + position % 3 * size);
-        int y = (int) (rect.y + position / 3 * size);
-        displayBlocks.add(
-                new TowerIcon(new Rectangle(x, rect.height - y - size, size, size), tower, spriteBatch, towerManager) {
-                    @Override
-                    public void process(float x, float y) {
-                        towerManager.setCurrentTower(towerType);
-                        towerManager.setStatus(PLACING_TOWER);
-                    }
-                });
+    private void update(List<TowerType> hierarchy) {
+        Iterator<TowerType> hierarchyIterator = hierarchy.iterator();
+        for (TowerIcon towerIcon : towerIcons) {
+            if (hierarchyIterator.hasNext()) {
+                towerIcon.towerType = hierarchyIterator.next();
+            } else {
+                towerIcon.towerType = null;
+            }
+        }
     }
 
 
