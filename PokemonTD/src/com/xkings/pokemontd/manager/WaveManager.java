@@ -23,6 +23,7 @@ public class WaveManager implements Updateable {
     private final Iterator<CreepType> creeps;
     private final UpdateFilter filter;
     private boolean active;
+    private CreepType nextWave;
 
     /**
      * @param clock internal update timer
@@ -33,13 +34,14 @@ public class WaveManager implements Updateable {
         this.creeps = Arrays.asList(CreepType.values()).iterator();
         this.active = true;
         this.filter = new UpdateFilter(this, interval);
+        updateWave();
         clock.addService(filter);
     }
 
     @Override
     public void update(float delta) {
-        if (creeps.hasNext()) {
-            fireNextWave(creeps.next());
+        if (nextWave != null) {
+            fireNextWave(nextWave);
         }
     }
 
@@ -52,6 +54,12 @@ public class WaveManager implements Updateable {
             float yOffset = (float) (Math.sin(angleToNextPoint + Math.PI) * next.getSize() * i);
             Creep.registerCreep(world, path, new WaveComponent(), next, startPoint.x + xOffset, startPoint.y + yOffset);
         }
+
+        updateWave();
+    }
+
+    private void updateWave() {
+        nextWave = creeps.hasNext() ? creeps.next() : null;
     }
 
     @Override
@@ -68,4 +76,7 @@ public class WaveManager implements Updateable {
         return (int) filter.getRemainingTime() + 1;
     }
 
+    public CreepType getNextWave() {
+        return nextWave;
+    }
 }

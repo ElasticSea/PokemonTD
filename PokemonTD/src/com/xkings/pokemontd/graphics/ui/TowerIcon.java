@@ -10,7 +10,7 @@ import com.xkings.pokemontd.manager.TowerManager;
  */
 abstract class TowerIcon extends DisplayBlock {
 
-    protected final TowerType towerType;
+    protected TowerType towerType;
     private final SpriteBatch spriteBatch;
     private final TowerManager towerManager;
 
@@ -23,11 +23,14 @@ abstract class TowerIcon extends DisplayBlock {
 
     @Override
     public void render() {
-        spriteBatch.begin();
-        spriteBatch.draw(towerType.getTexture(), rectangle.x, rectangle.y, rectangle.width, rectangle.height);
-        if(!towerManager.canAfford(towerType)){
-            spriteBatch.draw(towerType.getBlockedTexture(), rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+        if (towerType != null) {
+            spriteBatch.begin();
+            spriteBatch.draw(towerType.getTexture(), rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+            if (!towerManager.canAfford(towerType)) {
+                spriteBatch.draw(towerType.getBlockedTexture(), rectangle.x, rectangle.y, rectangle.width,
+                        rectangle.height);
+            }
+            spriteBatch.end();
         }
-        spriteBatch.end();
     }
 }
