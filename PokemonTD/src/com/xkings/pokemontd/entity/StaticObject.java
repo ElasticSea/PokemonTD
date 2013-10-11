@@ -33,7 +33,7 @@ public class StaticObject extends ConcreteEntity {
 
     public static Entity registerFakeTower(World world, TowerType towerType, float x, float y, Color tint) {
         StaticObject fakeTower = new StaticObject(towerType, world, x, y);
-        fakeTower.addComponent(new RangeComponent(towerType.getRange()));
+        fakeTower.addComponent(new RangeComponent(towerType.getRange(), true));
         fakeTower.addComponent(new TintComponent(tint));
         fakeTower.register();
         return fakeTower.entity;

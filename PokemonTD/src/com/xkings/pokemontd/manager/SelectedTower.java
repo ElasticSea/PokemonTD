@@ -1,6 +1,7 @@
 package com.xkings.pokemontd.manager;
 
 import com.artemis.Entity;
+import com.xkings.core.component.RangeComponent;
 
 public final class SelectedTower {
     private int x;
@@ -34,7 +35,13 @@ public final class SelectedTower {
     }
 
     public void setTower(Entity tower) {
+        if (this.tower != null) {
+            this.tower.getComponent(RangeComponent.class).setVisible(false);
+        }
         this.tower = tower;
+        if (tower != null) {
+            tower.getComponent(RangeComponent.class).setVisible(true);
+        }
     }
 
 

@@ -3,6 +3,7 @@ package com.xkings.pokemontd.manager;
 import com.artemis.Entity;
 import com.artemis.World;
 import com.badlogic.gdx.graphics.Color;
+import com.xkings.core.component.RangeComponent;
 import com.xkings.core.pathfinding.GenericBlueprint;
 import com.xkings.pokemontd.component.TowerTypeComponent;
 import com.xkings.pokemontd.component.TreasureComponent;
@@ -17,7 +18,7 @@ import java.util.List;
  */
 public class TowerManager {
 
-    public static final Color TINT = new Color(1,1,1, 0.5f);
+    public static final Color TINT = new Color(1, 1, 1, 0.5f);
     private final GetTowerInfoSystem getTowerInfoSystem;
     private CurrentTowerInfo currentTowerInfo = new CurrentTowerInfo();
     private Entity placeholderTower;
@@ -71,7 +72,8 @@ public class TowerManager {
         switch (status) {
             case NONE:
                 // getTowerInfoSystem.getInfo(selectedTower)
-                selectedTowerEntity.setTower(getTower(x, y));
+                Entity entity = getTower(x, y);
+                selectedTowerEntity.setTower(entity);
                 selectedTowerEntity.setX(x);
                 selectedTowerEntity.setY(y);
                 selectedTower = null;
@@ -98,7 +100,8 @@ public class TowerManager {
                 status = Status.CONFIRMING_PLACING;
                 selectedTowerEntity.setX(x);
                 selectedTowerEntity.setY(y);
-                this.placeholderTower = StaticObject.registerFakeTower(this.world, selectedTower, x + 0.5f, y+ 0.5f, TINT);
+                this.placeholderTower =
+                        StaticObject.registerFakeTower(this.world, selectedTower, x + 0.5f, y + 0.5f, TINT);
                 return true;
             }
         }
