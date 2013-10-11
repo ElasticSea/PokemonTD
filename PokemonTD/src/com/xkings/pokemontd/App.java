@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
-import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.graphics.Renderable;
 import com.xkings.core.graphics.ScreenText;
 import com.xkings.core.graphics.Shader;
@@ -18,10 +17,8 @@ import com.xkings.core.graphics.camera.CameraHandler;
 import com.xkings.core.input.EnhancedGestureDetector;
 import com.xkings.core.logic.Clock;
 import com.xkings.core.logic.WorldUpdater;
-import com.xkings.core.main.Assets;
 import com.xkings.core.main.Game2D;
 import com.xkings.core.pathfinding.GenericBlueprint;
-import com.xkings.pokemontd.component.TreasureComponent;
 import com.xkings.pokemontd.component.WaveComponent;
 import com.xkings.pokemontd.entity.Player;
 import com.xkings.pokemontd.graphics.TileMap;
@@ -34,8 +31,6 @@ import com.xkings.pokemontd.map.MapBuilder;
 import com.xkings.pokemontd.map.MapData;
 import com.xkings.pokemontd.map.Path;
 import com.xkings.pokemontd.system.*;
-
-import static com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 
 public class App extends Game2D {
 
@@ -164,8 +159,9 @@ public class App extends Game2D {
     }
 */
 
-    public MapData buildMap(){
-        return new MapBuilder(15, 15, 0, 8, MapBuilder.Direction.RIGHT).addStraight().addLeft().addStraight().addRight().build();
+    public MapData buildMap() {
+        return new MapBuilder(15, 15, 0, 8, MapBuilder.Direction.RIGHT).addStraight().addLeft().addRight()
+                .addStraight().addRight().build();
     }
 
     @Override
