@@ -11,7 +11,7 @@ import static com.xkings.pokemontd.entity.ProjectileType.Type;
 /**
  * Created by Tomas on 10/5/13.
  */
-public enum TowerType {
+public enum TowerType implements CommonDataType{
 
     Needle("weedle", 1, 1, new ProjectileType("default", Type.FOLLOW_TARGET, 10, 0.2f, 15), 3, new Treasure(10)),
     Pinch("kahuna", 1, 1, new ProjectileType("default", Type.FOLLOW_TARGET, 10, 0.2f, 45), 3, new Treasure(20)),
@@ -46,7 +46,7 @@ public enum TowerType {
         return speed;
     }
 
-    public int getSize() {
+    public float getSize() {
         return size;
     }
 

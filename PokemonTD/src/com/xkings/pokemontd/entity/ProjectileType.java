@@ -6,7 +6,7 @@ import com.xkings.core.main.Assets;
 /**
  * Created by Tomas on 10/8/13.
  */
-public class ProjectileType {
+public class ProjectileType implements  CommonDataType{
     //DefaultProjectile("default", Type.FOLLOW_TARGET, 10, 0.2f, 1);
 
     public enum Type {

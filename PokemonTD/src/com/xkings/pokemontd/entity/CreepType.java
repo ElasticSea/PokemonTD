@@ -8,7 +8,7 @@ import static com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 /**
  * Created by Tomas on 10/5/13.
  */
-public enum CreepType {
+public enum CreepType implements CommonDataType {
 
     DefaultCreep("default", 1f, 0.5f, 1, new Treasure(5), 5),
     DefaultCreep2("default", 1f, 0.5f, 2, new Treasure(5), 15);

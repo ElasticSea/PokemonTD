@@ -2,15 +2,12 @@ package com.xkings.pokemontd.manager;
 
 import com.artemis.Entity;
 import com.artemis.World;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.Color;
 import com.xkings.core.pathfinding.GenericBlueprint;
 import com.xkings.pokemontd.component.TowerTypeComponent;
 import com.xkings.pokemontd.component.TreasureComponent;
 import com.xkings.pokemontd.component.UpgradeComponent;
-import com.xkings.pokemontd.entity.CurrentTowerInfo;
-import com.xkings.pokemontd.entity.Player;
-import com.xkings.pokemontd.entity.Tower;
-import com.xkings.pokemontd.entity.TowerType;
+import com.xkings.pokemontd.entity.*;
 import com.xkings.pokemontd.system.GetTowerInfoSystem;
 
 import java.util.List;
@@ -20,8 +17,10 @@ import java.util.List;
  */
 public class TowerManager {
 
+    public static final Color TINT = new Color(1,1,1, 0.5f);
     private final GetTowerInfoSystem getTowerInfoSystem;
     private CurrentTowerInfo currentTowerInfo = new CurrentTowerInfo();
+    private Entity placeholderTower;
 
     public void toggleSellingTowers() {
         if (status == Status.SELLING_TOWER) {
@@ -48,7 +47,7 @@ public class TowerManager {
     }
 
     public enum Status {
-        NONE, PLACING_TOWER, SELLING_TOWER, UPGRADING_TOWER;
+        NONE, PLACING_TOWER, CONFIRMING_PLACING, SELLING_TOWER, UPGRADING_TOWER;
     }
 
     private Status status = Status.NONE;
@@ -79,10 +78,13 @@ public class TowerManager {
                 // return none(x, y);
                 break;
             case PLACING_TOWER:
-                 placeTower(x, y);
+                placeTower(x, y);
+                break;
+            case CONFIRMING_PLACING:
+                buyAndPlaceTower(x, y);
                 break;
             case SELLING_TOWER:
-                 sellTower(x, y);
+                sellTower(x, y);
                 break;
         }
         update();
@@ -93,6 +95,19 @@ public class TowerManager {
     private boolean placeTower(int x, int y) {
         if (selectedTower != null && blueprint.isWalkable(x, y)) {
             if (canAfford(selectedTower)) {
+                status = Status.CONFIRMING_PLACING;
+                selectedTowerEntity.setX(x);
+                selectedTowerEntity.setY(y);
+                this.placeholderTower = StaticObject.registerFakeTower(this.world, selectedTower, x + 0.5f, y+ 0.5f, TINT);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean buyAndPlaceTower(int x, int y) {
+        if (selectedTower != null && blueprint.isWalkable(x, y)) {
+            if (selectedTowerEntity.getX() == x && selectedTowerEntity.getY() == y) {
                 buyTower(selectedTower);
                 Entity entity = Tower.registerTower(world, selectedTower, x + 0.5f, y + 0.5f);
                 blueprint.setWalkable(entity, x, y);
@@ -101,10 +116,21 @@ public class TowerManager {
                 selectedTowerEntity.setY(y);
                 this.setStatus(Status.NONE);
                 selectedTower = null;
+                this.placeholderTower.deleteFromWorld();
                 return true;
             }
         }
+        reset();
         return false;
+    }
+
+    private void reset() {
+        this.placeholderTower.deleteFromWorld();
+        status = Status.NONE;
+        selectedTowerEntity.setTower(null);
+        selectedTowerEntity.setX(0);
+        selectedTowerEntity.setY(0);
+        selectedTower = null;
     }
 
     private boolean upgradingTower(SelectedTower currentEntity, TowerType updgrade) {
