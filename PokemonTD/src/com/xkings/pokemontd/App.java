@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.graphics.Renderable;
@@ -18,7 +19,6 @@ import com.xkings.core.graphics.camera.CameraHandler;
 import com.xkings.core.input.EnhancedGestureDetector;
 import com.xkings.core.logic.Clock;
 import com.xkings.core.logic.WorldUpdater;
-import com.xkings.core.main.Assets;
 import com.xkings.core.main.Game2D;
 import com.xkings.core.pathfinding.GenericBlueprint;
 import com.xkings.pokemontd.component.WaveComponent;
@@ -29,11 +29,10 @@ import com.xkings.pokemontd.input.EnhancedGestureProcessor;
 import com.xkings.pokemontd.manager.ProjectileManager;
 import com.xkings.pokemontd.manager.TowerManager;
 import com.xkings.pokemontd.manager.WaveManager;
+import com.xkings.pokemontd.map.MapBuilder;
 import com.xkings.pokemontd.map.MapData;
 import com.xkings.pokemontd.map.Path;
 import com.xkings.pokemontd.system.*;
-
-import static com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 
 public class App extends Game2D {
 
@@ -41,6 +40,7 @@ public class App extends Game2D {
     public static final float WAVE_INTERVAL = 5f;
     public static Entity pathBlock;
     private DefaultRenderer renderer;
+    private ShapeRenderer shapeRenderer;
     private SpriteBatch spriteBatch;
     private TileMap tileMap;
     private CameraHandler cameraHandler;
@@ -71,6 +71,7 @@ public class App extends Game2D {
         initializeWorld();
         assets = new PokemonAssets();
         spriteBatch = new SpriteBatch();
+        shapeRenderer = new ShapeRenderer();
 
 
         MapData map = createTestMap();
@@ -98,6 +99,7 @@ public class App extends Game2D {
 
     private void initializeWorld() {
         this.world = new World();
+        // FIXME nasty hack
         this.pathBlock = world.createEntity();
         this.clock.addService(new WorldUpdater(world));
     }
@@ -130,35 +132,9 @@ public class App extends Game2D {
 
 
     private MapData createTestMap() {
-        // FIXME nasty hack
-        Entity pathBlock = world.createEntity();
-        Entity[][] entityMap = new Entity[][]{{null, null, null, null, pathBlock, pathBlock, null, null, null, null},
-                {null, null, null, null, pathBlock, pathBlock, null, null, null, null},
-                {null, null, pathBlock, pathBlock, pathBlock, pathBlock, null, null, null, null},
-                {null, null, pathBlock, pathBlock, pathBlock, pathBlock, null, null, null, null},
-                {null, null, pathBlock, pathBlock, null, null, pathBlock, pathBlock, pathBlock, pathBlock},
-                {null, null, pathBlock, pathBlock, null, null, pathBlock, pathBlock, pathBlock, pathBlock},
-                {null, null, pathBlock, pathBlock, pathBlock, pathBlock, pathBlock, pathBlock, null, null},
-                {null, null, pathBlock, pathBlock, pathBlock, pathBlock, pathBlock, pathBlock, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}};
-        AtlasRegion grassTexture = Assets.getTexture("grass");
-        AtlasRegion pathRound0 = Assets.getTexture("pathRound0");
-        AtlasRegion pathRound1 = Assets.getTexture("pathRound1");
-        AtlasRegion pathRound2 = Assets.getTexture("pathRound2");
-        AtlasRegion pathRound3 = Assets.getTexture("pathRound3");
-        AtlasRegion pathHorizontal = Assets.getTexture("pathHorizontal");
-        AtlasRegion pathVertical = Assets.getTexture("pathVertical");
-        TileMap tileMap = new TileMap(
-                new AtlasRegion[][]{{grassTexture, grassTexture, pathHorizontal, grassTexture, grassTexture},
-                        {grassTexture, pathRound1, pathRound3, grassTexture, grassTexture},
-                        {grassTexture, pathHorizontal, grassTexture, pathRound1, pathVertical},
-                        {grassTexture, pathRound0, pathVertical, pathRound3, grassTexture},
-                        {grassTexture, grassTexture, grassTexture, grassTexture, grassTexture}}, 2);
-        GenericBlueprint<Entity> testBlueprint = new GenericBlueprint<Entity>(entityMap);
-        Path testPath = new Path(new Vector3(0, 5, 0), new Vector3(3, 5, 0), new Vector3(3, 3, 0), new Vector3(7, 3, 0),
-                new Vector3(7, 7, 0), new Vector3(5, 7, 0), new Vector3(5, 10, 0));
-        return new MapData(testBlueprint, testPath, tileMap);
+        return new MapBuilder(5, 5, 0, 2,
+                MapBuilder.Direction.RIGHT).addStraight().addStraight().addLeft().addRight().addStraight().addRight()
+                .addStraight().build();
     }
 
     @Override
@@ -203,6 +179,17 @@ public class App extends Game2D {
             lifes.addInfo("Gold: " + player.getTreasure().getGold());
             lifes.addInfo("Next Wave in: " + waveManager.getRemainingTime());     */
             lifes.render(onScreenRasterRender);
+
+            shapeRenderer.setProjectionMatrix(camera.combined);
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            Vector3 lastPoint = null;
+            for (Vector3 point : path.getPath()) {
+                if (lastPoint != null) {
+                    shapeRenderer.line(lastPoint.x, lastPoint.y, point.x, point.y);
+                }
+                lastPoint = point;
+            }
+            shapeRenderer.end();
         }
 
 

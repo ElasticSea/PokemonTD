@@ -2,7 +2,6 @@ package com.xkings.pokemontd.map;
 
 import com.artemis.Entity;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.main.Assets;
 import com.xkings.core.pathfinding.GenericBlueprint;
@@ -25,11 +24,13 @@ public class MapBuilder {
 
     public static final double CIRCLE = PI * 2;
     public static final double QUADRANT = PI / 2.0;
+    public static final int SEGMENTS = 3;
+    public static final float SEGMENT = (float) (QUADRANT / SEGMENTS);
     private final int width;
     private final int height;
     private final TextureAtlas.AtlasRegion[][] fakeMap;
     private final GenericBlueprint<Entity> genericBlueprint;
-    private Vector2 position;
+    private Vector3 position;
     private double direction;
     private final List<Vector3> points = new ArrayList<Vector3>();
     public static final int BLOCK_SIZE = 2;
@@ -56,11 +57,12 @@ public class MapBuilder {
     public MapBuilder(int width, int height, int x, int y, Direction direction) {
         this.width = width;
         this.height = height;
-        this.position = new Vector2(x, y);
+        this.position = new Vector3(x, y, 0);
         this.direction = direction.getAngle();
         this.lastDirection = this.direction;
-        Vector3 center = new Vector3(x + BLOCK_SIZE / 2f, y + BLOCK_SIZE / 2f, 0);
-        Vector3 previous = new Vector3(center.x + (float) Math.cos(this.direction + PI) * BLOCK_SIZE / 2f,
+        Vector3 center = new Vector3((x + 0.5f) * BLOCK_SIZE, (y + 0.5f) * BLOCK_SIZE, 0);
+
+        Vector3 previous = new Vector3(center.x + (float) Math.cos(this.direction + PI) * BLOCK_SIZE,
                 center.y + (float) Math.sin(this.direction) * BLOCK_SIZE / 2f, 0);
         points.add(previous);
         genericBlueprint = new GenericBlueprint<Entity>(width * BLOCK_SIZE, height * BLOCK_SIZE);
@@ -91,10 +93,10 @@ public class MapBuilder {
         for (BuilderCommand builderCommand : commands) {
             switch (builderCommand) {
                 case LEFT:
-                    createLeft();
+                    createTurn(1);
                     break;
                 case RIGHT:
-                    createRight();
+                    createTurn(-1);
                     break;
                 case STRAIGHT:
                     createPoint();
@@ -162,35 +164,44 @@ public class MapBuilder {
 
     private void createPoint() {
         writeToMap();
-        Vector3 center = new Vector3(position.x + BLOCK_SIZE / 2f, position.y + BLOCK_SIZE / 2f, 0);
-        Vector3 next = new Vector3(center.x + (float) Math.cos(this.direction) * BLOCK_SIZE / 2f,
-                center.y + (float) Math.sin(this.direction) * BLOCK_SIZE / 2f, 0);
+        Vector3 center = new Vector3((position.x + 0.5f) * BLOCK_SIZE, (position.y + 0.5f) * BLOCK_SIZE, 0);
+        Vector3 next = getOffset(direction).scl(BLOCK_SIZE / 2f).add(center);
         points.add(next);
-        moveTo((float) Math.cos(direction) * BLOCK_SIZE, (float) Math.sin(direction) * BLOCK_SIZE);
+        moveTo(getOffset(direction));
+    }
+
+    private Vector3 getOffset(double direction) {
+        return new Vector3((float) Math.cos(direction), (float) Math.sin(direction), 0);
     }
 
     private void writeToMap() {
         for (int i = 0; i < BLOCK_SIZE; i++) {
             for (int j = 0; j < BLOCK_SIZE; j++) {
-                genericBlueprint.setWalkable(App.pathBlock, (int) (position.x + i), (int) (position.y + j));
+                genericBlueprint.setWalkable(App.pathBlock, (int) (position.x * BLOCK_SIZE + i),
+                        (int) (position.y * BLOCK_SIZE + j));
             }
         }
     }
 
-
-    private void moveTo(float x, float y) {
-        position.add(x, y);
-
+    private void moveTo(Vector3 offset) {
+        position.add(offset);
     }
 
-    private void createRight() {
-        direction -=  QUADRANT ;
-        createPoint();
+    private void createTurn(int koeficient) {
+        direction += QUADRANT * koeficient;
+        writeToMap();
+        Vector3 corner = getOffset(direction).scl(BLOCK_SIZE / 2f).add(lastPoint());
+        for (int i = 1; i <= SEGMENTS; i++) {
+            double angle = direction + PI + SEGMENT * i * koeficient;
+            float x = (float) (corner.x + Math.cos(angle) * BLOCK_SIZE / 2f);
+            float y = (float) (corner.y + Math.sin(angle) * BLOCK_SIZE / 2f);
+            points.add(new Vector3(x, y, 0));
+        }
+        moveTo(getOffset(direction));
     }
 
-
-    private void createLeft() {
-        direction +=  QUADRANT ;
-        createPoint();
+    private Vector3 lastPoint() {
+        return points.get(points.size() - 1);
     }
+
 }
