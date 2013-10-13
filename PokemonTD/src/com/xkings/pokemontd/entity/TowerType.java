@@ -13,12 +13,12 @@ import static com.xkings.pokemontd.entity.ProjectileType.Type;
  */
 public enum TowerType implements CommonDataType{
 
-    Needle("weedle", 1, 1, new ProjectileType("default", Type.FOLLOW_TARGET, 10, 0.2f, 15), 3, new Treasure(10)),
-    Pinch("kahuna", 1, 1, new ProjectileType("default", Type.FOLLOW_TARGET, 10, 0.2f, 45), 3, new Treasure(20)),
-    Sting("beedrill", 1, 1, new ProjectileType("default", Type.FOLLOW_TARGET, 10, 0.2f, 135), 3, new Treasure(40)),
-    Scratch("nidoranf", 1, 1, new ProjectileType("default", Type.FOLLOW_TARGET, 10, 0.2f, 15), 3, new Treasure(10)),
-    Bite("nidorina", 1, 1, new ProjectileType("default", Type.FOLLOW_TARGET, 10, 0.2f, 45), 3, new Treasure(20)),
-    Smash("nidoqueen", 1, 1, new ProjectileType("default", Type.FOLLOW_TARGET, 10, 0.2f, 15), 3, new Treasure(40));
+    Needle("weedle", 1, 1, new ProjectileType("bullet", Type.FOLLOW_TARGET, 10, 0.2f, 15), 3, new Treasure(10)),
+    Pinch("kahuna", 1, 1, new ProjectileType("bullet", Type.FOLLOW_TARGET, 10, 0.2f, 45), 3, new Treasure(20)),
+    Sting("beedrill", 1, 1, new ProjectileType("bullet", Type.FOLLOW_TARGET, 10, 0.2f, 135), 3, new Treasure(40)),
+    Scratch("nidoranf", 1, 1, new ProjectileType("bullet", Type.FOLLOW_TARGET, 10, 0.2f, 15), 3, new Treasure(10)),
+    Bite("nidorina", 1, 1, new ProjectileType("bullet", Type.FOLLOW_TARGET, 10, 0.2f, 45), 3, new Treasure(20)),
+    Smash("nidoqueen", 1, 1, new ProjectileType("bullet", Type.FOLLOW_TARGET, 10, 0.2f, 15), 3, new Treasure(40));
     private static Map<TowerType, List<TowerType>> map;
     private final AtlasRegion texture;
     private final float speed;

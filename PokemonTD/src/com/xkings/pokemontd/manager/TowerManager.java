@@ -71,6 +71,7 @@ public class TowerManager {
     public boolean process(int x, int y) {
         switch (status) {
             case NONE:
+                CreepType.save();
                 // getTowerInfoSystem.getInfo(selectedTower)
                 Entity entity = getTower(x, y);
                 selectedTowerEntity.setTower(entity);
