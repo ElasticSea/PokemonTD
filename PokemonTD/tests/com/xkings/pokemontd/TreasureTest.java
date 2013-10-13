@@ -18,6 +18,9 @@ public class TreasureTest {
         TreasureA = new Treasure(50, 1, 2, 4, 2, 5, 0, 0);
         TreasureB = new Treasure(40, 1, 2, 4, 2, 5, 0, 0);
         TreasureC = new Treasure(50, 1, 1, 6, 5, 4, 0, 1);
+        System.out.println(TreasureA);
+        System.out.println(TreasureB);
+        System.out.println(TreasureC);
     }
 
     @Test

@@ -15,7 +15,7 @@ public class UpgradeComponent extends Component {
     private final List<TowerType> pastUpgrades = new ArrayList<TowerType>();
 
     public void add(UpgradeComponent upgradeComponent) {
-        for (TowerType towerType : upgradeComponent.pastUpgrades){
+        for (TowerType towerType : upgradeComponent.pastUpgrades) {
             add(towerType);
         }
     }

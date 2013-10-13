@@ -1,4 +1,4 @@
-package com.xkings.pokemontd.entity;
+package com.xkings.pokemontd.entity.datatypes;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.google.gson.Gson;
@@ -7,21 +7,48 @@ import com.xkings.core.main.Assets;
 import com.xkings.pokemontd.Treasure;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
-import static com.xkings.pokemontd.entity.CreepType.CreepName.*;
 
 /**
  * Created by Tomas on 10/5/13.
  */
 public class CreepType implements CommonDataType {
 
+    public static class DataStore {
+        private final Map<CreepName, CreepType> data;
 
-    public enum CreepName {
+        private DataStore(String fileName) {
+            this.data = getData(fileName);
+        }
+
+        private Map<CreepName, CreepType> getData(String fileName) {
+            Type type = new TypeToken<List<CreepType>>() {
+            }.getType();
+            List<CreepType> creepList = new Gson().fromJson(new FileHandle(fileName).readString(), type);
+
+            Map<CreepName, CreepType> map = new HashMap<CreepName, CreepType>();
+            for (CreepType creepType : creepList) {
+                map.put((CreepName) creepType.getName(), creepType);
+            }
+            return map;
+        }
+
+        public CreepType getType(CreepName creepName) {
+            return data.get(creepName);
+        }
+    }
+
+    private static final DataStore dataStore = new DataStore("creeps.json");
+
+    public static CreepType getType(CreepName next) {
+        return dataStore.getType(next);
+    }
+
+    public enum CreepName implements EntityName {
         Chansey, Ditto, Jynx, Kabuto, Lickitung, Porygon, Mew;
     }
 
@@ -60,6 +87,10 @@ public class CreepType implements CommonDataType {
         return size;
     }
 
+    public EntityName getName() {
+        return name;
+    }
+
     public int getHealth() {
         return health;
     }
@@ -72,24 +103,6 @@ public class CreepType implements CommonDataType {
         return creepsInWave;
     }
 
-
-    private static final Map<CreepName, CreepType> data = getData();
-
-    private static Map<CreepName, CreepType> getData() {
-        Type type = new TypeToken<List<CreepType>>() {
-        }.getType();
-        List<CreepType> creepList = new Gson().fromJson(new FileHandle("creeps.json").readString(), type);
-
-        Map<CreepName, CreepType> map = new HashMap<CreepName, CreepType>();
-        for (CreepType creepType : creepList) {
-            map.put(creepType.name, creepType);
-        }
-        return map;
-    }
-
-    public static CreepType getType(CreepName creepName) {
-        return data.get(creepName);
-    }
 
     public static void save() {
       /*  List<CreepType> list = new ArrayList<CreepType>();

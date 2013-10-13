@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.xkings.core.main.Assets;
 import com.xkings.pokemontd.App;
 import com.xkings.pokemontd.Element;
-import com.xkings.pokemontd.entity.Player;
+import com.xkings.pokemontd.Player;
 
 /**
  * Created by Tomas on 10/11/13.

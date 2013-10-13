@@ -1,4 +1,4 @@
-package com.xkings.pokemontd.entity;
+package com.xkings.pokemontd;
 
 import com.xkings.pokemontd.Health;
 import com.xkings.pokemontd.Treasure;

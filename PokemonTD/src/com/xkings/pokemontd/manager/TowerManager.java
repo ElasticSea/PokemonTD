@@ -3,12 +3,16 @@ package com.xkings.pokemontd.manager;
 import com.artemis.Entity;
 import com.artemis.World;
 import com.badlogic.gdx.graphics.Color;
-import com.xkings.core.component.RangeComponent;
 import com.xkings.core.pathfinding.GenericBlueprint;
+import com.xkings.pokemontd.CurrentTowerInfo;
+import com.xkings.pokemontd.Player;
 import com.xkings.pokemontd.component.TowerTypeComponent;
 import com.xkings.pokemontd.component.TreasureComponent;
 import com.xkings.pokemontd.component.UpgradeComponent;
-import com.xkings.pokemontd.entity.*;
+import com.xkings.pokemontd.entity.StaticObject;
+import com.xkings.pokemontd.entity.Tower;
+import com.xkings.pokemontd.entity.TowerType;
+import com.xkings.pokemontd.entity.datatypes.CreepType;
 import com.xkings.pokemontd.system.GetTowerInfoSystem;
 
 import java.util.List;
@@ -204,8 +208,10 @@ public class TowerManager {
 
     public List<TowerType> getCurrentTree() {
         Entity tower = selectedTowerEntity.getTower();
+        // FIXME get hierarchy working
         return TowerType.getHierarchy().get(
                 tower != null ? tower.getComponent(TowerTypeComponent.class).getTowerType() : null);
+        // return new ArrayList<TowerType>();
     }
 
     public boolean canAfford(TowerType towerType) {

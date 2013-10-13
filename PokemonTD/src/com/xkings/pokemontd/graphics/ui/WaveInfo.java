@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.xkings.pokemontd.App;
-import com.xkings.pokemontd.entity.CreepType;
+import com.xkings.pokemontd.entity.datatypes.CreepType;
 import com.xkings.pokemontd.manager.WaveManager;
 
 /**

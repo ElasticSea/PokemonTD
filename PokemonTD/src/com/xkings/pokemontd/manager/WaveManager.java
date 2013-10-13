@@ -7,7 +7,7 @@ import com.xkings.core.logic.UpdateFilter;
 import com.xkings.core.logic.Updateable;
 import com.xkings.pokemontd.component.WaveComponent;
 import com.xkings.pokemontd.entity.Creep;
-import com.xkings.pokemontd.entity.CreepType;
+import com.xkings.pokemontd.entity.datatypes.CreepType;
 import com.xkings.pokemontd.map.Path;
 
 import java.util.Arrays;

@@ -22,7 +22,6 @@ import com.xkings.core.logic.WorldUpdater;
 import com.xkings.core.main.Game2D;
 import com.xkings.core.pathfinding.GenericBlueprint;
 import com.xkings.pokemontd.component.WaveComponent;
-import com.xkings.pokemontd.entity.Player;
 import com.xkings.pokemontd.graphics.TileMap;
 import com.xkings.pokemontd.graphics.ui.Ui;
 import com.xkings.pokemontd.input.EnhancedGestureProcessor;
@@ -34,6 +33,7 @@ import com.xkings.pokemontd.map.MapData;
 import com.xkings.pokemontd.map.Path;
 import com.xkings.pokemontd.map.PathPack;
 import com.xkings.pokemontd.system.*;
+import com.xkings.pokemontd.system.abilitySytems.FireProjectilSystem;
 
 public class App extends Game2D {
 

@@ -3,7 +3,7 @@ package com.xkings.pokemontd.graphics.ui;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.xkings.pokemontd.App;
-import com.xkings.pokemontd.entity.CurrentTowerInfo;
+import com.xkings.pokemontd.CurrentTowerInfo;
 
 /**
  * Created by Tomas on 10/8/13.

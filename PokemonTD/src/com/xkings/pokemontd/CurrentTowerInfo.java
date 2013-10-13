@@ -1,4 +1,4 @@
-package com.xkings.pokemontd.entity;
+package com.xkings.pokemontd;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 

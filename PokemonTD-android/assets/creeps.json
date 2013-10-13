@@ -1,66 +1,87 @@
 [
    {
       "name":"Chansey",
+      "speed":1,
+      "size":1,
       "health":1,
       "treasure":{
          "gold":5,
          "elementSet":{}
       },
-      "abilityType":"NORMAL"
+      "abilityType":"NORMAL",
+      "creepsInWave":5
    },
 
    {
       "name":"Ditto",
+      "speed":1,
+      "size":1,
       "health":1,
       "treasure":{
          "gold":5,
-         "elementSet":{}
+         "elementSet":{WATER=1}
       },
-      "abilityType":"SWARM"
+      "abilityType":"SWARM",
+      "creepsInWave":5
    },
    {
       "name":"Jynx",
+      "speed":1,
+      "size":1,
       "health":1,
       "treasure":{
          "gold":5,
-         "elementSet":{}
+         "elementSet":{FIRE=2}
       },
-      "abilityType":"SPAWN"
+      "abilityType":"SPAWN",
+      "creepsInWave":5
    },
    {
       "name":"Kabuto",
+      "speed":1,
+      "size":1,
       "health":1,
       "treasure":{
          "gold":5,
-         "elementSet":{}
+         "elementSet":{NETRUAL=3, FIRE=1}
       },
-      "abilityType":"INVISIBLE"
+      "abilityType":"INVISIBLE",
+      "creepsInWave":5
    },
    {
       "name":"Lickitung",
+      "speed":1,
+      "size":1,
       "health":1,
       "treasure":{
          "gold":5,
          "elementSet":{}
       },
-      "abilityType":"FAST"
+      "abilityType":"FAST",
+      "creepsInWave":5
    },
    {
       "name":"Porygon",
+      "speed":1,
+      "size":1,
       "health":1,
       "treasure":{
          "gold":5,
          "elementSet":{}
       },
-      "abilityType":"RESURRECT"
+      "abilityType":"RESURRECT",
+      "creepsInWave":5
    },
    {
       "name":"Mew",
+      "speed":1,
+      "size":1,
       "health":1,
       "treasure":{
          "gold":5,
          "elementSet":{}
       },
-      "abilityType":"HEALING"
+      "abilityType":"HEALING",
+      "creepsInWave":5
    }
 ]

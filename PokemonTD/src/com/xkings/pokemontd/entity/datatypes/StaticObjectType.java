@@ -1,4 +1,4 @@
-package com.xkings.pokemontd.entity;
+package com.xkings.pokemontd.entity.datatypes;
 
 import com.xkings.core.main.Assets;
 
@@ -7,9 +7,8 @@ import static com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 /**
  * Created by Tomas on 10/5/13.
  */
-public enum StaticObjectType implements CommonDataType {
+public class StaticObjectType implements CommonDataType {
 
-    DefaultStaticObject("default", 1);
     private final AtlasRegion texture;
     private final int size;
 
@@ -25,5 +24,6 @@ public enum StaticObjectType implements CommonDataType {
     public float getSize() {
         return size;
     }
+
 
 }

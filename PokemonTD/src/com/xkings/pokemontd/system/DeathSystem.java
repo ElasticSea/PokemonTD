@@ -8,7 +8,7 @@ import com.artemis.systems.EntityProcessingSystem;
 import com.xkings.pokemontd.Health;
 import com.xkings.pokemontd.component.HealthComponent;
 import com.xkings.pokemontd.component.TreasureComponent;
-import com.xkings.pokemontd.entity.Player;
+import com.xkings.pokemontd.Player;
 
 /**
  * Created by Tomas on 10/4/13.

@@ -25,17 +25,20 @@ public class Treasure {
 
     public Treasure(int gold, int water, int fire, int nature, int light, int darkness, int neutral, int pure) {
         this.gold = gold;
-        elementSet.put(WATER, water);
-        elementSet.put(FIRE, fire);
-        elementSet.put(NATURE, nature);
-        elementSet.put(LIGHT, light);
-        elementSet.put(DARKNESS, darkness);
-        elementSet.put(NEUTRAL, neutral);
-        elementSet.put(PURE, pure);
+        addElement(WATER, water);
+        addElement(FIRE, fire);
+        addElement(NATURE, nature);
+        addElement(LIGHT, light);
+        addElement(DARKNESS, darkness);
+        addElement(NEUTRAL, neutral);
+        addElement(PURE, pure);
     }
 
     public void addElement(Element element, int count) {
-        elementSet.put(element, getElement(element) + count);
+        int add = getElement(element) + count;
+        if (add > 0) {
+            elementSet.put(element, add);
+        }
     }
 
     public boolean hasElement(Element element, int count) {
@@ -63,7 +66,8 @@ public class Treasure {
     }
 
     public int getElement(Element element) {
-        return elementSet.get(element);
+        Integer count = elementSet.get(element);
+        return count != null ? count : 0;
     }
 
     public void transferTo(Treasure treasure) {
@@ -85,9 +89,8 @@ public class Treasure {
      */
     public boolean includes(Treasure treasure) {
         if (hasGold(treasure.gold)) {
-            for (Map.Entry<Element, Integer> entry : elementSet.entrySet()) {
-                Element element = entry.getKey();
-                if (!hasElement(element, treasure.elementSet.get(element))) {
+            for (Element element : Element.values()) {
+                if (!hasElement(element, treasure.getElement(element))) {
                     return false;
                 }
             }
@@ -109,5 +112,13 @@ public class Treasure {
             this.addElement(entry.getKey(), entry.getValue());
         }
         this.addGold(treasure.getGold());
+    }
+
+    @Override
+    public String toString() {
+        return "Treasure{" +
+                "elementSet=" + elementSet +
+                ", gold=" + gold +
+                '}';
     }
 }

@@ -6,11 +6,10 @@ import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
 import com.xkings.core.component.RangeComponent;
-import com.xkings.pokemontd.component.AttackComponent;
-import com.xkings.pokemontd.component.ProjectileComponent;
 import com.xkings.pokemontd.component.SpriteComponent;
 import com.xkings.pokemontd.component.TowerTypeComponent;
-import com.xkings.pokemontd.entity.CurrentTowerInfo;
+import com.xkings.pokemontd.component.attack.AttackComponent;
+import com.xkings.pokemontd.CurrentTowerInfo;
 import com.xkings.pokemontd.entity.TowerType;
 import com.xkings.pokemontd.manager.SelectedTower;
 
@@ -18,7 +17,7 @@ public class GetTowerInfoSystem extends EntityProcessingSystem {
     @Mapper
     ComponentMapper<TowerTypeComponent> towerTypwMapper;
     @Mapper
-    ComponentMapper<ProjectileComponent> projectileMapper;
+    ComponentMapper<AttackComponent> projectileMapper;
     @Mapper
     ComponentMapper<RangeComponent> rangeMapper;
 
@@ -38,14 +37,14 @@ public class GetTowerInfoSystem extends EntityProcessingSystem {
 
     private void fillInfoFromEntity(CurrentTowerInfo currentTowerInfo, SelectedTower selectedTower) {
         fillIntoFromType(currentTowerInfo, towerTypwMapper.get(selectedTower.getTower()).getTowerType());
-        currentTowerInfo.setAttack((int) projectileMapper.get(selectedTower.getTower()).getProjectileType().getDamage());
+        //currentTowerInfo.setAttack((int) projectileMapper.get(selectedTower.getTower()).getAttackType());
         currentTowerInfo.setRange((int) rangeMapper.get(selectedTower.getTower()).getRange());
     }
 
     private void fillIntoFromType(CurrentTowerInfo currentTowerInfo, TowerType tower) {
-        currentTowerInfo.setName(tower.getName());
+        currentTowerInfo.setName(tower.getName().toString());
         currentTowerInfo.setAtlasRegion(tower.getTexture());
-        currentTowerInfo.setAttack((int) tower.getProjectile().getDamage());
+       // currentTowerInfo.setAttack((int) tower.getAttackComponent().getDamage());
         currentTowerInfo.setRange((int) tower.getRange());
     }
 

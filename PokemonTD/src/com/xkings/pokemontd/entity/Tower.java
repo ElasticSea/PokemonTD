@@ -18,7 +18,7 @@ public class Tower extends ConcreteEntity {
         addComponent(new SpriteComponent(towerType.getTexture()));
         addComponent(new SizeComponent(towerType.getSize(), towerType.getSize(), 0));
         addComponent(new SpeedComponent(towerType.getSpeed()));
-        addComponent(new ProjectileComponent(towerType.getProjectile()));
+        addComponent(towerType.getAttack());
         addComponent(new RangeComponent(towerType.getRange()));
         addComponent(new TimeComponent());
         addComponent(new TreasureComponent(new Treasure(towerType.getCost())));

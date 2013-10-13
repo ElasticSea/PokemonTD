@@ -2,41 +2,48 @@ package com.xkings.pokemontd.entity;
 
 import com.xkings.core.main.Assets;
 import com.xkings.pokemontd.Treasure;
+import com.xkings.pokemontd.component.attack.AttackComponent;
+import com.xkings.pokemontd.component.attack.ProjectileAttackComponent;
+import com.xkings.pokemontd.entity.datatypes.CommonDataType;
 
 import java.util.*;
 
 import static com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
-import static com.xkings.pokemontd.entity.ProjectileType.Type;
+import static com.xkings.pokemontd.component.attack.ProjectileAttackComponent.Type.FOLLOW_TARGET;
 
 /**
  * Created by Tomas on 10/5/13.
  */
-public enum TowerType implements CommonDataType{
+public enum TowerType implements CommonDataType {
 
-    Needle("weedle", 1, 1, new ProjectileType("bullet", Type.FOLLOW_TARGET, 10, 0.2f, 15), 3, new Treasure(10)),
-    Pinch("kahuna", 1, 1, new ProjectileType("bullet", Type.FOLLOW_TARGET, 10, 0.2f, 45), 3, new Treasure(20)),
-    Sting("beedrill", 1, 1, new ProjectileType("bullet", Type.FOLLOW_TARGET, 10, 0.2f, 135), 3, new Treasure(40)),
-    Scratch("nidoranf", 1, 1, new ProjectileType("bullet", Type.FOLLOW_TARGET, 10, 0.2f, 15), 3, new Treasure(10)),
-    Bite("nidorina", 1, 1, new ProjectileType("bullet", Type.FOLLOW_TARGET, 10, 0.2f, 45), 3, new Treasure(20)),
-    Smash("nidoqueen", 1, 1, new ProjectileType("bullet", Type.FOLLOW_TARGET, 10, 0.2f, 15), 3, new Treasure(40));
+    Needle("weedle", 1, 1, new ProjectileAttackComponent("bullet", FOLLOW_TARGET, 10, 0.2f, 15), 3, new Treasure(10)),
+    Pinch("kahuna", 1, 1, new ProjectileAttackComponent("bullet", FOLLOW_TARGET, 10, 0.2f, 45), 3, new Treasure(20)),
+    Sting("beedrill", 1, 1, new ProjectileAttackComponent("bullet", FOLLOW_TARGET, 10, 0.2f, 135), 3, new Treasure(40)),
+    Scratch("nidoranf", 1, 1, new ProjectileAttackComponent("bullet", FOLLOW_TARGET, 10, 0.2f, 15), 3,
+            new Treasure(10)),
+    Bite("nidorina", 1, 1, new ProjectileAttackComponent("bullet", FOLLOW_TARGET, 10, 0.2f, 45), 3, new Treasure(20)),
+    Smash("nidoqueen", 1, 1, new ProjectileAttackComponent("bullet", FOLLOW_TARGET, 10, 0.2f, 15), 3, new Treasure(40));
     private static Map<TowerType, List<TowerType>> map;
     private final AtlasRegion texture;
     private final float speed;
     private final int size;
-    private final ProjectileType projectile;
     private final float range;
     private final Treasure cost;
     private final AtlasRegion blockedTexture;
+    private final AttackComponent attack;
+    private final String name;
 
-    private TowerType(String name, float speed, int size, ProjectileType projectile, float range, Treasure cost) {
+    private TowerType(String name, float speed, int size, AttackComponent attack, float range, Treasure cost) {
+        this.name = name;
         this.texture = Assets.getTexture(name);
         this.blockedTexture = Assets.getTexture("blocked");
         this.speed = speed;
         this.size = size;
-        this.projectile = projectile;
+        this.attack = attack;
         this.range = range;
         this.cost = cost;
     }
+
 
     public AtlasRegion getTexture() {
         return texture;
@@ -50,8 +57,8 @@ public enum TowerType implements CommonDataType{
         return size;
     }
 
-    public ProjectileType getProjectile() {
-        return projectile;
+    public AttackComponent getAttack() {
+        return attack;
     }
 
     public float getRange() {
@@ -67,7 +74,7 @@ public enum TowerType implements CommonDataType{
     }
 
     public String getName() {
-        return this.toString();
+        return name;
     }
 
     public static Map<TowerType, List<TowerType>> getHierarchy() {

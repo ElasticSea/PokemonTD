@@ -8,7 +8,6 @@ import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.component.*;
 import com.xkings.core.utils.Collision;
-import com.xkings.pokemontd.component.AttackComponent;
 import com.xkings.pokemontd.component.HealthComponent;
 
 /**
@@ -16,8 +15,8 @@ import com.xkings.pokemontd.component.HealthComponent;
  */
 public class HitProjectileSystem extends EntityProcessingSystem {
 
-    @Mapper
-    ComponentMapper<AttackComponent> attackMapper;
+  /*  @Mapper
+    ComponentMapper<AttackComponent> damageMapper;    */
     @Mapper
     ComponentMapper<HealthComponent> healthMapper;
     @Mapper
@@ -50,12 +49,12 @@ public class HitProjectileSystem extends EntityProcessingSystem {
         Vector3 size = sizeMapper.get(entity).getPoint();
         Vector3 size1 = sizeMapper.get(target).getPoint();
 
-        int attack = attackMapper.get(entity).getAttack();
+      /*  int attack = damageMapper.get(entity).getAttack();
 
         if (Collision.intersectRects(position, position1, size, size1)) {
             entity.deleteFromWorld();
             healthMapper.get(target).getHealth().decrees(attack);
-        }
+        }   */
     }
 
 }
