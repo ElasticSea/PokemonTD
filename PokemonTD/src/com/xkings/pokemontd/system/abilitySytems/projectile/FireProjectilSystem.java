@@ -1,4 +1,4 @@
-package com.xkings.pokemontd.system.abilitySytems;
+package com.xkings.pokemontd.system.abilitySytems.projectile;
 
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;

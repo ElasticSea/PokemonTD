@@ -33,7 +33,8 @@ import com.xkings.pokemontd.map.MapData;
 import com.xkings.pokemontd.map.Path;
 import com.xkings.pokemontd.map.PathPack;
 import com.xkings.pokemontd.system.*;
-import com.xkings.pokemontd.system.abilitySytems.FireProjectilSystem;
+import com.xkings.pokemontd.system.abilitySytems.projectile.FireProjectilSystem;
+import com.xkings.pokemontd.system.abilitySytems.projectile.HitProjectileSystem;
 
 public class App extends Game2D {
 
@@ -106,7 +107,7 @@ public class App extends Game2D {
     }
 
     private void initializeContent() {
-        player = new Player(9999, 9999, 1, 2, 3, 0, 2, 1, 1);
+        player = new Player(9999, 9999, 0, 0, 0, 0, 0, 0, 0);
     }
 
     private void initializeManagers() {

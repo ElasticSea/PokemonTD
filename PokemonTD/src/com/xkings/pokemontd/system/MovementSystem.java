@@ -50,6 +50,7 @@ public class MovementSystem extends EntityProcessingSystem {
                 if (moveTowards(position, goal, speed, time)) {
                     pathComponent.next();
                     if (pathComponent.isFinished()) {
+                        System.out.println("finished");
                         return;
                     }
                 }
