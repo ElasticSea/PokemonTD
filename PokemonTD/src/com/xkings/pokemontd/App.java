@@ -32,6 +32,7 @@ import com.xkings.pokemontd.manager.WaveManager;
 import com.xkings.pokemontd.map.MapBuilder;
 import com.xkings.pokemontd.map.MapData;
 import com.xkings.pokemontd.map.Path;
+import com.xkings.pokemontd.map.PathPack;
 import com.xkings.pokemontd.system.*;
 
 public class App extends Game2D {
@@ -52,7 +53,7 @@ public class App extends Game2D {
     private RenderDebugSystem renderDebugSystem;
     private ClosestEnemySystem closestEnemySystem;
     private GetTowerInfoSystem getTowerInfoSystem;
-    private Path path;
+    private PathPack pathPack;
     private GenericBlueprint blueprint;
     private Player player;
     private static PokemonAssets assets;
@@ -77,7 +78,7 @@ public class App extends Game2D {
         MapData map = createTestMap();
         tileMap = map.getTileMap();
         blueprint = map.getBlueprint();
-        path = map.getPath();
+        pathPack = map.getPathPack();
         this.cameraHandler = new BoundedCameraHandler(camera, tileMap.getWidth() * tileMap.TILE_SIZE,
                 tileMap.getHeight() * tileMap.TILE_SIZE, 0.001f);
 
@@ -109,7 +110,7 @@ public class App extends Game2D {
     }
 
     private void initializeManagers() {
-        this.waveManager = new WaveManager(world, clock, path, WAVE_INTERVAL);
+        this.waveManager = new WaveManager(world, clock, pathPack.getMain(), WAVE_INTERVAL);
         this.towerManager = new TowerManager(world, blueprint, player);
         this.projectileManager = new ProjectileManager(world, blueprint);
     }
@@ -132,9 +133,11 @@ public class App extends Game2D {
 
 
     private MapData createTestMap() {
-        return new MapBuilder(5, 5, 0, 2,
-                MapBuilder.Direction.RIGHT).addStraight().addStraight().addLeft().addRight().addStraight().addRight()
-                .addStraight().build();
+        return new MapBuilder(9, 12, 3, 11,
+                MapBuilder.Direction.DOWN).addStraight().addRight().addStraight().addLeft().addStraight(
+                2).addLeft().addStraight().addLeft().addRight().addStraight().addRight().addStraight(
+                2).addRight().addStraight(3).addLeft().addStraight().addLeft().addStraight(5).addLeft().addStraight(
+                6).addLeft().addStraight().addRight().addStraight().build();
     }
 
     @Override
@@ -175,19 +178,18 @@ public class App extends Game2D {
 
             renderer.render();
 
-         /*   lifes.addInfo("Lifes: " + player.getHealth().getLives());
-            lifes.addInfo("Gold: " + player.getTreasure().getGold());
-            lifes.addInfo("Next Wave in: " + waveManager.getRemainingTime());     */
             lifes.render(onScreenRasterRender);
 
             shapeRenderer.setProjectionMatrix(camera.combined);
             shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-            Vector3 lastPoint = null;
-            for (Vector3 point : path.getPath()) {
-                if (lastPoint != null) {
-                    shapeRenderer.line(lastPoint.x, lastPoint.y, point.x, point.y);
+            for (Path path : pathPack.getPaths()) {
+                Vector3 lastPoint = null;
+                for (Vector3 point : path.getPath()) {
+                    if (lastPoint != null) {
+                        shapeRenderer.line(lastPoint.x, lastPoint.y, point.x, point.y);
+                    }
+                    lastPoint = point;
                 }
-                lastPoint = point;
             }
             shapeRenderer.end();
         }

@@ -13,17 +13,17 @@ import com.xkings.pokemontd.graphics.TileMap;
 public class MapData {
 
     private final GenericBlueprint<Entity>  blueprint;
-    private final Path path;
+    private final PathPack pathPack;
     private final TileMap tileMap;
 
-    public MapData(GenericBlueprint<Entity>  blueprint, Path path, TileMap tileMap) {
+    public MapData(GenericBlueprint<Entity>  blueprint, PathPack pathPack, TileMap tileMap) {
         this.blueprint = blueprint;
-        this.path = path;
+        this.pathPack = pathPack;
         this.tileMap = tileMap;
     }
 
-    public Path getPath() {
-        return path;
+    public PathPack getPathPack() {
+        return pathPack;
     }
 
     public GenericBlueprint<Entity>  getBlueprint() {
