@@ -13,10 +13,47 @@ public class CreepTypeBuilder {
 
     private final List<CreepTypeSpecification> data = getData();
 
-    public List<CreepTypeSpecification> getData() {
+    private List<CreepTypeSpecification> getData() {
         List<CreepTypeSpecification> list = new ArrayList<CreepTypeSpecification>();
         list.add(new CreepTypeSpecification(list.size(), 10, new Treasure(10), CreepAbilityType.RESURRECT));
         return list;
+    }
+
+
+    public CreepDataStore build() {
+        List<CreepType> list = new ArrayList<CreepType>();
+        for (CreepTypeSpecification specification : data) {
+            CreepAbilityType ability = specification.getAbilityType();
+            int health = specification.getHealth();
+            float speed = 1f;
+            float size = 1f;
+            int creepsInWay = 5;
+
+            switch (ability) {
+                case FAST:
+                    speed *= 2;
+                    health /= 2;
+                    break;
+                case SWARM:
+                    speed /= 2;
+                    size /= 2;
+                    creepsInWay *= 4;
+                    break;
+                case RESURRECT:
+                    break;
+                case INVISIBLE:
+                    break;
+                case SPAWN:
+                    health /= 1.5f;
+                    break;
+                case HEALING:
+                    break;
+            }
+
+            list.add(new CreepType(CreepName.values()[specification.getID()], speed, size, health,
+                    specification.getTreasure(), creepsInWay, ability));
+        }
+        return new CreepDataStore(list);
     }
 
     private static class CreepTypeSpecification {
@@ -51,7 +88,4 @@ public class CreepTypeBuilder {
         }
     }
 
-    public static void build() {
-
-    }
 }

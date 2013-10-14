@@ -34,8 +34,8 @@ public class CreepType implements CommonDataType {
     private final int creepsInWave;
     private final CreepAbilityType abilityType;
 
-    private CreepType(CreepName name, float speed, float size, int health, Treasure treasure, int creepsInWave,
-                      CreepAbilityType abilityType) {
+    public CreepType(CreepName name, float speed, float size, int health, Treasure treasure, int creepsInWave,
+                     CreepAbilityType abilityType) {
         this.name = name;
         this.speed = speed;
         this.size = size;

@@ -15,8 +15,12 @@ import java.util.Map;
 public class CreepDataStore {
     private final Map<CreepName, CreepType> data;
 
-    public CreepDataStore(Map<CreepName, CreepType> data) {
-        this.data = data;
+    public CreepDataStore(List<CreepType> creepList) {
+        Map<CreepName, CreepType> map = new HashMap<CreepName, CreepType>();
+        for (CreepType creepType : creepList) {
+            map.put(creepType.getName(), creepType);
+        }
+        this.data = map;
     }
 
     public CreepType getType(CreepName creepName) {
@@ -26,13 +30,7 @@ public class CreepDataStore {
     public static CreepDataStore createInstanceFromJSON(String fileName) {
         Type type = new TypeToken<List<CreepType>>() {
         }.getType();
-        List<CreepType> creepList = new Gson().fromJson(Gdx.files.internal("data/"+fileName).readString(), type);
-
-        Map<CreepName, CreepType> map = new HashMap<CreepName, CreepType>();
-        for (CreepType creepType : creepList) {
-            map.put(creepType.getName(), creepType);
-        }
-        return new CreepDataStore(map);
+        return new Gson().fromJson(Gdx.files.internal("data/" + fileName).readString(), type);
     }
 }
 
