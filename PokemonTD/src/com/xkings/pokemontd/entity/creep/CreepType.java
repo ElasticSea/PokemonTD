@@ -1,10 +1,11 @@
-package com.xkings.pokemontd.entity.datatypes;
+package com.xkings.pokemontd.entity.creep;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.xkings.core.main.Assets;
 import com.xkings.pokemontd.Treasure;
+import com.xkings.pokemontd.entity.datatypes.CommonDataType;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -18,42 +19,11 @@ import static com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
  */
 public class CreepType implements CommonDataType {
 
-    public static class DataStore {
-        private final Map<CreepName, CreepType> data;
 
-        private DataStore(String fileName) {
-            this.data = getData(fileName);
-        }
-
-        private Map<CreepName, CreepType> getData(String fileName) {
-            Type type = new TypeToken<List<CreepType>>() {
-            }.getType();
-            List<CreepType> creepList = new Gson().fromJson(new FileHandle(fileName).readString(), type);
-
-            Map<CreepName, CreepType> map = new HashMap<CreepName, CreepType>();
-            for (CreepType creepType : creepList) {
-                map.put((CreepName) creepType.getName(), creepType);
-            }
-            return map;
-        }
-
-        public CreepType getType(CreepName creepName) {
-            return data.get(creepName);
-        }
-    }
-
-    private static final DataStore dataStore = new DataStore("creeps.json");
+    private static final CreepDataStore dataStore =  CreepDataStore.createInstanceFromJSON("creeps.json");
 
     public static CreepType getType(CreepName next) {
         return dataStore.getType(next);
-    }
-
-    public enum CreepName implements EntityName {
-        Chansey, Ditto, Jynx, Kabuto, Lickitung, Porygon, Mew;
-    }
-
-    private enum CreepAbilityType {
-        NORMAL, FAST, SWARM, RESURRECT, INVISIBLE, SPAWN, HEALING;
     }
 
     private final CreepName name;
@@ -87,7 +57,7 @@ public class CreepType implements CommonDataType {
         return size;
     }
 
-    public EntityName getName() {
+    public CreepName getName() {
         return name;
     }
 

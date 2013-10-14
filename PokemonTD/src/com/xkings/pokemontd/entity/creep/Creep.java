@@ -1,11 +1,10 @@
-package com.xkings.pokemontd.entity;
+package com.xkings.pokemontd.entity.creep;
 
 import com.artemis.World;
 import com.xkings.core.component.*;
 import com.xkings.core.entity.ConcreteEntity;
 import com.xkings.pokemontd.Health;
 import com.xkings.pokemontd.component.*;
-import com.xkings.pokemontd.entity.datatypes.CreepType;
 import com.xkings.pokemontd.map.Path;
 
 /**

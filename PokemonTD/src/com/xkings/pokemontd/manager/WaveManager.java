@@ -6,8 +6,9 @@ import com.xkings.core.logic.Clock;
 import com.xkings.core.logic.UpdateFilter;
 import com.xkings.core.logic.Updateable;
 import com.xkings.pokemontd.component.WaveComponent;
-import com.xkings.pokemontd.entity.Creep;
-import com.xkings.pokemontd.entity.datatypes.CreepType;
+import com.xkings.pokemontd.entity.creep.Creep;
+import com.xkings.pokemontd.entity.creep.CreepName;
+import com.xkings.pokemontd.entity.creep.CreepType;
 import com.xkings.pokemontd.map.Path;
 
 import java.util.Arrays;
@@ -20,7 +21,7 @@ public class WaveManager implements Updateable {
     private final World world;
     private final Path path;
 
-    private final Iterator<CreepType.CreepName> creeps;
+    private final Iterator<CreepName> creeps;
     private final UpdateFilter filter;
     private boolean active;
     private CreepType nextWave;
@@ -31,7 +32,7 @@ public class WaveManager implements Updateable {
     public WaveManager(World world, Clock clock, Path path, float interval) {
         this.world = world;
         this.path = path;
-        this.creeps = Arrays.asList(CreepType.CreepName.values()).iterator();
+        this.creeps = Arrays.asList(CreepName.values()).iterator();
         this.active = true;
         this.filter = new UpdateFilter(this, interval);
         updateWave();

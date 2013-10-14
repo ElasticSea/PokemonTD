@@ -12,7 +12,7 @@ import com.xkings.pokemontd.component.UpgradeComponent;
 import com.xkings.pokemontd.entity.StaticObject;
 import com.xkings.pokemontd.entity.Tower;
 import com.xkings.pokemontd.entity.TowerType;
-import com.xkings.pokemontd.entity.datatypes.CreepType;
+import com.xkings.pokemontd.entity.creep.CreepType;
 import com.xkings.pokemontd.system.GetTowerInfoSystem;
 
 import java.util.List;

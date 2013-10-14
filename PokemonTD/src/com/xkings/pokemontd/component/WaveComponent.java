@@ -2,7 +2,6 @@ package com.xkings.pokemontd.component;
 
 import com.artemis.Component;
 import com.artemis.Entity;
-import com.xkings.pokemontd.entity.Creep;
 
 import java.util.LinkedList;
 import java.util.List;
