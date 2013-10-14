@@ -15,8 +15,8 @@ public class Treasure {
 
     public Treasure(Treasure treasure) {
         this(treasure.getGold(), treasure.getElement(WATER), treasure.getElement(FIRE), treasure.getElement(NATURE),
-                treasure.getElement(LIGHT), treasure.getElement(DARKNESS), treasure.getElement(NEUTRAL),
-                treasure.getElement(PURE));
+                treasure.getElement(LIGHT), treasure.getElement(DARKNESS), treasure.getElement(PURE),
+                treasure.getElement(SOUL));
     }
 
     public Treasure(int gold) {
@@ -30,8 +30,8 @@ public class Treasure {
         addElement(NATURE, nature);
         addElement(LIGHT, light);
         addElement(DARKNESS, darkness);
-        addElement(NEUTRAL, neutral);
-        addElement(PURE, pure);
+        addElement(PURE, neutral);
+        addElement(SOUL, pure);
     }
 
     public void addElement(Element element, int count) {
@@ -121,4 +121,33 @@ public class Treasure {
                 ", gold=" + gold +
                 '}';
     }
+
+    public static Treasure fromWater(int count) {
+        return new Treasure(0, count, 0, 0, 0, 0, 0, 0);
+    }
+
+    public static Treasure fromFire(int count) {
+        return new Treasure(0, 0, count, 0, 0, 0, 0, 0);
+    }
+
+    public static Treasure fromNature(int count) {
+        return new Treasure(0, 0, 0, count, 0, 0, 0, 0);
+    }
+
+    public static Treasure fromLight(int count) {
+        return new Treasure(0, 0, 0, 0, count, 0, 0, 0);
+    }
+
+    public static Treasure fromDarkness(int count) {
+        return new Treasure(0, 0, 0, 0, 0, count, 0, 0);
+    }
+
+    public static Treasure fromPure(int count) {
+        return new Treasure(0, 0, 0, 0, 0, 0, count, 0);
+    }
+
+    public static Treasure fromSoul(int count) {
+        return new Treasure(0, 0, 0, 0, 0, 0, 0, count);
+    }
+
 }
