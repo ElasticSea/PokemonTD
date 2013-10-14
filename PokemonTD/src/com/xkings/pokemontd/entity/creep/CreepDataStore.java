@@ -1,6 +1,6 @@
 package com.xkings.pokemontd.entity.creep;
 
-import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.Gdx;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -26,7 +26,7 @@ public class CreepDataStore {
     public static CreepDataStore createInstanceFromJSON(String fileName) {
         Type type = new TypeToken<List<CreepType>>() {
         }.getType();
-        List<CreepType> creepList = new Gson().fromJson(new FileHandle(fileName).readString(), type);
+        List<CreepType> creepList = new Gson().fromJson(Gdx.files.internal("data/"+fileName).readString(), type);
 
         Map<CreepName, CreepType> map = new HashMap<CreepName, CreepType>();
         for (CreepType creepType : creepList) {
