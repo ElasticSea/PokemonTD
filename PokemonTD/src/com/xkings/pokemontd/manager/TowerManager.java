@@ -4,7 +4,6 @@ import com.artemis.Entity;
 import com.artemis.World;
 import com.badlogic.gdx.graphics.Color;
 import com.xkings.core.pathfinding.GenericBlueprint;
-import com.xkings.pokemontd.CurrentTowerInfo;
 import com.xkings.pokemontd.Player;
 import com.xkings.pokemontd.component.TowerTypeComponent;
 import com.xkings.pokemontd.component.TreasureComponent;
@@ -13,7 +12,6 @@ import com.xkings.pokemontd.entity.StaticObject;
 import com.xkings.pokemontd.entity.Tower;
 import com.xkings.pokemontd.entity.TowerType;
 import com.xkings.pokemontd.entity.creep.CreepType;
-import com.xkings.pokemontd.system.GetTowerInfoSystem;
 
 import java.util.List;
 
@@ -23,8 +21,6 @@ import java.util.List;
 public class TowerManager {
 
     public static final Color TINT = new Color(1, 1, 1, 0.5f);
-    private final GetTowerInfoSystem getTowerInfoSystem;
-    private CurrentTowerInfo currentTowerInfo = new CurrentTowerInfo();
     private Entity placeholderTower;
 
     public void toggleSellingTowers() {
@@ -44,11 +40,33 @@ public class TowerManager {
             }
             this.selectedTower = towerType;
         }
-        update();
     }
 
-    private void update() {
-        getTowerInfoSystem.getInfo(currentTowerInfo, selectedTowerEntity, selectedTower);
+
+    public boolean process(Entity entity, int x , int y) {
+        switch (status) {
+            case NONE:
+                CreepType.save();
+                System.out.println("Find: "+entity);
+                // getTowerInfoSystem.getInfo(selectedTower)
+                selectedTowerEntity.setTower(entity);
+                selectedTowerEntity.setX(x);
+                selectedTowerEntity.setY(y);
+                selectedTower = null;
+                // return none(x, y);
+                break;
+            case PLACING_TOWER:
+                placeTower(x, y);
+                break;
+            case CONFIRMING_PLACING:
+                buyAndPlaceTower(x, y);
+                break;
+            case SELLING_TOWER:
+                sellTower(x, y);
+                break;
+        }
+
+        return false;
     }
 
     public enum Status {
@@ -68,36 +86,8 @@ public class TowerManager {
         this.world = world;
         this.blueprint = blueprint;
         this.player = player;
-        getTowerInfoSystem = new GetTowerInfoSystem();
-        world.setSystem(getTowerInfoSystem, true);
     }
 
-    public boolean process(int x, int y) {
-        switch (status) {
-            case NONE:
-                CreepType.save();
-                // getTowerInfoSystem.getInfo(selectedTower)
-                Entity entity = getTower(x, y);
-                selectedTowerEntity.setTower(entity);
-                selectedTowerEntity.setX(x);
-                selectedTowerEntity.setY(y);
-                selectedTower = null;
-                // return none(x, y);
-                break;
-            case PLACING_TOWER:
-                placeTower(x, y);
-                break;
-            case CONFIRMING_PLACING:
-                buyAndPlaceTower(x, y);
-                break;
-            case SELLING_TOWER:
-                sellTower(x, y);
-                break;
-        }
-        update();
-
-        return false;
-    }
 
     private boolean placeTower(int x, int y) {
         if (selectedTower != null && blueprint.isWalkable(x, y)) {
@@ -222,8 +212,5 @@ public class TowerManager {
         this.status = status;
     }
 
-    public CurrentTowerInfo getCurrentTowerInfo() {
-        return currentTowerInfo;
-    }
 }
 

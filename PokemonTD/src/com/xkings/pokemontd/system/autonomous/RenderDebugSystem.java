@@ -1,4 +1,4 @@
-package com.xkings.pokemontd.system;
+package com.xkings.pokemontd.system.autonomous;
 
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;

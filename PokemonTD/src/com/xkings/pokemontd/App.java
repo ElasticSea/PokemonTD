@@ -21,10 +21,12 @@ import com.xkings.core.logic.Clock;
 import com.xkings.core.logic.WorldUpdater;
 import com.xkings.core.main.Game2D;
 import com.xkings.core.pathfinding.GenericBlueprint;
+import com.xkings.pokemontd.component.TowerTypeComponent;
 import com.xkings.pokemontd.component.WaveComponent;
 import com.xkings.pokemontd.graphics.TileMap;
 import com.xkings.pokemontd.graphics.ui.Ui;
-import com.xkings.pokemontd.input.EnhancedGestureProcessor;
+import com.xkings.pokemontd.input.InGameInputProcessor;
+import com.xkings.pokemontd.manager.CreepManager;
 import com.xkings.pokemontd.manager.ProjectileManager;
 import com.xkings.pokemontd.manager.TowerManager;
 import com.xkings.pokemontd.manager.WaveManager;
@@ -32,9 +34,11 @@ import com.xkings.pokemontd.map.MapBuilder;
 import com.xkings.pokemontd.map.MapData;
 import com.xkings.pokemontd.map.Path;
 import com.xkings.pokemontd.map.PathPack;
-import com.xkings.pokemontd.system.*;
+import com.xkings.pokemontd.system.ClosestEnemySystem;
+import com.xkings.pokemontd.system.GetEntity;
 import com.xkings.pokemontd.system.abilitySytems.projectile.FireProjectilSystem;
 import com.xkings.pokemontd.system.abilitySytems.projectile.HitProjectileSystem;
+import com.xkings.pokemontd.system.autonomous.*;
 
 import java.util.Random;
 
@@ -52,10 +56,12 @@ public class App extends Game2D {
     private Clock clock;
     private WaveManager waveManager;
     private TowerManager towerManager;
+    private CreepManager creepManager;
     private RenderSpriteSystem renderSpriteSystem;
     private RenderDebugSystem renderDebugSystem;
     private ClosestEnemySystem closestEnemySystem;
-    private GetTowerInfoSystem getTowerInfoSystem;
+    private GetEntity getTowerSystem;
+    private GetEntity getCreepSystem;
     private PathPack pathPack;
     private GenericBlueprint blueprint;
     private Player player;
@@ -100,8 +106,9 @@ public class App extends Game2D {
     private void initializeInput() {
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(new GestureDetector(ui));
-        inputMultiplexer.addProcessor(
-                new EnhancedGestureDetector(new EnhancedGestureProcessor(towerManager, cameraHandler)));
+        inputMultiplexer.addProcessor(new EnhancedGestureDetector(
+                new InGameInputProcessor(ui, getTowerSystem, getCreepSystem, towerManager, creepManager,
+                        cameraHandler)));
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
@@ -119,6 +126,7 @@ public class App extends Game2D {
     private void initializeManagers() {
         this.waveManager = new WaveManager(world, clock, pathPack, WAVE_INTERVAL);
         this.towerManager = new TowerManager(world, blueprint, player);
+        this.creepManager = new CreepManager(world);
         this.projectileManager = new ProjectileManager(world, blueprint);
     }
 
@@ -126,10 +134,14 @@ public class App extends Game2D {
         renderSpriteSystem = new RenderSpriteSystem(cameraHandler.getCamera());
         renderDebugSystem = new RenderDebugSystem(cameraHandler);
         closestEnemySystem = new ClosestEnemySystem(WaveComponent.class);
+        getTowerSystem = new GetEntity(TowerTypeComponent.class);
+        getCreepSystem = new GetEntity(WaveComponent.class);
 
         world.setSystem(closestEnemySystem, true);
         world.setSystem(renderSpriteSystem, true);
         world.setSystem(renderDebugSystem, true);
+        world.setSystem(getTowerSystem, true);
+        world.setSystem(getCreepSystem, true);
         world.setSystem(new MovementSystem());
         world.setSystem(new WaveSystem(player));
         world.setSystem(new FireProjectilSystem(closestEnemySystem, projectileManager));

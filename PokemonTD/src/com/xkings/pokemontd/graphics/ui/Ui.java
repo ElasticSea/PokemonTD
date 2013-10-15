@@ -1,5 +1,6 @@
 package com.xkings.pokemontd.graphics.ui;
 
+import com.artemis.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,6 +11,7 @@ import com.xkings.core.graphics.Renderable;
 import com.xkings.core.main.Assets;
 import com.xkings.pokemontd.Player;
 import com.xkings.pokemontd.entity.TowerType;
+import com.xkings.pokemontd.manager.CreepManager;
 import com.xkings.pokemontd.manager.TowerManager;
 import com.xkings.pokemontd.manager.WaveManager;
 
@@ -39,7 +41,7 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
     private Icon sellBlock;
     private List<TowerType> lastHierarchy;
 
-    public Ui(Player player, WaveManager waveManager, TowerManager towerManager, Camera camera) {
+    public Ui(Player player, WaveManager waveManager, TowerManager towerManager,  Camera camera) {
         this.camera = camera;
         this.towerManager = towerManager;
         shapeRenderer = new ShapeRenderer();
@@ -67,7 +69,7 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
                 shapeRenderer);
         towerTable =
                 new GuiBox(new Rectangle(width - squareHeight, 0, squareHeight, squareHeight), offset, shapeRenderer);
-        entityInfo = new EntityInfo(displayBar.rectangle, spriteBatch, towerManager.getCurrentTowerInfo());
+        entityInfo = new EntityInfo(displayBar.rectangle, spriteBatch);
         displayBlocks.add(displayBar);
         displayBlocks.add(towerTable);
       //  displayBlocks.add(menuBar);
@@ -163,4 +165,7 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         return condition;
     }
 
+    public void updateEntityInfo(Entity entity) {
+        entityInfo.update(entity);
+    }
 }
