@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 import com.xkings.pokemontd.App;
-import com.xkings.pokemontd.component.DamageComponent;
 import com.xkings.pokemontd.component.SpriteComponent;
 import com.xkings.pokemontd.component.TowerTypeComponent;
 
@@ -45,7 +44,6 @@ class EntityInfo extends DisplayBlock {
         this.entity = entity;
     }
 
-
     private void renderCreep(Entity entity) {
         TextureAtlas.AtlasRegion atlasRegion = entity.getComponent(SpriteComponent.class).getSprite();
         renderCommon(atlasRegion, "Test", "Test", "Test");
@@ -53,9 +51,7 @@ class EntityInfo extends DisplayBlock {
 
     private void renderTower(Entity entity) {
         TextureAtlas.AtlasRegion atlasRegion = entity.getComponent(SpriteComponent.class).getSprite();
-        int damage = entity.getComponent(DamageComponent.class).getDamage();
-       // TextureAtlas.AtlasRegion atlasRegion = entity.getComponent(SpriteComponent.class).getSprite();
-        renderCommon(atlasRegion, "Atk: "+damage, "Test", "Test");
+        renderCommon(atlasRegion, "Test", "Test", "Test");
     }
 
     private void renderCommon(TextureAtlas.AtlasRegion atlasRegion, String name, String textA, String textB) {
