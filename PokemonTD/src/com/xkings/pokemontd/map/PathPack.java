@@ -23,6 +23,16 @@ public class PathPack {
         return paths;
     }
 
+
+    public Path get(int i) {
+        return paths.get(i);
+    }
+
+
+    public int size() {
+        return paths.size();
+    }
+
     public Path getMain() {
         return paths.get(paths.size() / 2);
     }

@@ -122,6 +122,10 @@ public class Treasure {
                 '}';
     }
 
+    public static Treasure fromGold(int count) {
+        return new Treasure(count, 0, 0, 0, 0, 0, 0, 0);
+    }
+
     public static Treasure fromWater(int count) {
         return new Treasure(0, count, 0, 0, 0, 0, 0, 0);
     }

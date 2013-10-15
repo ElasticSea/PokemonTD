@@ -30,18 +30,30 @@ public class WaveInfo extends GuiBox {
         super.render();
         spriteBatch.begin();
         CreepType nextWave = waveManager.getNextWave();
-        if(nextWave != null){
-            float eigth = rectangle.height/8f;
-        spriteBatch.draw(waveManager.getNextWave().getTexture(), rectangle.x + eigth, rectangle.y + eigth, eigth * 6,
-                eigth * 6);
+        if (nextWave != null) {
+            float textureOffset = rectangle.height / 5f;
+            spriteBatch.draw(waveManager.getNextWave().getTexture(), rectangle.x + textureOffset,
+                    rectangle.y + textureOffset, rectangle.width - textureOffset * 2,
+                    rectangle.height - textureOffset * 2);
         }
         int textOffset = offset * 2;
+        drawWaveInfo(textOffset);
+        drawAbilityInfo(textOffset);
+        spriteBatch.end();
+    }
+
+    private void drawAbilityInfo(int textOffset) {
+        pixelFont.drawMultiLine(spriteBatch, waveManager.getNextWave().getAbilityType().toString(),
+                rectangle.x +rectangle.width/2f, rectangle.y  + pixelFont.getCapHeight()*2, 0,
+                BitmapFont.HAlignment.CENTER);
+    }
+
+    private void drawWaveInfo(int textOffset) {
         pixelFont.drawMultiLine(spriteBatch, "Next wave", rectangle.x + textOffset,
                 rectangle.y + rectangle.height - pixelFont.getCapHeight(), 0, BitmapFont.HAlignment.LEFT);
         pixelFont.drawMultiLine(spriteBatch, String.valueOf(waveManager.getRemainingTime()),
                 rectangle.x + rectangle.width - textOffset, rectangle.y + rectangle.height - pixelFont.getCapHeight(),
                 0, BitmapFont.HAlignment.RIGHT);
-        spriteBatch.end();
     }
 
 }

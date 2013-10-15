@@ -1,16 +1,8 @@
 package com.xkings.pokemontd.entity.creep;
 
-import com.badlogic.gdx.files.FileHandle;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.xkings.core.main.Assets;
 import com.xkings.pokemontd.Treasure;
 import com.xkings.pokemontd.entity.datatypes.CommonDataType;
-
-import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import static com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 
@@ -20,33 +12,36 @@ import static com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 public class CreepType implements CommonDataType {
 
 
-    private static final CreepDataStore dataStore =  CreepDataStore.createInstanceFromJSON("creeps.json");
+    private static final CreepDataStore dataStore = new CreepTypeBuilder().build();
 
     public static CreepType getType(CreepName next) {
         return dataStore.getType(next);
     }
 
     private final CreepName name;
+
     private final float speed;
     private final float size;
     private final int health;
     private final Treasure treasure;
     private final int creepsInWave;
+    private final float distanceBetweenCreeps;
     private final CreepAbilityType abilityType;
 
     public CreepType(CreepName name, float speed, float size, int health, Treasure treasure, int creepsInWave,
-                     CreepAbilityType abilityType) {
+                     float distanceBetweenCreeps, CreepAbilityType abilityType) {
         this.name = name;
         this.speed = speed;
         this.size = size;
         this.health = health;
         this.treasure = treasure;
         this.creepsInWave = creepsInWave;
+        this.distanceBetweenCreeps = distanceBetweenCreeps;
         this.abilityType = abilityType;
     }
 
     public AtlasRegion getTexture() {
-        return Assets.getTexture(name.toString().toLowerCase());
+        return Assets.getTexture("creeps/" + name.toString().toLowerCase());
     }
 
     public float getSpeed() {
@@ -73,6 +68,13 @@ public class CreepType implements CommonDataType {
         return creepsInWave;
     }
 
+    public float getDistanceBetweenCreeps() {
+        return distanceBetweenCreeps;
+    }
+
+    public CreepAbilityType getAbilityType() {
+        return abilityType;
+    }
 
     public static void save() {
       /*  List<CreepType> list = new ArrayList<CreepType>();

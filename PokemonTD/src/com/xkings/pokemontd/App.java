@@ -36,9 +36,11 @@ import com.xkings.pokemontd.system.*;
 import com.xkings.pokemontd.system.abilitySytems.projectile.FireProjectilSystem;
 import com.xkings.pokemontd.system.abilitySytems.projectile.HitProjectileSystem;
 
+import java.util.Random;
+
 public class App extends Game2D {
 
-
+    public static final Random RANDOM = new Random();
     public static final float WAVE_INTERVAL = 5f;
     public static Entity pathBlock;
     private DefaultRenderer renderer;
@@ -60,6 +62,10 @@ public class App extends Game2D {
     private static PokemonAssets assets;
     private ProjectileManager projectileManager;
     private Ui ui;
+
+    public App(String[] args) {
+        super(args);
+    }
 
     @Override
     protected void renderInternal() {
@@ -111,7 +117,7 @@ public class App extends Game2D {
     }
 
     private void initializeManagers() {
-        this.waveManager = new WaveManager(world, clock, pathPack.getMain(), WAVE_INTERVAL);
+        this.waveManager = new WaveManager(world, clock, pathPack, WAVE_INTERVAL);
         this.towerManager = new TowerManager(world, blueprint, player);
         this.projectileManager = new ProjectileManager(world, blueprint);
     }
@@ -134,8 +140,8 @@ public class App extends Game2D {
 
 
     private MapData createTestMap() {
-        return new MapBuilder(9, 12, 3, 11,
-                MapBuilder.Direction.DOWN).addStraight().addRight().addStraight().addLeft().addStraight(
+        return new MapBuilder(9, 12, 3, 11, MapBuilder.Direction.DOWN,
+                0.40f).addStraight().addRight().addStraight().addLeft().addStraight(
                 2).addLeft().addStraight().addLeft().addRight().addStraight().addRight().addStraight(
                 2).addRight().addStraight(3).addLeft().addStraight().addLeft().addStraight(5).addLeft().addStraight(
                 6).addLeft().addStraight().addRight().addStraight().build();
@@ -181,18 +187,20 @@ public class App extends Game2D {
 
             lifes.render(onScreenRasterRender);
 
-            shapeRenderer.setProjectionMatrix(camera.combined);
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-            for (Path path : pathPack.getPaths()) {
-                Vector3 lastPoint = null;
-                for (Vector3 point : path.getPath()) {
-                    if (lastPoint != null) {
-                        shapeRenderer.line(lastPoint.x, lastPoint.y, point.x, point.y);
+            if (DEBUG != null) {
+                shapeRenderer.setProjectionMatrix(camera.combined);
+                shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+                for (Path path : pathPack.getPaths()) {
+                    Vector3 lastPoint = null;
+                    for (Vector3 point : path.getPath()) {
+                        if (lastPoint != null) {
+                            shapeRenderer.line(lastPoint.x, lastPoint.y, point.x, point.y);
+                        }
+                        lastPoint = point;
                     }
-                    lastPoint = point;
                 }
+                shapeRenderer.end();
             }
-            shapeRenderer.end();
         }
 
 

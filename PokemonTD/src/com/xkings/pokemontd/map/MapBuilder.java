@@ -24,14 +24,15 @@ public class MapBuilder {
 
     public static final double QUADRANT = PI / 2.0;
     public static final int SEGMENTS = 9;
-    public static final int PATHS = 5;
-    public static final float PATH_OFFSET = 1 / 4f;
+    public static final int PATHS = 11;
+    public static final float DEFAULT_PATH_OFFSET = 1 / 4f;
     public static final float SEGMENT = (float) (QUADRANT / SEGMENTS);
     private final int width;
     private final int height;
     private final TextureAtlas.AtlasRegion[][] fakeMap;
     private final GenericBlueprint<Entity> genericBlueprint;
     private final List<Vector3> centerPath;
+    private final float pathOffset;
     private Vector3 position;
     private double direction;
     private final List<List<Vector3>> paths = createPats(PATHS);
@@ -111,10 +112,15 @@ public class MapBuilder {
     private final List<BuilderCommand> commands = new LinkedList<BuilderCommand>();
 
     public MapBuilder(int width, int height, int x, int y, Direction direction) {
+        this(width, height, x, y, direction, DEFAULT_PATH_OFFSET);
+    }
+
+    public MapBuilder(int width, int height, int x, int y, Direction direction, float pathOffset) {
         this.width = width;
         this.height = height;
         this.position = new Vector3(x, y, 0);
         this.direction = direction.getAngle();
+        this.pathOffset = pathOffset;
         genericBlueprint = new GenericBlueprint<Entity>(width * BLOCK_SIZE, height * BLOCK_SIZE);
         fakeMap = new TextureAtlas.AtlasRegion[width][height];
         centerPath = paths.get(paths.size() / 2);
@@ -235,8 +241,8 @@ public class MapBuilder {
     private void addCornerSegment(Vector3 segment, Vector3 origin, int koeficient) {
         for (int i = 0; i < paths.size(); i++) {
             Vector3 pathDistance = segment.cpy().sub(origin).scl(2);
-            Vector3 offsetedPathDistance = pathDistance.cpy().scl(1 - PATH_OFFSET * 2f);
-            Vector3 offset = pathDistance.cpy().scl(PATH_OFFSET);
+            Vector3 offsetedPathDistance = pathDistance.cpy().scl(1 - pathOffset * 2f);
+            Vector3 offset = pathDistance.cpy().scl(pathOffset);
             Vector3 segmentDistance = offsetedPathDistance.scl(1f / (paths.size() / 2) / 2f);
             int pathNumber = koeficient == 1 ? i : paths.size() - 1 - i;
             paths.get(pathNumber).add(segmentDistance.scl(i).add(origin).add(offset));
