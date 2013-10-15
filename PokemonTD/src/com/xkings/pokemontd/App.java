@@ -58,6 +58,7 @@ public class App extends Game2D {
     private TowerManager towerManager;
     private CreepManager creepManager;
     private RenderSpriteSystem renderSpriteSystem;
+    private RenderHealthSystem renderHealthSystem;
     private RenderDebugSystem renderDebugSystem;
     private ClosestEnemySystem closestEnemySystem;
     private GetEntity getTowerSystem;
@@ -132,14 +133,16 @@ public class App extends Game2D {
 
     private void initializeSystems() {
         renderSpriteSystem = new RenderSpriteSystem(cameraHandler.getCamera());
+        renderHealthSystem = new RenderHealthSystem(cameraHandler.getCamera());
         renderDebugSystem = new RenderDebugSystem(cameraHandler);
         closestEnemySystem = new ClosestEnemySystem(WaveComponent.class);
         getTowerSystem = new GetEntity(TowerTypeComponent.class);
         getCreepSystem = new GetEntity(WaveComponent.class);
 
-        world.setSystem(closestEnemySystem, true);
         world.setSystem(renderSpriteSystem, true);
+        world.setSystem(renderHealthSystem, true);
         world.setSystem(renderDebugSystem, true);
+        world.setSystem(closestEnemySystem, true);
         world.setSystem(getTowerSystem, true);
         world.setSystem(getCreepSystem, true);
         world.setSystem(new MovementSystem());
@@ -183,6 +186,16 @@ public class App extends Game2D {
 
         @Override
         public void render() {
+            drawMap();
+            drawPath();
+            renderSpriteSystem.process();
+            renderHealthSystem.process();
+            renderDebugSystem.process();
+            renderer.render();
+           // lifes.render(onScreenRasterRender);
+        }
+
+        private void drawMap() {
             spriteBatch.setProjectionMatrix(camera.combined);
             spriteBatch.begin();
             for (int i = 0; i < tileMap.getWidth(); i++) {
@@ -192,13 +205,9 @@ public class App extends Game2D {
                 }
             }
             spriteBatch.end();
-            renderSpriteSystem.process();
-            renderDebugSystem.process();
+        }
 
-            renderer.render();
-
-            lifes.render(onScreenRasterRender);
-
+        private void drawPath() {
             if (DEBUG != null) {
                 shapeRenderer.setProjectionMatrix(camera.combined);
                 shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
