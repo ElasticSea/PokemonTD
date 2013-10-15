@@ -6,5 +6,5 @@ bin/
 gen/
 .idea/
 test-output/
-*/assets/data/textures/packed.*
+*/assets/data/textures/*.*
 *.properties
