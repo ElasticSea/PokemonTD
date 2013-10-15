@@ -18,7 +18,7 @@ public class Health {
         currentHealth -= count;
     }
 
-    public float getPercentage() {
-        return currentHealth / health;
+    public float getRatio() {
+        return (float) currentHealth / health;
     }
 }

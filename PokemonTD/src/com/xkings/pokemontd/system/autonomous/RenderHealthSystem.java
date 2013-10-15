@@ -57,6 +57,6 @@ public class RenderHealthSystem extends EntityProcessingSystem {
         shapeRenderer.setColor(Color.RED);
         shapeRenderer.rect(x, y, size.x, healthBarHeight);
         shapeRenderer.setColor(Color.GREEN);
-        shapeRenderer.rect(x, y, size.x * health.getPercentage(), healthBarHeight);
+        shapeRenderer.rect(x, y, size.x * health.getRatio(), healthBarHeight);
     }
 }
