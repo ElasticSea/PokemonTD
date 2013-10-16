@@ -7,7 +7,8 @@ import com.xkings.core.input.GestureProcessor;
 import com.xkings.pokemontd.graphics.ui.Ui;
 import com.xkings.pokemontd.manager.CreepManager;
 import com.xkings.pokemontd.manager.TowerManager;
-import com.xkings.pokemontd.system.GetEntity;
+import com.xkings.pokemontd.system.GetCreep;
+import com.xkings.pokemontd.system.GetTower;
 
 /**
  * Created by Tomas on 10/7/13.
@@ -15,11 +16,11 @@ import com.xkings.pokemontd.system.GetEntity;
 public class InGameInputProcessor extends GestureProcessor {
     private final Ui ui;
     private final TowerManager towerManager;
-    private final GetEntity getTowerSystem;
-    private final GetEntity getCreepSystem;
+    private final GetTower getTowerSystem;
+    private final GetCreep getCreepSystem;
     private final CreepManager creepManager;
 
-    public InGameInputProcessor(Ui ui, GetEntity getTowerSystem, GetEntity getCreepSystem, TowerManager towerManager,
+    public InGameInputProcessor(Ui ui, GetTower getTowerSystem, GetCreep getCreepSystem, TowerManager towerManager,
                                 CreepManager creepManager, CameraHandler camera) {
         super(camera);
         this.ui = ui;

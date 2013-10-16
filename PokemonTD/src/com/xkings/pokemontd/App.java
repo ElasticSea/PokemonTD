@@ -21,7 +21,6 @@ import com.xkings.core.logic.Clock;
 import com.xkings.core.logic.WorldUpdater;
 import com.xkings.core.main.Game2D;
 import com.xkings.core.pathfinding.GenericBlueprint;
-import com.xkings.pokemontd.component.TowerTypeComponent;
 import com.xkings.pokemontd.component.WaveComponent;
 import com.xkings.pokemontd.graphics.TileMap;
 import com.xkings.pokemontd.graphics.ui.Ui;
@@ -35,7 +34,8 @@ import com.xkings.pokemontd.map.MapData;
 import com.xkings.pokemontd.map.Path;
 import com.xkings.pokemontd.map.PathPack;
 import com.xkings.pokemontd.system.ClosestEnemySystem;
-import com.xkings.pokemontd.system.GetEntity;
+import com.xkings.pokemontd.system.GetCreep;
+import com.xkings.pokemontd.system.GetTower;
 import com.xkings.pokemontd.system.abilitySytems.projectile.FireProjectilSystem;
 import com.xkings.pokemontd.system.abilitySytems.projectile.HitProjectileSystem;
 import com.xkings.pokemontd.system.autonomous.*;
@@ -61,8 +61,8 @@ public class App extends Game2D {
     private RenderHealthSystem renderHealthSystem;
     private RenderDebugSystem renderDebugSystem;
     private ClosestEnemySystem closestEnemySystem;
-    private GetEntity getTowerSystem;
-    private GetEntity getCreepSystem;
+    private GetTower getTowerSystem;
+    private GetCreep getCreepSystem;
     private PathPack pathPack;
     private GenericBlueprint blueprint;
     private Player player;
@@ -136,8 +136,8 @@ public class App extends Game2D {
         renderHealthSystem = new RenderHealthSystem(cameraHandler.getCamera());
         renderDebugSystem = new RenderDebugSystem(cameraHandler);
         closestEnemySystem = new ClosestEnemySystem(WaveComponent.class);
-        getTowerSystem = new GetEntity(TowerTypeComponent.class);
-        getCreepSystem = new GetEntity(WaveComponent.class);
+        getTowerSystem = new GetTower();
+        getCreepSystem = new GetCreep();
 
         world.setSystem(renderSpriteSystem, true);
         world.setSystem(renderHealthSystem, true);
@@ -192,7 +192,7 @@ public class App extends Game2D {
             renderHealthSystem.process();
             renderDebugSystem.process();
             renderer.render();
-           // lifes.render(onScreenRasterRender);
+            // lifes.render(onScreenRasterRender);
         }
 
         private void drawMap() {
