@@ -45,7 +45,7 @@ public class Treasure {
         return getElement(element) >= count;
     }
 
-    public void removeElement(Element element, int count) {
+    public void subtractElement(Element element, int count) {
         addElement(element, -count);
     }
 
@@ -57,7 +57,7 @@ public class Treasure {
         return gold >= count;
     }
 
-    public void removeGold(int count) {
+    public void subtractGold(int count) {
         addGold(-count);
     }
 
@@ -102,9 +102,9 @@ public class Treasure {
 
     public void subtract(Treasure treasure) {
         for (Map.Entry<Element, Integer> entry : elementSet.entrySet()) {
-            this.removeElement(entry.getKey(), treasure.getElement(entry.getKey()));
+            this.subtractElement(entry.getKey(), treasure.getElement(entry.getKey()));
         }
-        this.removeGold(treasure.getGold());
+        this.subtractGold(treasure.getGold());
     }
 
     public void add(Treasure treasure) {
