@@ -33,6 +33,7 @@ public class MapBuilder {
     private final GenericBlueprint<Entity> genericBlueprint;
     private final List<Vector3> centerPath;
     private final float pathOffset;
+    private final int pathSize;
     private Vector3 position;
     private double direction;
     private final List<List<Vector3>> paths = createPats(PATHS);
@@ -72,22 +73,6 @@ public class MapBuilder {
             return texture;
         }
 
-        public boolean isRight() {
-            return right;
-        }
-
-        public boolean isUp() {
-            return up;
-        }
-
-        public boolean isLeft() {
-            return left;
-        }
-
-        public boolean isDown() {
-            return down;
-        }
-
         public boolean match(boolean right, boolean up, boolean left, boolean down) {
             return right == this.right && up == this.up && left == this.left && down == this.down;
         }
@@ -111,16 +96,17 @@ public class MapBuilder {
 
     private final List<BuilderCommand> commands = new LinkedList<BuilderCommand>();
 
-    public MapBuilder(int width, int height, int x, int y, Direction direction) {
-        this(width, height, x, y, direction, DEFAULT_PATH_OFFSET);
+    public MapBuilder(int width, int height, int x, int y, int pathSize,Direction direction) {
+        this(width, height, x, y, pathSize,direction, DEFAULT_PATH_OFFSET);
     }
 
-    public MapBuilder(int width, int height, int x, int y, Direction direction, float pathOffset) {
+    public MapBuilder(int width, int height, int x, int y, int pathSize, Direction direction, float pathOffset) {
         this.width = width;
         this.height = height;
         this.position = new Vector3(x, y, 0);
         this.direction = direction.getAngle();
         this.pathOffset = pathOffset;
+        this.pathSize = pathSize;
         genericBlueprint = new GenericBlueprint<Entity>(width * BLOCK_SIZE, height * BLOCK_SIZE);
         fakeMap = new TextureAtlas.AtlasRegion[width][height];
         centerPath = paths.get(paths.size() / 2);
