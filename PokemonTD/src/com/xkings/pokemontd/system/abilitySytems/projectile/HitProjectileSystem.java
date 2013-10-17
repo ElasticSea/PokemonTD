@@ -10,30 +10,31 @@ import com.xkings.core.component.*;
 import com.xkings.core.utils.Collision;
 import com.xkings.pokemontd.component.DamageComponent;
 import com.xkings.pokemontd.component.HealthComponent;
+import com.xkings.pokemontd.component.attack.ProjectileComponent;
 
 /**
  * Created by Tomas on 10/4/13.
  */
 public class HitProjectileSystem extends EntityProcessingSystem {
 
+    private final AoeSystem aoE;
     @Mapper
     ComponentMapper<DamageComponent> damageMapper;
     @Mapper
     ComponentMapper<HealthComponent> healthMapper;
-    @Mapper
-    ComponentMapper<RotationComponent> rotationMapper;
-    @Mapper
-    ComponentMapper<TimeComponent> timeMapper;
     @Mapper
     ComponentMapper<PositionComponent> positionMapper;
     @Mapper
     ComponentMapper<TargetComponent> targetMapper;
     @Mapper
     ComponentMapper<SizeComponent> sizeMapper;
+    @Mapper
+    ComponentMapper<ProjectileComponent> projectileMapper;
 
 
-    public HitProjectileSystem() {
+    public HitProjectileSystem(AoeSystem aoE) {
         super(Aspect.getAspectForAll(TargetComponent.class));
+        this.aoE = aoE;
     }
 
 
@@ -45,16 +46,20 @@ public class HitProjectileSystem extends EntityProcessingSystem {
             entity.deleteFromWorld();
             return;
         }
-        Vector3 position = positionMapper.get(entity).getPoint();
-        Vector3 position1 = positionMapper.get(target).getPoint();
-        Vector3 size = sizeMapper.get(entity).getPoint();
-        Vector3 size1 = sizeMapper.get(target).getPoint();
+        Vector3 entityPosition = positionMapper.get(entity).getPoint();
+        Vector3 targetPosition = positionMapper.get(target).getPoint();
+        Vector3 entitySize = sizeMapper.get(entity).getPoint();
+        Vector3 targetSize = sizeMapper.get(target).getPoint();
 
-       int damage = damageMapper.get(entity).getDamage();
-
-        if (Collision.intersectRects(position, position1, size, size1)) {
+        if (Collision.intersectRects(entityPosition, targetPosition, entitySize, targetSize)) {
+            ProjectileComponent projectile = projectileMapper.get(entity);
+            float damage = damageMapper.get(entity).getDamage();
+            if (projectile.getAoE() > 0) {
+                aoE.start(targetPosition, damage, projectile.getAoE());
+            } else {
+                healthMapper.get(target).getHealth().decrees((int) damage);
+            }
             entity.deleteFromWorld();
-            healthMapper.get(target).getHealth().decrees(damage);
         }
     }
 

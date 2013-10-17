@@ -6,17 +6,17 @@ import com.artemis.Component;
  * Created by Tomas on 10/13/13.
  */
 public class DamageComponent extends Component {
-    private int damage;
+    private float damage;
 
-    public DamageComponent(int damage) {
+    public DamageComponent(float damage) {
         this.damage = damage;
     }
 
-    public int getDamage() {
+    public float getDamage() {
         return damage;
     }
 
-    public void setDamage(int damage) {
+    public void setDamage(float damage) {
         this.damage = damage;
     }
 }

@@ -13,6 +13,7 @@ import com.xkings.pokemontd.component.SpriteComponent;
 import com.xkings.pokemontd.component.TintComponent;
 import com.xkings.pokemontd.entity.datatypes.CommonDataType;
 import com.xkings.pokemontd.entity.datatypes.StaticObjectType;
+import com.xkings.pokemontd.entity.tower.TowerType;
 
 /**
  * Created by Tomas on 10/5/13.

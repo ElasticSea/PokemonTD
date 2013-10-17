@@ -1,4 +1,4 @@
-package com.xkings.pokemontd.entity;
+package com.xkings.pokemontd.entity.tower;
 
 import com.artemis.Entity;
 import com.artemis.World;
@@ -24,6 +24,7 @@ public class Tower extends ConcreteEntity {
         addComponent(new TreasureComponent(new Treasure(towerType.getCost())));
         addComponent(new TowerTypeComponent(towerType));
         addComponent(new UpgradeComponent());
+        addComponent(new DamageComponent(towerType.getDamage()));
     }
 
     public static Entity registerTower(World world, TowerType towerType, float x, float y) {

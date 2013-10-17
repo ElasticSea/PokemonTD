@@ -4,7 +4,7 @@ import com.artemis.Entity;
 import com.artemis.World;
 import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.pathfinding.GenericBlueprint;
-import com.xkings.pokemontd.component.attack.ProjectileAttackComponent;
+import com.xkings.pokemontd.component.attack.ProjectileComponent;
 import com.xkings.pokemontd.entity.Projectile;
 
 /**
@@ -20,13 +20,12 @@ public class ProjectileManager {
         this.blueprint = blueprint;
     }
 
-    public boolean createProjectile(ProjectileAttackComponent projectileType, Vector3 position, Vector3 targetPosition,
-                                    Entity target) {
+    public boolean createProjectile(ProjectileComponent projectileType, Vector3 position, float damage,
+                                    Vector3 targetPosition, Entity target) {
         switch (projectileType.getType()) {
-
             case FOLLOW_TARGET:
-                Projectile.registerProjectile(world, projectileType.getTexture(), projectileType.getSize(),
-                        projectileType.getSpeed(), position.x, position.y, targetPosition, target);
+                Projectile.registerProjectile(world, projectileType, position.x, position.y, damage, targetPosition,
+                        target);
                 break;
             case LAST_KNOWN_PLACE:
                 break;

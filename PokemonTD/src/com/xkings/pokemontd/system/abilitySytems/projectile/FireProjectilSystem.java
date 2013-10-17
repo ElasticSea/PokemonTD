@@ -7,7 +7,8 @@ import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.component.*;
-import com.xkings.pokemontd.component.attack.ProjectileAttackComponent;
+import com.xkings.pokemontd.component.DamageComponent;
+import com.xkings.pokemontd.component.attack.ProjectileComponent;
 import com.xkings.pokemontd.manager.ProjectileManager;
 import com.xkings.pokemontd.system.ClosestEnemySystem;
 
@@ -20,18 +21,20 @@ public class FireProjectilSystem extends EntityProcessingSystem {
     private final ProjectileManager projectileManager;
     @Mapper
     ComponentMapper<SpeedComponent> speedMapper;
-   @Mapper
-    ComponentMapper<ProjectileAttackComponent> projectileMapper;
+    @Mapper
+    ComponentMapper<ProjectileComponent> projectileMapper;
     @Mapper
     ComponentMapper<PositionComponent> positionMapper;
     @Mapper
     ComponentMapper<RangeComponent> rangeMapper;
     @Mapper
     ComponentMapper<TimeComponent> timeMapper;
+    @Mapper
+    ComponentMapper<DamageComponent> damageMapper;
 
 
     public FireProjectilSystem(ClosestEnemySystem closestEnemySystem, ProjectileManager projectileManager) {
-        super(Aspect.getAspectForAll(TimeComponent.class, SpeedComponent.class, ProjectileAttackComponent.class,
+        super(Aspect.getAspectForAll(TimeComponent.class, SpeedComponent.class, ProjectileComponent.class,
                 PositionComponent.class));
         this.closestEnemySystem = closestEnemySystem;
         this.projectileManager = projectileManager;
@@ -58,8 +61,9 @@ public class FireProjectilSystem extends EntityProcessingSystem {
         Entity closestEnemy = closestEnemySystem.getClosestEntity();
         if (closestEnemy != null) {
             Vector3 closestEnemyPosition = positionMapper.get(closestEnemy).getPoint();
-            ProjectileAttackComponent projectileType = projectileMapper.get(entity);
-           projectileManager.createProjectile(projectileType, position, closestEnemyPosition, closestEnemy);
+            float damage = damageMapper.get(entity).getDamage();
+            ProjectileComponent projectileType = projectileMapper.get(entity);
+            projectileManager.createProjectile(projectileType, position, damage, closestEnemyPosition, closestEnemy);
         }
     }
 

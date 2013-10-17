@@ -6,24 +6,34 @@ import com.xkings.core.main.Assets;
 /**
  * Created by Tomas on 10/13/13.
  */
-public class ProjectileAttackComponent extends AttackComponent {
+public class ProjectileComponent extends AbilityComponent {
+    public static final float DEFAULT_SPEED = 20.0f;
+    public static final float DEFAULT_SIZE = 0.1f;
+    private float range;
+    private float splashRange;
     private TextureAtlas.AtlasRegion texture;
     private Type type;
     private float speed;
     private float size;
-    private float damage;
 
+    public static AbilityComponent getNormal() {
+        return getSplash(0);
+    }
+
+    public static AbilityComponent getSplash(float range) {
+        return new ProjectileComponent("bullet", Type.FOLLOW_TARGET, DEFAULT_SIZE, DEFAULT_SPEED, range);
+    }
 
     public enum Type {
         FOLLOW_TARGET, LAST_KNOWN_PLACE, AHEAD_TARGET,
     }
 
-    public ProjectileAttackComponent(String texture, Type type, float speed, float size, float damage) {
+    public ProjectileComponent(String texture, Type type, float size, float speed, float splashRange) {
         this.texture = Assets.getTexture(texture);
         this.type = type;
         this.speed = speed;
         this.size = size;
-        this.damage = damage;
+        this.splashRange = splashRange;
     }
 
     public TextureAtlas.AtlasRegion getTexture() {
@@ -56,5 +66,13 @@ public class ProjectileAttackComponent extends AttackComponent {
 
     public void setSize(float size) {
         this.size = size;
+    }
+
+    public float getAoE() {
+        return splashRange;
+    }
+
+    public void setSplashRange(float splashRange) {
+        this.splashRange = splashRange;
     }
 }

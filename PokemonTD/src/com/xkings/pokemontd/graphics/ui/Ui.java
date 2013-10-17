@@ -10,8 +10,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.xkings.core.graphics.Renderable;
 import com.xkings.core.main.Assets;
 import com.xkings.pokemontd.Player;
-import com.xkings.pokemontd.entity.TowerType;
-import com.xkings.pokemontd.manager.CreepManager;
+import com.xkings.pokemontd.entity.tower.TowerType;
 import com.xkings.pokemontd.manager.TowerManager;
 import com.xkings.pokemontd.manager.WaveManager;
 

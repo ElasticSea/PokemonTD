@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.xkings.pokemontd.App;
 import com.xkings.pokemontd.component.SpriteComponent;
 import com.xkings.pokemontd.component.TowerTypeComponent;
+import com.xkings.pokemontd.component.WaveComponent;
 
 /**
  * Created by Tomas on 10/8/13.
@@ -26,7 +27,7 @@ class EntityInfo extends DisplayBlock {
         if (entity != null) {
             if (entity.getComponent(TowerTypeComponent.class) != null) {
                 renderTower(entity);
-            } else {
+            } else if(entity.getComponent(WaveComponent.class) != null){
                 renderCreep(entity);
             }
         }

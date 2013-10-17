@@ -1,8 +1,5 @@
 package com.xkings.pokemontd;
 
-import com.xkings.pokemontd.Health;
-import com.xkings.pokemontd.Treasure;
-
 /**
  * Created by Tomas on 10/5/13.
  */

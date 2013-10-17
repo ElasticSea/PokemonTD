@@ -2,7 +2,7 @@ package com.xkings.pokemontd.component;
 
 import com.artemis.Component;
 import com.xkings.pokemontd.Treasure;
-import com.xkings.pokemontd.entity.TowerType;
+import com.xkings.pokemontd.entity.tower.TowerType;
 
 import java.util.ArrayList;
 import java.util.List;

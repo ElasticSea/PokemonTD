@@ -36,6 +36,7 @@ import com.xkings.pokemontd.map.PathPack;
 import com.xkings.pokemontd.system.ClosestEnemySystem;
 import com.xkings.pokemontd.system.GetCreep;
 import com.xkings.pokemontd.system.GetTower;
+import com.xkings.pokemontd.system.abilitySytems.projectile.AoeSystem;
 import com.xkings.pokemontd.system.abilitySytems.projectile.FireProjectilSystem;
 import com.xkings.pokemontd.system.abilitySytems.projectile.HitProjectileSystem;
 import com.xkings.pokemontd.system.autonomous.*;
@@ -58,9 +59,11 @@ public class App extends Game2D {
     private TowerManager towerManager;
     private CreepManager creepManager;
     private RenderSpriteSystem renderSpriteSystem;
+    private RenderTextSystem renderTextSystem;
     private RenderHealthSystem renderHealthSystem;
     private RenderDebugSystem renderDebugSystem;
     private ClosestEnemySystem closestEnemySystem;
+    private AoeSystem aoeSystem;
     private GetTower getTowerSystem;
     private GetCreep getCreepSystem;
     private PathPack pathPack;
@@ -87,7 +90,6 @@ public class App extends Game2D {
         assets = new PokemonAssets();
         spriteBatch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
-
 
         MapData map = createTestMap();
         tileMap = map.getTileMap();
@@ -133,22 +135,26 @@ public class App extends Game2D {
 
     private void initializeSystems() {
         renderSpriteSystem = new RenderSpriteSystem(cameraHandler.getCamera());
+        renderTextSystem = new RenderTextSystem(cameraHandler.getCamera());
         renderHealthSystem = new RenderHealthSystem(cameraHandler.getCamera());
         renderDebugSystem = new RenderDebugSystem(cameraHandler);
         closestEnemySystem = new ClosestEnemySystem(WaveComponent.class);
+        aoeSystem = new AoeSystem();
         getTowerSystem = new GetTower();
         getCreepSystem = new GetCreep();
 
         world.setSystem(renderSpriteSystem, true);
+        world.setSystem(renderTextSystem, true);
         world.setSystem(renderHealthSystem, true);
         world.setSystem(renderDebugSystem, true);
         world.setSystem(closestEnemySystem, true);
         world.setSystem(getTowerSystem, true);
         world.setSystem(getCreepSystem, true);
+        world.setSystem(aoeSystem, true);
         world.setSystem(new MovementSystem());
         world.setSystem(new WaveSystem(player));
         world.setSystem(new FireProjectilSystem(closestEnemySystem, projectileManager));
-        world.setSystem(new HitProjectileSystem());
+        world.setSystem(new HitProjectileSystem(aoeSystem));
         world.setSystem(new DeathSystem(player));
         world.initialize();
     }
@@ -170,14 +176,12 @@ public class App extends Game2D {
 
     private class DefaultRenderer implements Renderable {
 
-        private final ScreenText lifes;
         private final SpriteBatch onScreenRasterRender;
         private final Renderable renderer;
         private final Camera camera;
 
         protected DefaultRenderer(Ui Ui, Camera camera) {
             this.camera = camera;
-            lifes = new ScreenText(assets.getSmoothFont(), BitmapFont.HAlignment.RIGHT);
             onScreenRasterRender = new SpriteBatch();
             onScreenRasterRender.setShader(Shader.getShader("smoothText"));
             onScreenRasterRender.enableBlending();
@@ -188,11 +192,28 @@ public class App extends Game2D {
         public void render() {
             drawMap();
             drawPath();
+            drawGrid();
             renderSpriteSystem.process();
+            renderTextSystem.process();
             renderHealthSystem.process();
             renderDebugSystem.process();
             renderer.render();
-            // lifes.render(onScreenRasterRender);
+        }
+
+        private void drawGrid() {
+            if (DEBUG != null) {
+                shapeRenderer.setProjectionMatrix(camera.combined);
+                shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+                int height = tileMap.getHeight() * tileMap.TILE_SIZE;
+                int width = tileMap.getWidth() * tileMap.TILE_SIZE;
+                for (int i = 0; i < height; i++) {
+                    shapeRenderer.line(0, i, width, i);
+                }
+                for (int i = 0; i < width; i++) {
+                    shapeRenderer.line(i, 0, i, height);
+                }
+                shapeRenderer.end();
+            }
         }
 
         private void drawMap() {

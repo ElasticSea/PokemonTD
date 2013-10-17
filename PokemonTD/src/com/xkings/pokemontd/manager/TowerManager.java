@@ -9,8 +9,8 @@ import com.xkings.pokemontd.component.TowerTypeComponent;
 import com.xkings.pokemontd.component.TreasureComponent;
 import com.xkings.pokemontd.component.UpgradeComponent;
 import com.xkings.pokemontd.entity.StaticObject;
-import com.xkings.pokemontd.entity.Tower;
-import com.xkings.pokemontd.entity.TowerType;
+import com.xkings.pokemontd.entity.tower.Tower;
+import com.xkings.pokemontd.entity.tower.TowerType;
 import com.xkings.pokemontd.entity.creep.CreepType;
 
 import java.util.List;
@@ -200,7 +200,7 @@ public class TowerManager {
         Entity tower = selectedTowerEntity.getTower();
         // FIXME get hierarchy working
         return TowerType.getHierarchy().get(
-                tower != null ? tower.getComponent(TowerTypeComponent.class).getTowerType() : null);
+                tower != null ? tower.getComponent(TowerTypeComponent.class).getTowerType().getName() : null);
         // return new ArrayList<TowerType>();
     }
 

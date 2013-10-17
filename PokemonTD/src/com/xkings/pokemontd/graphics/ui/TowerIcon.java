@@ -2,7 +2,7 @@ package com.xkings.pokemontd.graphics.ui;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.xkings.pokemontd.entity.TowerType;
+import com.xkings.pokemontd.entity.tower.TowerType;
 import com.xkings.pokemontd.manager.TowerManager;
 
 /**

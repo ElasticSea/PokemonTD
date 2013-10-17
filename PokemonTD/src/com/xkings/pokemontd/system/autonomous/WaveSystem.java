@@ -33,10 +33,10 @@ public class WaveSystem extends EntityProcessingSystem {
     @Override
     protected void process(Entity entity) {
         PathComponent pathComponent = pathMapper.get(entity);
-        int damage = damageMapper.get(entity).getDamage();
+        float damage = damageMapper.get(entity).getDamage();
         PositionComponent positionComponent = positionMapper.get(entity);
         if (pathComponent.isFinished()) {
-            player.getHealth().decrees(damage);
+            player.getHealth().decrees((int) damage);
             pathComponent.reset();
             positionComponent.getPoint().set(pathComponent.get());
         }
