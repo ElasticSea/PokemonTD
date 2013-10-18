@@ -105,6 +105,7 @@ public class TowerManager implements Clickable {
                 clickedTower = entity;
                 this.setStatus(Status.NONE);
                 selectedTower = null;
+                removeFakeTower();
                 return true;
             }
         }
