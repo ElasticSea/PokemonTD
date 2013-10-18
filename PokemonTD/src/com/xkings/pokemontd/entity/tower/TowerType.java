@@ -21,20 +21,20 @@ public class TowerType implements CommonDataType {
     private final TowerName name;
     private final AtlasRegion texture;
     private final AtlasRegion blockedTexture;
-    private final float speed;
     private final float size;
+    private final float speed;
     private final float damage;
     private final float range;
     private final AbilityComponent attack;
     private final Treasure cost;
 
-    public TowerType(TowerName name, float speed, float size, float damage, float range, AbilityComponent attack,
+    public TowerType(TowerName name, float size, float speed, float damage, float range, AbilityComponent attack,
                      Treasure cost) {
         this.name = name;
         this.texture = Assets.getTexture(name.toString().toLowerCase());
         this.blockedTexture = Assets.getTexture("blocked");
-        this.speed = speed;
         this.size = size;
+        this.speed = speed;
         this.damage = damage;
         this.range = range;
         this.attack = attack;

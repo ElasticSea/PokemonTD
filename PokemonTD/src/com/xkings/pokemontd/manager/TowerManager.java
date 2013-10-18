@@ -32,10 +32,8 @@ public class TowerManager implements Clickable {
 
 
     public void setPickedTower(TowerType towerType) {
+        removeFakeTower();
         if (towerType != null) {
-            if (status == Status.CONFIRMING_PLACING) {
-                removeFakeTower();
-            }
             if (clickedTower == null) {
                 status = Status.PLACING_TOWER;
                 selectedTower = towerType;

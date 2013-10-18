@@ -22,17 +22,17 @@ public class TowerTypeBuilder {
 
     private List<TowerType> getData(float scale) {
         List<TowerType> list = new ArrayList<TowerType>();
-        list.add(new TowerType(TowerName.Needle, SIZE * scale, SPEED * scale, 15, RANGE * scale,
+        list.add(new TowerType(TowerName.Needle, SIZE * scale, SPEED, 15, RANGE * scale,
                 ProjectileComponent.getNormal(scale), new Treasure(10)));
-        list.add(new TowerType(TowerName.Pinch, SIZE * scale, SPEED * scale, 45, RANGE * scale,
+        list.add(new TowerType(TowerName.Pinch, SIZE * scale, SPEED, 45, RANGE * scale,
                 ProjectileComponent.getNormal(scale), new Treasure(20)));
-        list.add(new TowerType(TowerName.Sting, SIZE * scale, SPEED * scale, 135, RANGE * scale,
+        list.add(new TowerType(TowerName.Sting, SIZE * scale, SPEED, 135, RANGE * scale,
                 ProjectileComponent.getNormal(scale), new Treasure(40)));
-        list.add(new TowerType(TowerName.Scratch, SIZE * scale, SPEED * scale, 5.625f, RANGE * scale,
+        list.add(new TowerType(TowerName.Scratch, SIZE * scale, SPEED, 5.625f, RANGE * scale,
                 ProjectileComponent.getSplash(scale, 2), new Treasure(10)));
-        list.add(new TowerType(TowerName.Bite, SIZE * scale, SPEED * scale, 16.875f, RANGE * scale,
+        list.add(new TowerType(TowerName.Bite, SIZE * scale, SPEED, 16.875f, RANGE * scale,
                 ProjectileComponent.getSplash(scale, 2), new Treasure(20)));
-        list.add(new TowerType(TowerName.Smash, SIZE * scale, SPEED * scale, 50.625f, RANGE * scale,
+        list.add(new TowerType(TowerName.Smash, SIZE * scale, SPEED, 50.625f, RANGE * scale,
                 ProjectileComponent.getSplash(scale, 2), new Treasure(40)));
         return list;
     }
