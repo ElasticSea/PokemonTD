@@ -15,7 +15,7 @@ public class Health {
     }
 
     public void decrees(int count) {
-        currentHealth -= count;
+        currentHealth = Math.max(0, currentHealth - count);
     }
 
     public float getRatio() {
