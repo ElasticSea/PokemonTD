@@ -45,7 +45,7 @@ public class DeathSystem extends EntityProcessingSystem {
     }
 
     private boolean isAlive(Health health) {
-        return health.getLives() > 0;
+        return health.getHealth() > 0;
     }
 
 }

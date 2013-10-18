@@ -1,6 +1,5 @@
 package com.xkings.pokemontd.graphics.ui;
 
-import com.artemis.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -9,6 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.xkings.core.graphics.Renderable;
 import com.xkings.pokemontd.Player;
 import com.xkings.pokemontd.entity.tower.TowerType;
+import com.xkings.pokemontd.manager.CreepManager;
 import com.xkings.pokemontd.manager.TowerManager;
 import com.xkings.pokemontd.manager.WaveManager;
 
@@ -31,11 +31,13 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
     private final EntityInfo entityInfo;
     private final GuiBox statusBar;
     private final GuiBox nextWaveInfo;
+    private final CreepManager creepManager;
     private InteractiveBlock displayBar;
     private InteractiveBlock towerTable;
     private List<TowerType> lastHierarchy;
 
-    public Ui(Player player, WaveManager waveManager, TowerManager towerManager) {
+    public Ui(Player player, WaveManager waveManager, CreepManager creepManager, TowerManager towerManager) {
+        this.creepManager = creepManager;
         this.towerManager = towerManager;
         shapeRenderer = new ShapeRenderer();
         spriteBatch = new SpriteBatch();
@@ -61,7 +63,7 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
                         shapeRenderer);
         towerTable =
                 new GuiBox(new Rectangle(width - squareHeight, 0, squareHeight, squareHeight), offset, shapeRenderer);
-        entityInfo = new EntityInfo(this, displayBar.rectangle, shapeRenderer,spriteBatch);
+        entityInfo = new EntityInfo(this, displayBar.rectangle, shapeRenderer, spriteBatch);
         clickables.add(displayBar);
         clickables.add(towerTable);
         clickables.add(entityInfo);
@@ -143,12 +145,12 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         return condition;
     }
 
-    public void updateEntityInfo(Entity entity) {
-        entityInfo.update(entity);
-    }
-
     public void register(InteractiveBlock button) {
         clickables.add(button);
+    }
+
+    public CreepManager getCreepManager() {
+        return creepManager;
     }
 
     public TowerManager getTowerManager() {

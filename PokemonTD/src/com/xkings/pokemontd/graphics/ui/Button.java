@@ -13,34 +13,53 @@ import com.xkings.core.main.Assets;
  */
 abstract class Button extends InteractiveBlock {
     private final SpriteBatch spriteBatch;
-    private final String text;
+    private String text;
     private final BitmapFont font;
-    private final BitmapFont.TextBounds fontBounds;
     private final Vector2 position;
     private final ShapeRenderer shapeRenderer;
+    private final Color color;
 
-    public Button(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch, String text) {
+    protected Button(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch, String text) {
+        this(rectangle, shapeRenderer, spriteBatch, text, Color.CLEAR);
+    }
+
+    public Button(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch, String text, Color color) {
         super(rectangle);
         this.shapeRenderer = shapeRenderer;
         this.spriteBatch = spriteBatch;
         this.text = text;
+        this.color = color;
         this.font = Assets.createFont("pixelFont");
-        this.font.setScale(0.25f);
-        this.fontBounds = font.getBounds(text);
-        this.position =
-                new Vector2((rectangle.width - fontBounds.width) / 2f, (rectangle.height + fontBounds.height) / 2f);
+        this.font.setScale(0.50f);
+        this.position = recalculatePosition(text);
     }
+
 
     @Override
     public void render() {
-        /*shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.GREEN);
-        shapeRenderer.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
-        shapeRenderer.end(); */
+        if (color != Color.CLEAR) {
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            shapeRenderer.setColor(color);
+            shapeRenderer.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+            shapeRenderer.end();
+        }
 
         spriteBatch.begin();
         font.draw(spriteBatch, text, rectangle.x + position.x, rectangle.y + position.y);
         spriteBatch.end();
+    }
+
+    public void render(String text) {
+        if (!text.equals(this.text)) {
+            this.text = text;
+            recalculatePosition(text);
+        }
+        render();
+    }
+
+    private Vector2 recalculatePosition(String text) {
+        BitmapFont.TextBounds fontBounds = font.getBounds(text);
+        return new Vector2((rectangle.width - fontBounds.width) / 2f, (rectangle.height + fontBounds.height) / 2f);
     }
 
 }

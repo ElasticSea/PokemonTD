@@ -45,7 +45,7 @@ import java.util.Random;
 public class App extends Game2D {
 
     public static final Random RANDOM = new Random();
-    public static final int WORLD_SCALE = 32;
+    public static final int WORLD_SCALE = 100;
     public static final int WORLD_WIDTH = 20;
     public static final int WORLD_HEIGHT = 24;
     public static final Rectangle WORLD_RECT =
@@ -105,7 +105,7 @@ public class App extends Game2D {
         initializeContent();
         initializeManagers();
         initializeSystems();
-        ui = new Ui(player, waveManager, towerManager);
+        ui = new Ui(player, waveManager, creepManager, towerManager);
         renderer = new DefaultRenderer(ui, camera);
         initializeInput();
     }

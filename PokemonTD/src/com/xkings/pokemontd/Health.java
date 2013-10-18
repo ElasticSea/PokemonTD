@@ -10,7 +10,7 @@ public class Health {
         this.currentHealth = health;
     }
 
-    public int getLives() {
+    public int getHealth() {
         return currentHealth;
     }
 
