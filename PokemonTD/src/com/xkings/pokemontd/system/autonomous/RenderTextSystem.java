@@ -38,7 +38,6 @@ public class RenderTextSystem extends EntityProcessingSystem {
     public RenderTextSystem(Camera camera) {
         super(Aspect.getAspectForAll(PositionComponent.class, SizeComponent.class, TextComponent.class));
         this.camera = camera;
-        this.font.setScale(0.05f);
     }
 
     @Override
@@ -53,7 +52,7 @@ public class RenderTextSystem extends EntityProcessingSystem {
         BitmapFont.TextBounds fontBounds = font.getBounds(text);
         float x = positionComponent.getPoint().x - fontBounds.width / 2f;
         float y = positionComponent.getPoint().y + fontBounds.height / 2f;
-        spriteBatch.setColor(tintMapper.has(e) ? tintMapper.get(e).getTint() : Color.WHITE);
+        font.setColor(tintMapper.has(e) ? tintMapper.get(e).getTint() : Color.WHITE);
         font.draw(spriteBatch, text, x, y);
         spriteBatch.end();
     }

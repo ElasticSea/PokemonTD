@@ -1,10 +1,12 @@
 package com.xkings.pokemontd;
 
+import aurelienribon.tweenengine.Tween;
 import com.artemis.Entity;
 import com.artemis.World;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -20,6 +22,8 @@ import com.xkings.core.logic.Clock;
 import com.xkings.core.logic.WorldUpdater;
 import com.xkings.core.main.Game2D;
 import com.xkings.core.pathfinding.GenericBlueprint;
+import com.xkings.core.tween.TweenManagerAdapter;
+import com.xkings.core.tween.Vector3Accessor;
 import com.xkings.pokemontd.component.WaveComponent;
 import com.xkings.pokemontd.graphics.TileMap;
 import com.xkings.pokemontd.graphics.ui.Ui;
@@ -39,6 +43,7 @@ import com.xkings.pokemontd.system.abilitySytems.projectile.AoeSystem;
 import com.xkings.pokemontd.system.abilitySytems.projectile.FireProjectilSystem;
 import com.xkings.pokemontd.system.abilitySytems.projectile.HitProjectileSystem;
 import com.xkings.pokemontd.system.autonomous.*;
+import com.xkings.pokemontd.tween.ColorAccessor;
 
 import java.util.Random;
 
@@ -50,7 +55,7 @@ public class App extends Game2D {
     public static final int WORLD_HEIGHT = 24;
     public static final Rectangle WORLD_RECT =
             new Rectangle(0, 0, WORLD_WIDTH * WORLD_SCALE, WORLD_HEIGHT * WORLD_SCALE);
-    public static final float WAVE_INTERVAL = 5f;
+    public static final float WAVE_INTERVAL = 35f;
     public static final int PATH_SIZE = 2;
     public static Entity pathBlock;
     private DefaultRenderer renderer;
@@ -77,6 +82,19 @@ public class App extends Game2D {
     private static PokemonAssets assets;
     private ProjectileManager projectileManager;
     private Ui ui;
+    // Tweens
+    private static TweenManagerAdapter tweenManager = initTweenManager();
+
+    public static TweenManagerAdapter getTweenManager() {
+        return tweenManager;
+    }
+
+    private static TweenManagerAdapter initTweenManager() {
+        TweenManagerAdapter manager = new TweenManagerAdapter();
+        Tween.registerAccessor(Color.class, new ColorAccessor());
+        Tween.registerAccessor(Vector3.class, new Vector3Accessor());
+        return manager;
+    }
 
     public App(String[] args) {
         super(args);
@@ -88,6 +106,7 @@ public class App extends Game2D {
         renderer.render();
     }
 
+
     @Override
     protected void init(OrthographicCamera camera) {
         this.clock = Clock.createInstance("Logic", true, true);
@@ -96,7 +115,7 @@ public class App extends Game2D {
         spriteBatch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
 
-        MapData map = createTestMap();
+        MapData map = createMap();
         tileMap = map.getTileMap();
         blueprint = map.getBlueprint();
         pathPack = map.getPathPack();
@@ -108,14 +127,7 @@ public class App extends Game2D {
         ui = new Ui(player, waveManager, creepManager, towerManager);
         renderer = new DefaultRenderer(ui, camera);
         initializeInput();
-    }
-
-    private void initializeInput() {
-        InputMultiplexer inputMultiplexer = new InputMultiplexer();
-        inputMultiplexer.addProcessor(new GestureDetector(ui));
-        inputMultiplexer.addProcessor(new EnhancedGestureDetector(
-                new InGameInputProcessor(getCreepSystem, towerManager, creepManager, cameraHandler)));
-        Gdx.input.setInputProcessor(inputMultiplexer);
+        initializeTween();
     }
 
     private void initializeWorld() {
@@ -162,8 +174,20 @@ public class App extends Game2D {
         world.initialize();
     }
 
+    private void initializeInput() {
+        InputMultiplexer inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(new GestureDetector(ui));
+        inputMultiplexer.addProcessor(new EnhancedGestureDetector(
+                new InGameInputProcessor(getCreepSystem, towerManager, creepManager, cameraHandler)));
+        Gdx.input.setInputProcessor(inputMultiplexer);
+    }
 
-    private MapData createTestMap() {
+    private void initializeTween() {
+        clock.addService(tweenManager);
+    }
+
+
+    private MapData createMap() {
         return new MapBuilder(WORLD_WIDTH / PATH_SIZE, WORLD_HEIGHT / PATH_SIZE, 3, 11, PATH_SIZE,
                 MapBuilder.Direction.DOWN, 0.40f).addStraight().addRight().addStraight().addLeft().addStraight(
                 2).addLeft().addStraight().addLeft().addRight().addStraight().addRight().addStraight(

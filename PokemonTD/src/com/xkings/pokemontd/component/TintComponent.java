@@ -8,7 +8,7 @@ public class TintComponent extends Component {
     private Color tint;
 
     public TintComponent(Color tint) {
-        this.tint = tint;
+        this.tint = new Color(tint);
     }
 
     public Color getTint() {
