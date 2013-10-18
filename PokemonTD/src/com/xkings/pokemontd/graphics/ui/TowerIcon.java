@@ -8,7 +8,7 @@ import com.xkings.pokemontd.manager.TowerManager;
 /**
  * Created by Tomas on 10/8/13.
  */
-abstract class TowerIcon extends DisplayBlock {
+abstract class TowerIcon extends InteractiveBlock {
 
     protected TowerType towerType;
     private final SpriteBatch spriteBatch;

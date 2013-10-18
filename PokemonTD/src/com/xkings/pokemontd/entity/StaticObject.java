@@ -8,6 +8,7 @@ import com.xkings.core.component.RangeComponent;
 import com.xkings.core.component.RotationComponent;
 import com.xkings.core.component.SizeComponent;
 import com.xkings.core.entity.ConcreteEntity;
+import com.xkings.pokemontd.App;
 import com.xkings.pokemontd.component.PathComponent;
 import com.xkings.pokemontd.component.SpriteComponent;
 import com.xkings.pokemontd.component.TintComponent;

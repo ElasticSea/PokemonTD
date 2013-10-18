@@ -7,7 +7,7 @@ import com.xkings.core.main.Assets;
  * Created by Tomas on 10/13/13.
  */
 public class ProjectileComponent extends AbilityComponent {
-    public static final float DEFAULT_SPEED = 20.0f;
+    public static final float DEFAULT_SPEED = 2.0f;
     public static final float DEFAULT_SIZE = 0.1f;
     private float range;
     private float splashRange;
@@ -16,12 +16,13 @@ public class ProjectileComponent extends AbilityComponent {
     private float speed;
     private float size;
 
-    public static AbilityComponent getNormal() {
-        return getSplash(0);
+    public static AbilityComponent getNormal(float scale) {
+        return getSplash(scale, 0);
     }
 
-    public static AbilityComponent getSplash(float range) {
-        return new ProjectileComponent("bullet", Type.FOLLOW_TARGET, DEFAULT_SIZE, DEFAULT_SPEED, range);
+    public static AbilityComponent getSplash(float scale, float range) {
+        return new ProjectileComponent("bullet", Type.FOLLOW_TARGET, DEFAULT_SIZE * scale, DEFAULT_SPEED * scale,
+                range);
     }
 
     public enum Type {

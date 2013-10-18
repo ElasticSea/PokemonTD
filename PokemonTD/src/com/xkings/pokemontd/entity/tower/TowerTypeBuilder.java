@@ -16,31 +16,31 @@ import java.util.Map;
 
 public class TowerTypeBuilder {
 
-    public static final float SPEED = 1f;
-    public static final float SIZE = 1f;
+    public static final float SPEED = 1;
+    public static final float SIZE = 1;
+    public static final int RANGE = 3;
 
-    private final List<TowerType> data = getData();
-
-    private List<TowerType> getData() {
+    private List<TowerType> getData(float scale) {
         List<TowerType> list = new ArrayList<TowerType>();
-        list.add(
-                new TowerType(TowerName.Needle, SIZE, SPEED, 15, 3, ProjectileComponent.getNormal(), new Treasure(10)));
-        list.add(new TowerType(TowerName.Pinch, SIZE, SPEED, 45, 3, ProjectileComponent.getNormal(), new Treasure(20)));
-        list.add(
-                new TowerType(TowerName.Sting, SIZE, SPEED, 135, 3, ProjectileComponent.getNormal(), new Treasure(40)));
-        list.add(new TowerType(TowerName.Scratch, SIZE, SPEED, 5.625f, 3, ProjectileComponent.getSplash(2),
-                new Treasure(10)));
-        list.add(new TowerType(TowerName.Bite, SIZE, SPEED, 16.875f, 3, ProjectileComponent.getSplash(2),
-                new Treasure(20)));
-        list.add(new TowerType(TowerName.Smash, SIZE, SPEED, 50.625f, 3, ProjectileComponent.getSplash(2),
-                new Treasure(40)));
+        list.add(new TowerType(TowerName.Needle, SIZE * scale, SPEED * scale, 15, RANGE * scale,
+                ProjectileComponent.getNormal(scale), new Treasure(10)));
+        list.add(new TowerType(TowerName.Pinch, SIZE * scale, SPEED * scale, 45, RANGE * scale,
+                ProjectileComponent.getNormal(scale), new Treasure(20)));
+        list.add(new TowerType(TowerName.Sting, SIZE * scale, SPEED * scale, 135, RANGE * scale,
+                ProjectileComponent.getNormal(scale), new Treasure(40)));
+        list.add(new TowerType(TowerName.Scratch, SIZE * scale, SPEED * scale, 5.625f, RANGE * scale,
+                ProjectileComponent.getSplash(scale, 2), new Treasure(10)));
+        list.add(new TowerType(TowerName.Bite, SIZE * scale, SPEED * scale, 16.875f, RANGE * scale,
+                ProjectileComponent.getSplash(scale, 2), new Treasure(20)));
+        list.add(new TowerType(TowerName.Smash, SIZE * scale, SPEED * scale, 50.625f, RANGE * scale,
+                ProjectileComponent.getSplash(scale, 2), new Treasure(40)));
         return list;
     }
 
 
-    public Map<TowerName, TowerType> build() {
+    public Map<TowerName, TowerType> build(float scale) {
         Map<TowerName, TowerType> map = new HashMap<TowerName, TowerType>();
-        for (TowerType towerType : data) {
+        for (TowerType towerType : getData(scale)) {
             map.put(towerType.getName(), towerType);
         }
         return map;

@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 /**
  * Created by Tomas on 10/8/13.
  */
-class GuiBox extends DisplayBlock {
+class GuiBox extends InteractiveBlock {
 
     public static final float darker = 0.0f;
     public static final float lighter = 0.1f;

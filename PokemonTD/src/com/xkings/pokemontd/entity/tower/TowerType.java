@@ -1,6 +1,7 @@
 package com.xkings.pokemontd.entity.tower;
 
 import com.xkings.core.main.Assets;
+import com.xkings.pokemontd.App;
 import com.xkings.pokemontd.Treasure;
 import com.xkings.pokemontd.component.attack.AbilityComponent;
 import com.xkings.pokemontd.entity.datatypes.CommonDataType;
@@ -92,7 +93,7 @@ public class TowerType implements CommonDataType {
         return map;
     }
 
-    private static Map<TowerName, TowerType> towerTypeMap = new TowerTypeBuilder().build();
+    private static Map<TowerName, TowerType> towerTypeMap = new TowerTypeBuilder().build(App.WORLD_SCALE);
 
     private static List<TowerType> getTypes(TowerName... names) {
         List<TowerType> list = new ArrayList<TowerType>();

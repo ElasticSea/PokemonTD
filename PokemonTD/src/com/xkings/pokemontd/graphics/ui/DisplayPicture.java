@@ -7,12 +7,12 @@ import com.badlogic.gdx.math.Rectangle;
 /**
  * Created by Tomas on 10/8/13.
  */
-abstract class Icon extends InteractiveBlock {
+public class DisplayPicture extends DisplayBlock {
 
     private final SpriteBatch spriteBatch;
     private final TextureAtlas.AtlasRegion texture;
 
-    Icon(Rectangle rectangle, SpriteBatch spriteBatch, TextureAtlas.AtlasRegion texture) {
+    DisplayPicture(Rectangle rectangle, SpriteBatch spriteBatch, TextureAtlas.AtlasRegion texture) {
         super(rectangle);
         this.spriteBatch = spriteBatch;
         this.texture = texture;

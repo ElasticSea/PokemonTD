@@ -6,13 +6,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.graphics.Renderable;
-import com.xkings.core.graphics.ScreenText;
 import com.xkings.core.graphics.Shader;
 import com.xkings.core.graphics.camera.BoundedCameraHandler;
 import com.xkings.core.graphics.camera.CameraHandler;
@@ -46,7 +45,13 @@ import java.util.Random;
 public class App extends Game2D {
 
     public static final Random RANDOM = new Random();
+    public static final int WORLD_SCALE = 2;
+    public static final int WORLD_WIDTH = 20;
+    public static final int WORLD_HEIGHT = 24;
+    public static final Rectangle WORLD_RECT =
+            new Rectangle(0, 0, WORLD_WIDTH * WORLD_SCALE, WORLD_HEIGHT * WORLD_SCALE);
     public static final float WAVE_INTERVAL = 5f;
+    public static final int PATH_SIZE = 2;
     public static Entity pathBlock;
     private DefaultRenderer renderer;
     private ShapeRenderer shapeRenderer;
@@ -95,13 +100,12 @@ public class App extends Game2D {
         tileMap = map.getTileMap();
         blueprint = map.getBlueprint();
         pathPack = map.getPathPack();
-        this.cameraHandler = new BoundedCameraHandler(camera, tileMap.getWidth() * tileMap.TILE_SIZE,
-                tileMap.getHeight() * tileMap.TILE_SIZE, 0.001f);
+        cameraHandler = new BoundedCameraHandler(camera, WORLD_RECT, 0.001f);
 
         initializeContent();
         initializeManagers();
         initializeSystems();
-        ui = new Ui(player, waveManager, towerManager, camera);
+        ui = new Ui(player, waveManager, towerManager);
         renderer = new DefaultRenderer(ui, camera);
         initializeInput();
     }
@@ -110,8 +114,7 @@ public class App extends Game2D {
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(new GestureDetector(ui));
         inputMultiplexer.addProcessor(new EnhancedGestureDetector(
-                new InGameInputProcessor(ui, getTowerSystem, getCreepSystem, towerManager, creepManager,
-                        cameraHandler)));
+                new InGameInputProcessor(getCreepSystem, towerManager, creepManager, cameraHandler)));
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
@@ -161,8 +164,8 @@ public class App extends Game2D {
 
 
     private MapData createTestMap() {
-        return new MapBuilder(9, 12, 3, 11, MapBuilder.Direction.DOWN,
-                0.40f).addStraight().addRight().addStraight().addLeft().addStraight(
+        return new MapBuilder(WORLD_WIDTH / PATH_SIZE, WORLD_HEIGHT / PATH_SIZE, 3, 11, PATH_SIZE,
+                MapBuilder.Direction.DOWN, 0.40f).addStraight().addRight().addStraight().addLeft().addStraight(
                 2).addLeft().addStraight().addLeft().addRight().addStraight().addRight().addStraight(
                 2).addRight().addStraight(3).addLeft().addStraight().addLeft().addStraight(5).addLeft().addStraight(
                 6).addLeft().addStraight().addRight().addStraight().build();
@@ -207,10 +210,10 @@ public class App extends Game2D {
                 int height = tileMap.getHeight() * tileMap.TILE_SIZE;
                 int width = tileMap.getWidth() * tileMap.TILE_SIZE;
                 for (int i = 0; i < height; i++) {
-                    shapeRenderer.line(0, i, width, i);
+                    shapeRenderer.line(0, i * WORLD_SCALE, width * WORLD_SCALE, i * WORLD_SCALE);
                 }
                 for (int i = 0; i < width; i++) {
-                    shapeRenderer.line(i, 0, i, height);
+                    shapeRenderer.line(i * WORLD_SCALE, 0, i * WORLD_SCALE, height * WORLD_SCALE);
                 }
                 shapeRenderer.end();
             }
@@ -221,8 +224,8 @@ public class App extends Game2D {
             spriteBatch.begin();
             for (int i = 0; i < tileMap.getWidth(); i++) {
                 for (int j = 0; j < tileMap.getHeight(); j++) {
-                    spriteBatch.draw(tileMap.get(i, j), i * tileMap.TILE_SIZE, j * tileMap.TILE_SIZE, tileMap.TILE_SIZE,
-                            tileMap.TILE_SIZE);
+                    int size = tileMap.TILE_SIZE * WORLD_SCALE;
+                    spriteBatch.draw(tileMap.get(i, j), i * size, j * size, size, size);
                 }
             }
             spriteBatch.end();

@@ -2,13 +2,11 @@ package com.xkings.pokemontd.graphics.ui;
 
 import com.artemis.Entity;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Rectangle;
 import com.xkings.core.graphics.Renderable;
-import com.xkings.core.main.Assets;
 import com.xkings.pokemontd.Player;
 import com.xkings.pokemontd.entity.tower.TowerType;
 import com.xkings.pokemontd.manager.TowerManager;
@@ -26,26 +24,22 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
     private final ShapeRenderer shapeRenderer;
     private final SpriteBatch spriteBatch;
     private final TowerManager towerManager;
-    private final Camera camera;
-    private final ArrayList<DisplayBlock> displayBlocks;
+    private final ArrayList<InteractiveBlock> clickables;
     private final int width;
     private final int height;
-    private final GuiBox menuBar;
     private final List<TowerIcon> towerIcons;
     private final EntityInfo entityInfo;
     private final GuiBox statusBar;
     private final GuiBox nextWaveInfo;
-    private DisplayBlock displayBar;
-    private DisplayBlock towerTable;
-    private Icon sellBlock;
+    private InteractiveBlock displayBar;
+    private InteractiveBlock towerTable;
     private List<TowerType> lastHierarchy;
 
-    public Ui(Player player, WaveManager waveManager, TowerManager towerManager,  Camera camera) {
-        this.camera = camera;
+    public Ui(Player player, WaveManager waveManager, TowerManager towerManager) {
         this.towerManager = towerManager;
         shapeRenderer = new ShapeRenderer();
         spriteBatch = new SpriteBatch();
-        displayBlocks = new ArrayList<DisplayBlock>();
+        clickables = new ArrayList<InteractiveBlock>();
 
 
         width = Gdx.graphics.getWidth();
@@ -60,40 +54,25 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         int statusSize = 48;
         statusBar = new StatusBar(player, new Rectangle(0, height - statusSize, width, statusSize), statusSize / 8,
                 shapeRenderer, spriteBatch);
-        menuBar = new GuiBox(new Rectangle(width / 2f - iconSize * 1.5f, height - iconSize, iconSize * 3, iconSize), 0,
-                shapeRenderer);
-        nextWaveInfo = new WaveInfo(new Rectangle(0, 0, squareHeight, squareHeight), offset, shapeRenderer,
-                spriteBatch,waveManager);
-        displayBar = new GuiBox(new Rectangle(squareHeight-offset, 0, width-squareHeight+offset, stripHeight), offset,
-                shapeRenderer);
+        nextWaveInfo = new WaveInfo(new Rectangle(0, 0, squareHeight, squareHeight), offset, shapeRenderer, spriteBatch,
+                waveManager);
+        displayBar =
+                new GuiBox(new Rectangle(squareHeight - offset, 0, width - squareHeight + offset, stripHeight), offset,
+                        shapeRenderer);
         towerTable =
                 new GuiBox(new Rectangle(width - squareHeight, 0, squareHeight, squareHeight), offset, shapeRenderer);
-        entityInfo = new EntityInfo(displayBar.rectangle, spriteBatch);
-        displayBlocks.add(displayBar);
-        displayBlocks.add(towerTable);
-      //  displayBlocks.add(menuBar);
-        displayBlocks.add(entityInfo);
-        displayBlocks.add(statusBar);
-        displayBlocks.add(nextWaveInfo);
+        entityInfo = new EntityInfo(this, displayBar.rectangle, shapeRenderer,spriteBatch);
+        clickables.add(displayBar);
+        clickables.add(towerTable);
+        clickables.add(entityInfo);
+        clickables.add(statusBar);
+        clickables.add(nextWaveInfo);
 
         towerIcons = createTowerIcons(iconSize, towerTable.rectangle);
 
         for (TowerIcon towerIcon : towerIcons) {
-            displayBlocks.add(towerIcon);
+            clickables.add(towerIcon);
         }
-       // placeMenuIcons(iconSize, menuBar.rectangle);
-        // update(lastHierarchy);
-    }
-
-    private void placeMenuIcons(float size, Rectangle rect) {
-        sellBlock = new Icon(new Rectangle(rect.x, rect.y, size, size), spriteBatch, Assets.getTexture("coin")) {
-            @Override
-            public void process(float x, float y) {
-                towerManager.toggleSellingTowers();
-            }
-        };
-        displayBlocks.add(sellBlock);
-
     }
 
     private List<TowerIcon> createTowerIcons(float size, Rectangle rect) {
@@ -125,7 +104,7 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
             lastHierarchy = towerManager.getCurrentTree();
             update(lastHierarchy);
         }
-        for (DisplayBlock displayBlock : displayBlocks) {
+        for (DisplayBlock displayBlock : clickables) {
             displayBlock.render();
         }
     }
@@ -156,8 +135,8 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
 
     private boolean checkUiHit(float x, float y) {
         boolean condition = false;
-        for (DisplayBlock displayBlock : displayBlocks) {
-            if (displayBlock.hit(x, Gdx.graphics.getHeight() - y)) {
+        for (InteractiveBlock interactiveBlock : clickables) {
+            if (interactiveBlock.hit(x, Gdx.graphics.getHeight() - y)) {
                 condition = true;
             }
         }
@@ -166,5 +145,13 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
 
     public void updateEntityInfo(Entity entity) {
         entityInfo.update(entity);
+    }
+
+    public void register(InteractiveBlock button) {
+        clickables.add(button);
+    }
+
+    public TowerManager getTowerManager() {
+        return towerManager;
     }
 }

@@ -1,6 +1,7 @@
 package com.xkings.pokemontd.entity.creep;
 
 import com.xkings.core.main.Assets;
+import com.xkings.pokemontd.App;
 import com.xkings.pokemontd.Treasure;
 import com.xkings.pokemontd.entity.datatypes.CommonDataType;
 
@@ -14,7 +15,7 @@ import static com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 public class CreepType implements CommonDataType {
 
 
-    private static final Map<CreepName, CreepType> dataStore = new CreepTypeBuilder().build();
+    private static final Map<CreepName, CreepType> dataStore = new CreepTypeBuilder().build(App.WORLD_SCALE);
 
     public static CreepType getType(CreepName next) {
         return dataStore.get(next);

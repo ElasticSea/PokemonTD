@@ -1,5 +1,6 @@
 package com.xkings.pokemontd.entity.creep;
 
+import com.xkings.pokemontd.App;
 import com.xkings.pokemontd.Treasure;
 
 import java.util.ArrayList;
@@ -105,13 +106,13 @@ public class CreepTypeBuilder {
     }
 
 
-    public Map<CreepName, CreepType> build() {
+    public Map<CreepName, CreepType> build(float scale) {
         List<CreepType> list = new ArrayList<CreepType>();
         for (CreepTypeSpecification specification : data) {
             CreepAbilityType ability = specification.getAbilityType();
             int health = specification.getHealth();
-            float speed = 1f;
-            float size = 1f;
+            float speed = scale;
+            float size = scale;
             int creepsInWay = 5;
             float distanceBetweenCreeps = size;
 

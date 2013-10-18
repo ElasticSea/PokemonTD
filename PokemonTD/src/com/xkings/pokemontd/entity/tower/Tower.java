@@ -4,6 +4,7 @@ import com.artemis.Entity;
 import com.artemis.World;
 import com.xkings.core.component.*;
 import com.xkings.core.entity.ConcreteEntity;
+import com.xkings.pokemontd.App;
 import com.xkings.pokemontd.Treasure;
 import com.xkings.pokemontd.component.*;
 

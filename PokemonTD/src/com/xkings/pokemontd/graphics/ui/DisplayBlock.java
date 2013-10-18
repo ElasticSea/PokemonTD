@@ -12,14 +12,4 @@ abstract class DisplayBlock implements Renderable {
     DisplayBlock(Rectangle rectangle) {
         this.rectangle = rectangle;
     }
-
-    public boolean hit(float x, float y) {
-        if (rectangle.contains(x, y)) {
-            process(x - rectangle.width, y - rectangle.height);
-            return true;
-        }
-        return false;
-    }
-
-    public abstract void process(float x, float y);
 }

@@ -31,8 +31,8 @@ public class GetTower extends EntityProcessingSystem {
     protected void process(Entity entity) {
         Vector3 position = positionMapper.get(entity).getPoint();
         Vector3 size = sizeMapper.get(entity).getPoint();
-        if (x >= position.x - size.x / 2 && x < position.x + size.x / 2) {
-            if (y >= position.y - size.y / 2 && y < position.y + size.y / 2) {
+        if (x >= position.x - size.x / 2 && x <= position.x + size.x / 2) {
+            if (y >= position.y - size.y / 2 && y <= position.y + size.y / 2) {
                 this.entity = entity;
             }
         }
