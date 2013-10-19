@@ -15,7 +15,7 @@ public class PathPack {
     public PathPack(List<List<Vector3>> paths) {
         this.paths = new ArrayList<Path>();
         for (int i = 0; i < paths.size(); i++) {
-            this.paths.add(new Path(paths.get(i)));
+            this.paths.add(new Path(paths.get(i), 0));
         }
     }
 

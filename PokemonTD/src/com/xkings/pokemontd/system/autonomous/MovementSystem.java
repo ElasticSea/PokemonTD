@@ -8,6 +8,7 @@ import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.component.*;
 import com.xkings.pokemontd.component.PathComponent;
+import com.xkings.pokemontd.map.Path;
 
 /**
  * Created by Tomas on 10/4/13.
@@ -34,7 +35,7 @@ public class MovementSystem extends EntityProcessingSystem {
 
     @Override
     protected void process(Entity entity) {
-        PathComponent pathComponent = pathMapper.get(entity);
+        Path path = pathMapper.get(entity).getPath();
         Vector3 position = positionMapper.get(entity).getPoint();
         TimeComponent timeComponent = timeMapper.get(entity);
         float speed = speedMapper.get(entity).getSpeed();
@@ -44,13 +45,12 @@ public class MovementSystem extends EntityProcessingSystem {
         time.increase(world.getDelta());
 
         while (time.getAvailableTime() > 0) {
-            if (!pathComponent.isFinished()) {
-                Vector3 goal = pathComponent.get();
+            if (!path.isFinished()) {
+                Vector3 goal = path.get();
                 rotation.getPoint().x = (float) (Math.atan2(goal.y - position.y, goal.x - position.x) * 180 / Math.PI);
                 if (moveTowards(position, goal, speed, time)) {
-                    pathComponent.next();
-                    if (pathComponent.isFinished()) {
-                        System.out.println("finished");
+                    path.next();
+                    if (path.isFinished()) {
                         return;
                     }
                 }

@@ -10,6 +10,7 @@ import com.xkings.pokemontd.component.PathComponent;
 import com.xkings.pokemontd.component.WaveComponent;
 import com.xkings.pokemontd.component.DamageComponent;
 import com.xkings.pokemontd.Player;
+import com.xkings.pokemontd.map.Path;
 
 /**
  * Created by Tomas on 10/4/13.
@@ -32,13 +33,13 @@ public class WaveSystem extends EntityProcessingSystem {
 
     @Override
     protected void process(Entity entity) {
-        PathComponent pathComponent = pathMapper.get(entity);
+        Path path = pathMapper.get(entity).getPath();
         float damage = damageMapper.get(entity).getDamage();
         PositionComponent positionComponent = positionMapper.get(entity);
-        if (pathComponent.isFinished()) {
+        if (path.isFinished()) {
             player.getHealth().decrees((int) damage);
-            pathComponent.reset();
-            positionComponent.getPoint().set(pathComponent.get());
+            path.reset();
+            positionComponent.getPoint().set(path.get());
         }
     }
 

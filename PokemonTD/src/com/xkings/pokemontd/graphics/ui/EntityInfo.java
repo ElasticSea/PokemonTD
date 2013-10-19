@@ -40,14 +40,14 @@ class EntityInfo extends InteractiveBlock {
         textC = new DisplayText(new Rectangle(rectangle.x + offset, rectangle.y, offset * 2, offset), shapeRenderer,
                 spriteBatch, "textC");
         sell = new Button(new Rectangle(rectangle.x + offset * 5, rectangle.y + offset, offset * 2, offset),
-                shapeRenderer, spriteBatch, "SELL", new Color(Color.RED).mul(0.7f)) {
+                shapeRenderer, spriteBatch, "SELL", new Color(Color.RED).mul(0.6f)) {
             @Override
             public void process(float x, float y) {
                 ui.getTowerManager().sellTower();
             }
         };
         buy = new Button(new Rectangle(rectangle.x + offset * 5, rectangle.y + offset, offset * 2, offset),
-                shapeRenderer, spriteBatch, "BUY", new Color(Color.GREEN).mul(0.7f)) {
+                shapeRenderer, spriteBatch, "BUY", new Color(Color.GREEN).mul(0.6f)) {
             @Override
             public void process(float x, float y) {
                 ui.getTowerManager().getNewOrUpgrade();
@@ -84,20 +84,27 @@ class EntityInfo extends InteractiveBlock {
     }
 
     private void renderCreep(Entity entity) {
-        TextureAtlas.AtlasRegion atlasRegion = entity.getComponent(SpriteComponent.class).getSprite();
-        String name = entity.getComponent(NameComponent.class).getName();
-        String health = String.valueOf(entity.getComponent(HealthComponent.class).getHealth().getHealth());
-        renderCommon(atlasRegion, name, health, "");
+        SpriteComponent spriteComponent = entity.getComponent(SpriteComponent.class);
+        NameComponent nameComponent = entity.getComponent(NameComponent.class);
+        HealthComponent healthComponent = entity.getComponent(HealthComponent.class);
+        if (spriteComponent != null && nameComponent != null && healthComponent != null) {
+            renderCommon(spriteComponent.getSprite(), nameComponent.getName(),
+                    String.valueOf(healthComponent.getHealth().getHealth()), "");
+        }
     }
 
     private void renderTower(Entity entity) {
-        TextureAtlas.AtlasRegion atlasRegion = entity.getComponent(SpriteComponent.class).getSprite();
-        String name = entity.getComponent(NameComponent.class).getName();
-        String range = String.valueOf(entity.getComponent(RangeComponent.class).getRange());
-        renderCommon(atlasRegion, name, range, "");
-        buy.setEnabled(false);
-        sell.setEnabled(true);
-        sell.render();
+
+        SpriteComponent spriteComponent = entity.getComponent(SpriteComponent.class);
+        NameComponent nameComponent = entity.getComponent(NameComponent.class);
+        RangeComponent rangeComponent = entity.getComponent(RangeComponent.class);
+        if (spriteComponent != null && nameComponent != null && rangeComponent != null) {
+            renderCommon(spriteComponent.getSprite(), nameComponent.getName(),
+                    String.valueOf(rangeComponent.getRange()), "");
+            buy.setEnabled(false);
+            sell.setEnabled(true);
+            sell.render();
+        }
     }
 
     private void renderTower(TowerType towerType) {

@@ -58,7 +58,8 @@ public class WaveManager implements Updateable {
             double angleToNextPoint = Math.atan2(nextPoint.y - startPoint.y, nextPoint.x - startPoint.x);
             float xOffset = (float) (Math.cos(angleToNextPoint + Math.PI) * next.getDistanceBetweenCreeps() * i);
             float yOffset = (float) (Math.sin(angleToNextPoint + Math.PI) * next.getDistanceBetweenCreeps() * i);
-            Creep.registerCreep(world, path, new WaveComponent(), next, startPoint.x + xOffset, startPoint.y + yOffset);
+            Creep.registerCreep(world, new Path(path), new WaveComponent(), next, startPoint.x + xOffset,
+                    startPoint.y + yOffset);
         }
 
         updateWave();

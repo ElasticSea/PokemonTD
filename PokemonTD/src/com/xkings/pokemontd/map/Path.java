@@ -2,7 +2,6 @@ package com.xkings.pokemontd.map;
 
 import com.badlogic.gdx.math.Vector3;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,16 +13,42 @@ import java.util.List;
 
 public class Path {
     private final List<Vector3> path;
-
-    public Path(List<Vector3> path) {
-        this.path = path;
-    }
+    private int position;
 
     public Path(Vector3... path) {
-        this(Arrays.asList(path));
+        this(Arrays.asList(path), 0);
+    }
+
+    public Path(Path path) {
+        this(path.getPath(), path.getPosition());
+    }
+
+    public Path(List<Vector3> path, int position) {
+        this.path = path;
+        this.position = position;
     }
 
     public List<Vector3> getPath() {
         return path;
+    }
+
+    public Vector3 get() {
+        return path.get(position);
+    }
+
+    public void next() {
+        this.position++;
+    }
+
+    public boolean isFinished() {
+        return position == path.size();
+    }
+
+    public void reset() {
+        position = 0;
+    }
+
+    public int getPosition() {
+        return position;
     }
 }

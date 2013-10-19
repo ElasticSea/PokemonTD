@@ -55,7 +55,7 @@ public class App extends Game2D {
     public static final int WORLD_HEIGHT = 24;
     public static final Rectangle WORLD_RECT =
             new Rectangle(0, 0, WORLD_WIDTH * WORLD_SCALE, WORLD_HEIGHT * WORLD_SCALE);
-    public static final float WAVE_INTERVAL = 35f;
+    public static final float WAVE_INTERVAL = 75f;
     public static final int PATH_SIZE = 2;
     public static Entity pathBlock;
     private DefaultRenderer renderer;
