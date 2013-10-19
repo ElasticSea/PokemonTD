@@ -1,6 +1,6 @@
 package com.xkings.pokemontd;
 
-import junit.framework.Assert;
+import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
