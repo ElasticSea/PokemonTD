@@ -118,6 +118,7 @@ public class DeathSystem extends EntityProcessingSystem {
     }
 
     private void die(Entity e) {
+        waveMapper.get(e).removeCreep(e);
         e.deleteFromWorld();
     }
 
