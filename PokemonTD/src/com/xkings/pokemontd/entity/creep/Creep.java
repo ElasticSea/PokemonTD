@@ -5,6 +5,7 @@ import com.xkings.core.component.*;
 import com.xkings.core.entity.ConcreteEntity;
 import com.xkings.pokemontd.Health;
 import com.xkings.pokemontd.component.*;
+import com.xkings.pokemontd.component.VisibleComponent;
 import com.xkings.pokemontd.map.Path;
 
 /**
@@ -28,6 +29,7 @@ public class Creep extends ConcreteEntity {
         addComponent(new CreepAbilityComponent(creepAbilityType));
         addComponent(new DamageComponent(1));
         addComponent(new CreepTypeComponent(creepType));
+        addComponent(new VisibleComponent(true));
         addComponent(waveComponent);
     }
 

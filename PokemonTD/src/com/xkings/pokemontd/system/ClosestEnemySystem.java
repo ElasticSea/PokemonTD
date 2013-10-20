@@ -8,8 +8,8 @@ import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.component.PositionComponent;
-import com.xkings.core.component.RangeComponent;
 import com.xkings.core.component.SizeComponent;
+import com.xkings.pokemontd.component.VisibleComponent;
 
 public class ClosestEnemySystem extends EntityProcessingSystem {
     @Mapper
@@ -17,7 +17,7 @@ public class ClosestEnemySystem extends EntityProcessingSystem {
     @Mapper
     ComponentMapper<SizeComponent> sizeMapper;
     @Mapper
-    ComponentMapper<RangeComponent> rangeMapper;
+    ComponentMapper<VisibleComponent> visibilityMapper;
 
     private Entity closestEntity;
     private float closestDistance;
@@ -35,16 +35,18 @@ public class ClosestEnemySystem extends EntityProcessingSystem {
     }
 
     @Override
-    protected void process(Entity entity) {
-        Vector3 position = positionMapper.get(entity).getPoint();
-        Vector3 size = sizeMapper.get(entity).getPoint();
-        float tx = entityPosition.x - position.x;
-        float ty = entityPosition.y - position.y;
-        float distance = (float) Math.sqrt(tx * tx + ty * ty);
-        float range = entityRange + (size.x + size.y) / 2f;
-        if (this.entity != entity && entity.isEnabled() && distance <= range && distance < closestDistance) {
-            closestDistance = distance;
-            closestEntity = entity;
+    protected void process(Entity e) {
+        Vector3 position = positionMapper.get(e).getPoint();
+        Vector3 size = sizeMapper.get(e).getPoint();
+        if (!visibilityMapper.has(e) || visibilityMapper.get(e).isVisible()) {
+            float tx = entityPosition.x - position.x;
+            float ty = entityPosition.y - position.y;
+            float distance = (float) Math.sqrt(tx * tx + ty * ty);
+            float range = entityRange + (size.x + size.y) / 2f;
+            if (this.entity != e && e.isEnabled() && distance <= range && distance < closestDistance) {
+                closestDistance = distance;
+                closestEntity = e;
+            }
         }
     }
 
