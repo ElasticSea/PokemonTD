@@ -7,6 +7,7 @@ import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.component.PositionComponent;
+import com.xkings.pokemontd.App;
 import com.xkings.pokemontd.Health;
 import com.xkings.pokemontd.Player;
 import com.xkings.pokemontd.Treasure;
@@ -58,7 +59,7 @@ public class DeathSystem extends EntityProcessingSystem {
                     resurrect(e, 4000);
                     break;
                 case SPAWN:
-                    spawn(e);
+                    spawn(e, 8);
                     break;
                 default:
                     earn(e);
@@ -80,15 +81,32 @@ public class DeathSystem extends EntityProcessingSystem {
         Runnable task = new Runnable() {
             public void run() {
                 die(grave);
-                Creep.registerCreep(world, path, waveComponent, creepType, CreepAbilityType.NORMAL, position.x,
-                        position.y);
+                Creep.registerCreep(world, path, waveComponent, creepType, CreepAbilityType.NORMAL,
+                        creepType.getSpeed(), creepType.getSize(), position.x, position.y);
             }
         };
         worker.schedule(task, delayMs, TimeUnit.MILLISECONDS);
     }
 
-    private void spawn(Entity e) {
+    private void spawn(Entity e, int creeps) {
+        final Vector3 position = positionMapper.get(e).getPoint();
+        final Path path = pathMapper.get(e).getPath();
+        final WaveComponent waveComponent = waveMapper.get(e);
+        final CreepType creepType = creepTypeMapper.get(e).getCreepType();
 
+        float x;
+        float y;
+        double circleSegment = Math.PI * 2 / creeps;
+        float radius = path.getWidth() / 2f * App.WORLD_SCALE;
+        System.out.println(path.getWidth());
+        System.out.println(radius);
+        for (int i = 0; i < creeps; i++) {
+            x = position.x + (float) (Math.cos(circleSegment * i) * radius);
+            y = position.y + (float) (Math.sin(circleSegment * i) * radius);
+            Creep.registerCreep(world, path, waveComponent, creepType, CreepAbilityType.NORMAL, creepType.getSpeed(),
+                    creepType.getSize() / 4f, x, y);
+        }
+        die(e);
     }
 
 

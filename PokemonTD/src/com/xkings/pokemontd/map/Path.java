@@ -13,19 +13,21 @@ import java.util.List;
 
 public class Path {
     private final List<Vector3> path;
+    private final float width;
     private int position;
 
     public Path(Vector3... path) {
-        this(Arrays.asList(path), 0);
+        this(Arrays.asList(path), 0, 0);
     }
 
     public Path(Path path) {
-        this(path.getPath(), path.getPosition());
+        this(path.getPath(), path.getPosition(), path.getWidth());
     }
 
-    public Path(List<Vector3> path, int position) {
+    public Path(List<Vector3> path, int position, float width) {
         this.path = path;
         this.position = position;
+        this.width = width;
     }
 
     public List<Vector3> getPath() {
@@ -50,5 +52,9 @@ public class Path {
 
     public int getPosition() {
         return position;
+    }
+
+    public float getWidth() {
+        return width;
     }
 }

@@ -143,6 +143,7 @@ public class MapBuilder {
 
         for (BuilderCommand builderCommand : commands) {
             switch (builderCommand) {
+
                 case LEFT:
                     createTurn(1);
                     break;
@@ -155,13 +156,15 @@ public class MapBuilder {
             }
         }
         fixTextures();
-        scaleTo(paths,App.WORLD_SCALE);
-        return new MapData(genericBlueprint, new PathPack(paths), new TileMap(fakeMap, 2));
+        scaleTo(paths, App.WORLD_SCALE);
+        System.out.println(pathSize - pathOffset * 2);
+        return new MapData(genericBlueprint, new PathPack(paths, (.5f - pathOffset) * pathSize),
+                new TileMap(fakeMap, 2));
     }
 
     private void scaleTo(List<List<Vector3>> paths, int worldScale) {
-        for (List<Vector3> path : paths){
-            for (Vector3 point : path){
+        for (List<Vector3> path : paths) {
+            for (Vector3 point : path) {
                 point.scl(worldScale);
             }
         }

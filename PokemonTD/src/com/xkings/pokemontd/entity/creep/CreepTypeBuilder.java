@@ -20,7 +20,7 @@ public class CreepTypeBuilder {
 
     private List<CreepTypeSpecification> getData() {
         List<CreepTypeSpecification> list = new ArrayList<CreepTypeSpecification>();
-        list.add(new CreepTypeSpecification(CreepName.Hoothoot, 75,Treasure.fromGold(1), CreepAbilityType.NORMAL));
+        list.add(new CreepTypeSpecification(CreepName.Hoothoot, 75,Treasure.fromGold(1), CreepAbilityType.SPAWN));
         list.add(new CreepTypeSpecification(CreepName.Ledian, 88,Treasure.fromGold(1), CreepAbilityType.NORMAL));
         list.add(new CreepTypeSpecification(CreepName.Crobat, 103,Treasure.fromGold(1), CreepAbilityType.SWARM));
         list.add(new CreepTypeSpecification(CreepName.Lanturn, 120,Treasure.fromGold(1), CreepAbilityType.NORMAL));
@@ -113,7 +113,7 @@ public class CreepTypeBuilder {
             int health = specification.getHealth();
             float speed = scale;
             float size = scale;
-            int creepsInWay = 5;
+            int creepsInWay = 8;
             float distanceBetweenCreeps = size;
 
             switch (ability) {
@@ -132,7 +132,9 @@ public class CreepTypeBuilder {
                 case INVISIBLE:
                     break;
                 case SPAWN:
-                    health /= 1.5f;
+                    health *= 4f;
+                    size *= 2f;
+                    creepsInWay/= 4;
                     break;
                 case HEALING:
                     break;

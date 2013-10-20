@@ -12,10 +12,10 @@ public class PathPack {
 
     private final List<Path> paths;
 
-    public PathPack(List<List<Vector3>> paths) {
+    public PathPack(List<List<Vector3>> paths, float width) {
         this.paths = new ArrayList<Path>();
         for (int i = 0; i < paths.size(); i++) {
-            this.paths.add(new Path(paths.get(i), 0));
+            this.paths.add(new Path(paths.get(i), 0, width));
         }
     }
 
