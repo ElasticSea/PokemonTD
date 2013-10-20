@@ -36,8 +36,10 @@ public class StatusBar extends GuiBox {
         xOffset = rectangle.width - (offset + iconSize);
         yOffset = rectangle.y + offset;
         spriteBatch.begin();
-        drawAmount(player.getTreasure().getGold(), "coin", iconSize, (int) (rectangle.height * 2));
-        drawAmount(player.getHealth().getHealth(), "hearth", iconSize, (int) (rectangle.height * 2));
+      //  drawAmount(player.getTreasure().getGold(), "coin", iconSize, (int) (rectangle.height * 2));
+      //  drawAmount(player.getHealth().getHealth(), "hearth", iconSize, (int) (rectangle.height * 2));
+        int textOffset = offset * 2;
+        drawScore(textOffset);
 
         xOffset =  rectangle.x + offset;
         for (Element element : Element.values()){
@@ -50,19 +52,19 @@ public class StatusBar extends GuiBox {
         spriteBatch.end();
     }
 
-    private void drawAmount(int amount, String icon, float size, int textOffset) {
+   /* private void drawAmount(int amount, String icon, float size, int textOffset) {
         spriteBatch.draw(Assets.getTexture(icon), xOffset, yOffset, size, size);
         xOffset -= offset + size;
         drawText(amount);
         xOffset -= textOffset;
     }
 
-    private void drawText(int amount) {
+      private void drawText(int amount) {
         String text = String.valueOf(amount < 10000 ? amount : amount/1000 + "k");
         float fontY = (rectangle.height + pixelFont.getBounds(text).height) / 2f;
         pixelFont.drawMultiLine(spriteBatch, text, xOffset, rectangle.y + fontY, rectangle.height / 2f,
                 BitmapFont.HAlignment.RIGHT);
-    }
+    }         */
 
     private void drawElements(Element element, float size) {
         String textureName = "gems/" + element.toString().toLowerCase();
@@ -72,5 +74,14 @@ public class StatusBar extends GuiBox {
         }
         TextureAtlas.AtlasRegion texture = Assets.getTextureArray(textureName).get(elementCount - 1);
         spriteBatch.draw(texture, xOffset, yOffset, size, size);
+    }
+
+   private void drawScore(int textOffset){
+        pixelFont.drawMultiLine(spriteBatch, "Score ", rectangle.x+rectangle.width/2+rectangle.width/4*1.2f,
+        rectangle.y + rectangle.height*2.1f - pixelFont.getCapHeight()*4.7f, 0, BitmapFont.HAlignment.LEFT);
+        /*pixelFont.drawMultiLine(spriteBatch, String.valueOf(score.getScore()),
+                rectangle.x + textOffset*16f, rectangle.y + pixelFont.getCapHeight()*2,
+                0, BitmapFont.HAlignment.RIGHT);*/
+
     }
 }

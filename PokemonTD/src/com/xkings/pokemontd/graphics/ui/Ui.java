@@ -9,6 +9,7 @@ import com.xkings.core.graphics.Renderable;
 import com.xkings.pokemontd.Player;
 import com.xkings.pokemontd.entity.tower.TowerType;
 import com.xkings.pokemontd.manager.CreepManager;
+import com.xkings.pokemontd.manager.Interest;
 import com.xkings.pokemontd.manager.TowerManager;
 import com.xkings.pokemontd.manager.WaveManager;
 
@@ -31,12 +32,13 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
     private final EntityInfo entityInfo;
     private final GuiBox statusBar;
     private final GuiBox nextWaveInfo;
+    private final GuiBox status;
     private final CreepManager creepManager;
     private InteractiveBlock displayBar;
     private InteractiveBlock towerTable;
     private List<TowerType> lastHierarchy;
 
-    public Ui(Player player, WaveManager waveManager, CreepManager creepManager, TowerManager towerManager) {
+    public Ui(Player player, WaveManager waveManager, CreepManager creepManager, TowerManager towerManager, float guiScale,Interest interest) {
         this.creepManager = creepManager;
         this.towerManager = towerManager;
         shapeRenderer = new ShapeRenderer();
@@ -46,16 +48,18 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
 
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
-        int guiHeight = Gdx.graphics.getHeight() / 3;
 
-        int stripHeight = guiHeight / 3 * 2;
-        int squareHeight = guiHeight;
-        int offset = guiHeight / 35;
+        int stripHeight = (int) guiScale / 3 * 2;
+        int squareHeight = (int) guiScale;
+        int offset = (int) guiScale / 35;
         float iconSize = (squareHeight - offset) / 3f;
 
         int statusSize = 48;
         statusBar = new StatusBar(player, new Rectangle(0, height - statusSize, width, statusSize), statusSize / 8,
                 shapeRenderer, spriteBatch);
+        status = new Status(player, new Rectangle(width / 2 + width / 3, height /2 + height / 4, width, stripHeight), offset, shapeRenderer, spriteBatch, waveManager, interest);
+
+
         nextWaveInfo = new WaveInfo(new Rectangle(0, 0, squareHeight, squareHeight), offset, shapeRenderer, spriteBatch,
                 waveManager);
         displayBar =
@@ -64,11 +68,13 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         towerTable =
                 new GuiBox(new Rectangle(width - squareHeight, 0, squareHeight, squareHeight), offset, shapeRenderer);
         entityInfo = new EntityInfo(this, displayBar.rectangle, shapeRenderer, spriteBatch);
+
         clickables.add(displayBar);
         clickables.add(towerTable);
         clickables.add(entityInfo);
         clickables.add(statusBar);
         clickables.add(nextWaveInfo);
+        clickables.add(status);
 
         towerIcons = createTowerIcons(iconSize, towerTable.rectangle);
 

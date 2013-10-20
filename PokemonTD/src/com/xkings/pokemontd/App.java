@@ -28,10 +28,7 @@ import com.xkings.pokemontd.component.WaveComponent;
 import com.xkings.pokemontd.graphics.TileMap;
 import com.xkings.pokemontd.graphics.ui.Ui;
 import com.xkings.pokemontd.input.InGameInputProcessor;
-import com.xkings.pokemontd.manager.CreepManager;
-import com.xkings.pokemontd.manager.ProjectileManager;
-import com.xkings.pokemontd.manager.TowerManager;
-import com.xkings.pokemontd.manager.WaveManager;
+import com.xkings.pokemontd.manager.*;
 import com.xkings.pokemontd.map.MapBuilder;
 import com.xkings.pokemontd.map.MapData;
 import com.xkings.pokemontd.map.Path;
@@ -82,6 +79,7 @@ public class App extends Game2D {
     private static PokemonAssets assets;
     private ProjectileManager projectileManager;
     private Ui ui;
+    private Interest interest;
     // Tweens
     private static TweenManagerAdapter tweenManager = initTweenManager();
 
@@ -124,7 +122,7 @@ public class App extends Game2D {
         initializeContent();
         initializeManagers();
         initializeSystems();
-        ui = new Ui(player, waveManager, creepManager, towerManager);
+        ui = new Ui(player, waveManager, creepManager, towerManager, 160f, interest);
         renderer = new DefaultRenderer(ui, camera);
         initializeInput();
         initializeTween();

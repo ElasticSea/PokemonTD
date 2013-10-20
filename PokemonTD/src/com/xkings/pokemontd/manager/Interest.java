@@ -15,11 +15,13 @@ import com.xkings.pokemontd.Treasure;
 public class Interest implements Updateable {
     private final float INTEREST_KOEFICIENT;
     private final Treasure playerTreasure;
+    private final UpdateFilter filter;
 
     public Interest(Clock clock, Treasure playerTreasure, int interest, float interval) {
         this.INTEREST_KOEFICIENT = interest / 100;
         this.playerTreasure = playerTreasure;
-        clock.addService(new UpdateFilter(this, interval));
+        this.filter =(new UpdateFilter(this, interval));
+        clock.addService(filter);
     }
 
     @Override
@@ -34,5 +36,9 @@ public class Interest implements Updateable {
 
     @Override
     public void setActive(boolean active) {
+    }
+
+    public int getRemainingTime(){
+        return (int) filter.getRemainingTime();
     }
 }
