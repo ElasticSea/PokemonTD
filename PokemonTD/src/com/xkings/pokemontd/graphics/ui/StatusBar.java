@@ -81,7 +81,7 @@ public class StatusBar extends GuiBox {
         pixelFont.drawMultiLine(spriteBatch, "Score ", rectangle.x+rectangle.width/2+rectangle.width/4*1.2f,
         rectangle.y + rectangle.height*2.1f - pixelFont.getCapHeight()*4.7f, 0, BitmapFont.HAlignment.LEFT);
         pixelFont.drawMultiLine(spriteBatch, player.getScore().toString(),
-                rectangle.x + textOffset*16f, rectangle.y + pixelFont.getCapHeight()*2,
+                rectangle.x + rectangle.width/2+rectangle.width/3 + textOffset*8f, rectangle.y + pixelFont.getCapHeight()*2,
                 0, BitmapFont.HAlignment.RIGHT);
 
     }
