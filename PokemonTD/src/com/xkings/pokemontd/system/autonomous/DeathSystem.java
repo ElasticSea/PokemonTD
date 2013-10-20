@@ -52,7 +52,7 @@ public class DeathSystem extends EntityProcessingSystem {
     @Override
     protected void process(Entity e) {
         Health health = healthMapper.get(e).getHealth();
-        if (!isAlive(health)) {
+        if (!health.isAlive()) {
             switch (creepAbilityMapper.get(e).getCreepAbilityType()) {
                 case RESURRECT:
                     resurrect(e, 4000);
@@ -103,8 +103,5 @@ public class DeathSystem extends EntityProcessingSystem {
         e.deleteFromWorld();
     }
 
-    private boolean isAlive(Health health) {
-        return health.getHealth() > 0;
-    }
 
 }

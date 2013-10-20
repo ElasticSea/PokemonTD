@@ -37,7 +37,7 @@ public class StatusBar extends GuiBox {
         yOffset = rectangle.y + offset;
         spriteBatch.begin();
         drawAmount(player.getTreasure().getGold(), "coin", iconSize, (int) (rectangle.height * 2));
-        drawAmount(player.getHealth().getHealth(), "hearth", iconSize, (int) (rectangle.height * 2));
+        drawAmount(player.getHealth().getCurrentHealth(), "hearth", iconSize, (int) (rectangle.height * 2));
 
         xOffset =  rectangle.x + offset;
         for (Element element : Element.values()){

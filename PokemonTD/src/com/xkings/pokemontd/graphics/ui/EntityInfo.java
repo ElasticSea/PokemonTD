@@ -89,7 +89,7 @@ class EntityInfo extends InteractiveBlock {
         HealthComponent healthComponent = entity.getComponent(HealthComponent.class);
         if (spriteComponent != null && nameComponent != null && healthComponent != null) {
             renderCommon(spriteComponent.getSprite(), nameComponent.getName(),
-                    String.valueOf(healthComponent.getHealth().getHealth()), "");
+                    String.valueOf(healthComponent.getHealth().getCurrentHealth()), "");
         }
     }
 
