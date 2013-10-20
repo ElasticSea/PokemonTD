@@ -20,14 +20,12 @@ public class StatusBar extends GuiBox {
     private final BitmapFont pixelFont;
     private float xOffset;
     private float yOffset;
-    private Player score;
 
-    StatusBar(Player player, Rectangle rectangle, int offset, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,Player score) {
+    StatusBar(Player player, Rectangle rectangle, int offset, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
         super(rectangle, offset, shapeRenderer);
         this.player = player;
         this.spriteBatch = spriteBatch;
         this.pixelFont = App.getAssets().getPixelFont();
-        this.score = score;
     }
 
     @Override
@@ -82,7 +80,7 @@ public class StatusBar extends GuiBox {
    private void drawScore(int textOffset){
         pixelFont.drawMultiLine(spriteBatch, "Score ", rectangle.x+rectangle.width/2+rectangle.width/4*1.2f,
         rectangle.y + rectangle.height*2.1f - pixelFont.getCapHeight()*4.7f, 0, BitmapFont.HAlignment.LEFT);
-        pixelFont.drawMultiLine(spriteBatch, String.valueOf(player.getScore()),
+        pixelFont.drawMultiLine(spriteBatch, player.getScore().toString(),
                 rectangle.x + textOffset*16f, rectangle.y + pixelFont.getCapHeight()*2,
                 0, BitmapFont.HAlignment.RIGHT);
 

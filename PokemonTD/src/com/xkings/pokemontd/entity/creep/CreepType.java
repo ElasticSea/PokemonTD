@@ -30,9 +30,11 @@ public class CreepType implements CommonDataType {
     private final int creepsInWave;
     private final float distanceBetweenCreeps;
     private final CreepAbilityType abilityType;
+    private final int id;
 
-    public CreepType(CreepName name, float speed, float size, int health, Treasure treasure, int creepsInWave,
+    public CreepType(int id, CreepName name, float speed, float size, int health, Treasure treasure, int creepsInWave,
                      float distanceBetweenCreeps, CreepAbilityType abilityType) {
+        this.id = id;
         this.name = name;
         this.speed = speed;
         this.size = size;
@@ -79,6 +81,10 @@ public class CreepType implements CommonDataType {
         return abilityType;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public static void save() {
       /*  List<CreepType> list = new ArrayList<CreepType>();
         list.add(new CreepType(Chansey, 1f, 0.5f, 1, new Treasure(5), 5, CreepAbilityType.NORMAL));
@@ -90,4 +96,6 @@ public class CreepType implements CommonDataType {
         list.add(new CreepType(Mew, 1f, 0.5f, 1, new Treasure(5), 5, CreepAbilityType.HEALING));
         new FileHandle("json").writeString(new Gson().toJson(list), false);   */
     }
+
+
 }

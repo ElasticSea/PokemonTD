@@ -49,12 +49,11 @@ public class WaveInfo extends GuiBox {
     }
 
     private void drawWaveInfo(int textOffset) {
-        pixelFont.drawMultiLine(spriteBatch, "Next wave ", rectangle.x + textOffset,
+        pixelFont.drawMultiLine(spriteBatch, "Wave : ", rectangle.x + textOffset,
                 rectangle.y + rectangle.height - pixelFont.getCapHeight(), 0, BitmapFont.HAlignment.LEFT);
-        pixelFont.drawMultiLine(spriteBatch, String.valueOf(waveManager.getRemainingTime()),
+        pixelFont.drawMultiLine(spriteBatch,String.valueOf(waveManager.getCurrentWave().getId()+1 ),
                 rectangle.x + rectangle.width - textOffset, rectangle.y + rectangle.height - pixelFont.getCapHeight(),
                 0, BitmapFont.HAlignment.RIGHT);
     }
-
 
 }

@@ -37,7 +37,6 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
     private InteractiveBlock displayBar;
     private InteractiveBlock towerTable;
     private List<TowerType> lastHierarchy;
-    private Player score;
 
     public Ui(Player player, WaveManager waveManager, CreepManager creepManager, TowerManager towerManager, float guiScale,Interest interest) {
         this.creepManager = creepManager;
@@ -57,7 +56,7 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
 
         int statusSize = 48;
         statusBar = new StatusBar(player, new Rectangle(0, height - statusSize, width, statusSize), statusSize / 8,
-                shapeRenderer, spriteBatch, score);
+                shapeRenderer, spriteBatch);
         status = new Status(player, new Rectangle(width / 2 + width / 3, height /2 + height / 4, width, stripHeight), offset, shapeRenderer, spriteBatch, waveManager, interest);
 
 

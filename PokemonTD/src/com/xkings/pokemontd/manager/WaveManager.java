@@ -16,7 +16,6 @@ import com.xkings.pokemontd.map.PathPack;
 
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * Created by Tomas on 10/5/13.
@@ -29,6 +28,7 @@ public class WaveManager implements Updateable {
     private final UpdateFilter filter;
     private boolean active;
     private CreepType nextWave;
+    private CreepType currentWave;
 
     /**
      * @param clock internal update timer
@@ -73,6 +73,7 @@ public class WaveManager implements Updateable {
     }
 
     private void updateWave() {
+        currentWave = nextWave;
         nextWave = creeps.hasNext() ? CreepType.getType(creeps.next()) : null;
     }
 
@@ -92,5 +93,9 @@ public class WaveManager implements Updateable {
 
     public CreepType getNextWave() {
         return nextWave;
+    }
+
+    public CreepType getCurrentWave(){
+        return currentWave;
     }
 }
