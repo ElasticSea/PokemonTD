@@ -111,6 +111,7 @@ public class DeathSystem extends EntityProcessingSystem {
         Treasure treasure = treasureMapper.get(e).getTreasure();
         MoneyInfo.registerMoneyInfo(world, treasure.getGold(), position.x, position.y);
         treasure.transferTo(player.getTreasure());
+        player.getScore();
     }
 
     private void die(Entity e) {
