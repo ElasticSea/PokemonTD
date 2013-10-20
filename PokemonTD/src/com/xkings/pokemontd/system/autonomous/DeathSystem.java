@@ -20,6 +20,7 @@ import com.xkings.pokemontd.entity.MoneyInfo;
 public class DeathSystem extends EntityProcessingSystem {
 
     private final Player player;
+    private int score;
     @Mapper
     ComponentMapper<PositionComponent> positionMapper;
     @Mapper
@@ -30,6 +31,7 @@ public class DeathSystem extends EntityProcessingSystem {
     public DeathSystem(Player player) {
         super(Aspect.getAspectForAll(HealthComponent.class, TreasureComponent.class));
         this.player = player;
+        this.score = 0;
     }
 
     @Override
@@ -41,7 +43,12 @@ public class DeathSystem extends EntityProcessingSystem {
             MoneyInfo.registerMoneyInfo(world, treasure.getGold(), position.x, position.y);
             treasure.transferTo(player.getTreasure());
             e.deleteFromWorld();
+            this.score += 1;
         }
+    }
+
+    private int getScoree(){
+        return this.score;
     }
 
     private boolean isAlive(Health health) {

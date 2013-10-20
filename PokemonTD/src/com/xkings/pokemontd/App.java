@@ -136,7 +136,7 @@ public class App extends Game2D {
     }
 
     private void initializeContent() {
-        player = new Player(9999, 9999, 0, 0, 0, 0, 0, 0, 0);
+        player = new Player(9999, 9999, 0, 0, 0, 0, 0, 0, 0,0);
     }
 
     private void initializeManagers() {
