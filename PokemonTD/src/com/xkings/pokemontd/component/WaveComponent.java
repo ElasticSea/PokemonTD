@@ -12,6 +12,7 @@ public class WaveComponent extends Component {
 
 
     public boolean addCreep(Entity creep) {
+        System.out.println(wave);
         return wave.add(creep);
     }
 

@@ -52,8 +52,9 @@ public class App extends Game2D {
     public static final int WORLD_HEIGHT = 24;
     public static final Rectangle WORLD_RECT =
             new Rectangle(0, 0, WORLD_WIDTH * WORLD_SCALE, WORLD_HEIGHT * WORLD_SCALE);
-    public static final float WAVE_INTERVAL = 35f;
+    public static final float WAVE_INTERVAL = 75f;
     public static final int PATH_SIZE = 2;
+    public static final int INVISIBLE_INTERVAL = 5;
     public static Entity pathBlock;
     private DefaultRenderer renderer;
     private ShapeRenderer shapeRenderer;
@@ -65,6 +66,7 @@ public class App extends Game2D {
     private WaveManager waveManager;
     private TowerManager towerManager;
     private CreepManager creepManager;
+    private InvisibleManager invisibleManager;
     private RenderSpriteSystem renderSpriteSystem;
     private RenderTextSystem renderTextSystem;
     private RenderHealthSystem renderHealthSystem;
@@ -73,6 +75,7 @@ public class App extends Game2D {
     private AoeSystem aoeSystem;
     private GetTower getTowerSystem;
     private GetCreep getCreepSystem;
+    private InvisibleSystem invisibleSystem;
     private PathPack pathPack;
     private GenericBlueprint blueprint;
     private Player player;
@@ -144,6 +147,7 @@ public class App extends Game2D {
         this.towerManager = new TowerManager(world, blueprint, player);
         this.creepManager = new CreepManager(world);
         this.projectileManager = new ProjectileManager(world, blueprint);
+        this.invisibleManager = new InvisibleManager(world, clock, INVISIBLE_INTERVAL);
     }
 
     private void initializeSystems() {
@@ -155,6 +159,7 @@ public class App extends Game2D {
         aoeSystem = new AoeSystem();
         getTowerSystem = new GetTower();
         getCreepSystem = new GetCreep();
+        invisibleSystem = new InvisibleSystem();
 
         world.setSystem(renderSpriteSystem, true);
         world.setSystem(renderTextSystem, true);
@@ -164,11 +169,13 @@ public class App extends Game2D {
         world.setSystem(getTowerSystem, true);
         world.setSystem(getCreepSystem, true);
         world.setSystem(aoeSystem, true);
+        world.setSystem(invisibleSystem, true);
         world.setSystem(new MovementSystem());
         world.setSystem(new WaveSystem(player));
         world.setSystem(new FireProjectilSystem(closestEnemySystem, projectileManager));
         world.setSystem(new HitProjectileSystem(aoeSystem));
         world.setSystem(new DeathSystem(player));
+        world.setSystem(new HealingSystem());
         world.initialize();
     }
 

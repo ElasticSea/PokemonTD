@@ -15,6 +15,7 @@ import com.xkings.core.component.RotationComponent;
 import com.xkings.core.component.SizeComponent;
 import com.xkings.pokemontd.component.SpriteComponent;
 import com.xkings.pokemontd.component.TintComponent;
+import com.xkings.pokemontd.component.VisibleComponent;
 
 /**
  * Created by Tomas on 10/4/13.
@@ -33,6 +34,8 @@ public class RenderSpriteSystem extends EntityProcessingSystem {
     ComponentMapper<SpriteComponent> spriteMapper;
     @Mapper
     ComponentMapper<TintComponent> tintMapper;
+    @Mapper
+    ComponentMapper<VisibleComponent> visibleMapper;
 
     public RenderSpriteSystem(Camera camera) {
         super(Aspect.getAspectForAll(PositionComponent.class, SizeComponent.class, SpriteComponent.class));
@@ -41,6 +44,10 @@ public class RenderSpriteSystem extends EntityProcessingSystem {
 
     @Override
     protected void process(Entity e) {
+        if (visibleMapper.has(e) && !visibleMapper.get(e).isVisible()) {
+            return;
+        }
+
         PositionComponent positionComponent = positionMapper.get(e);
         Vector3 size = sizeMapper.get(e).getPoint();
         TextureAtlas.AtlasRegion sprite = spriteMapper.get(e).getSprite();

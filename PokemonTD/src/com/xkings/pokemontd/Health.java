@@ -2,23 +2,35 @@ package com.xkings.pokemontd;
 
 public class Health {
 
-    private int health;
-    private int currentHealth;
+    private float maxHealth;
+    private float currentHealth;
 
-    public Health(int health) {
-        this.health = health;
-        this.currentHealth = health;
-    }
-
-    public int getHealth() {
-        return currentHealth;
-    }
-
-    public void decrees(int count) {
-        currentHealth = Math.max(0, currentHealth - count);
+    public Health(int maxHealth) {
+        this.maxHealth = maxHealth;
+        this.currentHealth = maxHealth;
     }
 
     public float getRatio() {
-        return (float) currentHealth / health;
+        return currentHealth / maxHealth;
+    }
+
+    public void decrees(float count) {
+        currentHealth = Math.max(0, currentHealth - count);
+    }
+
+    public void increase(float count) {
+        currentHealth = Math.min(maxHealth, currentHealth + count);
+    }
+
+    public int getCurrentHealth() {
+        return (int) currentHealth;
+    }
+
+    public int getMaxHealth() {
+        return (int) maxHealth;
+    }
+
+    public boolean isAlive() {
+        return currentHealth > 0;
     }
 }

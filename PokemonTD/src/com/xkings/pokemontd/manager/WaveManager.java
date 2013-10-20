@@ -51,6 +51,7 @@ public class WaveManager implements Updateable {
     }
 
     private void fireNextWave(CreepType next) {
+        WaveComponent wave = new WaveComponent();
         for (int i = 0; i < next.getCreepsInWave(); i++) {
             Path path = getAppropriatePath(pathPack, next);
             Vector3 startPoint = path.getPath().get(0);
@@ -58,7 +59,8 @@ public class WaveManager implements Updateable {
             double angleToNextPoint = Math.atan2(nextPoint.y - startPoint.y, nextPoint.x - startPoint.x);
             float xOffset = (float) (Math.cos(angleToNextPoint + Math.PI) * next.getDistanceBetweenCreeps() * i);
             float yOffset = (float) (Math.sin(angleToNextPoint + Math.PI) * next.getDistanceBetweenCreeps() * i);
-            Creep.registerCreep(world, path, new WaveComponent(), next, startPoint.x + xOffset, startPoint.y + yOffset);
+            Creep.registerCreep(world, new Path(path), wave, next, startPoint.x + xOffset,
+                    startPoint.y + yOffset);
         }
 
         updateWave();
