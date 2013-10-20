@@ -44,7 +44,7 @@ public class Status extends GuiBox{
         yOffset = rectangle.y + offset*11;
         spriteBatch.begin();
         drawAmount(player.getTreasure().getGold(), "coin", iconSize, (int) (rectangle.height));
-        drawAmount2(player.getHealth().getHealth(), "hearth", iconSize, (int) (rectangle.height));
+        drawAmount2(player.getHealth().getCurrentHealth(), "hearth", iconSize, (int) (rectangle.height));
         CreepType nextWave = waveManager.getNextWave();
         if (nextWave != null) {
             float textureOffset = rectangle.height / 5f;
