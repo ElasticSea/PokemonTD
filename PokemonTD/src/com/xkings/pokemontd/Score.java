@@ -21,4 +21,8 @@ public class Score {
     public String toString() {
         return String.valueOf(score);
     }
+
+    public void increase(int count) {
+        score += count;
+    }
 }

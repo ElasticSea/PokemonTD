@@ -44,9 +44,12 @@ public class DeathSystem extends EntityProcessingSystem {
     ComponentMapper<WaveComponent> waveMapper;
     @Mapper
     ComponentMapper<CreepTypeComponent> creepTypeMapper;
+    @Mapper
+    ComponentMapper<DamageComponent> damageMapper;
 
     public DeathSystem(Player player) {
-        super(Aspect.getAspectForAll(HealthComponent.class, TreasureComponent.class, CreepAbilityComponent.class));
+        super(Aspect.getAspectForAll(HealthComponent.class, TreasureComponent.class, CreepAbilityComponent.class,
+                DamageComponent.class));
         this.player = player;
     }
 
@@ -111,7 +114,7 @@ public class DeathSystem extends EntityProcessingSystem {
         Treasure treasure = treasureMapper.get(e).getTreasure();
         MoneyInfo.registerMoneyInfo(world, treasure.getGold(), position.x, position.y);
         treasure.transferTo(player.getTreasure());
-        player.getScore();
+        player.getScore().increase((int) damageMapper.get(e).getDamage());
     }
 
     private void die(Entity e) {
