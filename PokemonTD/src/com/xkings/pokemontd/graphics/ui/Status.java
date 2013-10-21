@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.xkings.core.main.Assets;
 import com.xkings.pokemontd.App;
 import com.xkings.pokemontd.Player;
-import com.xkings.pokemontd.entity.creep.CreepType;
 import com.xkings.pokemontd.manager.Interest;
 import com.xkings.pokemontd.manager.WaveManager;
 
@@ -45,13 +44,6 @@ public class Status extends GuiBox{
         spriteBatch.begin();
         drawAmount(player.getTreasure().getGold(), "coin", iconSize, (int) (rectangle.height));
         drawAmount2(player.getHealth().getCurrentHealth(), "hearth", iconSize, (int) (rectangle.height));
-        CreepType nextWave = waveManager.getNextWave();
-        if (nextWave != null) {
-            float textureOffset = rectangle.height / 5f;
-            spriteBatch.draw(waveManager.getNextWave().getTexture(), rectangle.x + textureOffset,
-                    rectangle.y + textureOffset, rectangle.width - textureOffset * 2,
-                    rectangle.height - textureOffset * 2);
-        }
         int textOffset = offset * 2;
         drawWaveInfo(textOffset);
         //drawInterest(textOffset);
