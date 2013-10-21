@@ -5,5 +5,6 @@ package com.xkings.pokemontd.entity.tower;
  */
 
 public enum TowerName {
-    Needle, Pinch, Sting, Scratch, Bite, Smash;
+    Needle, Pinch, Sting, Scratch, Bite, Smash, Splash, Wave, Tsunami, Sparkle, Burning, Inferno, Flower, Forest,
+    Nature, Chichen, Screech, Claw, Spooky, Haunted, Nightmare;
 }

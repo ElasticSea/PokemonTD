@@ -31,7 +31,7 @@ public class TowerType implements CommonDataType {
     public TowerType(TowerName name, float size, float speed, float damage, float range, AbilityComponent attack,
                      Treasure cost) {
         this.name = name;
-        this.texture = Assets.getTexture(name.toString().toLowerCase());
+        this.texture = Assets.getTexture("towers/"+name.toString().toLowerCase());
         this.blockedTexture = Assets.getTexture("blocked");
         this.size = size;
         this.speed = speed;
@@ -78,19 +78,25 @@ public class TowerType implements CommonDataType {
         return damage;
     }
 
-    public static Map<TowerName, List<TowerType>> getHierarchy() {
+    public static List<TowerType> getHierarchy(TowerName towerName) {
         if (map == null) {
             map = new HashMap<TowerName, List<TowerType>>();
             map.put(null, getTypes(Needle, Scratch));
             map.put(Needle, getTypes(Pinch));
             map.put(Pinch, getTypes(Sting));
-            map.put(Sting, getTypes());
+            map.put(Sting, getTypes(Splash,Sparkle,Flower,Chichen,Spooky));
+
             map.put(Scratch, getTypes(Bite));
             map.put(Bite, getTypes(Smash));
-            map.put(Smash, getTypes());
+            map.put(Smash, getTypes(Splash,Sparkle,Flower,Chichen,Spooky));
+
+            map.put(Spooky, getTypes(Haunted));
+            map.put(Haunted, getTypes(Nightmare));
+
             map = Collections.unmodifiableMap(map);
         }
-        return map;
+        List<TowerType> result = map.get(towerName);
+        return result != null ? result : getTypes();
     }
 
     private static Map<TowerName, TowerType> towerTypeMap = new TowerTypeBuilder().build(App.WORLD_SCALE);

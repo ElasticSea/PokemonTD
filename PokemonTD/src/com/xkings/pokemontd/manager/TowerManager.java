@@ -171,7 +171,7 @@ public class TowerManager implements Clickable {
         TowerName towerName =
                 clickedTower != null ? clickedTower.getComponent(TowerTypeComponent.class).getTowerType().getName() :
                         null;
-        return TowerType.getHierarchy().get(towerName);
+        return TowerType.getHierarchy(towerName);
     }
 
     public boolean canAfford(TowerType towerType) {

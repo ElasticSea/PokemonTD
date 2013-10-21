@@ -20,13 +20,13 @@ public class Tower extends ConcreteEntity {
         addComponent(new SizeComponent(towerType.getSize(), towerType.getSize(), 0));
         addComponent(new SpeedComponent(towerType.getSpeed()));
         addComponent(new NameComponent(towerType.getName().toString()));
-        addComponent(towerType.getAttack());
         addComponent(new RangeComponent(towerType.getRange()));
         addComponent(new TimeComponent());
         addComponent(new TreasureComponent(new Treasure(towerType.getCost())));
         addComponent(new TowerTypeComponent(towerType));
         addComponent(new UpgradeComponent());
         addComponent(new DamageComponent(towerType.getDamage()));
+        addComponent(towerType.getAttack());
     }
 
     public static Entity registerTower(World world, TowerType towerType, float x, float y) {

@@ -8,6 +8,7 @@ import com.xkings.core.entity.ConcreteEntity;
 import com.xkings.pokemontd.component.DamageComponent;
 import com.xkings.pokemontd.component.PathComponent;
 import com.xkings.pokemontd.component.SpriteComponent;
+import com.xkings.pokemontd.component.attack.AbilityComponent;
 import com.xkings.pokemontd.component.attack.ProjectileComponent;
 import com.xkings.pokemontd.map.Path;
 
@@ -16,8 +17,8 @@ import com.xkings.pokemontd.map.Path;
  */
 public class Projectile extends ConcreteEntity {
 
-    private Projectile(World world, ProjectileComponent projectileType, float x, float y, float damage,
-                       Vector3 targetPosition, Entity target) {
+    private Projectile(World world,  ProjectileComponent projectileType, float x, float y,
+                       float damage, Vector3 targetPosition, Entity target) {
         super(world);
         addComponent(new PositionComponent(x, y, 0));
         addComponent(new RotationComponent(0, 0, 0));
@@ -29,10 +30,11 @@ public class Projectile extends ConcreteEntity {
         addComponent(projectileType);
         addComponent(new TimeComponent());
         addComponent(new TargetComponent(target));
+        addComponent(projectileType.getAbility());
     }
 
-    public static void registerProjectile(World world, ProjectileComponent projectileType, float x, float y,
-                                          float damage, Vector3 targetPosition, Entity target) {
+    public static void registerProjectile(World world,  ProjectileComponent projectileType,
+                                          float x, float y, float damage, Vector3 targetPosition, Entity target) {
         Projectile projectile = new Projectile(world, projectileType, x, y, damage, targetPosition, target);
         projectile.register();
 

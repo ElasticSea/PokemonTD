@@ -38,7 +38,10 @@ import com.xkings.pokemontd.system.GetCreep;
 import com.xkings.pokemontd.system.GetTower;
 import com.xkings.pokemontd.system.abilitySytems.projectile.AoeSystem;
 import com.xkings.pokemontd.system.abilitySytems.projectile.FireProjectilSystem;
-import com.xkings.pokemontd.system.abilitySytems.projectile.HitProjectileSystem;
+import com.xkings.pokemontd.system.abilitySytems.projectile.LifeStealSystem;
+import com.xkings.pokemontd.system.abilitySytems.projectile.hit.HitAoeSystem;
+import com.xkings.pokemontd.system.abilitySytems.projectile.hit.HitDamageSystem;
+import com.xkings.pokemontd.system.abilitySytems.projectile.hit.HitLifeStealSystem;
 import com.xkings.pokemontd.system.autonomous.*;
 import com.xkings.pokemontd.tween.ColorAccessor;
 
@@ -173,7 +176,10 @@ public class App extends Game2D {
         world.setSystem(new MovementSystem());
         world.setSystem(new WaveSystem(player));
         world.setSystem(new FireProjectilSystem(closestEnemySystem, projectileManager));
-        world.setSystem(new HitProjectileSystem(aoeSystem));
+        world.setSystem(new HitDamageSystem());
+        world.setSystem(new HitAoeSystem());
+        world.setSystem(new HitLifeStealSystem());
+        world.setSystem(new LifeStealSystem());
         world.setSystem(new DeathSystem(player));
         world.setSystem(new HealingSystem());
         world.initialize();
