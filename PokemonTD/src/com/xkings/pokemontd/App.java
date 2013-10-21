@@ -39,6 +39,7 @@ import com.xkings.pokemontd.system.GetTower;
 import com.xkings.pokemontd.system.abilitySytems.projectile.AoeSystem;
 import com.xkings.pokemontd.system.abilitySytems.projectile.FireProjectilSystem;
 import com.xkings.pokemontd.system.abilitySytems.projectile.LifeStealSystem;
+import com.xkings.pokemontd.system.abilitySytems.projectile.hit.BubbleSystem;
 import com.xkings.pokemontd.system.abilitySytems.projectile.hit.HitAoeSystem;
 import com.xkings.pokemontd.system.abilitySytems.projectile.hit.HitDamageSystem;
 import com.xkings.pokemontd.system.abilitySytems.projectile.hit.HitLifeStealSystem;
@@ -182,6 +183,7 @@ public class App extends Game2D {
         world.setSystem(new LifeStealSystem());
         world.setSystem(new DeathSystem(player));
         world.setSystem(new HealingSystem());
+        world.setSystem(new BubbleSystem(world));
         world.initialize();
     }
 

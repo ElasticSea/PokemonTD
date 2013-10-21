@@ -2,7 +2,7 @@ package com.xkings.pokemontd.entity.tower;
 
 import com.xkings.pokemontd.Treasure;
 import com.xkings.pokemontd.component.attack.AbilityComponent;
-import com.xkings.pokemontd.component.attack.ProjectileComponent;
+import com.xkings.pokemontd.component.attack.projectile.ProjectileComponent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,33 +20,36 @@ import static java.lang.Math.pow;
 
 public class TowerTypeBuilder {
 
-    public static final float SIZE = 1;
-    public static final float SUPER_SMALL_RANGE = 1.25f;
-    public static final float SMALL_RANGE = 1.75f;
-    public static final float NORMAL_RANGE = 2.25f;
-    public static final float LONG_RANGE = 2.75f;
-    public static final float SUPER_LONG_RANGE = 3.25f;
+    public static final float SIZE = 1.5f;
+    public static final float XS_RANGE = 1.25f;
+    public static final float S_RANGE = 1.75f;
+    public static final float N_RANGE = 2.25f;
+    public static final float L_RANGE = 2.75f;
+    public static final float XL_RANGE = 3.25f;
     public static final int NORMAL_SPEED = 1;
     public static final float SLOW_SPEED = 2f;
     public static final int INITIAL_BASE_DAMAGE = 15;
     public static final int INITIAL_GOLD = 10;
-    private static final float koefficient =
-            (float) (scaleByRange(SUPER_SMALL_RANGE) - scaleByRange(SUPER_LONG_RANGE)) * 2f;
+    private static final float koefficient = (float) (scaleByRange(XS_RANGE) - scaleByRange(XL_RANGE)) * 2f;
 
     private List<TowerType> getData(float scale) {
         List<Specs> specs = new ArrayList<Specs>();
         // Basic
-        specs.add(new Specs(TowerName.Needle, 1, NORMAL_SPEED, NORMAL_RANGE, ProjectileComponent.getNormal(scale)));
-        specs.add(new Specs(TowerName.Pinch, 2, NORMAL_SPEED, NORMAL_RANGE, ProjectileComponent.getNormal(scale)));
-        specs.add(new Specs(TowerName.Sting, 3, NORMAL_SPEED, NORMAL_RANGE, ProjectileComponent.getNormal(scale)));
-        specs.add(new Specs(TowerName.Scratch, 1, SLOW_SPEED, NORMAL_RANGE, ProjectileComponent.getSplash(scale, 2)));
-        specs.add(new Specs(TowerName.Bite, 2, SLOW_SPEED, NORMAL_RANGE, ProjectileComponent.getSplash(scale, 2)));
-        specs.add(new Specs(TowerName.Smash, 3, SLOW_SPEED, NORMAL_RANGE, ProjectileComponent.getSplash(scale, 2)));
+        specs.add(new Specs(TowerName.Needle, 1, NORMAL_SPEED, N_RANGE, ProjectileComponent.getNormal(scale)));
+        specs.add(new Specs(TowerName.Pinch, 2, NORMAL_SPEED, N_RANGE, ProjectileComponent.getNormal(scale)));
+        specs.add(new Specs(TowerName.Sting, 3, NORMAL_SPEED, N_RANGE, ProjectileComponent.getNormal(scale)));
+        specs.add(new Specs(TowerName.Scratch, 1, SLOW_SPEED, N_RANGE, ProjectileComponent.getSplash(scale, 2)));
+        specs.add(new Specs(TowerName.Bite, 2, SLOW_SPEED, N_RANGE, ProjectileComponent.getSplash(scale, 2)));
+        specs.add(new Specs(TowerName.Smash, 3, SLOW_SPEED, N_RANGE, ProjectileComponent.getSplash(scale, 2)));
         // New 15
-        specs.add(new Specs(TowerName.Spooky, 4, NORMAL_SPEED, SUPER_LONG_RANGE, ProjectileComponent.getNormal(scale)));
-        specs.add(
-                new Specs(TowerName.Haunted, 5, NORMAL_SPEED, SUPER_LONG_RANGE, ProjectileComponent.getNormal(scale)));
-        specs.add(new Specs(TowerName.Nightmare, 10, NORMAL_SPEED, SUPER_LONG_RANGE,
+        specs.add(new Specs(TowerName.Splash, 4, NORMAL_SPEED, N_RANGE, ProjectileComponent.getNormal(scale)));
+        specs.add(new Specs(TowerName.Wave, 5, NORMAL_SPEED, N_RANGE, ProjectileComponent.getBubble(scale)));
+        specs.add(new Specs(TowerName.Tsunami, 10, NORMAL_SPEED, N_RANGE, ProjectileComponent.getBubble(scale)));
+
+
+        specs.add(new Specs(TowerName.Spooky, 4, NORMAL_SPEED, XL_RANGE, ProjectileComponent.getNormal(scale)));
+        specs.add(new Specs(TowerName.Haunted, 5, NORMAL_SPEED, XL_RANGE, ProjectileComponent.getNormal(scale)));
+        specs.add(new Specs(TowerName.Nightmare, 10, NORMAL_SPEED, XL_RANGE,
                 ProjectileComponent.getTemLifeSteal(scale, 0.3f, 5f)));
 
         List<TowerType> data = new ArrayList<TowerType>();
@@ -69,7 +72,7 @@ public class TowerTypeBuilder {
     }
 
     private static double scaleByRange(float range) {
-        return (PI * pow(NORMAL_RANGE, 2) - (PI * pow(range, 2)));
+        return (PI * pow(N_RANGE, 2) - (PI * pow(range, 2)));
     }
 
     public float getBaseDamage(float initialBaseDamage, int levels) {

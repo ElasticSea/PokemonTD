@@ -4,7 +4,8 @@ import com.artemis.Entity;
 import com.artemis.World;
 import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.pathfinding.GenericBlueprint;
-import com.xkings.pokemontd.component.attack.ProjectileComponent;
+import com.xkings.pokemontd.App;
+import com.xkings.pokemontd.component.attack.projectile.ProjectileComponent;
 import com.xkings.pokemontd.entity.Projectile;
 
 /**
@@ -27,9 +28,10 @@ public class ProjectileManager {
                 Projectile.registerProjectile(world, projectileType, position.x, position.y, damage, targetPosition,
                         target);
                 break;
-            case LAST_KNOWN_PLACE:
-                break;
-            case AHEAD_TARGET:
+
+            case PASS_THROUGH:
+                Vector3 direction = targetPosition.cpy().sub(position).nor().scl(5 * App.WORLD_SCALE).add(position);
+                Projectile.registerProjectile(world, projectileType, position.x, position.y, damage, direction, target);
                 break;
         }
         return true;

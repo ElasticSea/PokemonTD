@@ -8,8 +8,7 @@ import com.xkings.core.entity.ConcreteEntity;
 import com.xkings.pokemontd.component.DamageComponent;
 import com.xkings.pokemontd.component.PathComponent;
 import com.xkings.pokemontd.component.SpriteComponent;
-import com.xkings.pokemontd.component.attack.AbilityComponent;
-import com.xkings.pokemontd.component.attack.ProjectileComponent;
+import com.xkings.pokemontd.component.attack.projectile.ProjectileComponent;
 import com.xkings.pokemontd.map.Path;
 
 /**

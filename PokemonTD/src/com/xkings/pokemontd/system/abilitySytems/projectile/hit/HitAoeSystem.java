@@ -4,12 +4,8 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.xkings.core.component.PositionComponent;
-import com.xkings.core.component.SizeComponent;
-import com.xkings.core.component.TargetComponent;
 import com.xkings.pokemontd.component.DamageComponent;
-import com.xkings.pokemontd.component.HealthComponent;
-import com.xkings.pokemontd.component.attack.AoeComponent;
-import com.xkings.pokemontd.component.attack.ProjectileComponent;
+import com.xkings.pokemontd.component.attack.projectile.data.AoeComponent;
 import com.xkings.pokemontd.system.abilitySytems.projectile.AoeSystem;
 
 /**

@@ -8,10 +8,12 @@ import com.xkings.core.logic.Updateable;
  */
 public abstract class AbstractEffect extends Component implements Effect, Updateable {
     private float currentTime;
-    private final float goalTime;
+    private final float interval;
+    private int iterations;
 
-    protected AbstractEffect(float goalTime) {
-        this.goalTime = goalTime;
+    protected AbstractEffect(float interval, int iterations) {
+        this.interval = interval;
+        this.iterations = iterations;
     }
 
     @Override
@@ -30,8 +32,9 @@ public abstract class AbstractEffect extends Component implements Effect, Update
 
     @Override
     public boolean isReady() {
-        if (currentTime >= goalTime) {
-            currentTime -= goalTime;
+        if (currentTime >= interval && iterations > 0) {
+            currentTime -= interval;
+            iterations--;
             return true;
         }
         return false;
@@ -41,5 +44,11 @@ public abstract class AbstractEffect extends Component implements Effect, Update
     @Override
     public boolean isStarted() {
         return currentTime > 0;
+    }
+
+    @Override
+    public void reset() {
+        // FIXME this is a hack that wont trigger is started, because its not zero but very close to zero.
+        currentTime =  Float.MIN_VALUE;
     }
 }

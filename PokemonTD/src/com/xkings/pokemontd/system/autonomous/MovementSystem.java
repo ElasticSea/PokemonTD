@@ -41,7 +41,7 @@ public class MovementSystem extends EntityProcessingSystem {
         float speed = speedMapper.get(entity).getSpeed();
         RotationComponent rotation = rotationMapper.get(entity);
 
-        Time time = timeComponent.getTime();
+        Time time = timeComponent.getTime(this.getClass());
         time.increase(world.getDelta());
 
         while (time.getAvailableTime() > 0) {

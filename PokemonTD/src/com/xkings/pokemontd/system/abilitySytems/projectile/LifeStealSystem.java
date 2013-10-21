@@ -25,7 +25,6 @@ public class LifeStealSystem extends EntityProcessingSystem {
 
     @Override
     protected void process(Entity entity) {
-        System.out.println("Peoces");
         LifeStealEffect lifeSteal = lifeStealMapper.get(entity);
         if (!lifeSteal.isStarted()) {
             registerEffect(entity, lifeSteal);

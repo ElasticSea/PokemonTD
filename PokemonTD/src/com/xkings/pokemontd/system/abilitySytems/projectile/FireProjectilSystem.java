@@ -8,7 +8,7 @@ import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.component.*;
 import com.xkings.pokemontd.component.DamageComponent;
-import com.xkings.pokemontd.component.attack.ProjectileComponent;
+import com.xkings.pokemontd.component.attack.projectile.ProjectileComponent;
 import com.xkings.pokemontd.manager.ProjectileManager;
 import com.xkings.pokemontd.system.ClosestEnemySystem;
 
@@ -43,7 +43,7 @@ public class FireProjectilSystem extends EntityProcessingSystem {
 
     @Override
     protected void process(Entity entity) {
-        Time time = timeMapper.get(entity).getTime();
+        Time time = timeMapper.get(entity).getTime(this.getClass());
         float speed = speedMapper.get(entity).getSpeed();
 
         time.increase(world.getDelta());

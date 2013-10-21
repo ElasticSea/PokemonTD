@@ -1,7 +1,12 @@
-package com.xkings.pokemontd.component.attack;
+package com.xkings.pokemontd.component.attack.projectile;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.xkings.core.main.Assets;
+import com.xkings.pokemontd.component.attack.AbilityComponent;
+import com.xkings.pokemontd.component.attack.projectile.data.AoeComponent;
+import com.xkings.pokemontd.component.attack.projectile.data.BubbleData;
+import com.xkings.pokemontd.component.attack.projectile.data.LifeStealData;
+import com.xkings.pokemontd.component.attack.projectile.data.NormalData;
 
 /**
  * Created by Tomas on 10/13/13.
@@ -9,6 +14,7 @@ import com.xkings.core.main.Assets;
 public class ProjectileComponent extends AbilityComponent {
     public static final float DEFAULT_SPEED = 2.0f;
     public static final float DEFAULT_SIZE = 0.1f;
+    public static final float BIG_SIZE = 0.25f;
     private TextureAtlas.AtlasRegion texture;
     private Type type;
     private float speed;
@@ -16,7 +22,7 @@ public class ProjectileComponent extends AbilityComponent {
     private final AbilityComponent ability;
 
     public static AbilityComponent getNormal(float scale) {
-        return new ProjectileComponent(new OneTimeDamageComponent(), "bullet", Type.FOLLOW_TARGET, DEFAULT_SIZE * scale,
+        return new ProjectileComponent(new NormalData(), "bullet", Type.FOLLOW_TARGET, DEFAULT_SIZE * scale,
                 DEFAULT_SPEED * scale);
     }
 
@@ -30,8 +36,13 @@ public class ProjectileComponent extends AbilityComponent {
                 DEFAULT_SIZE * scale, DEFAULT_SPEED * scale);
     }
 
+    public static AbilityComponent getBubble(float scale) {
+        return new ProjectileComponent(new BubbleData(0.25f), "bubble", Type.PASS_THROUGH,
+                BIG_SIZE * scale, DEFAULT_SPEED * scale);
+    }
+
     public enum Type {
-        FOLLOW_TARGET, LAST_KNOWN_PLACE, AHEAD_TARGET,
+        FOLLOW_TARGET, LAST_KNOWN_PLACE, AHEAD_TARGET, PASS_THROUGH;
     }
 
     public ProjectileComponent(AbilityComponent ability, String texture, Type type, float size, float speed) {

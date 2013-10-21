@@ -16,7 +16,7 @@ import com.xkings.pokemontd.component.DamageComponent;
 /**
  * Created by Tomas on 10/4/13.
  */
-public class HitSystem extends EntityProcessingSystem {
+public abstract class HitSystem extends EntityProcessingSystem {
 
     @Mapper
     ComponentMapper<DamageComponent> damageMapper;
@@ -35,7 +35,7 @@ public class HitSystem extends EntityProcessingSystem {
 
     @Override
     protected void process(Entity entity) {
-        System.out.println(targetMapper);
+        System.out.println(this.getClass());
         Entity target = targetMapper.get(entity).getTarget();
 
         if (positionMapper.get(target) == null) {
@@ -53,7 +53,6 @@ public class HitSystem extends EntityProcessingSystem {
         }
     }
 
-    public void onHit(Entity entity, Entity target) {
-    }
+    public abstract void onHit(Entity entity, Entity target);
 
 }

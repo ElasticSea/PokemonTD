@@ -3,12 +3,12 @@ package com.xkings.pokemontd.component.attack.effects;
 /**
  * Created by Tomas on 10/21/13.
  */
-public class LifeStealEffect extends  AbstractEffect {
+public class LifeStealEffect extends AbstractEffect {
     private final float ratio;
     private float stoleLife;
 
-    public LifeStealEffect(float goalTime, float ratio) {
-        super(goalTime);
+    public LifeStealEffect(float interval, float ratio) {
+        super(interval, 1);
         this.ratio = ratio;
     }
 
