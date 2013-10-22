@@ -9,13 +9,13 @@ import com.xkings.pokemontd.component.attack.projectile.data.NormalData;
 /**
  * Created by Tomas on 10/4/13.
  */
-public class HitDamageSystem extends HitSystem {
+public class HitNormalSystem extends HitSystem {
 
     @Mapper
     ComponentMapper<HealthComponent> healthMapper;
 
 
-    public HitDamageSystem() {
+    public HitNormalSystem() {
         super(NormalData.class);
     }
 

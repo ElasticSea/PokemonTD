@@ -12,6 +12,7 @@ import com.xkings.core.component.SizeComponent;
 import com.xkings.core.component.TargetComponent;
 import com.xkings.core.utils.Collision;
 import com.xkings.pokemontd.component.DamageComponent;
+import com.xkings.pokemontd.component.attack.projectile.ProjectileComponent;
 
 /**
  * Created by Tomas on 10/4/13.
@@ -26,6 +27,8 @@ public abstract class HitSystem extends EntityProcessingSystem {
     ComponentMapper<TargetComponent> targetMapper;
     @Mapper
     ComponentMapper<SizeComponent> sizeMapper;
+    @Mapper
+    ComponentMapper<ProjectileComponent> projectileMapper;
 
 
     public HitSystem(Class<? extends Component> filter) {
@@ -34,23 +37,30 @@ public abstract class HitSystem extends EntityProcessingSystem {
 
 
     @Override
-    protected void process(Entity entity) {
-        System.out.println(this.getClass());
-        Entity target = targetMapper.get(entity).getTarget();
+    protected void process(Entity e) {
+        Entity target = targetMapper.get(e).getTarget();
 
         if (positionMapper.get(target) == null) {
-            entity.deleteFromWorld();
+            e.deleteFromWorld();
             return;
         }
-        Vector3 entityPosition = positionMapper.get(entity).getPoint();
+        if (projectileMapper.get(e).getType().equals(ProjectileComponent.Type.IMMEDIATE_ATTACK)) {
+            hit(e, target);
+        }
+
+        Vector3 entityPosition = positionMapper.get(e).getPoint();
         Vector3 targetPosition = positionMapper.get(target).getPoint();
-        Vector3 entitySize = sizeMapper.get(entity).getPoint();
+        Vector3 entitySize = sizeMapper.get(e).getPoint();
         Vector3 targetSize = sizeMapper.get(target).getPoint();
 
         if (Collision.intersectRects(entityPosition, targetPosition, entitySize, targetSize)) {
-            onHit(entity, target);
-            entity.deleteFromWorld();
+            hit(e, target);
         }
+    }
+
+    private void hit(Entity e, Entity target) {
+        onHit(e, target);
+        e.deleteFromWorld();
     }
 
     public abstract void onHit(Entity entity, Entity target);

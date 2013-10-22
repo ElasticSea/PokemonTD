@@ -1,19 +1,24 @@
 package com.xkings.pokemontd.component.attack.effects;
 
 import com.artemis.Component;
+import com.badlogic.gdx.graphics.Color;
 import com.xkings.core.logic.Updateable;
 
 /**
  * Created by Tomas on 10/21/13.
  */
 public abstract class AbstractEffect extends Component implements Effect, Updateable {
+    private final Color tint;
+    private int currentIterations;
     private float currentTime;
     private final float interval;
     private int iterations;
 
-    protected AbstractEffect(float interval, int iterations) {
+    protected AbstractEffect(Color tint, float interval, int iterations) {
+        this.tint = tint;
         this.interval = interval;
         this.iterations = iterations;
+        this.currentIterations = iterations;
     }
 
     @Override
@@ -32,9 +37,9 @@ public abstract class AbstractEffect extends Component implements Effect, Update
 
     @Override
     public boolean isReady() {
-        if (currentTime >= interval && iterations > 0) {
+        if (currentTime >= interval && currentIterations > 0) {
             currentTime -= interval;
-            iterations--;
+            currentIterations--;
             return true;
         }
         return false;
@@ -49,6 +54,11 @@ public abstract class AbstractEffect extends Component implements Effect, Update
     @Override
     public void reset() {
         // FIXME this is a hack that wont trigger is started, because its not zero but very close to zero.
-        currentTime =  Float.MIN_VALUE;
+        currentTime = Float.MIN_VALUE;
+        currentIterations = iterations;
+    }
+
+    public Color getTint() {
+        return tint;
     }
 }

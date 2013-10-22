@@ -8,6 +8,7 @@ import com.xkings.core.entity.ConcreteEntity;
 import com.xkings.pokemontd.component.DamageComponent;
 import com.xkings.pokemontd.component.PathComponent;
 import com.xkings.pokemontd.component.SpriteComponent;
+import com.xkings.pokemontd.component.attack.AbilityComponent;
 import com.xkings.pokemontd.component.attack.projectile.ProjectileComponent;
 import com.xkings.pokemontd.map.Path;
 
@@ -16,8 +17,8 @@ import com.xkings.pokemontd.map.Path;
  */
 public class Projectile extends ConcreteEntity {
 
-    private Projectile(World world,  ProjectileComponent projectileType, float x, float y,
-                       float damage, Vector3 targetPosition, Entity target) {
+    private Projectile(World world, ProjectileComponent projectileType, float x, float y, float damage, float speed,
+                       Vector3 targetPosition, Entity target) {
         super(world);
         addComponent(new PositionComponent(x, y, 0));
         addComponent(new RotationComponent(0, 0, 0));
@@ -25,17 +26,18 @@ public class Projectile extends ConcreteEntity {
         addComponent(new SpriteComponent(projectileType.getTexture()));
         addComponent(new SizeComponent(projectileType.getSize(), projectileType.getSize(), 0));
         addComponent(new SpeedComponent(projectileType.getSpeed()));
-        addComponent(new DamageComponent(damage));
+        addComponent(new DamageComponent(damage, speed));
         addComponent(projectileType);
         addComponent(new TimeComponent());
         addComponent(new TargetComponent(target));
-        addComponent(projectileType.getAbility());
+        for (AbilityComponent abilityComponent : projectileType.getAbility()) {
+            addComponent(abilityComponent);
+        }
     }
 
-    public static void registerProjectile(World world,  ProjectileComponent projectileType,
-                                          float x, float y, float damage, Vector3 targetPosition, Entity target) {
-        Projectile projectile = new Projectile(world, projectileType, x, y, damage, targetPosition, target);
+    public static void registerProjectile(World world, ProjectileComponent projectileType, float x, float y,
+                                          float damage, float speed, Vector3 targetPosition, Entity target) {
+        Projectile projectile = new Projectile(world, projectileType, x, y, damage, speed, targetPosition, target);
         projectile.register();
-
     }
 }

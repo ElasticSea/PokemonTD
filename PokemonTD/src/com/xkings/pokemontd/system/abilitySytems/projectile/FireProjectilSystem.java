@@ -56,6 +56,7 @@ public class FireProjectilSystem extends EntityProcessingSystem {
     private void run(Entity entity) {
         Vector3 position = positionMapper.get(entity).getPoint();
         float range = rangeMapper.get(entity).getRange();
+        float speed = speedMapper.get(entity).getSpeed();
 
         closestEnemySystem.start(entity, position, range);
         Entity closestEnemy = closestEnemySystem.getClosestEntity();
@@ -63,7 +64,8 @@ public class FireProjectilSystem extends EntityProcessingSystem {
             Vector3 closestEnemyPosition = positionMapper.get(closestEnemy).getPoint();
             float damage = damageMapper.get(entity).getDamage();
             ProjectileComponent projectileType = projectileMapper.get(entity);
-            projectileManager.createProjectile(projectileType, position, damage, closestEnemyPosition, closestEnemy);
+            projectileManager.createProjectile(projectileType, position, damage, speed,closestEnemyPosition,
+                    closestEnemy);
         }
     }
 

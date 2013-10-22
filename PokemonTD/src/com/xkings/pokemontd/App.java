@@ -36,13 +36,8 @@ import com.xkings.pokemontd.map.PathPack;
 import com.xkings.pokemontd.system.ClosestEnemySystem;
 import com.xkings.pokemontd.system.GetCreep;
 import com.xkings.pokemontd.system.GetTower;
-import com.xkings.pokemontd.system.abilitySytems.projectile.AoeSystem;
-import com.xkings.pokemontd.system.abilitySytems.projectile.FireProjectilSystem;
-import com.xkings.pokemontd.system.abilitySytems.projectile.LifeStealSystem;
-import com.xkings.pokemontd.system.abilitySytems.projectile.hit.BubbleSystem;
-import com.xkings.pokemontd.system.abilitySytems.projectile.hit.HitAoeSystem;
-import com.xkings.pokemontd.system.abilitySytems.projectile.hit.HitDamageSystem;
-import com.xkings.pokemontd.system.abilitySytems.projectile.hit.HitLifeStealSystem;
+import com.xkings.pokemontd.system.abilitySytems.projectile.*;
+import com.xkings.pokemontd.system.abilitySytems.projectile.hit.*;
 import com.xkings.pokemontd.system.autonomous.*;
 import com.xkings.pokemontd.tween.ColorAccessor;
 
@@ -51,6 +46,7 @@ import java.util.Random;
 public class App extends Game2D {
 
     public static final Random RANDOM = new Random();
+    public static final Chance CHANCE = new Chance(RANDOM);
     public static final int WORLD_SCALE = 100;
     public static final int WORLD_WIDTH = 20;
     public static final int WORLD_HEIGHT = 24;
@@ -101,7 +97,7 @@ public class App extends Game2D {
         return manager;
     }
 
-    public App(String[] args) {
+    public App(String... args) {
         super(args);
     }
 
@@ -143,7 +139,7 @@ public class App extends Game2D {
     }
 
     private void initializeContent() {
-        player = new Player(9999, 9999, 0, 0, 0, 0, 0, 0, 0);
+        player = new Player(9999, 99990, 0, 0, 0, 0, 0, 0, 0);
     }
 
     private void initializeManagers() {
@@ -177,12 +173,19 @@ public class App extends Game2D {
         world.setSystem(new MovementSystem());
         world.setSystem(new WaveSystem(player));
         world.setSystem(new FireProjectilSystem(closestEnemySystem, projectileManager));
-        world.setSystem(new HitDamageSystem());
-        world.setSystem(new HitAoeSystem());
-        world.setSystem(new HitLifeStealSystem());
         world.setSystem(new LifeStealSystem());
         world.setSystem(new DeathSystem(player));
         world.setSystem(new HealingSystem());
+        world.setSystem(new DotSystem());
+        world.setSystem(new SlowSystem());
+
+        world.setSystem(new HitLifeStealSystem());
+        world.setSystem(new HitDotSystem());
+        world.setSystem(new HitNormalSystem());
+        world.setSystem(new HitAoeSystem());
+        world.setSystem(new HitSlowSystem());
+        world.setSystem(new HitBonusSystem());
+
         world.setSystem(new BubbleSystem(world));
         world.initialize();
     }

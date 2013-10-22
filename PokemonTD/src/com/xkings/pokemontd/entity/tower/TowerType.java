@@ -84,15 +84,27 @@ public class TowerType implements CommonDataType {
             map.put(null, getTypes(Needle, Scratch));
             map.put(Needle, getTypes(Pinch));
             map.put(Pinch, getTypes(Sting));
-            map.put(Sting, getTypes(Splash,Sparkle,Flower,Chichen,Spooky));
+            map.put(Sting, getTypes(Splash,Sparkle,Flower, Chicken,Spooky));
 
             map.put(Scratch, getTypes(Bite));
             map.put(Bite, getTypes(Smash));
-            map.put(Smash, getTypes(Splash,Sparkle,Flower,Chichen,Spooky));
+            map.put(Smash, getTypes(Splash,Sparkle,Flower, Chicken,Spooky));
 
 
             map.put(Splash, getTypes(Wave));
             map.put(Wave, getTypes(Tsunami));
+
+            map.put(Sparkle, getTypes(Burning));
+            map.put(Burning, getTypes(Inferno));
+
+
+            map.put(Flower, getTypes(Forest));
+            map.put(Forest, getTypes(Nature));
+
+
+            map.put(Chicken, getTypes(Screech));
+            map.put(Screech, getTypes(Claw));
+
 
             map.put(Spooky, getTypes(Haunted));
             map.put(Haunted, getTypes(Nightmare));

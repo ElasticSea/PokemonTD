@@ -26,8 +26,11 @@ public class TowerTypeBuilder {
     public static final float N_RANGE = 2.25f;
     public static final float L_RANGE = 2.75f;
     public static final float XL_RANGE = 3.25f;
-    public static final int NORMAL_SPEED = 1;
+    public static final float SUPER_FAST_SPEED = 0.25f;
+    public static final float FAST_SPEED = 0.5f;
+    public static final float NORMAL_SPEED = 1;
     public static final float SLOW_SPEED = 2f;
+    public static final float SUPER_SLOW_SPEED = 4f;
     public static final int INITIAL_BASE_DAMAGE = 15;
     public static final int INITIAL_GOLD = 10;
     private static final float koefficient = (float) (scaleByRange(XS_RANGE) - scaleByRange(XL_RANGE)) * 2f;
@@ -41,12 +44,26 @@ public class TowerTypeBuilder {
         specs.add(new Specs(TowerName.Scratch, 1, SLOW_SPEED, N_RANGE, ProjectileComponent.getSplash(scale, 2)));
         specs.add(new Specs(TowerName.Bite, 2, SLOW_SPEED, N_RANGE, ProjectileComponent.getSplash(scale, 2)));
         specs.add(new Specs(TowerName.Smash, 3, SLOW_SPEED, N_RANGE, ProjectileComponent.getSplash(scale, 2)));
-        // New 15
+        // blue
         specs.add(new Specs(TowerName.Splash, 4, NORMAL_SPEED, N_RANGE, ProjectileComponent.getNormal(scale)));
         specs.add(new Specs(TowerName.Wave, 5, NORMAL_SPEED, N_RANGE, ProjectileComponent.getBubble(scale)));
         specs.add(new Specs(TowerName.Tsunami, 10, NORMAL_SPEED, N_RANGE, ProjectileComponent.getBubble(scale)));
-
-
+        //red
+        specs.add(new Specs(TowerName.Sparkle, 4, NORMAL_SPEED, S_RANGE, ProjectileComponent.getFire(scale)));
+        specs.add(new Specs(TowerName.Burning, 5, FAST_SPEED, S_RANGE, ProjectileComponent.getFire(scale)));
+        specs.add(new Specs(TowerName.Inferno, 10, SUPER_FAST_SPEED, S_RANGE, ProjectileComponent.getFireDot(scale)));
+        //green
+        specs.add(new Specs(TowerName.Flower, 4, SUPER_SLOW_SPEED, S_RANGE,
+                ProjectileComponent.getNature(scale, 0.2f, 1, 0.2f)));
+        specs.add(new Specs(TowerName.Forest, 5, SUPER_SLOW_SPEED, S_RANGE,
+                ProjectileComponent.getNature(scale, 0.3f, 1.2f, 0.3f)));
+        specs.add(new Specs(TowerName.Nature, 10, SUPER_SLOW_SPEED, S_RANGE,
+                ProjectileComponent.getNature(scale, 0.7f, 2f, 0.5f)));
+        //yellow
+        specs.add(new Specs(TowerName.Chicken, 4, FAST_SPEED, N_RANGE, ProjectileComponent.getClaw(scale, 0f, 0)));
+        specs.add(new Specs(TowerName.Screech, 5, FAST_SPEED, N_RANGE, ProjectileComponent.getClaw(scale, 0.1f, 1)));
+        specs.add(new Specs(TowerName.Claw, 10, FAST_SPEED, N_RANGE, ProjectileComponent.getClaw(scale, 0.3f, 2)));
+        //purple
         specs.add(new Specs(TowerName.Spooky, 4, NORMAL_SPEED, XL_RANGE, ProjectileComponent.getNormal(scale)));
         specs.add(new Specs(TowerName.Haunted, 5, NORMAL_SPEED, XL_RANGE, ProjectileComponent.getNormal(scale)));
         specs.add(new Specs(TowerName.Nightmare, 10, NORMAL_SPEED, XL_RANGE,
