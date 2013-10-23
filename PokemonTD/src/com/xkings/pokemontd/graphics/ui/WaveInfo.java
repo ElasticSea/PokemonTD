@@ -26,15 +26,15 @@ public class WaveInfo extends GuiBox {
 
     @Override
     public void render() {
-        pixelFont.setScale(rectangle.height / 32 / 10);
+        pixelFont.setScale(height / 32 / 10);
         super.render();
         spriteBatch.begin();
         CreepType nextWave = waveManager.getNextWave();
         if (nextWave != null) {
-            float textureOffset = rectangle.height / 5f;
-            spriteBatch.draw(waveManager.getNextWave().getTexture(), rectangle.x + textureOffset,
-                    rectangle.y + textureOffset, rectangle.width - textureOffset * 2,
-                    rectangle.height - textureOffset * 2);
+            float textureOffset = height / 5f;
+            spriteBatch.draw(waveManager.getNextWave().getTexture(), x + textureOffset,
+                    y + textureOffset, width - textureOffset * 2,
+                    height - textureOffset * 2);
         }
         int textOffset = offset * 2;
         drawWaveInfo(textOffset);
@@ -44,15 +44,15 @@ public class WaveInfo extends GuiBox {
 
     private void drawAbilityInfo(int textOffset) {
         pixelFont.drawMultiLine(spriteBatch, waveManager.getNextWave().getAbilityType().toString(),
-                rectangle.x +rectangle.width/2f, rectangle.y  + pixelFont.getCapHeight()*2, 0,
+                x +width/2f, y  + pixelFont.getCapHeight()*2, 0,
                 BitmapFont.HAlignment.CENTER);
     }
 
     private void drawWaveInfo(int textOffset) {
-        pixelFont.drawMultiLine(spriteBatch, "Wave : ", rectangle.x + textOffset,
-                rectangle.y + rectangle.height - pixelFont.getCapHeight(), 0, BitmapFont.HAlignment.LEFT);
+        pixelFont.drawMultiLine(spriteBatch, "Wave : ", x + textOffset,
+                y + height - pixelFont.getCapHeight(), 0, BitmapFont.HAlignment.LEFT);
         pixelFont.drawMultiLine(spriteBatch,String.valueOf(waveManager.getCurrentWave().getId()+1 ),
-                rectangle.x + rectangle.width - textOffset, rectangle.y + rectangle.height - pixelFont.getCapHeight(),
+                x + width - textOffset, y + height - pixelFont.getCapHeight(),
                 0, BitmapFont.HAlignment.RIGHT);
     }
 

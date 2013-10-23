@@ -21,7 +21,7 @@ public class DisplayPicture extends DisplayBlock {
     @Override
     public void render() {
         spriteBatch.begin();
-        spriteBatch.draw(texture, rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+        spriteBatch.draw(texture, x, y, width, height);
         spriteBatch.end();
     }
 }

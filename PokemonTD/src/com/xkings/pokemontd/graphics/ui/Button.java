@@ -40,12 +40,12 @@ abstract class Button extends InteractiveBlock {
         if (color != Color.CLEAR) {
             shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
             shapeRenderer.setColor(color);
-            shapeRenderer.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+            shapeRenderer.rect(x, y, width, height);
             shapeRenderer.end();
         }
 
         spriteBatch.begin();
-        font.draw(spriteBatch, text, rectangle.x + position.x, rectangle.y + position.y);
+        font.draw(spriteBatch, text, x + position.x, y + position.y);
         spriteBatch.end();
     }
 
@@ -59,7 +59,7 @@ abstract class Button extends InteractiveBlock {
 
     private Vector2 recalculatePosition(String text) {
         BitmapFont.TextBounds fontBounds = font.getBounds(text);
-        return new Vector2((rectangle.width - fontBounds.width) / 2f, (rectangle.height + fontBounds.height) / 2f);
+        return new Vector2((width - fontBounds.width) / 2f, (height + fontBounds.height) / 2f);
     }
 
 }

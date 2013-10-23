@@ -49,25 +49,27 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
 
-        int stripHeight = (int) guiScale / 3 * 2;
-        int squareHeight = (int) guiScale;
-        int offset = (int) guiScale / 35;
+        float Height = (int) guiScale / 3*2.8f;
+        int squareHeight = Gdx.graphics.getHeight()/4* (int) guiScale;
+        int stripHeight = (int) (squareHeight/3f* 2f);
+        int offset = squareHeight/36;
         float iconSize = (squareHeight - offset) / 3f;
 
         int statusSize = 48;
-        statusBar = new StatusBar(player, new Rectangle(0, height - statusSize, width, statusSize), statusSize / 8,
+        statusBar = new StatusBar(player, new Rectangle(0, height - statusSize, width, statusSize), offset,
                 shapeRenderer, spriteBatch);
-        status = new Status(player, new Rectangle(width / 2 + width / 3, height /2 + height / 4, width, stripHeight), offset, shapeRenderer, spriteBatch, waveManager, interest);
+        status = new Status(player, new Rectangle(width-squareHeight, height-statusBar.height*1.5f-squareHeight, width, squareHeight), offset, shapeRenderer, spriteBatch, waveManager, interest);
 
 
         nextWaveInfo = new WaveInfo(new Rectangle(0, 0, squareHeight, squareHeight), offset, shapeRenderer, spriteBatch,
                 waveManager);
         displayBar =
-                new GuiBox(new Rectangle(squareHeight - offset, 0, width - squareHeight + offset, stripHeight), offset,
+                new GuiBox(new Rectangle(squareHeight - offset, 0, width - (squareHeight - offset)*2, stripHeight), offset,
                         shapeRenderer);
+        //width-Gdx.graphics.getWidth()/5
         towerTable =
-                new GuiBox(new Rectangle(width - squareHeight, 0, squareHeight, squareHeight), offset, shapeRenderer);
-        entityInfo = new EntityInfo(this, displayBar.rectangle, shapeRenderer, spriteBatch);
+                new GuiBox(new Rectangle(Gdx.graphics.getWidth() - squareHeight , 0, squareHeight, squareHeight), offset, shapeRenderer);
+        entityInfo = new EntityInfo(this, displayBar, shapeRenderer, spriteBatch);
 
         clickables.add(displayBar);
         clickables.add(towerTable);
@@ -76,7 +78,7 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         clickables.add(nextWaveInfo);
         clickables.add(status);
 
-        towerIcons = createTowerIcons(iconSize, towerTable.rectangle);
+        towerIcons = createTowerIcons(iconSize, towerTable);
 
         for (TowerIcon towerIcon : towerIcons) {
             clickables.add(towerIcon);
@@ -131,6 +133,7 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
+        System.out.println("HI");
         return checkUiHit(x, y);
     }
 
@@ -144,7 +147,9 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
     private boolean checkUiHit(float x, float y) {
         boolean condition = false;
         for (InteractiveBlock interactiveBlock : clickables) {
+            System.out.println(interactiveBlock);
             if (interactiveBlock.hit(x, Gdx.graphics.getHeight() - y)) {
+                System.out.println("hit");
                 condition = true;
             }
         }

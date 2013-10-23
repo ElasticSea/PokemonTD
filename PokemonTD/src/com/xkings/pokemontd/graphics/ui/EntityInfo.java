@@ -32,21 +32,21 @@ class EntityInfo extends InteractiveBlock {
         super(rectangle);
         this.ui = ui;
         this.spriteBatch = spriteBatch;
-        offset = rectangle.height / 4;
-        textA = new DisplayText(new Rectangle(rectangle.x + offset * 3, rectangle.y + offset, offset * 2, offset),
+        offset = height / 4;
+        textA = new DisplayText(new Rectangle(x + offset * 3, y + offset, offset * 2, offset),
                 shapeRenderer, spriteBatch, "textA");
-        textB = new DisplayText(new Rectangle(rectangle.x + offset * 3, rectangle.y + offset * 2, offset * 2, offset),
+        textB = new DisplayText(new Rectangle(x + offset * 3, y + offset * 2, offset * 2, offset),
                 shapeRenderer, spriteBatch, "textB");
-        textC = new DisplayText(new Rectangle(rectangle.x + offset, rectangle.y, offset * 2, offset), shapeRenderer,
+        textC = new DisplayText(new Rectangle(x + offset, y, offset * 2, offset), shapeRenderer,
                 spriteBatch, "textC");
-        sell = new Button(new Rectangle(rectangle.x + offset * 5, rectangle.y + offset, offset * 2, offset),
+        sell = new Button(new Rectangle(x + offset * 5, y + offset, offset * 2, offset),
                 shapeRenderer, spriteBatch, "SELL", new Color(Color.RED).mul(0.6f)) {
             @Override
             public void process(float x, float y) {
                 ui.getTowerManager().sellTower();
             }
         };
-        buy = new Button(new Rectangle(rectangle.x + offset * 5, rectangle.y + offset, offset * 2, offset),
+        buy = new Button(new Rectangle(x + offset * 5, y + offset, offset * 2, offset),
                 shapeRenderer, spriteBatch, "BUY", new Color(Color.GREEN).mul(0.6f)) {
             @Override
             public void process(float x, float y) {
@@ -118,9 +118,9 @@ class EntityInfo extends InteractiveBlock {
     }
 
     private void renderCommon(TextureAtlas.AtlasRegion atlasRegion, String name, String text0, String text1) {
-        App.getAssets().getPixelFont().setScale(rectangle.height / 8 / 32);
+        App.getAssets().getPixelFont().setScale(height / 8 / 32);
         spriteBatch.begin();
-        spriteBatch.draw(atlasRegion, rectangle.x + offset, rectangle.y + offset, offset * 2, offset * 2);
+        spriteBatch.draw(atlasRegion, x + offset, y + offset, offset * 2, offset * 2);
         spriteBatch.end();
         textA.render(text0);
         textB.render(text1);

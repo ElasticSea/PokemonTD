@@ -36,14 +36,14 @@ public class Status extends GuiBox{
 
     @Override
     public void render() {
-        pixelFont.setScale(rectangle.height / 200);
+        pixelFont.setScale(height / 200);
         super.render();
-        float iconSize = (rectangle.height)/6;
-        xOffset = rectangle.width - (offset + iconSize*4);
-        yOffset = rectangle.y + offset*11;
+        float iconSize = (height)/6;
+        xOffset = width - (offset + iconSize*4);
+        yOffset = y + offset*11;
         spriteBatch.begin();
-        drawAmount(player.getTreasure().getGold(), "coin", iconSize, (int) (rectangle.height));
-        drawAmount2(player.getHealth().getCurrentHealth(), "hearth", iconSize, (int) (rectangle.height));
+        drawAmount(player.getTreasure().getGold(), "coin", iconSize, (int) (height));
+        drawAmount2(player.getHealth().getCurrentHealth(), "hearth", iconSize, (int) (height));
         int textOffset = offset * 2;
         drawWaveInfo(textOffset);
         //drawInterest(textOffset);
@@ -51,13 +51,13 @@ public class Status extends GuiBox{
     }
 
     private void drawAmount(int amount, String icon, float size, int textOffset) {
-        spriteBatch.draw(Assets.getTexture(icon), xOffset+size*1.25f, yOffset, size, size);
+        spriteBatch.draw(Assets.getTexture(icon), xOffset+size*2.75f, yOffset+size+size/4, size, size);
         xOffset -= offset + size;
         drawText(amount);
         xOffset -= textOffset;
     }
     private void drawAmount2(int amount, String icon, float size, int textOffset) {
-        spriteBatch.draw(Assets.getTexture(icon), xOffset+size*8.5f , yOffset + size*2, size, size);
+        spriteBatch.draw(Assets.getTexture(icon), xOffset+size*9.9f , yOffset + size*2.8f, size, size);
         xOffset -= offset + size;
         drawText2(amount);
         yOffset -= textOffset;
@@ -65,30 +65,30 @@ public class Status extends GuiBox{
 
     private void drawText(int amount) {
         String text = String.valueOf(amount < 10000 ? amount : amount/1000 + "k");
-        float fontY = ((rectangle.height + pixelFont.getBounds(text).height)) / 2f;
-        pixelFont.drawMultiLine(spriteBatch, text, xOffset-fontY/2, rectangle.y + fontY, rectangle.height / 2f,
+        float fontY = ((height + pixelFont.getBounds(text).height)) / 2f;
+        pixelFont.drawMultiLine(spriteBatch, text, xOffset-fontY/2.3f, y + fontY*1.15f, height/1.3f,
                 BitmapFont.HAlignment.RIGHT);
     }
 
     private void drawText2(int amount) {
         String text = String.valueOf(amount < 10000 ? amount : amount/1000 + "k");
-        float fontY = ((rectangle.height + pixelFont.getBounds(text).height)) / 2f;
-        pixelFont.drawMultiLine(spriteBatch, text, xOffset+fontY*1.6f, rectangle.y + fontY*1.6f, rectangle.height / 2f,
+        float fontY = ((height + pixelFont.getBounds(text).height)) / 2;
+        pixelFont.drawMultiLine(spriteBatch, text, xOffset+fontY*2.1f, y + fontY*1.6f, height / 2f,
                 BitmapFont.HAlignment.RIGHT);
     }
 
     private void drawWaveInfo(int textOffset) {
-        pixelFont.drawMultiLine(spriteBatch, "Wave in ", rectangle.x + textOffset*1.2f,
-                rectangle.y + rectangle.height - pixelFont.getCapHeight()*4.7f, 0, BitmapFont.HAlignment.LEFT);
+        pixelFont.drawMultiLine(spriteBatch, "Wave in", x + textOffset*1.2f,
+                y + height*1.15f - pixelFont.getCapHeight()*4.7f, 0, BitmapFont.HAlignment.LEFT);
         pixelFont.drawMultiLine(spriteBatch, String.valueOf(waveManager.getRemainingTime()),
-                rectangle.x + textOffset*16f, rectangle.y + pixelFont.getCapHeight()*2,
+                x + textOffset*16f, y + pixelFont.getCapHeight()*2,
                 0, BitmapFont.HAlignment.RIGHT);
     }
     private void drawInterest(int textOffset) {
-        pixelFont.drawMultiLine(spriteBatch, "Interest ", rectangle.x + textOffset*1.2f,
-                rectangle.y + rectangle.height - pixelFont.getCapHeight()*4.7f, 0, BitmapFont.HAlignment.LEFT);
+        pixelFont.drawMultiLine(spriteBatch, "Interest ", x + textOffset*1.2f,
+                y + height - pixelFont.getCapHeight()*4.7f, 0, BitmapFont.HAlignment.LEFT);
         pixelFont.drawMultiLine(spriteBatch, String.valueOf(interest.getRemainingTime()),
-                rectangle.x + textOffset*16f, rectangle.y + pixelFont.getCapHeight()*2,
+                x + textOffset*16f, y + pixelFont.getCapHeight()*2,
                 0, BitmapFont.HAlignment.RIGHT);
     }
 }

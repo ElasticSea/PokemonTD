@@ -24,15 +24,15 @@ class GuiBox extends InteractiveBlock {
 
     @Override
     public void render() {
-        drawRect(rectangle, offset);
+        drawRect(offset);
     }
 
-    private void drawRect(Rectangle rect, int offset) {
+    private void drawRect(int offset) {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(darkerColor);
-        shapeRenderer.rect(rect.x, rect.y, rect.width, rect.height);
+        shapeRenderer.rect(x,y, width, height);
         shapeRenderer.setColor(lighterColor);
-        shapeRenderer.rect(rect.x + offset, rect.y + offset, rect.width - offset * 2, rect.height - offset * 2);
+        shapeRenderer.rect(x + offset, y + offset, width - offset * 2, height - offset * 2);
         shapeRenderer.end();
     }
 

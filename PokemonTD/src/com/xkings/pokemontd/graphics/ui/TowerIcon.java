@@ -25,10 +25,10 @@ abstract class TowerIcon extends InteractiveBlock {
     public void render() {
         if (towerType != null) {
             spriteBatch.begin();
-            spriteBatch.draw(towerType.getTexture(), rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+            spriteBatch.draw(towerType.getTexture(), x, y, width, height);
             if (!towerManager.canAfford(towerType)) {
-                spriteBatch.draw(towerType.getBlockedTexture(), rectangle.x, rectangle.y, rectangle.width,
-                        rectangle.height);
+                spriteBatch.draw(towerType.getBlockedTexture(), x, y, width,
+                        height);
             }
             spriteBatch.end();
         }

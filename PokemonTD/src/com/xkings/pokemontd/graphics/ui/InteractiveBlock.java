@@ -15,8 +15,8 @@ abstract class InteractiveBlock extends DisplayBlock implements Clickable {
 
     @Override
     public boolean hit(float x, float y) {
-        if (isEnabled() && rectangle.contains(x, y)) {
-            process(x - rectangle.width, y - rectangle.height);
+        if (isEnabled() && contains(x, y)) {
+            process(x - width, y - height);
             return true;
         }
         return false;

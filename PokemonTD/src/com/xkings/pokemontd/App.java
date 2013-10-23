@@ -125,7 +125,7 @@ public class App extends Game2D {
         initializeContent();
         initializeManagers();
         initializeSystems();
-        ui = new Ui(player, waveManager, creepManager, towerManager, 160f, interest);
+        ui = new Ui(player, waveManager, creepManager, towerManager, 1, interest);
         renderer = new DefaultRenderer(ui, camera);
         initializeInput();
         initializeTween();
