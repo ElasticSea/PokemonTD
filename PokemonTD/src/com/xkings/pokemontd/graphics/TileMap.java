@@ -10,14 +10,16 @@ import java.util.List;
  */
 public class TileMap<E> {
     private final List<Map<E>> levels;
-    public final int TILE_SIZE;
+    private final List<Integer> tileSize;
 
-    public TileMap(int width, int height, int levels, int tileSize) {
-        this.levels = new ArrayList<Map<E>>(levels);
-        this.TILE_SIZE = tileSize;
-        for (int i = 0; i < levels; i++) {
-            this.levels.add(new Map<E>(new Object[width][height]));
-        }
+    public TileMap() {
+        this.levels = new ArrayList<Map<E>>();
+        this.tileSize = new ArrayList<Integer>();
+    }
+
+    public void addLevel(int width, int height, int tileSize) {
+        this.levels.add(new Map<E>(new Object[width][height]));
+        this.tileSize.add(tileSize);
     }
 
     public void set(E element, int x, int y, int level) {
@@ -28,15 +30,19 @@ public class TileMap<E> {
         return levels.get(level).get(x, y);
     }
 
-    public int getHeight() {
-        return levels.get(0).getHeight();
+    public int getHeight(int index) {
+        return levels.get(index).getHeight();
     }
 
-    public int getWidth() {
-        return levels.get(0).getWidth();
+    public int getWidth(int index) {
+        return levels.get(index).getWidth();
     }
 
     public int getLevels() {
         return levels.size();
+    }
+
+    public int getTileSize(int index) {
+        return this.tileSize.get(index);
     }
 }

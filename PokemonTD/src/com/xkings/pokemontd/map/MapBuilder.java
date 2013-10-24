@@ -147,13 +147,18 @@ public class MapBuilder {
         createPoint(direction + PI, pathSize);
 
         blueprint = new Blueprint(width * pathSize, height * pathSize, true);
-        textureMap = new TileMap<TextureAtlas.AtlasRegion>(width, height, 3, pathSize);
+        textureMap = new TileMap<TextureAtlas.AtlasRegion>();
+        textureMap.addLevel(width, height, 2);
+        textureMap.addLevel(width, height, 2);
+        textureMap.addLevel(width, height, 2);
+        textureMap.addLevel(width, height, 2);
+        textureMap.addLevel(width * 2, height * 2, 1);
+
         centerPath = paths.get(paths.size() / 2);
-        setTexture((int) (position.x+1) * pathSize, (int) position.y * pathSize, 2, Assets.getTexture("house2"));
+        setTexture((int) (position.x + 1) * pathSize, (int) position.y * pathSize, 2, Assets.getTexture("house2"));
 
 
-
-        Vector3 entrancePosition = position.cpy().add(getOffset(direction+PI ));
+        Vector3 entrancePosition = position.cpy().add(getOffset(direction + PI));
         createEntrance(entrancePosition);
 
         for (BuilderCommand builderCommand : commands) {
@@ -169,7 +174,7 @@ public class MapBuilder {
                     break;
             }
         }
-         entrancePosition = position.cpy();
+        entrancePosition = position.cpy();
         createEntrance(entrancePosition);
         fixTextures();
         createPoint(direction, 0);
@@ -178,7 +183,7 @@ public class MapBuilder {
     }
 
     private void createEntrance(Vector3 position) {
-        setTexture((int) position.x * pathSize, (int) position.y * pathSize, 2, Assets.getTexture("entrance"));
+        setTexture((int) position.x * pathSize, (int) position.y * pathSize, 3, Assets.getTexture("entrance"));
         setTexture((int) position.x * pathSize, (int) position.y * pathSize, 0, MapTextures.Vertical.getTexture());
     }
 
@@ -244,17 +249,28 @@ public class MapBuilder {
 
         for (int i = 0; i < blueprint.getWidth(); i++) {
             for (int j = 0; j < blueprint.getHeight(); j++) {
-                if (i >= mapOffset.x * pathSize && i < blueprint.getWidth() - mapOffset.width * pathSize &&
-                        j >= mapOffset.y * pathSize && j < blueprint.getHeight() - mapOffset.height * pathSize) {
+                if (i < mapOffset.x * pathSize || i >= blueprint.getWidth() - mapOffset.width * pathSize ||
+                        j < mapOffset.y * pathSize || j >= blueprint.getHeight() - mapOffset.height * pathSize) {
+                    int level = 4;
+                    if (getTexture(i, j, level - 1) == null) {
+                        setTextureSafe(i, j, 2, Assets.getTexture("grass"));
+                    }
+                    if (blueprint.isWalkable(i, j - 1)) {
+                        setTextureSmallSafe(i, j, level, Assets.getTexture("treeSub"));
 
-                } else {
-                    setTextureSafe(i, j, 2, Assets.getTexture("rock"));
+                    } else if (!blueprint.isWalkable(i, j + 1)) {
+                        setTextureSmallSafe(i, j, level, Assets.getTexture("treeTop"));
+                    } else if (getTexture(i, j - 1, level - 1) != null || getTexture(i, j, level - 1) == null) {
+                        setTextureSmallSafe(i, j, level, Assets.getTexture("tree"));
+                        setTextureSmallSafe(i, j, level, Assets.getTexture("tree"));
+                    }
                     blueprint.setWalkable(false, i, j);
-
                 }
 
             }
+
         }
+
     }
 
 
@@ -267,6 +283,18 @@ public class MapBuilder {
             textureMap.set(texture, x / pathSize, y / pathSize, level);
         }
     }
+
+    private TextureAtlas.AtlasRegion getTextureSmall(int x, int y, int level) {
+        return textureMap.get(x, y, level);
+    }
+
+
+    private void setTextureSmallSafe(int x, int y, int level, TextureAtlas.AtlasRegion texture) {
+        if (getTextureSmall(x, y, level) == null) {
+            textureMap.set(texture, x, y, level);
+        }
+    }
+
 
     private TextureAtlas.AtlasRegion getTexture(int x, int y, int level) {
         return textureMap.get(x / pathSize, y / pathSize, level);

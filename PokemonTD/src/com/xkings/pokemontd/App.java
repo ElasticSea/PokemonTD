@@ -247,6 +247,8 @@ public class App extends Game2D {
             renderHealthSystem.process();
             renderDebugSystem.process();
             drawMap(2);
+            drawMap(4);
+            drawMap(3);
             renderer.render();
         }
 
@@ -254,8 +256,8 @@ public class App extends Game2D {
             if (DEBUG != null) {
                 shapeRenderer.setProjectionMatrix(camera.combined);
                 shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-                int height = tileMap.getHeight() * tileMap.TILE_SIZE;
-                int width = tileMap.getWidth() * tileMap.TILE_SIZE;
+                int height = tileMap.getHeight(0) * tileMap.getTileSize(0);
+                int width = tileMap.getWidth(0)* tileMap.getTileSize(0);
                 for (int i = 0; i < height; i++) {
                     shapeRenderer.line(0, i * WORLD_SCALE, width * WORLD_SCALE, i * WORLD_SCALE);
                 }
@@ -269,9 +271,9 @@ public class App extends Game2D {
         private void drawMap(int level) {
             spriteBatch.setProjectionMatrix(camera.combined);
             spriteBatch.begin();
-                for (int j = 0; j < tileMap.getWidth(); j++) {
-                    for (int k = 0; k < tileMap.getHeight(); k++) {
-                        int size = tileMap.TILE_SIZE * WORLD_SCALE;
+                for (int j = 0; j < tileMap.getWidth(level); j++) {
+                    for (int k = 0; k < tileMap.getHeight(level); k++) {
+                        int size = tileMap.getTileSize(level) * WORLD_SCALE;
                         TextureAtlas.AtlasRegion atlasRegion = tileMap.get(j, k, level);
                         if (atlasRegion != null) {
                             spriteBatch.draw(atlasRegion, j * size, k * size, size, size);
