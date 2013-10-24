@@ -16,6 +16,7 @@ import com.xkings.pokemontd.entity.tower.Tower;
 import com.xkings.pokemontd.entity.tower.TowerName;
 import com.xkings.pokemontd.entity.tower.TowerType;
 import com.xkings.pokemontd.graphics.ui.Clickable;
+import com.xkings.pokemontd.system.FindShop;
 import com.xkings.pokemontd.system.GetTower;
 
 import java.util.List;
@@ -101,6 +102,12 @@ public class TowerManager implements Clickable {
 
             }
         }
+    }
+
+    public Entity getShop() {
+        FindShop findShop = world.getSystem(FindShop.class);
+        findShop.process();
+        return findShop.getShop();
     }
 
     public enum Status {

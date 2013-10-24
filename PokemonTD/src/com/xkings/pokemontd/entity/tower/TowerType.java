@@ -81,7 +81,7 @@ public class TowerType implements CommonDataType {
     public static List<TowerType> getHierarchy(TowerName towerName) {
         if (map == null) {
             map = new HashMap<TowerName, List<TowerType>>();
-            map.put(null, getTypes(Needle, Scratch));
+            map.put(null, getTypes(Needle, Scratch, Shop));
             map.put(Needle, getTypes(Pinch));
             map.put(Pinch, getTypes(Sting));
             map.put(Sting, getTypes(Splash,Sparkle,Flower, Chicken,Spooky));

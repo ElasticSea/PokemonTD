@@ -155,8 +155,6 @@ public class MapBuilder {
         textureMap.addLevel(width * 2, height * 2, 1);
 
         centerPath = paths.get(paths.size() / 2);
-        setTexture((int) (position.x + 1) * pathSize, (int) position.y * pathSize, 2, Assets.getTexture("house2"));
-
 
         Vector3 entrancePosition = position.cpy().add(getOffset(direction + PI));
         createEntrance(entrancePosition);

@@ -4,7 +4,6 @@ import com.artemis.Entity;
 import com.artemis.World;
 import com.xkings.core.component.*;
 import com.xkings.core.entity.ConcreteEntity;
-import com.xkings.pokemontd.App;
 import com.xkings.pokemontd.Treasure;
 import com.xkings.pokemontd.component.*;
 
@@ -26,11 +25,17 @@ public class Tower extends ConcreteEntity {
         addComponent(new TowerTypeComponent(towerType));
         addComponent(new UpgradeComponent());
         addComponent(new DamageComponent(towerType.getDamage()));
-        addComponent(towerType.getAttack());
+        if (towerType.getAttack() != null) {
+            addComponent(towerType.getAttack());
+        }
     }
 
     public static Entity registerTower(World world, TowerType towerType, float x, float y) {
         Tower tower = new Tower(towerType, world, x, y);
+        if(towerType.getName().equals(TowerName.Shop)) {
+            // FIXME shop component probably wont hold treasure
+            tower.addComponent(new ShopComponent(new Treasure(0)));
+        }
         tower.register();
         return tower.entity;
     }

@@ -22,6 +22,7 @@ public class ProjectileComponent extends AbilityComponent {
     private float speed;
     private float size;
     private final List<AbilityComponent> ability;
+    private static AbilityComponent none;
 
     public static AbilityComponent getNormal(float scale) {
         return new ProjectileComponent("bullet", Type.FOLLOW_TARGET, DEFAULT_SIZE * scale, NORMAL_SPEED * scale,

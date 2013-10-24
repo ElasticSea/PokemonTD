@@ -35,6 +35,7 @@ import com.xkings.pokemontd.map.MapData;
 import com.xkings.pokemontd.map.Path;
 import com.xkings.pokemontd.map.PathPack;
 import com.xkings.pokemontd.system.ClosestEnemySystem;
+import com.xkings.pokemontd.system.FindShop;
 import com.xkings.pokemontd.system.GetCreep;
 import com.xkings.pokemontd.system.GetTower;
 import com.xkings.pokemontd.system.abilitySytems.projectile.*;
@@ -55,7 +56,7 @@ public class App extends Game2D {
     public static final float WAVE_INTERVAL = 75f;
     public static final int PATH_SIZE = 2;
     public static final int INVISIBLE_INTERVAL = 5;
-    public static final int INTEREST_INTERVAL = 5;
+    public static final int INTEREST_INTERVAL = 15;
     public static Entity pathBlock;
     private DefaultRenderer renderer;
     private ShapeRenderer shapeRenderer;
@@ -74,8 +75,6 @@ public class App extends Game2D {
     private RenderDebugSystem renderDebugSystem;
     private ClosestEnemySystem closestEnemySystem;
     private AoeSystem aoeSystem;
-    private GetTower getTowerSystem;
-    private GetCreep getCreepSystem;
     private InvisibleSystem invisibleSystem;
     private PathPack pathPack;
     private Blueprint blueprint;
@@ -152,7 +151,7 @@ public class App extends Game2D {
         this.creepManager = new CreepManager(world);
         this.projectileManager = new ProjectileManager(world);
         this.invisibleManager = new InvisibleManager(world, clock, INVISIBLE_INTERVAL);
-        this.interest = new Interest(clock, player.getTreasure(), 2, INTEREST_INTERVAL);
+        this.interest = new Interest(clock, world, player.getTreasure(), towerManager, 2, INTEREST_INTERVAL);
     }
 
     private void initializeSystems() {
@@ -162,8 +161,6 @@ public class App extends Game2D {
         renderDebugSystem = new RenderDebugSystem(cameraHandler);
         closestEnemySystem = new ClosestEnemySystem(WaveComponent.class);
         aoeSystem = new AoeSystem();
-        getTowerSystem = new GetTower();
-        getCreepSystem = new GetCreep();
         invisibleSystem = new InvisibleSystem();
 
         world.setSystem(renderSpriteSystem, true);
@@ -171,10 +168,11 @@ public class App extends Game2D {
         world.setSystem(renderHealthSystem, true);
         world.setSystem(renderDebugSystem, true);
         world.setSystem(closestEnemySystem, true);
-        world.setSystem(getTowerSystem, true);
-        world.setSystem(getCreepSystem, true);
         world.setSystem(aoeSystem, true);
         world.setSystem(invisibleSystem, true);
+        world.setSystem(new GetTower(), true);
+        world.setSystem(new GetCreep(), true);
+        world.setSystem(new FindShop(), true);
         world.setSystem(new MovementSystem());
         world.setSystem(new WaveSystem(player));
         world.setSystem(new FireProjectilSystem(closestEnemySystem, projectileManager));
@@ -198,8 +196,8 @@ public class App extends Game2D {
     private void initializeInput() {
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(new GestureDetector(ui));
-        inputMultiplexer.addProcessor(new EnhancedGestureDetector(
-                new InGameInputProcessor(getCreepSystem, towerManager, creepManager, cameraHandler)));
+        inputMultiplexer.addProcessor(
+                new EnhancedGestureDetector(new InGameInputProcessor(towerManager, creepManager, cameraHandler)));
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
@@ -257,7 +255,7 @@ public class App extends Game2D {
                 shapeRenderer.setProjectionMatrix(camera.combined);
                 shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
                 int height = tileMap.getHeight(0) * tileMap.getTileSize(0);
-                int width = tileMap.getWidth(0)* tileMap.getTileSize(0);
+                int width = tileMap.getWidth(0) * tileMap.getTileSize(0);
                 for (int i = 0; i < height; i++) {
                     shapeRenderer.line(0, i * WORLD_SCALE, width * WORLD_SCALE, i * WORLD_SCALE);
                 }
@@ -271,14 +269,14 @@ public class App extends Game2D {
         private void drawMap(int level) {
             spriteBatch.setProjectionMatrix(camera.combined);
             spriteBatch.begin();
-                for (int j = 0; j < tileMap.getWidth(level); j++) {
-                    for (int k = 0; k < tileMap.getHeight(level); k++) {
-                        int size = tileMap.getTileSize(level) * WORLD_SCALE;
-                        TextureAtlas.AtlasRegion atlasRegion = tileMap.get(j, k, level);
-                        if (atlasRegion != null) {
-                            spriteBatch.draw(atlasRegion, j * size, k * size, size, size);
-                        }
+            for (int j = 0; j < tileMap.getWidth(level); j++) {
+                for (int k = 0; k < tileMap.getHeight(level); k++) {
+                    int size = tileMap.getTileSize(level) * WORLD_SCALE;
+                    TextureAtlas.AtlasRegion atlasRegion = tileMap.get(j, k, level);
+                    if (atlasRegion != null) {
+                        spriteBatch.draw(atlasRegion, j * size, k * size, size, size);
                     }
+                }
 
             }
             spriteBatch.end();
