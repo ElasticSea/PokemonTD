@@ -158,7 +158,7 @@ public class App extends Game2D {
         renderSpriteSystem = new RenderSpriteSystem(cameraHandler.getCamera());
         renderTextSystem = new RenderTextSystem(cameraHandler.getCamera());
         renderHealthSystem = new RenderHealthSystem(cameraHandler.getCamera());
-        renderDebugSystem = new RenderDebugSystem(cameraHandler);
+        renderDebugSystem = new RenderDebugSystem(cameraHandler, towerManager);
         closestEnemySystem = new ClosestEnemySystem(WaveComponent.class);
         aoeSystem = new AoeSystem();
         invisibleSystem = new InvisibleSystem();

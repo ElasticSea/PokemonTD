@@ -16,7 +16,7 @@ public class GetTower extends GetEntity {
      * Finds desired tower on given coordinates
      */
     public GetTower() {
-        super(ShopComponent.class);
+        super(TowerTypeComponent.class);
     }
 
 }

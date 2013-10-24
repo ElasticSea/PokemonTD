@@ -110,6 +110,10 @@ public class TowerManager implements Clickable {
         return findShop.getShop();
     }
 
+    public Entity getPlaceholderTower() {
+        return placeholderTower;
+    }
+
     public enum Status {
         NONE, PLACING_TOWER, MOVE_PLACEHOLDER;
     }

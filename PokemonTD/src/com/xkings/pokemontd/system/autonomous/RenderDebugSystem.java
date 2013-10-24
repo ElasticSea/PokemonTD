@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.component.PositionComponent;
 import com.xkings.core.component.RangeComponent;
 import com.xkings.core.graphics.camera.CameraHandler;
+import com.xkings.pokemontd.manager.TowerManager;
 
 /**
  * Created by Tomas on 10/4/13.
@@ -17,22 +18,24 @@ import com.xkings.core.graphics.camera.CameraHandler;
 public class RenderDebugSystem extends EntityProcessingSystem {
     private final CameraHandler camera;
     private final ShapeRenderer shapeRenderer = new ShapeRenderer(5000);
+    private final TowerManager towerManager;
 
     @Mapper
     ComponentMapper<PositionComponent> positionMapper;
     @Mapper
     ComponentMapper<RangeComponent> rangeMapper;
 
-    public RenderDebugSystem(CameraHandler camera) {
+    public RenderDebugSystem(CameraHandler camera, TowerManager towerManager) {
         super(Aspect.getAspectForAll(PositionComponent.class, RangeComponent.class));
         this.camera = camera;
+        this.towerManager = towerManager;
     }
 
     @Override
     protected void process(Entity e) {
         Vector3 position = positionMapper.get(e).getPoint();
         RangeComponent rangeComponent = rangeMapper.get(e);
-        if (rangeComponent.isVisible()) {
+        if (towerManager.getClicked() == e || towerManager.getPlaceholderTower() == e) {
             shapeRenderer.setProjectionMatrix(camera.getCamera().combined);
             shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
             shapeRenderer.circle(position.x, position.y, rangeComponent.getRange(),
