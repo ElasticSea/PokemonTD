@@ -3,8 +3,9 @@ package com.xkings.pokemontd.system.autonomous;
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
+import com.artemis.EntitySystem;
 import com.artemis.annotations.Mapper;
-import com.artemis.systems.EntityProcessingSystem;
+import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -17,10 +18,15 @@ import com.xkings.pokemontd.component.SpriteComponent;
 import com.xkings.pokemontd.component.TintComponent;
 import com.xkings.pokemontd.component.VisibleComponent;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Tomas on 10/4/13.
  */
-public class RenderSpriteSystem extends EntityProcessingSystem {
+public class RenderSpriteSystem extends EntitySystem {
     private final Camera camera;
     private final SpriteBatch spriteBatch = new SpriteBatch();
 
@@ -42,7 +48,6 @@ public class RenderSpriteSystem extends EntityProcessingSystem {
         this.camera = camera;
     }
 
-    @Override
     protected void process(Entity e) {
         if (visibleMapper.has(e) && !visibleMapper.get(e).isVisible()) {
             return;
@@ -65,4 +70,24 @@ public class RenderSpriteSystem extends EntityProcessingSystem {
         spriteBatch.end();
     }
 
+    @Override
+    protected void processEntities(ImmutableBag<Entity> entities) {
+        ArrayList<PositionComponent> positions = new ArrayList<PositionComponent>(entities.size());
+        Map<PositionComponent, Entity> map = new HashMap<PositionComponent, Entity>();
+        for (int i = 0; i < entities.size(); i++) {
+            Entity entity = entities.get(i);
+            PositionComponent position = positionMapper.get(entity);
+            positions.add(position);
+            map.put(position, entity);
+        }
+        Collections.sort(positions);
+        for (PositionComponent position : positions) {
+            process(map.get(position));
+        }
+    }
+
+    @Override
+    protected boolean checkProcessing() {
+        return true;
+    }
 }

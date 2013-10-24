@@ -80,7 +80,6 @@ public class TowerTypeBuilder {
 
     private TowerType createTowerType(float scale, Specs specs) {
         float damage = getDamage(getBaseDamage(INITIAL_BASE_DAMAGE, specs.level), specs.range, specs.speed);
-        System.out.println(damage);
         return new TowerType(specs.name, SIZE * scale, specs.speed, damage, specs.range * scale, specs.attackComponent,
                 new Treasure(getGold(INITIAL_GOLD, specs.level)));
     }
