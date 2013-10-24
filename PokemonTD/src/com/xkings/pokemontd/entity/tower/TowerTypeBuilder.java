@@ -38,7 +38,7 @@ public class TowerTypeBuilder {
     private List<TowerType> getData(float scale) {
         List<Specs> specs = new ArrayList<Specs>();
         // Shop
-        specs.add(new Specs(TowerName.Shop, 1, NORMAL_SPEED, N_RANGE, null));
+        specs.add(new Specs(TowerName.Shop, 1, 0, 0, null));
         // Basic
         specs.add(new Specs(TowerName.Needle, 1, NORMAL_SPEED, N_RANGE, ProjectileComponent.getNormal(scale)));
         specs.add(new Specs(TowerName.Pinch, 2, NORMAL_SPEED, N_RANGE, ProjectileComponent.getNormal(scale)));

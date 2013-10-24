@@ -34,12 +34,11 @@ public class RenderDebugSystem extends EntityProcessingSystem {
     @Override
     protected void process(Entity e) {
         Vector3 position = positionMapper.get(e).getPoint();
-        RangeComponent rangeComponent = rangeMapper.get(e);
-        if (towerManager.getClicked() == e || towerManager.getPlaceholderTower() == e) {
+        float range = rangeMapper.get(e).getRange();
+        if ((towerManager.getClicked() == e || towerManager.getPlaceholderTower() == e) && range > 0) {
             shapeRenderer.setProjectionMatrix(camera.getCamera().combined);
             shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-            shapeRenderer.circle(position.x, position.y, rangeComponent.getRange(),
-                    (int) (12 * (float) Math.cbrt(rangeComponent.getRange())) * 4);
+            shapeRenderer.circle(position.x, position.y, range, (int) (12 * (float) Math.cbrt(range)) * 4);
             shapeRenderer.end();
         }
     }
