@@ -13,12 +13,10 @@ import com.xkings.pokemontd.entity.Projectile;
  */
 public class ProjectileManager {
 
-    private final GenericBlueprint blueprint;
     private final World world;
 
-    public ProjectileManager(World world, GenericBlueprint blueprint) {
+    public ProjectileManager(World world) {
         this.world = world;
-        this.blueprint = blueprint;
     }
 
     public boolean createProjectile(ProjectileComponent projectileType, Vector3 position, float damage, float speed,

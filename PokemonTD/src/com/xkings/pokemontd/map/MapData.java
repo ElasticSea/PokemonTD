@@ -1,6 +1,7 @@
 package com.xkings.pokemontd.map;
 
 import com.artemis.Entity;
+import com.xkings.core.pathfinding.Blueprint;
 import com.xkings.core.pathfinding.GenericBlueprint;
 import com.xkings.pokemontd.graphics.TileMap;
 
@@ -12,11 +13,11 @@ import com.xkings.pokemontd.graphics.TileMap;
 
 public class MapData {
 
-    private final GenericBlueprint<Entity>  blueprint;
+    private final Blueprint blueprint;
     private final PathPack pathPack;
     private final TileMap tileMap;
 
-    public MapData(GenericBlueprint<Entity>  blueprint, PathPack pathPack, TileMap tileMap) {
+    public MapData(Blueprint blueprint, PathPack pathPack, TileMap tileMap) {
         this.blueprint = blueprint;
         this.pathPack = pathPack;
         this.tileMap = tileMap;
@@ -26,7 +27,7 @@ public class MapData {
         return pathPack;
     }
 
-    public GenericBlueprint<Entity>  getBlueprint() {
+    public Blueprint getBlueprint() {
         return blueprint;
     }
 

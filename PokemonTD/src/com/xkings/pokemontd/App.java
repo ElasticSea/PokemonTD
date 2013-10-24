@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Rectangle;
@@ -21,7 +22,7 @@ import com.xkings.core.input.EnhancedGestureDetector;
 import com.xkings.core.logic.Clock;
 import com.xkings.core.logic.WorldUpdater;
 import com.xkings.core.main.Game2D;
-import com.xkings.core.pathfinding.GenericBlueprint;
+import com.xkings.core.pathfinding.Blueprint;
 import com.xkings.core.tween.TweenManagerAdapter;
 import com.xkings.core.tween.Vector3Accessor;
 import com.xkings.pokemontd.component.WaveComponent;
@@ -48,18 +49,18 @@ public class App extends Game2D {
     public static final Random RANDOM = new Random();
     public static final Chance CHANCE = new Chance(RANDOM);
     public static final int WORLD_SCALE = 100;
-    public static final int WORLD_WIDTH = 20;
-    public static final int WORLD_HEIGHT = 24;
-    public static final Rectangle WORLD_RECT =
-            new Rectangle(0, 0, WORLD_WIDTH * WORLD_SCALE, WORLD_HEIGHT * WORLD_SCALE);
+    public static int WORLD_WIDTH;
+    public static int WORLD_HEIGHT;
+    public static Rectangle WORLD_RECT;
     public static final float WAVE_INTERVAL = 75f;
     public static final int PATH_SIZE = 2;
     public static final int INVISIBLE_INTERVAL = 5;
+    public static final int INTEREST_INTERVAL = 5;
     public static Entity pathBlock;
     private DefaultRenderer renderer;
     private ShapeRenderer shapeRenderer;
     private SpriteBatch spriteBatch;
-    private TileMap tileMap;
+    private TileMap<TextureAtlas.AtlasRegion> tileMap;
     private CameraHandler cameraHandler;
     private World world;
     private Clock clock;
@@ -77,7 +78,7 @@ public class App extends Game2D {
     private GetCreep getCreepSystem;
     private InvisibleSystem invisibleSystem;
     private PathPack pathPack;
-    private GenericBlueprint blueprint;
+    private Blueprint blueprint;
     private Player player;
     private static PokemonAssets assets;
     private ProjectileManager projectileManager;
@@ -120,7 +121,10 @@ public class App extends Game2D {
         tileMap = map.getTileMap();
         blueprint = map.getBlueprint();
         pathPack = map.getPathPack();
-        cameraHandler = new BoundedCameraHandler(camera, WORLD_RECT, 0.001f);
+        WORLD_WIDTH = blueprint.getWidth();
+        WORLD_HEIGHT = blueprint.getHeight();
+        WORLD_RECT = new Rectangle(0, 0, WORLD_WIDTH * WORLD_SCALE, WORLD_HEIGHT * WORLD_SCALE);
+        cameraHandler = new BoundedCameraHandler(camera, WORLD_RECT, 0.2f);
 
         initializeContent();
         initializeManagers();
@@ -146,8 +150,9 @@ public class App extends Game2D {
         this.waveManager = new WaveManager(world, clock, pathPack, WAVE_INTERVAL);
         this.towerManager = new TowerManager(world, blueprint, player);
         this.creepManager = new CreepManager(world);
-        this.projectileManager = new ProjectileManager(world, blueprint);
+        this.projectileManager = new ProjectileManager(world);
         this.invisibleManager = new InvisibleManager(world, clock, INVISIBLE_INTERVAL);
+        this.interest = new Interest(clock, player.getTreasure(), 2, INTEREST_INTERVAL);
     }
 
     private void initializeSystems() {
@@ -204,8 +209,8 @@ public class App extends Game2D {
 
 
     private MapData createMap() {
-        return new MapBuilder(WORLD_WIDTH / PATH_SIZE, WORLD_HEIGHT / PATH_SIZE, 3, 11, PATH_SIZE,
-                MapBuilder.Direction.DOWN, 0.40f).addStraight().addRight().addStraight().addLeft().addStraight(
+        return new MapBuilder(3, 11, PATH_SIZE, MapBuilder.Direction.DOWN, 0.40f,
+                new Rectangle(1, 1, 1, 2)).addStraight().addRight().addStraight().addLeft().addStraight(
                 2).addLeft().addStraight().addLeft().addRight().addStraight().addRight().addStraight(
                 2).addRight().addStraight(3).addLeft().addStraight().addLeft().addStraight(5).addLeft().addStraight(
                 6).addLeft().addStraight().addRight().addStraight().build();
@@ -233,13 +238,15 @@ public class App extends Game2D {
 
         @Override
         public void render() {
-            drawMap();
+            drawMap(0);
+            drawMap(1);
             drawPath();
             drawGrid();
             renderSpriteSystem.process();
             renderTextSystem.process();
             renderHealthSystem.process();
             renderDebugSystem.process();
+            drawMap(2);
             renderer.render();
         }
 
@@ -259,14 +266,18 @@ public class App extends Game2D {
             }
         }
 
-        private void drawMap() {
+        private void drawMap(int level) {
             spriteBatch.setProjectionMatrix(camera.combined);
             spriteBatch.begin();
-            for (int i = 0; i < tileMap.getWidth(); i++) {
-                for (int j = 0; j < tileMap.getHeight(); j++) {
-                    int size = tileMap.TILE_SIZE * WORLD_SCALE;
-                    spriteBatch.draw(tileMap.get(i, j), i * size, j * size, size, size);
-                }
+                for (int j = 0; j < tileMap.getWidth(); j++) {
+                    for (int k = 0; k < tileMap.getHeight(); k++) {
+                        int size = tileMap.TILE_SIZE * WORLD_SCALE;
+                        TextureAtlas.AtlasRegion atlasRegion = tileMap.get(j, k, level);
+                        if (atlasRegion != null) {
+                            spriteBatch.draw(atlasRegion, j * size, k * size, size, size);
+                        }
+                    }
+
             }
             spriteBatch.end();
         }

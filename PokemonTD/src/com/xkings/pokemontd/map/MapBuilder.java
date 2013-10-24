@@ -1,10 +1,10 @@
 package com.xkings.pokemontd.map;
 
-import com.artemis.Entity;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.main.Assets;
-import com.xkings.core.pathfinding.GenericBlueprint;
+import com.xkings.core.pathfinding.Blueprint;
 import com.xkings.pokemontd.App;
 import com.xkings.pokemontd.graphics.TileMap;
 
@@ -27,16 +27,18 @@ public class MapBuilder {
     public static final int PATHS = 11;
     public static final float DEFAULT_PATH_OFFSET = 1 / 4f;
     public static final float SEGMENT = (float) (QUADRANT / SEGMENTS);
-    private final int width;
-    private final int height;
-    private final TextureAtlas.AtlasRegion[][] fakeMap;
-    private final GenericBlueprint<Entity> genericBlueprint;
-    private final List<Vector3> centerPath;
+    public static final int DEFAULT_MAP_OFFSET = 20;
+    private final Rectangle mapOffset;
+    private TileMap<TextureAtlas.AtlasRegion> textureMap;
+    private Blueprint blueprint;
+    private List<Vector3> centerPath;
     private final float pathOffset;
     private final int pathSize;
     private Vector3 position;
     private double direction;
     private final List<List<Vector3>> paths = createPats(PATHS);
+    private int width;
+    private int height;
 
     private List<List<Vector3>> createPats(int pathsCount) {
         List<List<Vector3>> paths = new ArrayList<List<Vector3>>();
@@ -48,7 +50,11 @@ public class MapBuilder {
 
     private enum MapTextures {
         Horizontal("pathHorizontal", true, false, true, false),
+        Horizontal2("pathHorizontal", true, false, false, false),
+        Horizontal3("pathHorizontal", false, false, true, false),
         Vertical("pathVertical", false, true, false, true),
+        Vertical2("pathVertical", false, false, false, true),
+        Vertical3("pathVertical", false, true, false, false),
         LeftUpRound("pathRound0", false, true, true, false),
         LeftDownRound("pathRound3", false, false, true, true),
         RightUpRound("pathRound1", true, true, false, false),
@@ -94,25 +100,17 @@ public class MapBuilder {
 
     private final List<BuilderCommand> commands = new LinkedList<BuilderCommand>();
 
-    public MapBuilder(int width, int height, int x, int y, int pathSize, Direction direction) {
-        this(width, height, x, y, pathSize, direction, DEFAULT_PATH_OFFSET);
+    public MapBuilder(int x, int y, int pathSize, Direction direction) {
+        this(x, y, pathSize, direction, DEFAULT_PATH_OFFSET,
+                new Rectangle(DEFAULT_MAP_OFFSET, DEFAULT_MAP_OFFSET, DEFAULT_MAP_OFFSET, DEFAULT_MAP_OFFSET));
     }
 
-    public MapBuilder(int width, int height, int x, int y, int pathSize, Direction direction, float pathOffset) {
-        this.width = width;
-        this.height = height;
+    public MapBuilder(int x, int y, int pathSize, Direction direction, float pathOffset, Rectangle mapOffset) {
         this.position = new Vector3(x, y, 0);
         this.direction = direction.getAngle();
         this.pathOffset = pathOffset;
         this.pathSize = pathSize;
-        genericBlueprint = new GenericBlueprint<Entity>(width * pathSize, height * pathSize);
-        fakeMap = new TextureAtlas.AtlasRegion[width][height];
-        centerPath = paths.get(paths.size() / 2);
-        for (int i = 0; i < fakeMap.length; i++) {
-            for (int j = 0; j < fakeMap[0].length; j++) {
-                fakeMap[i][j] = Assets.getTexture("grass");
-            }
-        }
+        this.mapOffset = mapOffset;
     }
 
     public MapBuilder addLeft() {
@@ -139,11 +137,27 @@ public class MapBuilder {
     }
 
     public MapData build() {
+        Vector3 dimensions = computeMapDimensions(direction, commands);
+        width = (int) (dimensions.x + 1 + mapOffset.x + mapOffset.width);
+        height = (int) (dimensions.y + mapOffset.y + mapOffset.height);
+        position.y = dimensions.y - 1 + mapOffset.y;
+        position.x = 2 + mapOffset.x;
+
+
         createPoint(direction + PI, pathSize);
+
+        blueprint = new Blueprint(width * pathSize, height * pathSize, true);
+        textureMap = new TileMap<TextureAtlas.AtlasRegion>(width, height, 3, pathSize);
+        centerPath = paths.get(paths.size() / 2);
+        setTexture((int) (position.x+1) * pathSize, (int) position.y * pathSize, 2, Assets.getTexture("house2"));
+
+
+
+        Vector3 entrancePosition = position.cpy().add(getOffset(direction+PI ));
+        createEntrance(entrancePosition);
 
         for (BuilderCommand builderCommand : commands) {
             switch (builderCommand) {
-
                 case LEFT:
                     createTurn(1);
                     break;
@@ -155,11 +169,49 @@ public class MapBuilder {
                     break;
             }
         }
+         entrancePosition = position.cpy();
+        createEntrance(entrancePosition);
         fixTextures();
+        createPoint(direction, 0);
         scaleTo(paths, App.WORLD_SCALE);
-        System.out.println(pathSize - pathOffset * 2);
-        return new MapData(genericBlueprint, new PathPack(paths, (.5f - pathOffset) * pathSize),
-                new TileMap(fakeMap, 2));
+        return new MapData(blueprint, new PathPack(paths, (.5f - pathOffset) * pathSize), textureMap);
+    }
+
+    private void createEntrance(Vector3 position) {
+        setTexture((int) position.x * pathSize, (int) position.y * pathSize, 2, Assets.getTexture("entrance"));
+        setTexture((int) position.x * pathSize, (int) position.y * pathSize, 0, MapTextures.Vertical.getTexture());
+    }
+
+    private Vector3 computeMapDimensions(double direction, List<BuilderCommand> commands) {
+        Vector3 position = new Vector3();
+        Vector3 min = position.cpy();
+        Vector3 max = position.cpy();
+
+        position.add(getOffset(direction));
+        setMaxMin(min, max, position);
+
+        for (BuilderCommand builderCommand : commands) {
+            switch (builderCommand) {
+                case LEFT:
+                    direction += QUADRANT;
+                    break;
+                case RIGHT:
+                    direction -= QUADRANT;
+                    break;
+            }
+            position.add(getOffset(direction));
+            setMaxMin(min, max, position);
+
+
+        }
+        return max.sub(min);
+    }
+
+    private void setMaxMin(Vector3 min, Vector3 max, Vector3 position) {
+        min.x = Math.min(min.x, position.x);
+        min.y = Math.min(min.y, position.y);
+        max.x = Math.max(max.x, position.x);
+        max.y = Math.max(max.y, position.y);
     }
 
     private void scaleTo(List<List<Vector3>> paths, int worldScale) {
@@ -175,25 +227,51 @@ public class MapBuilder {
             for (int j = 0; j < height; j++) {
                 int x = i * pathSize;
                 int y = j * pathSize;
-                if (!genericBlueprint.isWalkable(x, y)) {
+                setTextureSafe(x, y, 0, Assets.getTexture("grass"));
+                if (!blueprint.isWalkable(x, y)) {
                     for (MapTextures mapTextures : MapTextures.values()) {
-                        boolean right = !genericBlueprint.isWalkable(x + pathSize, y);
-                        boolean up = !genericBlueprint.isWalkable(x, y + pathSize);
-                        boolean left = !genericBlueprint.isWalkable(x - pathSize, y);
-                        boolean down = !genericBlueprint.isWalkable(x, y - pathSize);
+                        boolean right = !blueprint.isWalkable(x + pathSize, y);
+                        boolean up = !blueprint.isWalkable(x, y + pathSize);
+                        boolean left = !blueprint.isWalkable(x - pathSize, y);
+                        boolean down = !blueprint.isWalkable(x, y - pathSize);
                         if (mapTextures.match(right, up, left, down)) {
-                            setTexture(x, y, mapTextures.getTexture());
+                            setTexture(x, y, 0, mapTextures.getTexture());
                         }
                     }
                 }
             }
         }
+
+        for (int i = 0; i < blueprint.getWidth(); i++) {
+            for (int j = 0; j < blueprint.getHeight(); j++) {
+                if (i >= mapOffset.x * pathSize && i < blueprint.getWidth() - mapOffset.width * pathSize &&
+                        j >= mapOffset.y * pathSize && j < blueprint.getHeight() - mapOffset.height * pathSize) {
+
+                } else {
+                    setTextureSafe(i, j, 2, Assets.getTexture("rock"));
+                    blueprint.setWalkable(false, i, j);
+
+                }
+
+            }
+        }
     }
 
 
-    private void setTexture(int x, int y, TextureAtlas.AtlasRegion texture) {
-        fakeMap[x / pathSize][y / pathSize] = texture;
+    private void setTexture(int x, int y, int level, TextureAtlas.AtlasRegion texture) {
+        textureMap.set(texture, x / pathSize, y / pathSize, level);
     }
+
+    private void setTextureSafe(int x, int y, int level, TextureAtlas.AtlasRegion texture) {
+        if (getTexture(x, y, level) == null) {
+            textureMap.set(texture, x / pathSize, y / pathSize, level);
+        }
+    }
+
+    private TextureAtlas.AtlasRegion getTexture(int x, int y, int level) {
+        return textureMap.get(x / pathSize, y / pathSize, level);
+    }
+
 
     private void createStraight() {
         writeToMap();
@@ -211,8 +289,7 @@ public class MapBuilder {
     private void writeToMap() {
         for (int i = 0; i < pathSize; i++) {
             for (int j = 0; j < pathSize; j++) {
-                genericBlueprint.setWalkable(App.pathBlock, (int) (position.x * pathSize + i),
-                        (int) (position.y * pathSize + j));
+                blueprint.setWalkable(false, (int) (position.x * pathSize + i), (int) (position.y * pathSize + j));
             }
         }
     }
