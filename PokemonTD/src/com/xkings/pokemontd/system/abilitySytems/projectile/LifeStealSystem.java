@@ -1,10 +1,8 @@
 package com.xkings.pokemontd.system.abilitySytems.projectile;
 
-import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
-import com.artemis.systems.EntityProcessingSystem;
 import com.xkings.pokemontd.Health;
 import com.xkings.pokemontd.component.HealthComponent;
 import com.xkings.pokemontd.component.attack.effects.LifeStealEffect;
@@ -12,7 +10,7 @@ import com.xkings.pokemontd.component.attack.effects.LifeStealEffect;
 /**
  * Created by Tomas on 10/4/13.
  */
-public class LifeStealSystem extends EntityProcessingSystem {
+public class LifeStealSystem extends EffectSystem {
 
     @Mapper
     ComponentMapper<HealthComponent> healthMapper;
@@ -20,35 +18,30 @@ public class LifeStealSystem extends EntityProcessingSystem {
     ComponentMapper<LifeStealEffect> lifeStealMapper;
 
     public LifeStealSystem() {
-        super(Aspect.getAspectForAll(HealthComponent.class, LifeStealEffect.class));
+        super(LifeStealEffect.class);
     }
 
     @Override
-    protected void process(Entity entity) {
-        LifeStealEffect lifeSteal = lifeStealMapper.get(entity);
-        if (!lifeSteal.isStarted()) {
-            registerEffect(entity, lifeSteal);
-        }
-        lifeSteal.update(world.delta);
-        if (lifeSteal.isReady()) {
-            unregisterEffect(entity, lifeSteal);
-        }
-    }
-
-    private void registerEffect(Entity entity, LifeStealEffect lifeSteal) {
-        Health health = healthMapper.get(entity).getHealth();
+    protected void started(Entity e) {
+        LifeStealEffect lifeSteal = lifeStealMapper.get(e);
+        Health health = healthMapper.get(e).getHealth();
         float lifeStole = health.getMaxHealth() * lifeSteal.getRatio();
         lifeSteal.setStoleLife(lifeStole);
+        System.out.println("Decrees "+lifeStole);
         health.decrees(lifeStole);
     }
 
-    private void unregisterEffect(Entity entity, LifeStealEffect lifeSteal) {
-        Health health = healthMapper.get(entity).getHealth();
+    @Override
+    protected void processEffect(Entity e) {
+        System.out.println("PTOVRS");
+        LifeStealEffect lifeSteal = lifeStealMapper.get(e);
+        Health health = healthMapper.get(e).getHealth();
         if (health.isAlive()) {
             health.increase(lifeSteal.getStoleLife());
             lifeSteal.setStoleLife(0);
         }
-        entity.removeComponent(lifeSteal);
-        world.changedEntity(entity);
+        e.removeComponent(lifeSteal);
+        world.changedEntity(e);
     }
+
 }

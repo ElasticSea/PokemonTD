@@ -43,7 +43,9 @@ public class EffectSystem extends EntityProcessingSystem {
             started(e);
         }
         effect.update(world.delta);
-        processEffect(e);
+        while (effect.isReady()) {
+            processEffect(e);
+        }
         if (effect.isFinished()) {
             finished(e);
             spriteMapper.get(e).remove(SpriteComponent.Type.EFFECT);

@@ -39,15 +39,41 @@ public class ClosestEnemySystem extends EntityProcessingSystem {
         Vector3 position = positionMapper.get(e).getPoint();
         Vector3 size = sizeMapper.get(e).getPoint();
         if (!visibilityMapper.has(e) || visibilityMapper.get(e).isVisible()) {
-            float tx = entityPosition.x - position.x;
-            float ty = entityPosition.y - position.y;
-            float distance = (float) Math.sqrt(tx * tx + ty * ty);
-            float range = entityRange + (size.x + size.y) / 2f;
-            if (this.entity != e && e.isEnabled() && distance <= range && distance < closestDistance) {
+            float distance = calculateDistance(entityPosition, position, size);
+            if (this.entity != e && e.isEnabled() && distance <= entityRange && distance < closestDistance) {
                 closestDistance = distance;
                 closestEntity = e;
             }
         }
+    }
+
+    Vector3[] corners = new Vector3[]{new Vector3(), new Vector3(), new Vector3(), new Vector3()};
+
+    private float calculateDistance(Vector3 originalPosition, Vector3 position, Vector3 size) {
+        corners[0].x = position.x - size.x / 2;
+        corners[0].y = position.y - size.y / 2;
+        corners[1].x = corners[0].x + size.x;
+        corners[1].y = corners[0].y;
+        corners[2].x = corners[0].x;
+        corners[2].y = corners[0].y + size.y;
+        corners[3].x = corners[0].x + size.x;
+        corners[3].y = corners[0].y + size.y;
+
+        float distance = Float.MAX_VALUE;
+        for(Vector3 corner : corners){
+            float candidate = calculateDistance(corner, originalPosition);
+            if(candidate < distance){
+                distance  =candidate;
+            }
+        }
+        return distance;
+    }
+
+    private float calculateDistance(Vector3 a,  Vector3 b ) {
+        float tx = b.x - a.x;
+        float ty = b.y - a.y;
+        return (float) Math.sqrt(tx * tx + ty * ty);
+
     }
 
     public void start(Entity entity, Vector3 position, float range) {
