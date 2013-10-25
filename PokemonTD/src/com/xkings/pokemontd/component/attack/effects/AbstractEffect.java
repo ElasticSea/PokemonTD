@@ -8,14 +8,14 @@ import com.xkings.core.logic.Updateable;
  * Created by Tomas on 10/21/13.
  */
 public abstract class AbstractEffect extends Component implements Effect, Updateable {
-    private final Color tint;
+    private final String effect;
     private int currentIterations;
     private float currentTime;
     private final float interval;
     private int iterations;
 
-    protected AbstractEffect(Color tint, float interval, int iterations) {
-        this.tint = tint;
+    protected AbstractEffect( String effect,float interval, int iterations) {
+        this.effect = effect;
         this.interval = interval;
         this.iterations = iterations;
         this.currentIterations = iterations;
@@ -45,6 +45,10 @@ public abstract class AbstractEffect extends Component implements Effect, Update
         return false;
     }
 
+    @Override
+    public boolean isFinished() {
+        return currentIterations == 0;
+    }
 
     @Override
     public boolean isStarted() {
@@ -58,7 +62,7 @@ public abstract class AbstractEffect extends Component implements Effect, Update
         currentIterations = iterations;
     }
 
-    public Color getTint() {
-        return tint;
+    public String getEffect() {
+        return effect;
     }
 }

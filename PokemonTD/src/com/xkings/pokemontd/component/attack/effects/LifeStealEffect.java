@@ -1,7 +1,5 @@
 package com.xkings.pokemontd.component.attack.effects;
 
-import com.badlogic.gdx.graphics.Color;
-
 /**
  * Created by Tomas on 10/21/13.
  */
@@ -10,7 +8,7 @@ public class LifeStealEffect extends AbstractEffect {
     private float stoleLife;
 
     public LifeStealEffect(float interval, float ratio) {
-        super(Color.MAGENTA, interval, 1);
+        super("fireAnimation", interval, 1);
         this.ratio = ratio;
     }
 

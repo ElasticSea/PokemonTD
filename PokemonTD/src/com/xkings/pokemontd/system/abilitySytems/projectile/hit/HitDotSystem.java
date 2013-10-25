@@ -3,7 +3,10 @@ package com.xkings.pokemontd.system.abilitySytems.projectile.hit;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
+import com.xkings.core.main.Assets;
+import com.xkings.pokemontd.Animation;
 import com.xkings.pokemontd.component.DamageComponent;
+import com.xkings.pokemontd.component.SpriteComponent;
 import com.xkings.pokemontd.component.attack.effects.DotEffect;
 import com.xkings.pokemontd.component.attack.projectile.data.DotData;
 
@@ -18,6 +21,8 @@ public class HitDotSystem extends HitSystem {
     ComponentMapper<DotEffect> dotMapper;
     @Mapper
     ComponentMapper<DamageComponent> damageMapper;
+    @Mapper
+    ComponentMapper<SpriteComponent> spriteMapper;
 
     public HitDotSystem() {
         super(DotData.class);

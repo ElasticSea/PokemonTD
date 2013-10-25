@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.component.PositionComponent;
 import com.xkings.core.component.RotationComponent;
 import com.xkings.core.component.SizeComponent;
+import com.xkings.pokemontd.Animation;
 import com.xkings.pokemontd.component.SpriteComponent;
 import com.xkings.pokemontd.component.TintComponent;
 import com.xkings.pokemontd.component.VisibleComponent;
@@ -55,18 +56,25 @@ public class RenderSpriteSystem extends EntitySystem {
 
         PositionComponent positionComponent = positionMapper.get(e);
         Vector3 size = sizeMapper.get(e).getPoint();
-        TextureAtlas.AtlasRegion sprite = spriteMapper.get(e).getSprite();
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
-        float x = positionComponent.getPoint().x - size.x / 2f;
-        float y = positionComponent.getPoint().y - size.y / 2f;
-        spriteBatch.setColor(tintMapper.has(e) ? tintMapper.get(e).getTint() : Color.WHITE);
-        if (rotationMapper.has(e)) {
-            Vector3 rotation = rotationMapper.get(e).getPoint();
-            spriteBatch.draw(sprite, x, y, size.x / 2f, size.y / 2f, size.x, size.y, 1f, 1f, rotation.x);
-        } else {
-            spriteBatch.draw(sprite, x, y, size.x, size.y);
+
+        for (SpriteComponent.Type type : SpriteComponent.Type.values()) {
+            Animation animation = spriteMapper.get(e).get(type);
+            if (animation != null) {
+                TextureAtlas.AtlasRegion sprite = animation.next();
+                float x = positionComponent.getPoint().x - size.x / 2f;
+                float y = positionComponent.getPoint().y - size.y / 2f;
+                spriteBatch.setColor(tintMapper.has(e) ? tintMapper.get(e).getTint() : Color.WHITE);
+                if (rotationMapper.has(e)) {
+                    Vector3 rotation = rotationMapper.get(e).getPoint();
+                    spriteBatch.draw(sprite, x, y, size.x / 2f, size.y / 2f, size.x, size.y, 1f, 1f, rotation.x);
+                } else {
+                    spriteBatch.draw(sprite, x, y, size.x, size.y);
+                }
+            }
         }
+
         spriteBatch.end();
     }
 

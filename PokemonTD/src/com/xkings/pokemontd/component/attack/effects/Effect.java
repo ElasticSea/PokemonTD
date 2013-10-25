@@ -7,5 +7,6 @@ public interface Effect {
 
     public boolean isReady();
     public boolean isStarted();
+    public boolean isFinished();
     public void reset();
 }

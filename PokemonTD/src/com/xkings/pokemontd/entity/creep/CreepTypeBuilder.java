@@ -19,7 +19,7 @@ public class CreepTypeBuilder {
 
     private List<CreepTypeSpecification> getData() {
         List<CreepTypeSpecification> list = new ArrayList<CreepTypeSpecification>();
-        list.add(new CreepTypeSpecification(CreepName.Hoothoot, 75, Treasure.fromGold(1),
+        list.add(new CreepTypeSpecification(CreepName.Hoothoot, 7500000, Treasure.fromGold(1),
                 CreepAbilityType.NORMAL));
         list.add(new CreepTypeSpecification(CreepName.Ledian, 88, Treasure.fromGold(1), CreepAbilityType.NORMAL));
         list.add(new CreepTypeSpecification(CreepName.Crobat, 103, Treasure.fromGold(1), CreepAbilityType.SWARM));
