@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.xkings.core.graphics.Renderable;
 import com.xkings.pokemontd.Player;
 import com.xkings.pokemontd.entity.tower.TowerType;
@@ -27,7 +29,7 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
     private final TowerManager towerManager;
     private final ArrayList<InteractiveBlock> clickables;
     private final int width;
-    private final int height;
+    private int height = 0;
     private final List<TowerIcon> towerIcons;
     private final EntityInfo entityInfo;
     private final GuiBox statusBar;
@@ -44,21 +46,29 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         shapeRenderer = new ShapeRenderer();
         spriteBatch = new SpriteBatch();
         clickables = new ArrayList<InteractiveBlock>();
+        height = Gdx.graphics.getHeight();
+        float heightInInch = height / Gdx.graphics.getDensity() * 160*2;
+        float squareHeight = MathUtils.clamp(Gdx.graphics.getDensity() * 160*2, height/4, height/2);
+        float statusBarHeight = squareHeight/5;
+        float statusHeight = statusBarHeight*4;
+
 
 
         width = Gdx.graphics.getWidth();
-        height = Gdx.graphics.getHeight();
 
         float Height = (int) guiScale / 3*2.8f;
-        int squareHeight = Gdx.graphics.getHeight()/4* (int) guiScale;
         int stripHeight = (int) (squareHeight/3f* 2f);
-        int offset = squareHeight/36;
+        int offset = (int) squareHeight/36;
         float iconSize = (squareHeight - offset) / 3f;
+        float statusHeightBlock = statusHeight/5;
+        float statusOffSet = statusHeightBlock/2;
+        statusHeight = statusHeightBlock*4;
 
-        int statusSize = 48;
-        statusBar = new StatusBar(player, new Rectangle(0, height - statusSize, width, statusSize), offset,
+        Vector2 statusBarDimensions = new Vector2(width,statusBarHeight);
+        statusBar = new StatusBar(player, new Rectangle(0, this.height - statusBarDimensions.y, statusBarDimensions.x, statusBarDimensions.y), offset,
                 shapeRenderer, spriteBatch);
-        status = new Status(player, new Rectangle(width-squareHeight, height-statusBar.height*1.5f-squareHeight, width, squareHeight), offset, shapeRenderer, spriteBatch, waveManager, interest);
+        Vector2 statusDimensions = new Vector2(squareHeight,statusHeight);
+        status = new Status(player, new Rectangle(width-statusDimensions.x, this.height - statusBar.height  - statusOffSet - statusDimensions.y, statusDimensions.x, statusDimensions.y), offset, shapeRenderer, spriteBatch, waveManager, interest);
 
 
         nextWaveInfo = new WaveInfo(new Rectangle(0, 0, squareHeight, squareHeight), offset, shapeRenderer, spriteBatch,
@@ -66,7 +76,6 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         displayBar =
                 new GuiBox(new Rectangle(squareHeight - offset, 0, width - (squareHeight - offset)*2, stripHeight), offset,
                         shapeRenderer);
-        //width-Gdx.graphics.getWidth()/5
         towerTable =
                 new GuiBox(new Rectangle(Gdx.graphics.getWidth() - squareHeight , 0, squareHeight, squareHeight), offset, shapeRenderer);
         entityInfo = new EntityInfo(this, displayBar, shapeRenderer, spriteBatch);
@@ -133,7 +142,6 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
-        System.out.println("HI");
         return checkUiHit(x, y);
     }
 
@@ -149,7 +157,6 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         for (InteractiveBlock interactiveBlock : clickables) {
             System.out.println(interactiveBlock);
             if (interactiveBlock.hit(x, Gdx.graphics.getHeight() - y)) {
-                System.out.println("hit");
                 condition = true;
             }
         }

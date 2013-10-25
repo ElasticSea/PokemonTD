@@ -1,12 +1,10 @@
 package com.xkings.pokemontd.graphics.ui;
 
 import com.artemis.Entity;
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.xkings.core.component.RangeComponent;
 import com.xkings.pokemontd.App;
 import com.xkings.pokemontd.component.HealthComponent;
 import com.xkings.pokemontd.component.NameComponent;
@@ -19,55 +17,33 @@ import com.xkings.pokemontd.entity.tower.TowerType;
 class EntityInfo extends InteractiveBlock {
 
     private final SpriteBatch spriteBatch;
-    private final Button sell;
-    private final DisplayText textA;
-    private final DisplayText textB;
+
     private final Ui ui;
-    private final Button buy;
-    private final DisplayText textC;
+    private final TowerTypeInfo towerTypeInfo;
+    private final TowerEntityInfo towerEntityInfo;
     private Entity entity;
-    private float offset;
+    private final BitmapFont pixelFont;
 
     EntityInfo(final Ui ui, Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
         super(rectangle);
         this.ui = ui;
         this.spriteBatch = spriteBatch;
-        offset = height / 4;
-        textA = new DisplayText(new Rectangle(x + offset * 3, y + offset, offset * 2, offset),
-                shapeRenderer, spriteBatch, "textA");
-        textB = new DisplayText(new Rectangle(x + offset * 3, y + offset * 2, offset * 2, offset),
-                shapeRenderer, spriteBatch, "textB");
-        textC = new DisplayText(new Rectangle(x + offset, y, offset * 2, offset), shapeRenderer,
-                spriteBatch, "textC");
-        sell = new Button(new Rectangle(x + offset * 5, y + offset, offset * 2, offset),
-                shapeRenderer, spriteBatch, "SELL", new Color(Color.RED).mul(0.6f)) {
-            @Override
-            public void process(float x, float y) {
-                ui.getTowerManager().sellTower();
-            }
-        };
-        buy = new Button(new Rectangle(x + offset * 5, y + offset, offset * 2, offset),
-                shapeRenderer, spriteBatch, "BUY", new Color(Color.GREEN).mul(0.6f)) {
-            @Override
-            public void process(float x, float y) {
-                ui.getTowerManager().getNewOrUpgrade();
-            }
-        };
-        ui.register(sell);
-        ui.register(buy);
+        towerTypeInfo = new TowerTypeInfo(ui, rectangle, shapeRenderer, spriteBatch);
+        this.pixelFont = App.getAssets().getPixelFont();
+        towerEntityInfo = new TowerEntityInfo(ui, rectangle, shapeRenderer, spriteBatch);
     }
 
     @Override
     public void render() {
         TowerType towerType = ui.getTowerManager().getSelectedTowerType();
         if (towerType != null) {
-            renderTower(towerType);
+            towerTypeInfo.render(towerType);
             return;
         }
 
         entity = ui.getTowerManager().getClicked();
         if (entity != null) {
-            renderTower(entity);
+            towerEntityInfo.render(entity);
             return;
         }
 
@@ -88,30 +64,17 @@ class EntityInfo extends InteractiveBlock {
         NameComponent nameComponent = entity.getComponent(NameComponent.class);
         HealthComponent healthComponent = entity.getComponent(HealthComponent.class);
         if (spriteComponent != null && nameComponent != null && healthComponent != null) {
-            renderCommon(spriteComponent.getSprite(), nameComponent.getName(),
-                    String.valueOf(healthComponent.getHealth().getCurrentHealth()), "");
+            //  renderCommon(spriteComponent.getSprite(), nameComponent.getName(),
+            //         String.valueOf(healthComponent.getHealth().getCurrentHealth()), "");
         }
     }
 
-    private void renderTower(Entity entity) {
 
-        SpriteComponent spriteComponent = entity.getComponent(SpriteComponent.class);
-        NameComponent nameComponent = entity.getComponent(NameComponent.class);
-        RangeComponent rangeComponent = entity.getComponent(RangeComponent.class);
-        if (spriteComponent != null && nameComponent != null && rangeComponent != null) {
-            renderCommon(spriteComponent.getSprite(), nameComponent.getName(),
-                    String.valueOf(rangeComponent.getRange()), "");
-            buy.setEnabled(false);
-            sell.setEnabled(true);
-            sell.render();
-        }
-    }
-
-    private void renderTower(TowerType towerType) {
+  /*  private void renderTower(TowerType towerType) {
         TextureAtlas.AtlasRegion atlasRegion = towerType.getTexture();
         String name = towerType.getName().toString();
         String range = String.valueOf(towerType.getRange());
-        renderCommon(atlasRegion, name, range, "");
+        renderCommon(atlasRegion, name, range," ");
         sell.setEnabled(false);
         buy.setEnabled(true);
         buy.render();
@@ -122,9 +85,9 @@ class EntityInfo extends InteractiveBlock {
         spriteBatch.begin();
         spriteBatch.draw(atlasRegion, x + offset, y + offset, offset * 2, offset * 2);
         spriteBatch.end();
-        textA.render(text0);
-        textB.render(text1);
+        damage.render(text0);
+        speed.render(text1);
         textC.render(name);
-    }
+    }        */
 
 }

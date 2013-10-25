@@ -10,12 +10,15 @@ import com.badlogic.gdx.math.Rectangle;
 public class DisplayPicture extends DisplayBlock {
 
     private final SpriteBatch spriteBatch;
-    private final TextureAtlas.AtlasRegion texture;
+    private TextureAtlas.AtlasRegion texture;
 
-    DisplayPicture(Rectangle rectangle, SpriteBatch spriteBatch, TextureAtlas.AtlasRegion texture) {
-        super(rectangle);
+    DisplayPicture(Rectangle rectangle, SpriteBatch spriteBatch) {
+        this(rectangle.x, rectangle.y, rectangle.width, rectangle.height, spriteBatch);
+    }
+
+    DisplayPicture(float x, float y, float width, float height, SpriteBatch spriteBatch) {
+        super(x, y, width, height);
         this.spriteBatch = spriteBatch;
-        this.texture = texture;
     }
 
     @Override
@@ -23,5 +26,10 @@ public class DisplayPicture extends DisplayBlock {
         spriteBatch.begin();
         spriteBatch.draw(texture, x, y, width, height);
         spriteBatch.end();
+    }
+
+    public void render(TextureAtlas.AtlasRegion texture) {
+        this.texture = texture;
+        render();
     }
 }

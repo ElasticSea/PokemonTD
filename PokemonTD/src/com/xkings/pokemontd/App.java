@@ -55,6 +55,7 @@ public class App extends Game2D {
     public static final float WAVE_INTERVAL = 75f;
     public static final int PATH_SIZE = 2;
     public static final int INVISIBLE_INTERVAL = 5;
+    private Treasure playerTreasure;
     public static Entity pathBlock;
     private DefaultRenderer renderer;
     private ShapeRenderer shapeRenderer;

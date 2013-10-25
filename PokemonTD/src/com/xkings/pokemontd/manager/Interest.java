@@ -20,7 +20,7 @@ public class Interest implements Updateable {
     public Interest(Clock clock, Treasure playerTreasure, int interest, float interval) {
         this.INTEREST_KOEFICIENT = interest / 100;
         this.playerTreasure = playerTreasure;
-        this.filter =(new UpdateFilter(this, interval));
+        this.filter = (new UpdateFilter(this, interval));
         clock.addService(filter);
     }
 
@@ -39,6 +39,6 @@ public class Interest implements Updateable {
     }
 
     public int getRemainingTime(){
-        return (int) filter.getRemainingTime();
+        return (int) filter.getRemainingTime()+2;
     }
 }
