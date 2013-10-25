@@ -4,7 +4,6 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.xkings.pokemontd.component.HealthComponent;
-import com.xkings.pokemontd.component.SpriteComponent;
 import com.xkings.pokemontd.component.attack.effects.DotEffect;
 
 /**
@@ -23,9 +22,6 @@ public class DotSystem extends EffectSystem {
 
     @Override
     protected void processEffect(Entity e) {
-        DotEffect dot = dotMapper.get(e);
-        if (dot.isReady()) {
-            healthMapper.get(e).getHealth().decrees(dot.getDamage());
-        }
+        healthMapper.get(e).getHealth().decrees(dotMapper.get(e).getDamage());
     }
 }

@@ -19,12 +19,10 @@ public class EffectSystem extends EntityProcessingSystem {
     private ComponentMapper<? extends AbstractEffect> effectMapper;
     private final Class<? extends AbstractEffect> effect;
     @Mapper
-    ComponentMapper<HealthComponent> healthMapper;
-    @Mapper
     ComponentMapper<SpriteComponent> spriteMapper;
 
     public EffectSystem(Class<? extends AbstractEffect> effect) {
-        super(Aspect.getAspectForAll(HealthComponent.class, effect));
+        super(Aspect.getAspectForAll(effect));
         this.effect = effect;
     }
 

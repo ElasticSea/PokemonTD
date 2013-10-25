@@ -58,7 +58,6 @@ public abstract class AbstractEffect extends Component implements Effect, Update
     @Override
     public void reset() {
         // FIXME this is a hack that wont trigger is started, because its not zero but very close to zero.
-        currentTime = Float.MIN_VALUE;
         currentIterations = iterations;
     }
 

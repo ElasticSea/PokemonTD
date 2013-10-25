@@ -25,7 +25,6 @@ import com.xkings.core.main.Game2D;
 import com.xkings.core.pathfinding.Blueprint;
 import com.xkings.core.tween.TweenManagerAdapter;
 import com.xkings.core.tween.Vector3Accessor;
-import com.xkings.pokemontd.component.WaveComponent;
 import com.xkings.pokemontd.graphics.TileMap;
 import com.xkings.pokemontd.graphics.ui.Ui;
 import com.xkings.pokemontd.input.InGameInputProcessor;
@@ -34,13 +33,12 @@ import com.xkings.pokemontd.map.MapBuilder;
 import com.xkings.pokemontd.map.MapData;
 import com.xkings.pokemontd.map.Path;
 import com.xkings.pokemontd.map.PathPack;
-import com.xkings.pokemontd.system.ClosestEnemySystem;
-import com.xkings.pokemontd.system.FindShop;
-import com.xkings.pokemontd.system.GetCreep;
-import com.xkings.pokemontd.system.GetTower;
+import com.xkings.pokemontd.system.*;
 import com.xkings.pokemontd.system.abilitySytems.projectile.*;
 import com.xkings.pokemontd.system.abilitySytems.projectile.hit.*;
 import com.xkings.pokemontd.system.autonomous.*;
+import com.xkings.pokemontd.system.trigger.ApplyBuffSystem;
+import com.xkings.pokemontd.system.trigger.FireProjectilSystem;
 import com.xkings.pokemontd.tween.ColorAccessor;
 
 import java.util.Random;
@@ -73,14 +71,10 @@ public class App extends Game2D {
     private RenderTextSystem renderTextSystem;
     private RenderHealthSystem renderHealthSystem;
     private RenderDebugSystem renderDebugSystem;
-    private ClosestEnemySystem closestEnemySystem;
-    private AoeSystem aoeSystem;
-    private InvisibleSystem invisibleSystem;
     private PathPack pathPack;
     private Blueprint blueprint;
     private Player player;
     private static PokemonAssets assets;
-    private ProjectileManager projectileManager;
     private Ui ui;
     private Interest interest;
     // Tweens
@@ -149,7 +143,6 @@ public class App extends Game2D {
         this.waveManager = new WaveManager(world, clock, pathPack, WAVE_INTERVAL);
         this.towerManager = new TowerManager(world, blueprint, player);
         this.creepManager = new CreepManager(world);
-        this.projectileManager = new ProjectileManager(world);
         this.invisibleManager = new InvisibleManager(world, clock, INVISIBLE_INTERVAL);
         this.interest = new Interest(clock, world, player.getTreasure(), towerManager, 2, INTEREST_INTERVAL);
     }
@@ -159,28 +152,28 @@ public class App extends Game2D {
         renderTextSystem = new RenderTextSystem(cameraHandler.getCamera());
         renderHealthSystem = new RenderHealthSystem(cameraHandler.getCamera());
         renderDebugSystem = new RenderDebugSystem(cameraHandler, towerManager);
-        closestEnemySystem = new ClosestEnemySystem(WaveComponent.class);
-        aoeSystem = new AoeSystem();
-        invisibleSystem = new InvisibleSystem();
 
         world.setSystem(renderSpriteSystem, true);
         world.setSystem(renderTextSystem, true);
         world.setSystem(renderHealthSystem, true);
         world.setSystem(renderDebugSystem, true);
-        world.setSystem(closestEnemySystem, true);
-        world.setSystem(aoeSystem, true);
-        world.setSystem(invisibleSystem, true);
+        world.setSystem(new ClosestCreepSystem(), true);
+        world.setSystem(new ClosestTowerSystem(), true);
+        world.setSystem(new ClosestTowerWithoutDamageBuffSystem(), true);
+        world.setSystem(new AoeSystem(), true);
+        world.setSystem(new InvisibleSystem(), true);
         world.setSystem(new GetTower(), true);
         world.setSystem(new GetCreep(), true);
         world.setSystem(new FindShop(), true);
         world.setSystem(new MovementSystem());
         world.setSystem(new WaveSystem(player));
-        world.setSystem(new FireProjectilSystem(closestEnemySystem, projectileManager));
+        world.setSystem(new FireProjectilSystem());
         world.setSystem(new LifeStealSystem());
         world.setSystem(new DeathSystem(player));
         world.setSystem(new HealingSystem());
         world.setSystem(new DotSystem());
         world.setSystem(new SlowSystem());
+        world.setSystem(new BuffSystem());
 
         world.setSystem(new HitLifeStealSystem());
         world.setSystem(new HitDotSystem());
@@ -188,6 +181,7 @@ public class App extends Game2D {
         world.setSystem(new HitAoeSystem());
         world.setSystem(new HitSlowSystem());
         world.setSystem(new HitBonusSystem());
+        world.setSystem(new ApplyBuffSystem());
 
         world.setSystem(new BubbleSystem(world));
         world.initialize();

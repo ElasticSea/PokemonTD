@@ -51,7 +51,7 @@ public class ProjectileComponent extends AbilityComponent {
 
     public static AbilityComponent getFireDot(float scale) {
         return new ProjectileComponent("fire", Type.FOLLOW_TARGET, BIG_SIZE * scale, FAST_SPEED * scale,
-                new DotData(8, 0.25f), new NormalData());
+                new DotData(16, 0.25f), new NormalData());
     }
 
     public static AbilityComponent getNature(float scale, float slowRatio, float duration, float chance) {

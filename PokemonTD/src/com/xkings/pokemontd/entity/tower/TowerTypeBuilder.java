@@ -2,6 +2,7 @@ package com.xkings.pokemontd.entity.tower;
 
 import com.xkings.pokemontd.Treasure;
 import com.xkings.pokemontd.component.attack.AbilityComponent;
+import com.xkings.pokemontd.component.attack.projectile.BuffAbility;
 import com.xkings.pokemontd.component.attack.projectile.ProjectileComponent;
 
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class TowerTypeBuilder {
         List<Specs> specs = new ArrayList<Specs>();
         // Shop
         specs.add(new Specs(TowerName.Shop, 1, 0, 0, null));
+        /// ######################  PURES
         // Basic
         specs.add(new Specs(TowerName.Needle, 1, NORMAL_SPEED, N_RANGE, ProjectileComponent.getNormal(scale)));
         specs.add(new Specs(TowerName.Pinch, 2, NORMAL_SPEED, N_RANGE, ProjectileComponent.getNormal(scale)));
@@ -70,6 +72,8 @@ public class TowerTypeBuilder {
         specs.add(new Specs(TowerName.Haunted, 5, NORMAL_SPEED, XL_RANGE, ProjectileComponent.getNormal(scale)));
         specs.add(new Specs(TowerName.Nightmare, 10, NORMAL_SPEED, XL_RANGE,
                 ProjectileComponent.getTemLifeSteal(scale, 0.3f, 5f)));
+        /// ######################  ONE ELEMENT
+        specs.add(new Specs(TowerName.Noble, 5, NORMAL_SPEED, N_RANGE, BuffAbility.getDamage(1.5f,45)));
 
         List<TowerType> data = new ArrayList<TowerType>();
         for (Specs specification : specs) {

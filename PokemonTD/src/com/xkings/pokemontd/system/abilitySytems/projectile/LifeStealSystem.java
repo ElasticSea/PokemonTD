@@ -27,13 +27,11 @@ public class LifeStealSystem extends EffectSystem {
         Health health = healthMapper.get(e).getHealth();
         float lifeStole = health.getMaxHealth() * lifeSteal.getRatio();
         lifeSteal.setStoleLife(lifeStole);
-        System.out.println("Decrees "+lifeStole);
         health.decrees(lifeStole);
     }
 
     @Override
     protected void processEffect(Entity e) {
-        System.out.println("PTOVRS");
         LifeStealEffect lifeSteal = lifeStealMapper.get(e);
         Health health = healthMapper.get(e).getHealth();
         if (health.isAlive()) {

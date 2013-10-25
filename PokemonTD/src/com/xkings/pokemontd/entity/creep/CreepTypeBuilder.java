@@ -114,7 +114,7 @@ public class CreepTypeBuilder {
             int health = specification.getHealth();
             float speed = scale;
             float size = scale;
-            int creepsInWay = 8;
+            int creepsInWay = 1;
             float distanceBetweenCreeps = size;
 
             switch (ability) {
