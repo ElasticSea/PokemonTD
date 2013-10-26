@@ -146,12 +146,12 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         return checkUiHit(x, y);
     }
 
-    @Override
+   /* @Override
     public boolean pan(float x, float y, float deltaX, float deltaY) {
         // TODO: Event if its a hit, other listener remembers pressed finger/button and as soon as it leaves UI hit
         // TODO: area, the camera will jump the distance between first press and current release.
         return checkUiHit(x, y);
-    }
+    }      */
 
     private boolean checkUiHit(float x, float y) {
         boolean condition = false;

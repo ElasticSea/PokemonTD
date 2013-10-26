@@ -30,6 +30,7 @@ public class Status extends GuiBox {
     private final DisplayPicture moneyPicture;
     private final WaveManager waveManager;
     private final Interest interest;
+
     private final Player player;
 
     Status(Player player, Rectangle rectangle, int offset, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
