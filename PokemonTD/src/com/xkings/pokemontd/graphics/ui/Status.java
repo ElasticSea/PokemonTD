@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.xkings.core.main.Assets;
+import com.xkings.pokemontd.Player;
 import com.xkings.pokemontd.manager.Interest;
 import com.xkings.pokemontd.manager.WaveManager;
 
@@ -29,11 +30,13 @@ public class Status extends GuiBox {
     private final DisplayPicture moneyPicture;
     private final WaveManager waveManager;
     private final Interest interest;
+    private final Player player;
 
-    Status(Rectangle rectangle, int offset, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
+    Status(Player player, Rectangle rectangle, int offset, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
            WaveManager waveManager, Interest interest) {
         super(rectangle, offset, shapeRenderer);
 
+        this.player = player;
         this.shapeRenderer = shapeRenderer;
         this.spriteBatch = spriteBatch;
         this.waveManager = waveManager;
@@ -74,9 +77,9 @@ public class Status extends GuiBox {
         interestTimeText.render(String.valueOf(interest.getRemainingTime()));
         waveText.render("Wave");
         waveTimeText.render(String.valueOf(waveManager.getRemainingTime()));
-        livesText.render("Lives");
+        livesText.render(String.valueOf(player.getHealth().getCurrentHealth()));
         livesPicture.render(Assets.getTexture("hearth"));
-        moneyText.render("Money");
+        moneyText.render(String.valueOf(player.getTreasure().getGold()));
         moneyPicture.render(Assets.getTexture("coin"));
     }
 }
