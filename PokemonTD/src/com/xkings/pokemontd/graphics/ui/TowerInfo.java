@@ -93,6 +93,7 @@ public class TowerInfo extends InteractiveBlock {
         }
         this.sell.setEnabled(sellCache);
         this.buy.setEnabled(buyCache);
+        sell.setEnabled(false);
     }
 
     public void render(TextureAtlas.AtlasRegion region, int damage, int speed, int range, String nameCache, boolean sell,
