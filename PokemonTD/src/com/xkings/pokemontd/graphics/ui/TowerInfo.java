@@ -32,9 +32,9 @@ public class TowerInfo extends InteractiveBlock {
     private ShapeRenderer shapeRenderer;
     protected TowerType tower;
     private TextureAtlas.AtlasRegion regionCache;
-    private int damageCache;
-    private int speedCache;
-    private int rangeCache;
+    private String damageCache;
+    private String speedCache;
+    private String rangeCache;
     private String nameCache;
     private boolean sellCache;
     private boolean buyCache;
@@ -85,9 +85,9 @@ public class TowerInfo extends InteractiveBlock {
     public void render() {
         App.getAssets().getPixelFont().setScale(height / 8 / 32);
         picture.render(regionCache);
-        this.damage.render("Atk: " + damageCache);
-        this.speed.render("Spd: " + speedCache);
-        this.range.render("Rng: " + rangeCache);
+        this.damage.render( damageCache);
+        this.speed.render( speedCache);
+        this.range.render(rangeCache);
         this.name.render(nameCache);
         if (sellCache) {
             this.sell.render("sell");
@@ -99,7 +99,7 @@ public class TowerInfo extends InteractiveBlock {
         sell.setEnabled(false);
     }
 
-    public void render(TextureAtlas.AtlasRegion region, int damage, int speed, int range, String nameCache,
+    public void render(TextureAtlas.AtlasRegion region, String damage, String speed, String range, String nameCache,
                        boolean sell, boolean buy) {
         this.regionCache = region;
         this.damageCache = damage;

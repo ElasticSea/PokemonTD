@@ -24,6 +24,7 @@ class EntityInfo extends GuiBox {
     private final TowerTypeInfo towerTypeInfo;
     private final TowerEntityInfo towerEntityInfo;
     private final ArrayList<Clickable> clickables;
+    private final ShopEntityInfo shopEntityInfo;
     private CreepEntityInfo creepEntityInfo;
     private Entity entity;
     private final BitmapFont pixelFont;
@@ -37,6 +38,7 @@ class EntityInfo extends GuiBox {
         this.pixelFont = App.getAssets().getPixelFont();
         towerEntityInfo = new TowerEntityInfo(ui, offsetRectange, shapeRenderer, spriteBatch);
         creepEntityInfo = new CreepEntityInfo(ui, offsetRectange, shapeRenderer, spriteBatch);
+        shopEntityInfo = new ShopEntityInfo(ui, offsetRectange, shapeRenderer, spriteBatch);
 
         clickables = new ArrayList<Clickable>();
         clickables.add(towerTypeInfo);
@@ -65,6 +67,7 @@ class EntityInfo extends GuiBox {
             creepEntityInfo.render(entity);
             return;
         }
+
 
     }
 
