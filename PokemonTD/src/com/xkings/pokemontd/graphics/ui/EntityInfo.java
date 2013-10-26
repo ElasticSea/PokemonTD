@@ -11,6 +11,8 @@ import com.xkings.pokemontd.component.NameComponent;
 import com.xkings.pokemontd.component.SpriteComponent;
 import com.xkings.pokemontd.entity.tower.TowerType;
 
+import java.util.ArrayList;
+
 /**
  * Created by Tomas on 10/8/13.
  */
@@ -21,6 +23,7 @@ class EntityInfo extends GuiBox {
     private final Ui ui;
     private final TowerTypeInfo towerTypeInfo;
     private final TowerEntityInfo towerEntityInfo;
+    private final ArrayList<Clickable> clickables;
     private Entity entity;
     private final BitmapFont pixelFont;
 
@@ -29,8 +32,13 @@ class EntityInfo extends GuiBox {
         this.ui = ui;
         this.spriteBatch = spriteBatch;
         towerTypeInfo = new TowerTypeInfo(ui, offsetRectange, shapeRenderer, spriteBatch);
+
         this.pixelFont = App.getAssets().getPixelFont();
         towerEntityInfo = new TowerEntityInfo(ui, offsetRectange, shapeRenderer, spriteBatch);
+
+        clickables = new ArrayList<Clickable>();
+        clickables.add(towerTypeInfo);
+        clickables.add(towerEntityInfo);
     }
 
     @Override
@@ -38,22 +46,35 @@ class EntityInfo extends GuiBox {
         super.render();
         TowerType towerType = ui.getTowerManager().getSelectedTowerType();
         if (towerType != null) {
+            disableClickables(towerTypeInfo);
             towerTypeInfo.render(towerType);
             return;
         }
 
         entity = ui.getTowerManager().getClicked();
         if (entity != null) {
+            disableClickables(towerEntityInfo);
             towerEntityInfo.render(entity);
             return;
         }
-
+            /*
         entity = ui.getCreepManager().getClicked();
         if (entity != null) {
             renderCreep(entity);
             return;
-        }
+        } else {
+            // towerEntityInfo.setEnabled(false);
 
+        }      */
+
+    }
+
+    private void disableClickables(Clickable ignore) {
+        for (Clickable clickable : clickables) {
+            if (clickable != ignore) {
+                clickable.setEnabled(false);
+            }
+        }
     }
 
     @Override

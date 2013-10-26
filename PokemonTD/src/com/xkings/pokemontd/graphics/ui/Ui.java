@@ -48,7 +48,7 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         clickables = new ArrayList<InteractiveBlock>();
         height = Gdx.graphics.getHeight();
         float heightInInch = height / Gdx.graphics.getDensity() * 160 * 2;
-        float squareHeight = MathUtils.clamp(Gdx.graphics.getDensity() * 160 * 2, height / 4, height / 2);
+        float squareHeight = MathUtils.clamp(Gdx.graphics.getDensity() * 160 * 2, height / 4, height / 3);
         float statusBarHeight = squareHeight / 5;
         float statusHeight = statusBarHeight * 4;
 

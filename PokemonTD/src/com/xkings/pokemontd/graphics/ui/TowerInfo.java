@@ -9,6 +9,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.xkings.pokemontd.App;
 import com.xkings.pokemontd.entity.tower.TowerType;
 
+import java.util.ArrayList;
+
 /**
  * User: Seda
  * Date: 24.10.13
@@ -25,6 +27,7 @@ public class TowerInfo extends InteractiveBlock {
     protected final Button sell;
     protected final Button buy;
     protected final DisplayText name;
+    private final ArrayList<Clickable> clickables;
     private DisplayPicture picture;
     private ShapeRenderer shapeRenderer;
     protected TowerType tower;
@@ -42,7 +45,8 @@ public class TowerInfo extends InteractiveBlock {
         this.ui = ui;
         this.pixelFont = App.getAssets().getPixelFont();
         float offset = height / 5;
-        float offsetBlocks = height/2;
+        float offsetBlocks = height / 2;
+        clickables = new ArrayList<Clickable>();
         //Rectangle offsetBlock = new Rectangle(x + offset, y + offset, width - offset * 2, height - offset * 2);
         //Rectangle blockInBlock = new Rectangle(x + offset, y + offset, width - offset * 2, height - offset * 2);
 
@@ -57,15 +61,15 @@ public class TowerInfo extends InteractiveBlock {
                 spriteBatch);
         name = new DisplayText(new Rectangle(x + offset, y + offset / 7, height - offset * 2, offset), shapeRenderer,
                 spriteBatch, BitmapFont.HAlignment.CENTER);
-        sell = new Button(new Rectangle(x+ width-offsetBlocks, y, offsetBlocks, offsetBlocks), shapeRenderer, spriteBatch,
-                BitmapFont.HAlignment.CENTER, new Color(Color.RED).mul(0.6f)) {
+        sell = new Button(new Rectangle(x + width - offsetBlocks, y, offsetBlocks, offsetBlocks), shapeRenderer,
+                spriteBatch, BitmapFont.HAlignment.CENTER, new Color(Color.RED).mul(0.6f)) {
             @Override
             public void process(float x, float y) {
                 ui.getTowerManager().sellTower();
             }
         };
-        buy = new Button(new Rectangle(x + width-offsetBlocks, y + offsetBlocks, offsetBlocks, offsetBlocks), shapeRenderer, spriteBatch,
-                BitmapFont.HAlignment.CENTER, new Color(Color.GREEN).mul(0.6f)) {
+        buy = new Button(new Rectangle(x + width - offsetBlocks, y + offsetBlocks, offsetBlocks, offsetBlocks),
+                shapeRenderer, spriteBatch, BitmapFont.HAlignment.CENTER, new Color(Color.GREEN).mul(0.6f)) {
             @Override
             public void process(float x, float y) {
                 ui.getTowerManager().getNewOrUpgrade();
@@ -73,13 +77,12 @@ public class TowerInfo extends InteractiveBlock {
         };
         ui.register(sell);
         ui.register(buy);
-        sell.setEnabled(false);
-        buy.setEnabled(false);
+        clickables.add(sell);
+        clickables.add(buy);
     }
 
     @Override
     public void render() {
-        float offset = this.height / 5;
         App.getAssets().getPixelFont().setScale(height / 8 / 32);
         picture.render(regionCache);
         this.damage.render("Atk: " + damageCache);
@@ -95,8 +98,8 @@ public class TowerInfo extends InteractiveBlock {
         this.buy.setEnabled(buyCache);
     }
 
-    public void render(TextureAtlas.AtlasRegion region, int damage, int speed, int range, String nameCache, boolean sell,
-                       boolean buy) {
+    public void render(TextureAtlas.AtlasRegion region, int damage, int speed, int range, String nameCache,
+                       boolean sell, boolean buy) {
         this.regionCache = region;
         this.damageCache = damage;
         this.speedCache = speed;
@@ -105,6 +108,13 @@ public class TowerInfo extends InteractiveBlock {
         this.sellCache = sell;
         this.buyCache = buy;
         render();
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+            for (Clickable clickable : clickables) {
+                clickable.setEnabled(enabled);
+            }
     }
 
     @Override
