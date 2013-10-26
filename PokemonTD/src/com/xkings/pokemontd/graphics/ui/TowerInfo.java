@@ -38,8 +38,8 @@ public class TowerInfo extends InteractiveBlock {
         //Rectangle offsetBlock = new Rectangle(x + offset, y + offset, width - offset * 2, height - offset * 2);
         //Rectangle blockInBlock = new Rectangle(x + offset, y + offset, width - offset * 2, height - offset * 2);
 
-        picture = new DisplayPicture(new Rectangle(x + offset, y + offset, height - offset * 2, height - offset * 2),
-                spriteBatch, shapeRenderer, Color.DARK_GRAY);
+        picture = new DisplayPicture(x + offset, y + offset, height - offset * 2, height - offset * 2, shapeRenderer,
+                spriteBatch, Color.DARK_GRAY);
 
         damage = new DisplayText(new Rectangle(x + offset * 5, y + offset * 3.5f, offset * 2, offset), shapeRenderer,
                 spriteBatch);

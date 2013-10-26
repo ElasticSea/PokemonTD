@@ -6,8 +6,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.xkings.core.main.Assets;
-import com.xkings.pokemontd.App;
-import com.xkings.pokemontd.Player;
 import com.xkings.pokemontd.manager.Interest;
 import com.xkings.pokemontd.manager.WaveManager;
 
@@ -19,128 +17,63 @@ import com.xkings.pokemontd.manager.WaveManager;
  */
 
 public class Status extends GuiBox {
-    private final Player player;
     private final SpriteBatch spriteBatch;
-    private final BitmapFont pixelFont;
-    private final int textFieldCount;
     private final DisplayText interestText;
     private final DisplayText waveText;
     private final DisplayText livesText;
     private final DisplayText moneyText;
     private final DisplayText waveTimeText;
     private final DisplayText interestTimeText;
-    private float xOffset;
-    private float yOffset;
+    private final DisplayPicture livesPicture;
+    private final ShapeRenderer shapeRenderer;
+    private final DisplayPicture moneyPicture;
     private final WaveManager waveManager;
     private final Interest interest;
 
-    Status(Player player, Rectangle rectangle, int offset, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
+    Status(Rectangle rectangle, int offset, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
            WaveManager waveManager, Interest interest) {
         super(rectangle, offset, shapeRenderer);
 
-        this.player = player;
+        this.shapeRenderer = shapeRenderer;
         this.spriteBatch = spriteBatch;
-        this.pixelFont = App.getAssets().getPixelFont();
         this.waveManager = waveManager;
         this.interest = interest;
 
-        this.textFieldCount = 4;
-        Vector2 textSize = new Vector2(offsetRectange.width / 2f, offsetRectange.
-                height / textFieldCount);
+        Vector2 textFieldCount = new Vector2(2, 4);
+        Vector2 textSize = new Vector2(offsetRectange.width / textFieldCount.x, offsetRectange.
+                height / textFieldCount.y);
 
-        interestText = new DisplayText(new Rectangle(offsetRectange.x, offsetRectange.y, textSize.x, textSize.y),
-                shapeRenderer, spriteBatch);
-        waveText =
-                new DisplayText(new Rectangle(offsetRectange.x, offsetRectange.y + textSize.y, textSize.x, textSize.y),
-                        shapeRenderer, spriteBatch);
-        livesText = new DisplayText(
-                new Rectangle(offsetRectange.x, offsetRectange.y + textSize.y * 2, textSize.x, textSize.y),
-                shapeRenderer, spriteBatch);
-        moneyText = new DisplayText(
-                new Rectangle(offsetRectange.x, offsetRectange.y + textSize.y * 3, textSize.x, textSize.y),
-                shapeRenderer, spriteBatch);
+        interestText = createDisplayBlock(0, 0, textSize, BitmapFont.HAlignment.LEFT);
+        waveText = createDisplayBlock(0, 1, textSize, BitmapFont.HAlignment.LEFT);
+        livesText = createDisplayBlock(0, 2, textSize, BitmapFont.HAlignment.LEFT);
+        moneyText = createDisplayBlock(0, 3, textSize, BitmapFont.HAlignment.LEFT);
 
-        interestTimeText =
-                new DisplayText(new Rectangle(offsetRectange.x + textSize.x, offsetRectange.y, textSize.x, textSize.y),
-                        shapeRenderer, spriteBatch, BitmapFont.HAlignment.RIGHT);
-        waveTimeText = new DisplayText(
-                new Rectangle(offsetRectange.x + textSize.x, offsetRectange.y + textSize.y, textSize.x, textSize.y),
-                shapeRenderer, spriteBatch, BitmapFont.HAlignment.RIGHT);
-        // renderLeftText(x, y, textSize.x, textSize.y);
+        interestTimeText = createDisplayBlock(1, 0, textSize, BitmapFont.HAlignment.RIGHT);
+        waveTimeText = createDisplayBlock(1, 1, textSize, BitmapFont.HAlignment.RIGHT);
+        livesPicture = createDisplayPicture(1, 2, textSize);
+        moneyPicture = createDisplayPicture(1, 3, textSize);
     }
 
-    private void renderLeftText(float x, float y, float width, float height) {
+    private DisplayText createDisplayBlock(float x, float y, Vector2 size, BitmapFont.HAlignment alignment) {
+        return new DisplayText(
+                new Rectangle(offsetRectange.x + size.x * x, offsetRectange.y + size.y * y, size.x, size.y),
+                shapeRenderer, spriteBatch, alignment);
+    }
 
+    private DisplayPicture createDisplayPicture(float x, float y, Vector2 size) {
+        return new DisplayPicture(offsetRectange.x + size.x * x, offsetRectange.y + size.y * y, size.x, size.y,
+                shapeRenderer, spriteBatch);
     }
 
     @Override
     public void render() {
-        pixelFont.setScale(height / 300);
-        super.render();
         interestText.render("Interest");
         interestTimeText.render(String.valueOf(interest.getRemainingTime()));
         waveText.render("Wave");
         waveTimeText.render(String.valueOf(waveManager.getRemainingTime()));
         livesText.render("Lives");
+        livesPicture.render(Assets.getTexture("hearth"));
         moneyText.render("Money");
-        float iconSize = (height) / 6;
-        xOffset = width - (offset + iconSize * 4);
-        yOffset = y + offset * 11;
-        spriteBatch.begin();
-        //drawAmount(player.getTreasure().getGold(), "coin", iconSize, (int) (height));
-        //drawAmount2(player.getHealth().getCurrentHealth(), "hearth", iconSize, (int) (height));
-        int textOffset = offset * 2;
-        // drawWaveInfo(textOffset);
-        //     drawInterest(textOffset);
-        spriteBatch.end();
-    }
-
-    //y+height/2+height/3.5f
-    private void drawAmount(int amount, String icon, float size, int textOffset) {
-        spriteBatch.draw(Assets.getTexture(icon), x + width / 2 + width / 3, y + height / 2 + height / 3.5f, size,
-                size);
-        //xOffset -= offset + size;
-        drawText(amount);
-        //xOffset -= textOffset;
-    }
-
-    private void drawAmount2(int amount, String icon, float size, int textOffset) {
-        spriteBatch.draw(Assets.getTexture(icon), x + width / 2 + width / 3, y + height / 2 + height / 14, size, size);
-        //xOffset -= offset + size;
-        drawText2(amount);
-        yOffset -= textOffset;
-    }
-
-    private void drawText(int amount) {
-        String text = String.valueOf(amount < 10000 ? amount : amount / 1000 + "k");
-        float fontY = pixelFont.getBounds(text).height / 2;
-        pixelFont.drawMultiLine(spriteBatch, text, x + width / 14, y + height - fontY * 1.3f, height / 2,
-                BitmapFont.HAlignment.LEFT);
-    }
-
-    private void drawText2(int amount) {
-        String text = String.valueOf(amount < 10000 ? amount : amount / 1000 + "k");
-        float fontY = pixelFont.getBounds(text).height / 2;
-        pixelFont.drawMultiLine(spriteBatch, text, x + width / 14, y + height / 2 + height / 4 - fontY, height / 2,
-                BitmapFont.HAlignment.LEFT);
-    }
-
-    private void drawWaveInfo(int textOffset) {
-        String text = String.valueOf(textOffset);
-        float fontY = pixelFont.getBounds(text).height / 2;
-        pixelFont.drawMultiLine(spriteBatch, "Wave in", x + width / 14, y + height / 2 - fontY, 0,
-                BitmapFont.HAlignment.LEFT);
-        pixelFont.drawMultiLine(spriteBatch, String.valueOf(waveManager.getRemainingTime()), x + width / 2 + width / 3,
-                y + height / 2 - fontY, 0, BitmapFont.HAlignment.LEFT);
-    }
-
-    private void drawInterest(int textOffset) {
-        String text = String.valueOf(textOffset);
-        float fontY = pixelFont.getBounds(text).height / 2;
-        pixelFont.drawMultiLine(spriteBatch, "Interest ", x + width / 14, y + height / 2 - height / 4 - fontY,
-                height / 2, BitmapFont.HAlignment.LEFT);
-       /* pixelFont.drawMultiLine(spriteBatch, String.valueOf(interest.getRemainingTime()),
-                x + width/2+width/3, y + height/2-height/4-fontY,
-                0, BitmapFont.HAlignment.RIGHT);        */    // Potřebuju dořešit!!
+        moneyPicture.render(Assets.getTexture("coin"));
     }
 }

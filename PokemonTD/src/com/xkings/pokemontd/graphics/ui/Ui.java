@@ -69,7 +69,7 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
                 new Rectangle(0, this.height - statusBarDimensions.y, statusBarDimensions.x, statusBarDimensions.y),
                 offset, shapeRenderer, spriteBatch);
         Vector2 statusDimensions = new Vector2(squareHeight, statusHeight);
-        status = new Status(player, new Rectangle(width - statusDimensions.x,
+        status = new Status(new Rectangle(width - statusDimensions.x,
                 this.height - statusBar.height - statusOffSet - statusDimensions.y, statusDimensions.x,
                 statusDimensions.y), offset, shapeRenderer, spriteBatch, waveManager, interest);
 
