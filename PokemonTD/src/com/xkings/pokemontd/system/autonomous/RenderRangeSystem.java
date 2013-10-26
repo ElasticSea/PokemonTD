@@ -11,22 +11,25 @@ import com.xkings.core.component.PositionComponent;
 import com.xkings.core.component.RangeComponent;
 import com.xkings.core.component.SizeComponent;
 import com.xkings.core.graphics.camera.CameraHandler;
+import com.xkings.pokemontd.manager.TowerManager;
 
 /**
  * Created by Tomas on 10/4/13.
  */
-public class RenderDebugSystem extends EntityProcessingSystem {
+public class RenderRangeSystem extends EntityProcessingSystem {
     private final CameraHandler camera;
     private final ShapeRenderer shapeRenderer = new ShapeRenderer(5000);
+    private final TowerManager towerManager;
 
     @Mapper
     ComponentMapper<PositionComponent> positionMapper;
     @Mapper
-    ComponentMapper<SizeComponent> sizeMapper;
+    ComponentMapper<RangeComponent> rangeMapper;
 
-    public RenderDebugSystem(CameraHandler camera) {
+    public RenderRangeSystem(CameraHandler camera, TowerManager towerManager) {
         super(Aspect.getAspectForAll(PositionComponent.class, SizeComponent.class));
         this.camera = camera;
+        this.towerManager = towerManager;
     }
 
     @Override
@@ -43,8 +46,12 @@ public class RenderDebugSystem extends EntityProcessingSystem {
     @Override
     protected void process(Entity e) {
         Vector3 position = positionMapper.get(e).getPoint();
-        Vector3 size = sizeMapper.get(e).getPoint();
-        shapeRenderer.rect(position.x - size.x / 2, position.y - size.y / 2, size.x, size.y);
+        if (rangeMapper.has(e)) {
+            float range = rangeMapper.get(e).getRange();
+            if ((towerManager.getClicked() == e || towerManager.getPlaceholderTower() == e) && range > 0) {
+                shapeRenderer.circle(position.x, position.y, range, (int) (12 * (float) Math.cbrt(range)) * 4);
+            }
+        }
     }
 
 }

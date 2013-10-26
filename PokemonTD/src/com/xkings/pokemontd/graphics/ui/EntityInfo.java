@@ -47,16 +47,15 @@ class EntityInfo extends GuiBox {
     @Override
     public void render() {
         super.render();
+        disableClickables();
         TowerType towerType = ui.getTowerManager().getSelectedTowerType();
         if (towerType != null) {
-            disableClickables(towerTypeInfo);
             towerTypeInfo.render(towerType);
             return;
         }
 
         entity = ui.getTowerManager().getClicked();
         if (entity != null) {
-            disableClickables(towerEntityInfo);
             towerEntityInfo.render(entity);
             return;
         }
@@ -70,11 +69,9 @@ class EntityInfo extends GuiBox {
 
     }
 
-    private void disableClickables(Clickable ignore) {
+    private void disableClickables() {
         for (Clickable clickable : clickables) {
-            if (clickable != ignore) {
-                clickable.setEnabled(false);
-            }
+            clickable.setEnabled(false);
         }
     }
 
