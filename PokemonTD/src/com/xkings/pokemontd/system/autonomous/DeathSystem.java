@@ -44,9 +44,12 @@ public class DeathSystem extends EntityProcessingSystem {
     ComponentMapper<WaveComponent> waveMapper;
     @Mapper
     ComponentMapper<CreepTypeComponent> creepTypeMapper;
+    @Mapper
+    ComponentMapper<DamageComponent> damageMapper;
 
     public DeathSystem(Player player) {
-        super(Aspect.getAspectForAll(HealthComponent.class, TreasureComponent.class, CreepAbilityComponent.class));
+        super(Aspect.getAspectForAll(HealthComponent.class, TreasureComponent.class, CreepAbilityComponent.class,
+                DamageComponent.class));
         this.player = player;
     }
 
@@ -94,15 +97,11 @@ public class DeathSystem extends EntityProcessingSystem {
         final WaveComponent waveComponent = waveMapper.get(e);
         final CreepType creepType = creepTypeMapper.get(e).getCreepType();
 
-        float x;
-        float y;
         double circleSegment = Math.PI * 2 / creeps;
         float radius = path.getWidth() / 2f * App.WORLD_SCALE;
-        System.out.println(path.getWidth());
-        System.out.println(radius);
         for (int i = 0; i < creeps; i++) {
-            x = position.x + (float) (Math.cos(circleSegment * i) * radius);
-            y = position.y + (float) (Math.sin(circleSegment * i) * radius);
+            float x = position.x + (float) (Math.cos(circleSegment * i) * radius);
+            float y = position.y + (float) (Math.sin(circleSegment * i) * radius);
             Creep.registerCreep(world, path, waveComponent, creepType, CreepAbilityType.NORMAL, creepType.getSpeed(),
                     creepType.getSize() / 4f, x, y);
         }
@@ -115,11 +114,12 @@ public class DeathSystem extends EntityProcessingSystem {
         Treasure treasure = treasureMapper.get(e).getTreasure();
         MoneyInfo.registerMoneyInfo(world, treasure.getGold(), position.x, position.y);
         treasure.transferTo(player.getTreasure());
-        player.getScore();
+        player.getScore().increase((int) damageMapper.get(e).getDamage());
     }
 
     private void die(Entity e) {
-        waveMapper.get(e).removeCreep(e);
+        // FIXME tested so far on resurrect and does not work.
+        // waveMapper.get(e).removeCreep(e);
         e.deleteFromWorld();
     }
 

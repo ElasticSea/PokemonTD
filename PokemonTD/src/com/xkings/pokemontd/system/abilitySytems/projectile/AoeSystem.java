@@ -7,10 +7,7 @@ import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.component.*;
-import com.xkings.core.utils.Collision;
-import com.xkings.pokemontd.component.DamageComponent;
 import com.xkings.pokemontd.component.HealthComponent;
-import com.xkings.pokemontd.component.attack.ProjectileComponent;
 
 /**
  * Created by Tomas on 10/4/13.

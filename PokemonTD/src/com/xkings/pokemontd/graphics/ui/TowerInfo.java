@@ -38,7 +38,8 @@ public class TowerInfo extends InteractiveBlock {
         //Rectangle offsetBlock = new Rectangle(x + offset, y + offset, width - offset * 2, height - offset * 2);
         //Rectangle blockInBlock = new Rectangle(x + offset, y + offset, width - offset * 2, height - offset * 2);
 
-        picture = new DisplayPicture(new Rectangle(x + offset, y + offset, height - offset * 2, height - offset * 2), spriteBatch);
+        picture = new DisplayPicture(new Rectangle(x + offset, y + offset, height - offset * 2, height - offset * 2),
+                spriteBatch, shapeRenderer, Color.DARK_GRAY);
 
         damage = new DisplayText(new Rectangle(x + offset * 5, y + offset * 3.5f, offset * 2, offset),
                 shapeRenderer, spriteBatch, "Attack");
@@ -48,7 +49,7 @@ public class TowerInfo extends InteractiveBlock {
                 spriteBatch, "Range: ");
         name = new DisplayText(new Rectangle(x + offset, y + offset / 7, offset * 2, offset), shapeRenderer,
                 spriteBatch, "name");
-        sell = new Button(new Rectangle(x + offset * 7, y + offset, offset * 2, offset),
+        sell = new Button(new Rectangle(x + offset * 7, y + offset/ 4, offset * 2, offset),
                 shapeRenderer, spriteBatch, "SELL", new Color(Color.RED).mul(0.6f)) {
             @Override
             public void process(float x, float y) {
@@ -64,6 +65,8 @@ public class TowerInfo extends InteractiveBlock {
         };
         ui.register(sell);
         ui.register(buy);
+        sell.setEnabled(false);
+        buy.setEnabled(false);
     }
 
     @Override

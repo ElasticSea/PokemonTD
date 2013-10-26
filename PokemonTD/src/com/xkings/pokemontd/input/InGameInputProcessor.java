@@ -18,14 +18,11 @@ import java.util.List;
  */
 public class InGameInputProcessor extends GestureProcessor {
     private final TowerManager towerManager;
-    private final GetCreep getCreepSystem;
     private final CreepManager creepManager;
     private final List<Clickable> clickables;
 
-    public InGameInputProcessor(GetCreep getCreepSystem, TowerManager towerManager, CreepManager creepManager,
-                                CameraHandler camera) {
+    public InGameInputProcessor(TowerManager towerManager, CreepManager creepManager, CameraHandler camera) {
         super(camera);
-        this.getCreepSystem = getCreepSystem;
         this.towerManager = towerManager;
         this.creepManager = creepManager;
 

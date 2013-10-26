@@ -5,7 +5,7 @@ import com.artemis.World;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.component.PositionComponent;
-import com.xkings.core.pathfinding.GenericBlueprint;
+import com.xkings.core.pathfinding.Blueprint;
 import com.xkings.pokemontd.App;
 import com.xkings.pokemontd.Player;
 import com.xkings.pokemontd.component.TowerTypeComponent;
@@ -16,6 +16,7 @@ import com.xkings.pokemontd.entity.tower.Tower;
 import com.xkings.pokemontd.entity.tower.TowerName;
 import com.xkings.pokemontd.entity.tower.TowerType;
 import com.xkings.pokemontd.graphics.ui.Clickable;
+import com.xkings.pokemontd.system.FindShop;
 import com.xkings.pokemontd.system.GetTower;
 
 import java.util.List;
@@ -26,6 +27,7 @@ import java.util.List;
 public class TowerManager implements Clickable {
 
     public static final Color TINT = new Color(1, 1, 1, 0.5f);
+    private final Blueprint blueprint;
     private Entity placeholderTower;
     private Entity clickedTower;
 
@@ -102,6 +104,16 @@ public class TowerManager implements Clickable {
         }
     }
 
+    public Entity getShop() {
+        FindShop findShop = world.getSystem(FindShop.class);
+        findShop.process();
+        return findShop.getShop();
+    }
+
+    public Entity getPlaceholderTower() {
+        return placeholderTower;
+    }
+
     public enum Status {
         NONE, PLACING_TOWER, MOVE_PLACEHOLDER;
     }
@@ -113,15 +125,17 @@ public class TowerManager implements Clickable {
     private TowerType selectedTower = null;
 
 
-    public TowerManager(World world, GenericBlueprint<Entity> blueprint, Player player) {
+    public TowerManager(World world, Blueprint blueprint, Player player) {
         this.world = world;
+        this.blueprint = blueprint;
         this.player = player;
     }
 
 
     private boolean placeTower(int x, int y) {
         if (selectedTower != null && status != Status.MOVE_PLACEHOLDER) {
-            if (canAfford(selectedTower)) {
+            Vector3 block = getBlockPosition(x, y);
+            if (canAfford(selectedTower) && blueprint.isWalkable((int) block.x, (int) block.y)) {
                 status = Status.MOVE_PLACEHOLDER;
                 Vector3 towerPosition = getTowerPosition(x, y);
                 this.placeholderTower =
@@ -134,8 +148,11 @@ public class TowerManager implements Clickable {
     }
 
     private void movePlaceholder(int x, int y) {
-        Vector3 desiredPosition = getTowerPosition(x, y);
-        placeholderTower.getComponent(PositionComponent.class).getPoint().set(desiredPosition);
+        Vector3 block = getBlockPosition(x, y);
+        if (blueprint.isWalkable((int) block.x, (int) block.y)) {
+            Vector3 desiredPosition = getTowerPosition(x, y);
+            placeholderTower.getComponent(PositionComponent.class).getPoint().set(desiredPosition);
+        }
     }
 
     private void removePlaceholderTower() {
@@ -171,7 +188,7 @@ public class TowerManager implements Clickable {
         TowerName towerName =
                 clickedTower != null ? clickedTower.getComponent(TowerTypeComponent.class).getTowerType().getName() :
                         null;
-        return TowerType.getHierarchy().get(towerName);
+        return TowerType.getHierarchy(towerName);
     }
 
     public boolean canAfford(TowerType towerType) {
@@ -188,6 +205,12 @@ public class TowerManager implements Clickable {
         float towerX = (blockX + .5f) * App.WORLD_SCALE;
         float towerY = (blockY + .5f) * App.WORLD_SCALE;
         return new Vector3(towerX, towerY, 0);
+    }
+
+    private Vector3 getBlockPosition(float worldX, float worldY) {
+        int blockX = (int) (worldX / App.WORLD_SCALE);
+        int blockY = (int) (worldY / App.WORLD_SCALE);
+        return new Vector3(blockX, blockY, 0);
     }
 
 }

@@ -29,25 +29,27 @@ public class MovementSystem extends EntityProcessingSystem {
 
     public MovementSystem() {
         super(Aspect.getAspectForAll(PositionComponent.class, SizeComponent.class, SpeedComponent.class,
-                RotationComponent.class, TimeComponent.class));
+                TimeComponent.class, PathComponent.class));
     }
 
 
     @Override
-    protected void process(Entity entity) {
-        Path path = pathMapper.get(entity).getPath();
-        Vector3 position = positionMapper.get(entity).getPoint();
-        TimeComponent timeComponent = timeMapper.get(entity);
-        float speed = speedMapper.get(entity).getSpeed();
-        RotationComponent rotation = rotationMapper.get(entity);
+    protected void process(Entity e) {
+        Path path = pathMapper.get(e).getPath();
+        Vector3 position = positionMapper.get(e).getPoint();
+        TimeComponent timeComponent = timeMapper.get(e);
+        float speed = speedMapper.get(e).getSpeed();
 
-        Time time = timeComponent.getTime();
+        Time time = timeComponent.getTime(this.getClass());
         time.increase(world.getDelta());
 
         while (time.getAvailableTime() > 0) {
             if (!path.isFinished()) {
                 Vector3 goal = path.get();
-                rotation.getPoint().x = (float) (Math.atan2(goal.y - position.y, goal.x - position.x) * 180 / Math.PI);
+                if (rotationMapper.has(e)) {
+                    rotationMapper.get(e).getPoint().x =
+                            (float) (Math.atan2(goal.y - position.y, goal.x - position.x) * 180 / Math.PI);
+                }
                 if (moveTowards(position, goal, speed, time)) {
                     path.next();
                     if (path.isFinished()) {
