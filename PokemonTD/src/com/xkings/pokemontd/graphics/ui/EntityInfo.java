@@ -24,6 +24,7 @@ class EntityInfo extends GuiBox {
     private final TowerTypeInfo towerTypeInfo;
     private final TowerEntityInfo towerEntityInfo;
     private final ArrayList<Clickable> clickables;
+    private CreepEntityInfo creepEntityInfo;
     private Entity entity;
     private final BitmapFont pixelFont;
 
@@ -35,10 +36,12 @@ class EntityInfo extends GuiBox {
 
         this.pixelFont = App.getAssets().getPixelFont();
         towerEntityInfo = new TowerEntityInfo(ui, offsetRectange, shapeRenderer, spriteBatch);
+        creepEntityInfo = new CreepEntityInfo(ui, offsetRectange, shapeRenderer, spriteBatch);
 
         clickables = new ArrayList<Clickable>();
         clickables.add(towerTypeInfo);
         clickables.add(towerEntityInfo);
+        clickables.add(creepEntityInfo);
     }
 
     @Override
@@ -57,15 +60,13 @@ class EntityInfo extends GuiBox {
             towerEntityInfo.render(entity);
             return;
         }
-            /*
+
         entity = ui.getCreepManager().getClicked();
         if (entity != null) {
-            renderCreep(entity);
+            disableClickables(creepEntityInfo);
+            creepEntityInfo.render(entity);
             return;
-        } else {
-            // towerEntityInfo.setEnabled(false);
-
-        }      */
+        }
 
     }
 
@@ -86,30 +87,9 @@ class EntityInfo extends GuiBox {
         NameComponent nameComponent = entity.getComponent(NameComponent.class);
         HealthComponent healthComponent = entity.getComponent(HealthComponent.class);
         if (spriteComponent != null && nameComponent != null && healthComponent != null) {
-            //  renderCommon(spriteComponent.getSprite(), nameComponent.getName(),
-            //         String.valueOf(healthComponent.getHealth().getCurrentHealth()), "");
         }
     }
 
 
-  /*  private void renderTower(TowerType towerType) {
-        TextureAtlas.AtlasRegion atlasRegion = towerType.getTexture();
-        String name = towerType.getName().toString();
-        String range = String.valueOf(towerType.getRange());
-        renderCommon(atlasRegion, name, range," ");
-        sell.setEnabled(false);
-        buy.setEnabled(true);
-        buy.render();
-    }
-
-    private void renderCommon(TextureAtlas.AtlasRegion atlasRegion, String name, String text0, String text1) {
-        App.getAssets().getPixelFont().setScale(height / 8 / 32);
-        spriteBatch.begin();
-        spriteBatch.draw(atlasRegion, x + offset, y + offset, offset * 2, offset * 2);
-        spriteBatch.end();
-        damage.render(text0);
-        speed.render(text1);
-        textC.render(name);
-    }        */
 
 }

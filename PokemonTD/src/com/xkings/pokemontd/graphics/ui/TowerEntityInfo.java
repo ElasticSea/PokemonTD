@@ -29,8 +29,8 @@ public class TowerEntityInfo  extends TowerInfo{
         DamageComponent damageComponent = entity.getComponent(DamageComponent.class);
         SpeedComponent speedComponent = entity.getComponent(SpeedComponent.class);
 
-        if (spriteComponent != null && nameComponent != null && rangeComponent != null) {
-            render(entity.getComponent(SpriteComponent.class).getSprite(),(int) entity.getComponent(DamageComponent.class).getDamage(), (int) entity.getComponent(SpeedComponent.class).getSpeed(),(int) entity.getComponent(RangeComponent.class).getRange(), entity.getComponent(NameComponent.class).getName(), true, false);
+        if (spriteComponent != null && nameComponent != null && rangeComponent != null && damageComponent !=null && speedComponent !=null) {
+            render(spriteComponent.getSprite(),(int) damageComponent.getDamage(), (int) speedComponent.getSpeed(),(int) rangeComponent.getRange(), nameComponent.getName(), true, false);
         }
 
     }

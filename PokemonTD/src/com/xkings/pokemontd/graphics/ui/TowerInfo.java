@@ -53,11 +53,11 @@ public class TowerInfo extends InteractiveBlock {
         picture = new DisplayPicture(x + offset, y + offset, height - offset * 2, height - offset * 2, shapeRenderer,
                 spriteBatch, Color.DARK_GRAY);
 
-        damage = new DisplayText(new Rectangle(x + offset * 5, y + offset * 3.5f, offset * 2, offset), shapeRenderer,
+        damage = new DisplayText(new Rectangle(x + offset * 5, y + offset * 3, offset * 2, offset), shapeRenderer,
                 spriteBatch);
-        speed = new DisplayText(new Rectangle(x + offset * 5, y + offset * 2.5f, offset * 2, offset), shapeRenderer,
+        speed = new DisplayText(new Rectangle(x + offset * 5, y + offset * 2, offset * 2, offset), shapeRenderer,
                 spriteBatch);
-        range = new DisplayText(new Rectangle(x + offset * 5, y + offset * 1.5f, offset * 2, offset), shapeRenderer,
+        range = new DisplayText(new Rectangle(x + offset * 5, y + offset, offset * 2, offset), shapeRenderer,
                 spriteBatch);
         name = new DisplayText(new Rectangle(x + offset, y + offset / 7, height - offset * 2, offset), shapeRenderer,
                 spriteBatch, BitmapFont.HAlignment.CENTER);

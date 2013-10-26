@@ -13,7 +13,6 @@ import com.xkings.pokemontd.entity.tower.TowerType;
 
 public class TowerTypeInfo extends TowerInfo {
 
-
     TowerTypeInfo(final Ui ui, Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
             super(ui,rectangle,shapeRenderer,spriteBatch);
     }
@@ -21,7 +20,5 @@ public class TowerTypeInfo extends TowerInfo {
     public void render(TowerType tower){
         render(tower.getTexture(),(int)tower.getDamage(),(int) tower.getSpeed(),(int) tower.getRange(),(tower.getName().toString()), false, true );
     }
-
-
 
 }
