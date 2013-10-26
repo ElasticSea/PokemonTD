@@ -13,6 +13,7 @@ import com.xkings.core.main.Assets;
  */
 abstract class Button extends InteractiveBlock {
     private final SpriteBatch spriteBatch;
+    private final BitmapFont.HAlignment alignment;
     private String text;
     private final BitmapFont font;
     private final Vector2 position;
@@ -20,10 +21,16 @@ abstract class Button extends InteractiveBlock {
     private final Color color;
 
     protected Button(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch, String text) {
-        this(rectangle, shapeRenderer, spriteBatch, text, Color.CLEAR);
+        this(rectangle, shapeRenderer, spriteBatch, text, BitmapFont.HAlignment.LEFT, Color.CLEAR);
     }
 
-    public Button(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch, String text, Color color) {
+    protected Button(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch, String text,
+                     BitmapFont.HAlignment alignment) {
+        this(rectangle, shapeRenderer, spriteBatch, text, alignment, Color.CLEAR);
+    }
+
+    public Button(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch, String text,
+                  BitmapFont.HAlignment alignment, Color color) {
         super(rectangle);
         this.shapeRenderer = shapeRenderer;
         this.spriteBatch = spriteBatch;
@@ -32,6 +39,7 @@ abstract class Button extends InteractiveBlock {
         this.font = Assets.createFont("pixelFont");
         this.font.setScale(0.50f);
         this.position = recalculatePosition(text);
+        this.alignment = alignment;
     }
 
 
@@ -45,7 +53,7 @@ abstract class Button extends InteractiveBlock {
         }
 
         spriteBatch.begin();
-        font.draw(spriteBatch, text, x + position.x, y + position.y);
+        font.drawMultiLine(spriteBatch, text, x, y + position.y, width, alignment);
         spriteBatch.end();
     }
 

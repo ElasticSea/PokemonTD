@@ -41,23 +41,23 @@ public class TowerInfo extends InteractiveBlock {
         picture = new DisplayPicture(new Rectangle(x + offset, y + offset, height - offset * 2, height - offset * 2),
                 spriteBatch, shapeRenderer, Color.DARK_GRAY);
 
-        damage = new DisplayText(new Rectangle(x + offset * 5, y + offset * 3.5f, offset * 2, offset),
-                shapeRenderer, spriteBatch, "Attack");
-        speed = new DisplayText(new Rectangle(x + offset * 5, y + offset * 2.5f, offset * 2, offset),
-                shapeRenderer, spriteBatch, "Speed");
+        damage = new DisplayText(new Rectangle(x + offset * 5, y + offset * 3.5f, offset * 2, offset), shapeRenderer,
+                spriteBatch, "Attack");
+        speed = new DisplayText(new Rectangle(x + offset * 5, y + offset * 2.5f, offset * 2, offset), shapeRenderer,
+                spriteBatch, "Speed");
         range = new DisplayText(new Rectangle(x + offset * 5, y + offset * 1.5f, offset * 2, offset), shapeRenderer,
                 spriteBatch, "Range: ");
-        name = new DisplayText(new Rectangle(x + offset, y + offset / 7, offset * 2, offset), shapeRenderer,
-                spriteBatch, "name");
-        sell = new Button(new Rectangle(x + offset * 7, y + offset/ 4, offset * 2, offset),
-                shapeRenderer, spriteBatch, "SELL", new Color(Color.RED).mul(0.6f)) {
+        name = new DisplayText(new Rectangle(x + offset, y + offset / 7, height - offset * 2, offset), shapeRenderer,
+                spriteBatch, "name", BitmapFont.HAlignment.CENTER);
+        sell = new Button(new Rectangle(x + offset * 7, y + offset / 4, offset * 2, offset), shapeRenderer, spriteBatch,
+                "SELL", BitmapFont.HAlignment.CENTER, new Color(Color.RED).mul(0.6f)) {
             @Override
             public void process(float x, float y) {
                 ui.getTowerManager().sellTower();
             }
         };
-        buy = new Button(new Rectangle(x + offset * 5, y + offset / 4, offset * 2, offset),
-                shapeRenderer, spriteBatch, "BUY", new Color(Color.GREEN).mul(0.6f)) {
+        buy = new Button(new Rectangle(x + offset * 5, y + offset / 4, offset * 2, offset), shapeRenderer, spriteBatch,
+                "BUY", BitmapFont.HAlignment.CENTER, new Color(Color.GREEN).mul(0.6f)) {
             @Override
             public void process(float x, float y) {
                 ui.getTowerManager().getNewOrUpgrade();
@@ -86,7 +86,8 @@ public class TowerInfo extends InteractiveBlock {
         buy.render();
     }
 
-    public void render(TextureAtlas.AtlasRegion region, int damage, int speed, int range, String name, boolean sell, boolean buy) {
+    public void render(TextureAtlas.AtlasRegion region, int damage, int speed, int range, String name, boolean sell,
+                       boolean buy) {
         float offset = this.height / 5;
         App.getAssets().getPixelFont().setScale(height / 8 / 32);
         picture.render(region);

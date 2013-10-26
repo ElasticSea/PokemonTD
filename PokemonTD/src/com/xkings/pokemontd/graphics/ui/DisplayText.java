@@ -1,5 +1,6 @@
 package com.xkings.pokemontd.graphics.ui;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -14,6 +15,16 @@ public class DisplayText extends Button {
 
     public DisplayText(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch, String text) {
         super(rectangle, shapeRenderer, spriteBatch, text);
+    }
+
+    public DisplayText(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch, String text,
+                       BitmapFont.HAlignment alignment) {
+        super(rectangle, shapeRenderer, spriteBatch, text, alignment);
+    }
+
+    public DisplayText(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch, String text,
+                       BitmapFont.HAlignment alignment, Color color) {
+        super(rectangle, shapeRenderer, spriteBatch, text, alignment, color);
     }
 
     @Override
