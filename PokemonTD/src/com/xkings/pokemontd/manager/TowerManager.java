@@ -64,6 +64,16 @@ public class TowerManager implements Clickable {
         return clickedTower != null;
     }
 
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+
+    }
+
     private void rollBack() {
         removePlaceholderTower();
         selectedTower = null;

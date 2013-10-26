@@ -24,6 +24,16 @@ public class CreepManager implements Clickable{
         return clickedCreep != null;
     }
 
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+
+    }
+
     public Entity getClicked() {
         return clickedCreep;
     }
