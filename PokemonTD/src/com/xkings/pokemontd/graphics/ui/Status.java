@@ -50,8 +50,8 @@ public class Status extends GuiBox {
 
         interestTimeText = createDisplayBlock(1, 0, textSize, BitmapFont.HAlignment.RIGHT);
         waveTimeText = createDisplayBlock(1, 1, textSize, BitmapFont.HAlignment.RIGHT);
-        livesPicture = createDisplayPicture(1, 2, textSize);
-        moneyPicture = createDisplayPicture(1, 3, textSize);
+        livesPicture = createDisplayPicture(1, 2, textSize, BitmapFont.HAlignment.RIGHT);
+        moneyPicture = createDisplayPicture(1, 3, textSize, BitmapFont.HAlignment.RIGHT);
     }
 
     private DisplayText createDisplayBlock(float x, float y, Vector2 size, BitmapFont.HAlignment alignment) {
@@ -60,13 +60,16 @@ public class Status extends GuiBox {
                 shapeRenderer, spriteBatch, alignment);
     }
 
-    private DisplayPicture createDisplayPicture(float x, float y, Vector2 size) {
-        return new DisplayPicture(offsetRectange.x + size.x * x, offsetRectange.y + size.y * y, size.x, size.y,
+    private DisplayPicture createDisplayPicture(float x, float y, Vector2 size, BitmapFont.HAlignment alignment) {
+        float shorterSize = Math.min(size.x, size.y);
+        float xPosition = alignment.equals(BitmapFont.HAlignment.LEFT) ? size.x * x : size.x * (x + 1) - shorterSize;
+        return new DisplayPicture(offsetRectange.x + xPosition, offsetRectange.y + size.y * y, shorterSize, shorterSize,
                 shapeRenderer, spriteBatch);
     }
 
     @Override
     public void render() {
+        super.render();
         interestText.render("Interest");
         interestTimeText.render(String.valueOf(interest.getRemainingTime()));
         waveText.render("Wave");
