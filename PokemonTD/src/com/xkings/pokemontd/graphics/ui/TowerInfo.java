@@ -42,22 +42,22 @@ public class TowerInfo extends InteractiveBlock {
                 spriteBatch, shapeRenderer, Color.DARK_GRAY);
 
         damage = new DisplayText(new Rectangle(x + offset * 5, y + offset * 3.5f, offset * 2, offset), shapeRenderer,
-                spriteBatch, "Attack");
+                spriteBatch);
         speed = new DisplayText(new Rectangle(x + offset * 5, y + offset * 2.5f, offset * 2, offset), shapeRenderer,
-                spriteBatch, "Speed");
+                spriteBatch);
         range = new DisplayText(new Rectangle(x + offset * 5, y + offset * 1.5f, offset * 2, offset), shapeRenderer,
-                spriteBatch, "Range: ");
+                spriteBatch);
         name = new DisplayText(new Rectangle(x + offset, y + offset / 7, height - offset * 2, offset), shapeRenderer,
-                spriteBatch, "name", BitmapFont.HAlignment.CENTER);
+                spriteBatch, BitmapFont.HAlignment.CENTER);
         sell = new Button(new Rectangle(x + offset * 7, y + offset / 4, offset * 2, offset), shapeRenderer, spriteBatch,
-                "SELL", BitmapFont.HAlignment.CENTER, new Color(Color.RED).mul(0.6f)) {
+                BitmapFont.HAlignment.CENTER, new Color(Color.RED).mul(0.6f)) {
             @Override
             public void process(float x, float y) {
                 ui.getTowerManager().sellTower();
             }
         };
         buy = new Button(new Rectangle(x + offset * 5, y + offset / 4, offset * 2, offset), shapeRenderer, spriteBatch,
-                "BUY", BitmapFont.HAlignment.CENTER, new Color(Color.GREEN).mul(0.6f)) {
+                BitmapFont.HAlignment.CENTER, new Color(Color.GREEN).mul(0.6f)) {
             @Override
             public void process(float x, float y) {
                 ui.getTowerManager().getNewOrUpgrade();

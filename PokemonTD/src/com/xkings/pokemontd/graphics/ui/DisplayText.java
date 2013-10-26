@@ -5,26 +5,24 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.xkings.core.main.Assets;
 
 /**
  * Created by Tomas on 10/8/13.
  */
 public class DisplayText extends Button {
 
-    public DisplayText(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch, String text) {
-        super(rectangle, shapeRenderer, spriteBatch, text);
+    public DisplayText(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
+        super(rectangle, shapeRenderer, spriteBatch);
     }
 
-    public DisplayText(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch, String text,
+    public DisplayText(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
                        BitmapFont.HAlignment alignment) {
-        super(rectangle, shapeRenderer, spriteBatch, text, alignment);
+        super(rectangle, shapeRenderer, spriteBatch, alignment);
     }
 
-    public DisplayText(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch, String text,
+    public DisplayText(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
                        BitmapFont.HAlignment alignment, Color color) {
-        super(rectangle, shapeRenderer, spriteBatch, text, alignment, color);
+        super(rectangle, shapeRenderer, spriteBatch, alignment, color);
     }
 
     @Override

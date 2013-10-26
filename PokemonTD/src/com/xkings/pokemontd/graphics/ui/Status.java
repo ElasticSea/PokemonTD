@@ -49,23 +49,23 @@ public class Status extends GuiBox {
                 height / textFieldCount);
 
         interestText = new DisplayText(new Rectangle(offsetRectange.x, offsetRectange.y, textSize.x, textSize.y),
-                shapeRenderer, spriteBatch, "interest");
+                shapeRenderer, spriteBatch);
         waveText =
                 new DisplayText(new Rectangle(offsetRectange.x, offsetRectange.y + textSize.y, textSize.x, textSize.y),
-                        shapeRenderer, spriteBatch, "Wave");
+                        shapeRenderer, spriteBatch);
         livesText = new DisplayText(
                 new Rectangle(offsetRectange.x, offsetRectange.y + textSize.y * 2, textSize.x, textSize.y),
-                shapeRenderer, spriteBatch, "Lifes");
+                shapeRenderer, spriteBatch);
         moneyText = new DisplayText(
                 new Rectangle(offsetRectange.x, offsetRectange.y + textSize.y * 3, textSize.x, textSize.y),
-                shapeRenderer, spriteBatch, "Money");
+                shapeRenderer, spriteBatch);
 
+        interestTimeText =
+                new DisplayText(new Rectangle(offsetRectange.x + textSize.x, offsetRectange.y, textSize.x, textSize.y),
+                        shapeRenderer, spriteBatch, BitmapFont.HAlignment.RIGHT);
         waveTimeText = new DisplayText(
                 new Rectangle(offsetRectange.x + textSize.x, offsetRectange.y + textSize.y, textSize.x, textSize.y),
-                shapeRenderer, spriteBatch, "Wave", BitmapFont.HAlignment.RIGHT);
-        interestTimeText = new DisplayText(
-                new Rectangle(offsetRectange.x + textSize.x, offsetRectange.y + textSize.y, textSize.x, textSize.y),
-                shapeRenderer, spriteBatch, "Interest", BitmapFont.HAlignment.RIGHT);
+                shapeRenderer, spriteBatch, BitmapFont.HAlignment.RIGHT);
         // renderLeftText(x, y, textSize.x, textSize.y);
     }
 
@@ -77,12 +77,12 @@ public class Status extends GuiBox {
     public void render() {
         pixelFont.setScale(height / 300);
         super.render();
-        interestText.render();
-        interestTimeText.render();
-        waveText.render();
+        interestText.render("Interest");
+        interestTimeText.render(String.valueOf(interest.getRemainingTime()));
+        waveText.render("Wave");
         waveTimeText.render(String.valueOf(waveManager.getRemainingTime()));
-        livesText.render();
-        moneyText.render();
+        livesText.render("Lives");
+        moneyText.render("Money");
         float iconSize = (height) / 6;
         xOffset = width - (offset + iconSize * 4);
         yOffset = y + offset * 11;

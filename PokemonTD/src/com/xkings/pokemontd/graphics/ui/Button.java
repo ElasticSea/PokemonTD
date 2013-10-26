@@ -20,21 +20,21 @@ abstract class Button extends InteractiveBlock {
     private final ShapeRenderer shapeRenderer;
     private final Color color;
 
-    protected Button(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch, String text) {
-        this(rectangle, shapeRenderer, spriteBatch, text, BitmapFont.HAlignment.LEFT, Color.CLEAR);
+    protected Button(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
+        this(rectangle, shapeRenderer, spriteBatch, BitmapFont.HAlignment.LEFT, Color.CLEAR);
     }
 
-    protected Button(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch, String text,
+    protected Button(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
                      BitmapFont.HAlignment alignment) {
-        this(rectangle, shapeRenderer, spriteBatch, text, alignment, Color.CLEAR);
+        this(rectangle, shapeRenderer, spriteBatch, alignment, Color.CLEAR);
     }
 
-    public Button(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch, String text,
+    public Button(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
                   BitmapFont.HAlignment alignment, Color color) {
         super(rectangle);
         this.shapeRenderer = shapeRenderer;
         this.spriteBatch = spriteBatch;
-        this.text = text;
+        this.text = new String();
         this.color = color;
         this.font = Assets.createFont("pixelFont");
         this.font.setScale(0.50f);
