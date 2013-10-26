@@ -31,11 +31,6 @@ public class TowerEntityInfo  extends TowerInfo{
 
         if (spriteComponent != null && nameComponent != null && rangeComponent != null) {
             render(entity.getComponent(SpriteComponent.class).getSprite(),(int) entity.getComponent(DamageComponent.class).getDamage(), (int) entity.getComponent(SpeedComponent.class).getSpeed(),(int) entity.getComponent(RangeComponent.class).getRange(), entity.getComponent(NameComponent.class).getName(), true, false);
-            /*renderCommon(spriteComponent.getSprite(), nameComponent.getName(),
-                    String.valueOf(rangeComponent.getRange()), "");      */
-           /* buy.setEnabled(false);
-            sell.setEnabled(true);
-            sell.render();   */
         }
 
     }

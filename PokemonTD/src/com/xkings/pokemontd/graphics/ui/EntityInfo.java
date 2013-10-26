@@ -14,7 +14,7 @@ import com.xkings.pokemontd.entity.tower.TowerType;
 /**
  * Created by Tomas on 10/8/13.
  */
-class EntityInfo extends InteractiveBlock {
+class EntityInfo extends GuiBox {
 
     private final SpriteBatch spriteBatch;
 
@@ -24,17 +24,18 @@ class EntityInfo extends InteractiveBlock {
     private Entity entity;
     private final BitmapFont pixelFont;
 
-    EntityInfo(final Ui ui, Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
-        super(rectangle);
+    EntityInfo(final Ui ui, Rectangle rectangle, int offset, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
+        super(rectangle, offset, shapeRenderer);
         this.ui = ui;
         this.spriteBatch = spriteBatch;
-        towerTypeInfo = new TowerTypeInfo(ui, rectangle, shapeRenderer, spriteBatch);
+        towerTypeInfo = new TowerTypeInfo(ui, offsetRectange, shapeRenderer, spriteBatch);
         this.pixelFont = App.getAssets().getPixelFont();
-        towerEntityInfo = new TowerEntityInfo(ui, rectangle, shapeRenderer, spriteBatch);
+        towerEntityInfo = new TowerEntityInfo(ui, offsetRectange, shapeRenderer, spriteBatch);
     }
 
     @Override
     public void render() {
+        super.render();
         TowerType towerType = ui.getTowerManager().getSelectedTowerType();
         if (towerType != null) {
             towerTypeInfo.render(towerType);

@@ -28,6 +28,13 @@ public class TowerInfo extends InteractiveBlock {
     private DisplayPicture picture;
     private ShapeRenderer shapeRenderer;
     protected TowerType tower;
+    private TextureAtlas.AtlasRegion regionCache;
+    private int damageCache;
+    private int speedCache;
+    private int rangeCache;
+    private String nameCache;
+    private boolean sellCache;
+    private boolean buyCache;
 
     public TowerInfo(final Ui ui, Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
         super(rectangle);
@@ -35,6 +42,7 @@ public class TowerInfo extends InteractiveBlock {
         this.ui = ui;
         this.pixelFont = App.getAssets().getPixelFont();
         float offset = height / 5;
+        float offsetBlocks = height/2;
         //Rectangle offsetBlock = new Rectangle(x + offset, y + offset, width - offset * 2, height - offset * 2);
         //Rectangle blockInBlock = new Rectangle(x + offset, y + offset, width - offset * 2, height - offset * 2);
 
@@ -49,14 +57,14 @@ public class TowerInfo extends InteractiveBlock {
                 spriteBatch);
         name = new DisplayText(new Rectangle(x + offset, y + offset / 7, height - offset * 2, offset), shapeRenderer,
                 spriteBatch, BitmapFont.HAlignment.CENTER);
-        sell = new Button(new Rectangle(x + offset * 7, y + offset / 4, offset * 2, offset), shapeRenderer, spriteBatch,
+        sell = new Button(new Rectangle(x+ width-offsetBlocks, y, offsetBlocks, offsetBlocks), shapeRenderer, spriteBatch,
                 BitmapFont.HAlignment.CENTER, new Color(Color.RED).mul(0.6f)) {
             @Override
             public void process(float x, float y) {
                 ui.getTowerManager().sellTower();
             }
         };
-        buy = new Button(new Rectangle(x + offset * 5, y + offset / 4, offset * 2, offset), shapeRenderer, spriteBatch,
+        buy = new Button(new Rectangle(x + width-offsetBlocks, y + offsetBlocks, offsetBlocks, offsetBlocks), shapeRenderer, spriteBatch,
                 BitmapFont.HAlignment.CENTER, new Color(Color.GREEN).mul(0.6f)) {
             @Override
             public void process(float x, float y) {
@@ -72,36 +80,31 @@ public class TowerInfo extends InteractiveBlock {
     @Override
     public void render() {
         float offset = this.height / 5;
-        TextureAtlas.AtlasRegion atlasRegion = tower.getTexture();
-        String name = tower.getName().toString();
         App.getAssets().getPixelFont().setScale(height / 8 / 32);
-        picture.render(atlasRegion);
-        damage.render("Atk: " + String.valueOf((int) tower.getDamage()));
-        speed.render("Spd: " + String.valueOf((int) tower.getSpeed()));
-        this.range.render("Rng: " + String.valueOf((int) tower.getRange()));
-        this.name.render(name);
-
-        sell.setEnabled(false);
-        buy.setEnabled(true);
-        buy.render();
+        picture.render(regionCache);
+        this.damage.render("Atk: " + damageCache);
+        this.speed.render("Spd: " + speedCache);
+        this.range.render("Rng: " + rangeCache);
+        this.name.render(nameCache);
+        if (sellCache) {
+            this.sell.render("sell");
+        } else if (buyCache) {
+            this.buy.render("buy");
+        }
+        this.sell.setEnabled(sellCache);
+        this.buy.setEnabled(buyCache);
     }
 
-    public void render(TextureAtlas.AtlasRegion region, int damage, int speed, int range, String name, boolean sell,
+    public void render(TextureAtlas.AtlasRegion region, int damage, int speed, int range, String nameCache, boolean sell,
                        boolean buy) {
-        float offset = this.height / 5;
-        App.getAssets().getPixelFont().setScale(height / 8 / 32);
-        picture.render(region);
-        this.damage.render("Atk: " + damage);
-        this.speed.render("Spd: " + speed);
-        this.range.render("Rng: " + range);
-        this.name.render(name);
-        if (sell) {
-            this.sell.render();
-        } else if (buy) {
-            this.buy.render();
-        }
-        this.sell.setEnabled(sell);
-        this.buy.setEnabled(buy);
+        this.regionCache = region;
+        this.damageCache = damage;
+        this.speedCache = speed;
+        this.rangeCache = range;
+        this.nameCache = nameCache;
+        this.sellCache = sell;
+        this.buyCache = buy;
+        render();
     }
 
     @Override
