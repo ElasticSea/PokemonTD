@@ -36,6 +36,9 @@ public class Status extends GuiBox {
            WaveManager waveManager, Interest interest) {
         super(rectangle, offset, shapeRenderer);
 
+        offsetRectange.x += offset;
+        offsetRectange.width -= offset*2;
+
         this.player = player;
         this.shapeRenderer = shapeRenderer;
         this.spriteBatch = spriteBatch;
