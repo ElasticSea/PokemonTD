@@ -71,6 +71,7 @@ public class App extends Game2D {
     private RenderTextSystem renderTextSystem;
     private RenderHealthSystem renderHealthSystem;
     private RenderDebugSystem renderDebugSystem;
+    private RenderRangeSystem renderRangeSystem;
     private PathPack pathPack;
     private Blueprint blueprint;
     private Player player;
@@ -151,12 +152,16 @@ public class App extends Game2D {
         renderSpriteSystem = new RenderSpriteSystem(cameraHandler.getCamera());
         renderTextSystem = new RenderTextSystem(cameraHandler.getCamera());
         renderHealthSystem = new RenderHealthSystem(cameraHandler.getCamera());
-        renderDebugSystem = new RenderDebugSystem(cameraHandler, towerManager);
+        renderDebugSystem = new RenderDebugSystem(cameraHandler);
+        renderRangeSystem = new RenderRangeSystem(cameraHandler, towerManager);
 
         world.setSystem(renderSpriteSystem, true);
         world.setSystem(renderTextSystem, true);
         world.setSystem(renderHealthSystem, true);
-        world.setSystem(renderDebugSystem, true);
+        if (DEBUG != null) {
+            world.setSystem(renderDebugSystem, true);
+        }
+        world.setSystem(renderRangeSystem, true);
         world.setSystem(new ClosestCreepSystem(), true);
         world.setSystem(new ClosestTowerSystem(), true);
         world.setSystem(new ClosestTowerWithoutDamageBuffSystem(), true);
@@ -199,7 +204,6 @@ public class App extends Game2D {
         clock.addService(tweenManager);
     }
 
-
     private MapData createMap() {
         return new MapBuilder(3, 11, PATH_SIZE, MapBuilder.Direction.DOWN, 0.40f,
                 new Rectangle(1, 1, 1, 2)).addStraight().addRight().addStraight().addLeft().addStraight(
@@ -212,7 +216,6 @@ public class App extends Game2D {
     public void dispose() {
 
     }
-
 
     private class DefaultRenderer implements Renderable {
 
@@ -237,6 +240,7 @@ public class App extends Game2D {
             renderSpriteSystem.process();
             renderTextSystem.process();
             renderHealthSystem.process();
+            renderRangeSystem.process();
             renderDebugSystem.process();
             drawMap(2);
             drawMap(4);
