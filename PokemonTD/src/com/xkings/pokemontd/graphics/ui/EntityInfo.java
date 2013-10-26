@@ -62,7 +62,6 @@ class EntityInfo extends GuiBox {
 
         entity = ui.getCreepManager().getClicked();
         if (entity != null) {
-            disableClickables(creepEntityInfo);
             creepEntityInfo.render(entity);
             return;
         }
