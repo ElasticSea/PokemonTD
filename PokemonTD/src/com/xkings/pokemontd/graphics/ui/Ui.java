@@ -36,7 +36,6 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
     private final GuiBox nextWaveInfo;
     private final GuiBox status;
     private final CreepManager creepManager;
-    private InteractiveBlock displayBar;
     private InteractiveBlock towerTable;
     private List<TowerType> lastHierarchy;
 
@@ -76,15 +75,11 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
 
         nextWaveInfo = new WaveInfo(new Rectangle(0, 0, squareHeight, squareHeight), offset, shapeRenderer, spriteBatch,
                 waveManager);
-        displayBar =
-                new GuiBox(new Rectangle(squareHeight - offset, 0, width - (squareHeight - offset) * 2, stripHeight),
-                        offset, shapeRenderer);
         towerTable =
                 new GuiBox(new Rectangle(Gdx.graphics.getWidth() - squareHeight, 0, squareHeight, squareHeight), offset,
                         shapeRenderer);
-        entityInfo = new EntityInfo(this, displayBar, shapeRenderer, spriteBatch);
+        entityInfo = new EntityInfo(this, new Rectangle(squareHeight - offset, 0, width - (squareHeight - offset) * 2, stripHeight),offset, shapeRenderer, spriteBatch);
 
-        clickables.add(displayBar);
         clickables.add(towerTable);
         clickables.add(entityInfo);
         clickables.add(statusBar);
