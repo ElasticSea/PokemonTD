@@ -27,6 +27,8 @@ public class Status extends GuiBox {
     private final DisplayText waveText;
     private final DisplayText livesText;
     private final DisplayText moneyText;
+    private final DisplayText waveTimeText;
+    private final DisplayText interestTimeText;
     private float xOffset;
     private float yOffset;
     private final WaveManager waveManager;
@@ -43,16 +45,27 @@ public class Status extends GuiBox {
         this.interest = interest;
 
         this.textFieldCount = 4;
-        Vector2 textSize = new Vector2(width / 2f, height / textFieldCount);
+        Vector2 textSize = new Vector2(offsetRectange.width / 2f, offsetRectange.
+                height / textFieldCount);
 
-        interestText =
-                new DisplayText(new Rectangle(x, y, textSize.x, textSize.y), shapeRenderer, spriteBatch, "interest");
-        waveText = new DisplayText(new Rectangle(x, y + textSize.y, textSize.x, textSize.y), shapeRenderer, spriteBatch,
-                "Wave");
-        livesText = new DisplayText(new Rectangle(x, y + textSize.y * 2, textSize.x, textSize.y), shapeRenderer,
-                spriteBatch, "Lifes");
-        moneyText = new DisplayText(new Rectangle(x, y + textSize.y * 3, textSize.x, textSize.y), shapeRenderer,
-                spriteBatch, "Money");
+        interestText = new DisplayText(new Rectangle(offsetRectange.x, offsetRectange.y, textSize.x, textSize.y),
+                shapeRenderer, spriteBatch, "interest");
+        waveText =
+                new DisplayText(new Rectangle(offsetRectange.x, offsetRectange.y + textSize.y, textSize.x, textSize.y),
+                        shapeRenderer, spriteBatch, "Wave");
+        livesText = new DisplayText(
+                new Rectangle(offsetRectange.x, offsetRectange.y + textSize.y * 2, textSize.x, textSize.y),
+                shapeRenderer, spriteBatch, "Lifes");
+        moneyText = new DisplayText(
+                new Rectangle(offsetRectange.x, offsetRectange.y + textSize.y * 3, textSize.x, textSize.y),
+                shapeRenderer, spriteBatch, "Money");
+
+        waveTimeText = new DisplayText(
+                new Rectangle(offsetRectange.x + textSize.x, offsetRectange.y + textSize.y, textSize.x, textSize.y),
+                shapeRenderer, spriteBatch, "Wave", BitmapFont.HAlignment.RIGHT);
+        interestTimeText = new DisplayText(
+                new Rectangle(offsetRectange.x + textSize.x, offsetRectange.y + textSize.y, textSize.x, textSize.y),
+                shapeRenderer, spriteBatch, "Interest", BitmapFont.HAlignment.RIGHT);
         // renderLeftText(x, y, textSize.x, textSize.y);
     }
 
@@ -65,7 +78,9 @@ public class Status extends GuiBox {
         pixelFont.setScale(height / 300);
         super.render();
         interestText.render();
+        interestTimeText.render();
         waveText.render();
+        waveTimeText.render(String.valueOf(waveManager.getRemainingTime()));
         livesText.render();
         moneyText.render();
         float iconSize = (height) / 6;

@@ -15,9 +15,11 @@ class GuiBox extends InteractiveBlock {
     public static final Color lighterColor = new Color(lighter, lighter, lighter, 1);
     protected final int offset;
     private final ShapeRenderer shapeRenderer;
+    protected final Rectangle offsetRectange;
 
     GuiBox(Rectangle rectangle, int offset, ShapeRenderer shapeRenderer) {
         super(rectangle);
+        this.offsetRectange = new Rectangle(x + offset, y + offset, width - offset * 2, height - offset * 2);
         this.offset = offset;
         this.shapeRenderer = shapeRenderer;
     }
@@ -30,7 +32,7 @@ class GuiBox extends InteractiveBlock {
     private void drawRect(int offset) {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(darkerColor);
-        shapeRenderer.rect(x,y, width, height);
+        shapeRenderer.rect(x, y, width, height);
         shapeRenderer.setColor(lighterColor);
         shapeRenderer.rect(x + offset, y + offset, width - offset * 2, height - offset * 2);
         shapeRenderer.end();

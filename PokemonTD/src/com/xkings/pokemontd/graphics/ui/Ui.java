@@ -40,44 +40,48 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
     private InteractiveBlock towerTable;
     private List<TowerType> lastHierarchy;
 
-    public Ui(Player player, WaveManager waveManager, CreepManager creepManager, TowerManager towerManager, float guiScale,Interest interest) {
+    public Ui(Player player, WaveManager waveManager, CreepManager creepManager, TowerManager towerManager,
+              float guiScale, Interest interest) {
         this.creepManager = creepManager;
         this.towerManager = towerManager;
         shapeRenderer = new ShapeRenderer();
         spriteBatch = new SpriteBatch();
         clickables = new ArrayList<InteractiveBlock>();
         height = Gdx.graphics.getHeight();
-        float heightInInch = height / Gdx.graphics.getDensity() * 160*2;
-        float squareHeight = MathUtils.clamp(Gdx.graphics.getDensity() * 160*2, height/4, height/2);
-        float statusBarHeight = squareHeight/5;
-        float statusHeight = statusBarHeight*4;
-
+        float heightInInch = height / Gdx.graphics.getDensity() * 160 * 2;
+        float squareHeight = MathUtils.clamp(Gdx.graphics.getDensity() * 160 * 2, height / 4, height / 2);
+        float statusBarHeight = squareHeight / 5;
+        float statusHeight = statusBarHeight * 4;
 
 
         width = Gdx.graphics.getWidth();
 
-        float Height = (int) guiScale / 3*2.8f;
-        int stripHeight = (int) (squareHeight/3f* 2f);
-        int offset = (int) squareHeight/36;
+        float Height = (int) guiScale / 3 * 2.8f;
+        int stripHeight = (int) (squareHeight / 3f * 2f);
+        int offset = (int) squareHeight / 36;
         float iconSize = (squareHeight - offset) / 3f;
-        float statusHeightBlock = statusHeight/5;
-        float statusOffSet = statusHeightBlock/2;
-        statusHeight = statusHeightBlock*4;
+        float statusHeightBlock = statusHeight / 5;
+        float statusOffSet = statusHeightBlock / 2;
+        statusHeight = statusHeightBlock * 4;
 
-        Vector2 statusBarDimensions = new Vector2(width,statusBarHeight);
-        statusBar = new StatusBar(player, new Rectangle(0, this.height - statusBarDimensions.y, statusBarDimensions.x, statusBarDimensions.y), offset,
-                shapeRenderer, spriteBatch);
-        Vector2 statusDimensions = new Vector2(squareHeight,statusHeight);
-        status = new Status(player, new Rectangle(width-statusDimensions.x, this.height - statusBar.height  - statusOffSet - statusDimensions.y, statusDimensions.x, statusDimensions.y), offset, shapeRenderer, spriteBatch, waveManager, interest);
+        Vector2 statusBarDimensions = new Vector2(width, statusBarHeight);
+        statusBar = new StatusBar(player,
+                new Rectangle(0, this.height - statusBarDimensions.y, statusBarDimensions.x, statusBarDimensions.y),
+                offset, shapeRenderer, spriteBatch);
+        Vector2 statusDimensions = new Vector2(squareHeight, statusHeight);
+        status = new Status(player, new Rectangle(width - statusDimensions.x,
+                this.height - statusBar.height - statusOffSet - statusDimensions.y, statusDimensions.x,
+                statusDimensions.y), offset, shapeRenderer, spriteBatch, waveManager, interest);
 
 
         nextWaveInfo = new WaveInfo(new Rectangle(0, 0, squareHeight, squareHeight), offset, shapeRenderer, spriteBatch,
                 waveManager);
         displayBar =
-                new GuiBox(new Rectangle(squareHeight - offset, 0, width - (squareHeight - offset)*2, stripHeight), offset,
-                        shapeRenderer);
+                new GuiBox(new Rectangle(squareHeight - offset, 0, width - (squareHeight - offset) * 2, stripHeight),
+                        offset, shapeRenderer);
         towerTable =
-                new GuiBox(new Rectangle(Gdx.graphics.getWidth() - squareHeight , 0, squareHeight, squareHeight), offset, shapeRenderer);
+                new GuiBox(new Rectangle(Gdx.graphics.getWidth() - squareHeight, 0, squareHeight, squareHeight), offset,
+                        shapeRenderer);
         entityInfo = new EntityInfo(this, displayBar, shapeRenderer, spriteBatch);
 
         clickables.add(displayBar);
