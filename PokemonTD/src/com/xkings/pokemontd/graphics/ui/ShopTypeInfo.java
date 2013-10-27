@@ -19,7 +19,7 @@ public class ShopTypeInfo extends TowerTypeInfo {
 
 
     public void render(TowerType tower) {
-        render(tower.getTexture(), "", "", "", (tower.getName().toString()), false, true);
+        render(tower.getTexture(), "", "", "","", (tower.getName().toString()), false, true);
     }
 
 }

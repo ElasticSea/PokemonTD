@@ -9,6 +9,7 @@ import com.xkings.core.component.SpeedComponent;
 import com.xkings.pokemontd.component.DamageComponent;
 import com.xkings.pokemontd.component.NameComponent;
 import com.xkings.pokemontd.component.SpriteComponent;
+import com.xkings.pokemontd.component.TreasureComponent;
 
 /**
  * User: Seda
@@ -28,9 +29,10 @@ public class TowerEntityInfo  extends TowerInfo{
         RangeComponent rangeComponent = entity.getComponent(RangeComponent.class);
         DamageComponent damageComponent = entity.getComponent(DamageComponent.class);
         SpeedComponent speedComponent = entity.getComponent(SpeedComponent.class);
+        TreasureComponent costComponent = entity.getComponent(TreasureComponent.class);
 
         if (spriteComponent != null && nameComponent != null && rangeComponent != null && damageComponent !=null && speedComponent !=null) {
-            render(spriteComponent.getSprite(),"Dmg: " +(int) damageComponent.getDamage(),"Spd: " + (int) speedComponent.getSpeed(),"Rng: " +(int) rangeComponent.getRange(), nameComponent.getName(), true, false);
+            render(spriteComponent.getSprite(),"Dmg: " +(int) damageComponent.getDamage(),"Spd: " + (int) speedComponent.getSpeed(),"Rng: " +(int) rangeComponent.getRange(),"Cost: " + costComponent.getTreasure().getGold(), nameComponent.getName(), true, false);
         }
 
     }
