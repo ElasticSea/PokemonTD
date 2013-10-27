@@ -60,11 +60,16 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         float statusOffSet = statusHeightBlock / 2;
         statusHeight = statusHeightBlock * 4;
 
+        Rectangle pickTableRectangle =
+                new Rectangle(Gdx.graphics.getWidth() - squareHeight, 0, squareHeight, squareHeight);
+        towerIcons = new TowerIcons(pickTableRectangle, offset, shapeRenderer, spriteBatch, towerManager);
+        shopIcons = new ShopIcons(pickTableRectangle, offset, shapeRenderer, spriteBatch, player);
+
         Vector2 statusBarDimensions = new Vector2(width, statusBarHeight);
+        Vector2 statusDimensions = new Vector2(squareHeight, statusHeight);
         statusBar = new StatusBar(player,
                 new Rectangle(0, this.height - statusBarDimensions.y, statusBarDimensions.x, statusBarDimensions.y),
-                offset, shapeRenderer, spriteBatch);
-        Vector2 statusDimensions = new Vector2(squareHeight, statusHeight);
+                offset, shapeRenderer, spriteBatch, shopIcons.offsetRectange.width);
         status = new Status(player, new Rectangle(width - statusDimensions.x,
                 this.height - statusBar.height - statusOffSet - statusDimensions.y, statusDimensions.x,
                 statusDimensions.y), offset, shapeRenderer, spriteBatch, waveManager, interest);
@@ -82,11 +87,6 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
 
         clickables.add(nextWaveInfo);
         clickables.add(status);
-
-        Rectangle pickTableRectangle =
-                new Rectangle(Gdx.graphics.getWidth() - squareHeight, 0, squareHeight, squareHeight);
-        towerIcons = new TowerIcons(pickTableRectangle, offset, shapeRenderer, spriteBatch, towerManager);
-        shopIcons = new ShopIcons(pickTableRectangle, offset, shapeRenderer, spriteBatch, player);
     }
 
 
@@ -95,12 +95,12 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         TowerName towerName = towerManager.getCurrentTowerName();
         clickables.remove(towerIcons);
         clickables.remove(shopIcons);
-            if (towerName != null &&towerName.equals(TowerName.Shop)) {
-                clickables.add(shopIcons);
-            } else {
-                towerIcons.update(towerName);
-                clickables.add(towerIcons);
-            }
+        if (towerName != null && towerName.equals(TowerName.Shop)) {
+            clickables.add(shopIcons);
+        } else {
+            towerIcons.update(towerName);
+            clickables.add(towerIcons);
+        }
         for (DisplayBlock displayBlock : clickables) {
             displayBlock.render();
         }

@@ -19,7 +19,7 @@ public class CreepTypeBuilder {
 
     private List<CreepTypeSpecification> getData() {
         List<CreepTypeSpecification> list = new ArrayList<CreepTypeSpecification>();
-        list.add(new CreepTypeSpecification(CreepName.Hoothoot, 7500000, Treasure.fromGold(1),
+        list.add(new CreepTypeSpecification(CreepName.Hoothoot, 750000, Treasure.fromGold(1),
                 CreepAbilityType.NORMAL));
         list.add(new CreepTypeSpecification(CreepName.Ledian, 88, Treasure.fromGold(1), CreepAbilityType.NORMAL));
         list.add(new CreepTypeSpecification(CreepName.Crobat, 103, Treasure.fromGold(1), CreepAbilityType.SWARM));
@@ -49,7 +49,8 @@ public class CreepTypeBuilder {
         list.add(new CreepTypeSpecification(CreepName.Flygon, 4512, Treasure.fromGold(13), CreepAbilityType.NORMAL));
         list.add(new CreepTypeSpecification(CreepName.Whiscash, 5290, Treasure.fromGold(14), CreepAbilityType.NORMAL));
         list.add(new CreepTypeSpecification(CreepName.Claydol, 6203, Treasure.fromGold(16), CreepAbilityType.NORMAL));
-        list.add(new CreepTypeSpecification(CreepName.Lileep, 72273, Treasure.fromGold(17), CreepAbilityType.RESURRECT));
+        list.add(
+                new CreepTypeSpecification(CreepName.Lileep, 72273, Treasure.fromGold(17), CreepAbilityType.RESURRECT));
         list.add(new CreepTypeSpecification(CreepName.Feebas, 8546, Treasure.fromGold(19), CreepAbilityType.NORMAL));
         list.add(new CreepTypeSpecification(CreepName.Kecleon, 10041, Treasure.fromGold(21), CreepAbilityType.NORMAL));
         list.add(new CreepTypeSpecification(CreepName.Banette, 11799, Treasure.fromGold(23), CreepAbilityType.NORMAL));
@@ -58,13 +59,16 @@ public class CreepTypeBuilder {
         list.add(new CreepTypeSpecification(CreepName.Huntail, 19140, Treasure.fromGold(31), CreepAbilityType.NORMAL));
         list.add(new CreepTypeSpecification(CreepName.Kyogre, 22490, Treasure.fromGold(34), CreepAbilityType.SWARM));
         list.add(new CreepTypeSpecification(CreepName.Prinplup, 26426, Treasure.fromGold(37), CreepAbilityType.NORMAL));
-        list.add(new CreepTypeSpecification(CreepName.Wormadam, 31050, Treasure.fromGold(41), CreepAbilityType.INVISIBLE));
+        list.add(new CreepTypeSpecification(CreepName.Wormadam, 31050, Treasure.fromGold(41),
+                CreepAbilityType.INVISIBLE));
         list.add(new CreepTypeSpecification(CreepName.Bronzong, 36484, Treasure.fromGold(45), CreepAbilityType.NORMAL));
         list.add(new CreepTypeSpecification(CreepName.Yanmega, 43051, Treasure.fromGold(50), CreepAbilityType.NORMAL));
         list.add(new CreepTypeSpecification(CreepName.Glaceon, 50800, Treasure.fromGold(55), CreepAbilityType.NORMAL));
-        list.add(new CreepTypeSpecification(CreepName.Mamoswine, 59944, Treasure.fromGold(60), CreepAbilityType.RESURRECT));
+        list.add(new CreepTypeSpecification(CreepName.Mamoswine, 59944, Treasure.fromGold(60),
+                CreepAbilityType.RESURRECT));
         list.add(new CreepTypeSpecification(CreepName.Palkia, 70734, Treasure.fromGold(66), CreepAbilityType.NORMAL));
-        list.add(new CreepTypeSpecification(CreepName.Regigigas, 83466, Treasure.fromGold(73), CreepAbilityType.NORMAL));
+        list.add(
+                new CreepTypeSpecification(CreepName.Regigigas, 83466, Treasure.fromGold(73), CreepAbilityType.NORMAL));
         list.add(new CreepTypeSpecification(CreepName.Giratina, 98490, Treasure.fromGold(80), CreepAbilityType.SWARM));
         list.add(new CreepTypeSpecification(CreepName.Manaphy, 116218, Treasure.fromGold(88), CreepAbilityType.NORMAL));
         list.add(new CreepTypeSpecification(CreepName.Darkrai, 137137, Treasure.fromGold(97), CreepAbilityType.NORMAL));
@@ -72,14 +76,21 @@ public class CreepTypeBuilder {
         list.add(new CreepTypeSpecification(CreepName.Tepig, 190950, Treasure.fromGold(117), CreepAbilityType.NORMAL));
         list.add(new CreepTypeSpecification(CreepName.Emboar, 229140, Treasure.fromGold(129), CreepAbilityType.NORMAL));
         list.add(new CreepTypeSpecification(CreepName.Watchog, 274968, Treasure.fromGold(142), CreepAbilityType.SPAWN));
-        list.add(new CreepTypeSpecification(CreepName.Herdier, 329962, Treasure.fromGold(156), CreepAbilityType.NORMAL));
-        list.add(new CreepTypeSpecification(CreepName.Liepard, 395954, Treasure.fromGold(172), CreepAbilityType.INVISIBLE));
-        list.add(new CreepTypeSpecification(CreepName.Panpour, 475145, Treasure.fromGold(189), CreepAbilityType.NORMAL));
-        list.add(new CreepTypeSpecification(CreepName.Tirtouga, 570174, Treasure.fromGold(208), CreepAbilityType.NORMAL));
-        list.add(new CreepTypeSpecification(CreepName.Zorua, 684209, Treasure.fromGold(229), CreepAbilityType.RESURRECT));
-        list.add(new CreepTypeSpecification(CreepName.Klinklang, 821050, Treasure.fromGold(252), CreepAbilityType.NORMAL));
+        list.add(
+                new CreepTypeSpecification(CreepName.Herdier, 329962, Treasure.fromGold(156), CreepAbilityType.NORMAL));
+        list.add(new CreepTypeSpecification(CreepName.Liepard, 395954, Treasure.fromGold(172),
+                CreepAbilityType.INVISIBLE));
+        list.add(
+                new CreepTypeSpecification(CreepName.Panpour, 475145, Treasure.fromGold(189), CreepAbilityType.NORMAL));
+        list.add(new CreepTypeSpecification(CreepName.Tirtouga, 570174, Treasure.fromGold(208),
+                CreepAbilityType.NORMAL));
+        list.add(new CreepTypeSpecification(CreepName.Zorua, 684209, Treasure.fromGold(229),
+                CreepAbilityType.RESURRECT));
+        list.add(new CreepTypeSpecification(CreepName.Klinklang, 821050, Treasure.fromGold(252),
+                CreepAbilityType.NORMAL));
         list.add(new CreepTypeSpecification(CreepName.Lampent, 985261, Treasure.fromGold(277), CreepAbilityType.FAST));
-        list.add(new CreepTypeSpecification(CreepName.Druddigon, 1182313, Treasure.fromGold(304), CreepAbilityType.NORMAL));
+        list.add(new CreepTypeSpecification(CreepName.Druddigon, 1182313, Treasure.fromGold(304),
+                CreepAbilityType.NORMAL));
         list.add(new CreepTypeSpecification(CreepName.Hydreigon, 2364626, Treasure.fromGold(0), CreepAbilityType.BOSS));
 
         list.add(new CreepTypeSpecification(CreepName.Xatu, 3484, Treasure.fromPure(1), CreepAbilityType.NORMAL));
@@ -90,16 +101,22 @@ public class CreepTypeBuilder {
         list.add(new CreepTypeSpecification(CreepName.Yanma, 570174, Treasure.fromFire(3), CreepAbilityType.NORMAL));
         list.add(new CreepTypeSpecification(CreepName.Bellossom, 3484, Treasure.fromLight(1), CreepAbilityType.NORMAL));
         list.add(new CreepTypeSpecification(CreepName.Politoed, 26426, Treasure.fromLight(2), CreepAbilityType.NORMAL));
-        list.add(new CreepTypeSpecification(CreepName.Skiploom, 570174, Treasure.fromLight(3), CreepAbilityType.NORMAL));
+        list.add(
+                new CreepTypeSpecification(CreepName.Skiploom, 570174, Treasure.fromLight(3), CreepAbilityType.NORMAL));
         list.add(new CreepTypeSpecification(CreepName.Marill, 3484, Treasure.fromWater(1), CreepAbilityType.NORMAL));
-        list.add(new CreepTypeSpecification(CreepName.Azumarill, 26426, Treasure.fromWater(2), CreepAbilityType.NORMAL));
+        list.add(
+                new CreepTypeSpecification(CreepName.Azumarill, 26426, Treasure.fromWater(2), CreepAbilityType.NORMAL));
         list.add(new CreepTypeSpecification(CreepName.Wooper, 570174, Treasure.fromWater(3), CreepAbilityType.NORMAL));
-        list.add(new CreepTypeSpecification(CreepName.Sudowoodo, 3484, Treasure.fromNature(1), CreepAbilityType.NORMAL));
+        list.add(
+                new CreepTypeSpecification(CreepName.Sudowoodo, 3484, Treasure.fromNature(1), CreepAbilityType.NORMAL));
         list.add(new CreepTypeSpecification(CreepName.Sunkern, 26426, Treasure.fromNature(2), CreepAbilityType.NORMAL));
-        list.add(new CreepTypeSpecification(CreepName.Sunflora, 570174, Treasure.fromNature(3), CreepAbilityType.NORMAL));
-        list.add(new CreepTypeSpecification(CreepName.Umbreon, 3848, Treasure.fromDarkness(1), CreepAbilityType.NORMAL));
+        list.add(new CreepTypeSpecification(CreepName.Sunflora, 570174, Treasure.fromNature(3),
+                CreepAbilityType.NORMAL));
+        list.add(
+                new CreepTypeSpecification(CreepName.Umbreon, 3848, Treasure.fromDarkness(1), CreepAbilityType.NORMAL));
         list.add(new CreepTypeSpecification(CreepName.Aipom, 26426, Treasure.fromDarkness(2), CreepAbilityType.NORMAL));
-        list.add(new CreepTypeSpecification(CreepName.Hoppip, 570174, Treasure.fromDarkness(3), CreepAbilityType.NORMAL));
+        list.add(new CreepTypeSpecification(CreepName.Hoppip, 570174, Treasure.fromDarkness(3),
+                CreepAbilityType.NORMAL));
 
         list.add(new CreepTypeSpecification(CreepName.Flaaffy, 1204626, Treasure.fromSoul(3), CreepAbilityType.NORMAL));
         return list;
@@ -114,7 +131,7 @@ public class CreepTypeBuilder {
             int health = specification.getHealth();
             float speed = scale;
             float size = scale;
-            int creepsInWay = 1;
+            int creepsInWay = 8;
             float distanceBetweenCreeps = size;
 
             switch (ability) {
@@ -135,14 +152,14 @@ public class CreepTypeBuilder {
                 case SPAWN:
                     health *= 4f;
                     size *= 2f;
-                    creepsInWay/= 4;
+                    creepsInWay /= 4;
                     break;
                 case HEALING:
                     break;
             }
 
-            list.add(new CreepType(id, specification.getName(), speed, size, health,
-                    specification.getTreasure(), creepsInWay, distanceBetweenCreeps, ability));
+            list.add(new CreepType(id, specification.getName(), speed, size, health, specification.getTreasure(),
+                    creepsInWay, distanceBetweenCreeps, ability));
         }
 
         Map<CreepName, CreepType> map = new HashMap<CreepName, CreepType>();
