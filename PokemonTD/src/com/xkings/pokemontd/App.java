@@ -15,7 +15,6 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.graphics.Renderable;
-import com.xkings.core.graphics.Shader;
 import com.xkings.core.graphics.camera.BoundedCameraHandler;
 import com.xkings.core.graphics.camera.CameraHandler;
 import com.xkings.core.input.EnhancedGestureDetector;
@@ -141,7 +140,7 @@ public class App extends Game2D {
     }
 
     private void initializeManagers() {
-        this.waveManager = new WaveManager(world, clock, pathPack, STRESS_TEST != null ? 0.01f :WAVE_INTERVAL);
+        this.waveManager = new WaveManager(world, clock, pathPack, STRESS_TEST != null ? 0.01f : WAVE_INTERVAL);
         this.towerManager = new TowerManager(world, blueprint, player);
         this.creepManager = new CreepManager(world);
         this.invisibleManager = new InvisibleManager(world, clock, INVISIBLE_INTERVAL);
@@ -149,11 +148,11 @@ public class App extends Game2D {
     }
 
     private void initializeSystems() {
-        renderSpriteSystem = new RenderSpriteSystem(cameraHandler.getCamera(),spriteBatch);
-        renderTextSystem = new RenderTextSystem(cameraHandler.getCamera());
-        renderHealthSystem = new RenderHealthSystem(cameraHandler.getCamera());
-        renderDebugSystem = new RenderDebugSystem(cameraHandler);
-        renderRangeSystem = new RenderRangeSystem(cameraHandler, towerManager);
+        renderSpriteSystem = new RenderSpriteSystem(cameraHandler.getCamera(), spriteBatch);
+        renderTextSystem = new RenderTextSystem(spriteBatch);
+        renderHealthSystem = new RenderHealthSystem(shapeRenderer);
+        renderDebugSystem = new RenderDebugSystem(shapeRenderer);
+        renderRangeSystem = new RenderRangeSystem(shapeRenderer, towerManager);
 
         world.setSystem(renderSpriteSystem, true);
         world.setSystem(renderTextSystem, true);
@@ -234,11 +233,8 @@ public class App extends Game2D {
             drawMap(0);
             drawMap(1);
             renderSpriteSystem.process();
-            spriteBatch.end();
             renderTextSystem.process();
-            renderHealthSystem.process();
-            renderRangeSystem.process();
-            renderDebugSystem.process();
+            spriteBatch.end();
             spriteBatch.setProjectionMatrix(camera.combined);
             spriteBatch.begin();
             drawMap(2);
@@ -248,8 +244,11 @@ public class App extends Game2D {
 
             shapeRenderer.setProjectionMatrix(camera.combined);
             shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            renderRangeSystem.process();
+            renderDebugSystem.process();
             drawPath();
             drawGrid();
+            renderHealthSystem.process();
             shapeRenderer.end();
             renderer.render();
         }

@@ -5,39 +5,31 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.component.PositionComponent;
-import com.xkings.core.component.RangeComponent;
 import com.xkings.core.component.SizeComponent;
-import com.xkings.core.graphics.camera.CameraHandler;
 
 /**
  * Created by Tomas on 10/4/13.
  */
 public class RenderDebugSystem extends EntityProcessingSystem {
-    private final CameraHandler camera;
-    private final ShapeRenderer shapeRenderer = new ShapeRenderer(5000);
+    private final ShapeRenderer shapeRenderer;
 
     @Mapper
     ComponentMapper<PositionComponent> positionMapper;
     @Mapper
     ComponentMapper<SizeComponent> sizeMapper;
 
-    public RenderDebugSystem(CameraHandler camera) {
+    public RenderDebugSystem(ShapeRenderer shapeRenderer) {
         super(Aspect.getAspectForAll(PositionComponent.class, SizeComponent.class));
-        this.camera = camera;
+        this.shapeRenderer = shapeRenderer;
     }
 
     @Override
     protected void begin() {
-        shapeRenderer.setProjectionMatrix(camera.getCamera().combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-    }
-
-    @Override
-    protected void end() {
-        shapeRenderer.end();
+        shapeRenderer.setColor(Color.WHITE);
     }
 
     @Override

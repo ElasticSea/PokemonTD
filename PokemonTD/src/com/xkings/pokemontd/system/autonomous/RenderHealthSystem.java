@@ -5,7 +5,6 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
@@ -18,8 +17,7 @@ import com.xkings.pokemontd.component.HealthComponent;
  * Created by Tomas on 10/4/13.
  */
 public class RenderHealthSystem extends EntityProcessingSystem {
-    private final Camera camera;
-    private final ShapeRenderer shapeRenderer = new ShapeRenderer();
+    private final ShapeRenderer shapeRenderer;
 
     @Mapper
     ComponentMapper<PositionComponent> positionMapper;
@@ -28,14 +26,13 @@ public class RenderHealthSystem extends EntityProcessingSystem {
     @Mapper
     ComponentMapper<HealthComponent> healthMapper;
 
-    public RenderHealthSystem(Camera camera) {
+    public RenderHealthSystem(ShapeRenderer shapeRenderer) {
         super(Aspect.getAspectForAll(PositionComponent.class, SizeComponent.class, HealthComponent.class));
-        this.camera = camera;
+        this.shapeRenderer = shapeRenderer;
     }
-
     @Override
     protected void begin() {
-        shapeRenderer.setProjectionMatrix(camera.combined);
+        shapeRenderer.end();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
     }
 
@@ -43,6 +40,7 @@ public class RenderHealthSystem extends EntityProcessingSystem {
     protected void end() {
         shapeRenderer.end();
     }
+
 
     @Override
     protected void process(Entity e) {

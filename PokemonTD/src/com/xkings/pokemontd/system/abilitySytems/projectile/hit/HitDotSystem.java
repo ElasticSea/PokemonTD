@@ -31,7 +31,7 @@ public class HitDotSystem extends HitSystem {
     @Override
     public void onHit(Entity e, Entity target) {
         DotData data = dotDataMapper.get(e);
-        DotEffect effect = dotMapper.get(target);
+        DotEffect effect = dotMapper.getSafe(target);
         if (effect == null) {
             target.addComponent(new DotEffect(data.getInterval(), data.getIterations(),
                     damageMapper.get(e).getDps() * data.getDamageMultiplier() / data.getIterations()));
