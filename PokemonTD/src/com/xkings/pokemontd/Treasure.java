@@ -101,14 +101,14 @@ public class Treasure {
     }
 
     public void subtract(Treasure treasure) {
-        for (Map.Entry<Element, Integer> entry : elementSet.entrySet()) {
+        for (Map.Entry<Element, Integer> entry : treasure.elementSet.entrySet()) {
             this.subtractElement(entry.getKey(), treasure.getElement(entry.getKey()));
         }
         this.subtractGold(treasure.getGold());
     }
 
     public void add(Treasure treasure) {
-        for (Map.Entry<Element, Integer> entry : elementSet.entrySet()) {
+        for (Map.Entry<Element, Integer> entry : treasure.elementSet.entrySet()) {
             this.addElement(entry.getKey(), entry.getValue());
         }
         this.addGold(treasure.getGold());
