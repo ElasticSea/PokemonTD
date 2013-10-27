@@ -29,7 +29,7 @@ import java.util.Map;
  */
 public class RenderSpriteSystem extends EntitySystem {
     private final Camera camera;
-    private final SpriteBatch spriteBatch = new SpriteBatch();
+    private final SpriteBatch spriteBatch;
 
     @Mapper
     ComponentMapper<PositionComponent> positionMapper;
@@ -44,9 +44,10 @@ public class RenderSpriteSystem extends EntitySystem {
     @Mapper
     ComponentMapper<VisibleComponent> visibleMapper;
 
-    public RenderSpriteSystem(Camera camera) {
+    public RenderSpriteSystem(Camera camera, SpriteBatch spriteBatch) {
         super(Aspect.getAspectForAll(PositionComponent.class, SizeComponent.class, SpriteComponent.class));
         this.camera = camera;
+        this.spriteBatch = spriteBatch;
     }
 
     protected void process(Entity e) {
@@ -56,8 +57,6 @@ public class RenderSpriteSystem extends EntitySystem {
 
         PositionComponent positionComponent = positionMapper.get(e);
         Vector3 size = sizeMapper.get(e).getPoint();
-        spriteBatch.setProjectionMatrix(camera.combined);
-        spriteBatch.begin();
 
         for (SpriteComponent.Type type : SpriteComponent.Type.values()) {
             Animation animation = spriteMapper.get(e).get(type);
@@ -75,7 +74,6 @@ public class RenderSpriteSystem extends EntitySystem {
             }
         }
 
-        spriteBatch.end();
     }
 
     @Override

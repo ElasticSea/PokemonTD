@@ -32,9 +32,8 @@ public class WaveInfo extends GuiBox {
         CreepType nextWave = waveManager.getNextWave();
         if (nextWave != null) {
             float textureOffset = height / 5f;
-            spriteBatch.draw(waveManager.getNextWave().getTexture(), x + textureOffset,
-                    y + textureOffset, width - textureOffset * 2,
-                    height - textureOffset * 2);
+            spriteBatch.draw(waveManager.getNextWave().getTexture(), x + textureOffset, y + textureOffset,
+                    width - textureOffset * 2, height - textureOffset * 2);
         }
         int textOffset = offset * 2;
         drawWaveInfo(textOffset);
@@ -43,17 +42,18 @@ public class WaveInfo extends GuiBox {
     }
 
     private void drawAbilityInfo(int textOffset) {
-        pixelFont.drawMultiLine(spriteBatch, waveManager.getNextWave().getAbilityType().toString(),
-                x +width/2f, y  + pixelFont.getCapHeight()*2, 0,
-                BitmapFont.HAlignment.CENTER);
+        CreepType nextWave = waveManager.getNextWave();
+        if (nextWave != null) {
+            pixelFont.drawMultiLine(spriteBatch, nextWave.getAbilityType().toString(), x + width / 2f,
+                    y + pixelFont.getCapHeight() * 2, 0, BitmapFont.HAlignment.CENTER);
+        }
     }
 
     private void drawWaveInfo(int textOffset) {
-        pixelFont.drawMultiLine(spriteBatch, "Wave : ", x + textOffset,
-                y + height - pixelFont.getCapHeight(), 0, BitmapFont.HAlignment.LEFT);
-        pixelFont.drawMultiLine(spriteBatch,String.valueOf(waveManager.getCurrentWave().getId()+1 ),
-                x + width - textOffset, y + height - pixelFont.getCapHeight(),
-                0, BitmapFont.HAlignment.RIGHT);
+        pixelFont.drawMultiLine(spriteBatch, "Wave : ", x + textOffset, y + height - pixelFont.getCapHeight(), 0,
+                BitmapFont.HAlignment.LEFT);
+        pixelFont.drawMultiLine(spriteBatch, String.valueOf(waveManager.getCurrentWave().getId() + 1),
+                x + width - textOffset, y + height - pixelFont.getCapHeight(), 0, BitmapFont.HAlignment.RIGHT);
     }
 
 }

@@ -141,7 +141,7 @@ public class App extends Game2D {
     }
 
     private void initializeManagers() {
-        this.waveManager = new WaveManager(world, clock, pathPack, WAVE_INTERVAL);
+        this.waveManager = new WaveManager(world, clock, pathPack, STRESS_TEST != null ? 0.01f :WAVE_INTERVAL);
         this.towerManager = new TowerManager(world, blueprint, player);
         this.creepManager = new CreepManager(world);
         this.invisibleManager = new InvisibleManager(world, clock, INVISIBLE_INTERVAL);
@@ -149,7 +149,7 @@ public class App extends Game2D {
     }
 
     private void initializeSystems() {
-        renderSpriteSystem = new RenderSpriteSystem(cameraHandler.getCamera());
+        renderSpriteSystem = new RenderSpriteSystem(cameraHandler.getCamera(),spriteBatch);
         renderTextSystem = new RenderTextSystem(cameraHandler.getCamera());
         renderHealthSystem = new RenderHealthSystem(cameraHandler.getCamera());
         renderDebugSystem = new RenderDebugSystem(cameraHandler);
@@ -219,39 +219,43 @@ public class App extends Game2D {
 
     private class DefaultRenderer implements Renderable {
 
-        private final SpriteBatch onScreenRasterRender;
         private final Renderable renderer;
         private final Camera camera;
 
         protected DefaultRenderer(Ui Ui, Camera camera) {
             this.camera = camera;
-            onScreenRasterRender = new SpriteBatch();
-            onScreenRasterRender.setShader(Shader.getShader("smoothText"));
-            onScreenRasterRender.enableBlending();
             renderer = Ui;
         }
 
         @Override
         public void render() {
+            spriteBatch.setProjectionMatrix(camera.combined);
+            spriteBatch.begin();
             drawMap(0);
             drawMap(1);
-            drawPath();
-            drawGrid();
             renderSpriteSystem.process();
+            spriteBatch.end();
             renderTextSystem.process();
             renderHealthSystem.process();
             renderRangeSystem.process();
             renderDebugSystem.process();
+            spriteBatch.setProjectionMatrix(camera.combined);
+            spriteBatch.begin();
             drawMap(2);
             drawMap(4);
             drawMap(3);
+            spriteBatch.end();
+
+            shapeRenderer.setProjectionMatrix(camera.combined);
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            drawPath();
+            drawGrid();
+            shapeRenderer.end();
             renderer.render();
         }
 
         private void drawGrid() {
             if (DEBUG != null) {
-                shapeRenderer.setProjectionMatrix(camera.combined);
-                shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
                 int height = tileMap.getHeight(0) * tileMap.getTileSize(0);
                 int width = tileMap.getWidth(0) * tileMap.getTileSize(0);
                 for (int i = 0; i < height; i++) {
@@ -260,13 +264,10 @@ public class App extends Game2D {
                 for (int i = 0; i < width; i++) {
                     shapeRenderer.line(i * WORLD_SCALE, 0, i * WORLD_SCALE, height * WORLD_SCALE);
                 }
-                shapeRenderer.end();
             }
         }
 
         private void drawMap(int level) {
-            spriteBatch.setProjectionMatrix(camera.combined);
-            spriteBatch.begin();
             for (int j = 0; j < tileMap.getWidth(level); j++) {
                 for (int k = 0; k < tileMap.getHeight(level); k++) {
                     int size = tileMap.getTileSize(level) * WORLD_SCALE;
@@ -277,13 +278,10 @@ public class App extends Game2D {
                 }
 
             }
-            spriteBatch.end();
         }
 
         private void drawPath() {
             if (DEBUG != null) {
-                shapeRenderer.setProjectionMatrix(camera.combined);
-                shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
                 for (Path path : pathPack.getPaths()) {
                     Vector3 lastPoint = null;
                     for (Vector3 point : path.getPath()) {
@@ -293,7 +291,6 @@ public class App extends Game2D {
                         lastPoint = point;
                     }
                 }
-                shapeRenderer.end();
             }
         }
 

@@ -24,8 +24,7 @@ class ElementIcon extends InteractiveBlock {
     public void render() {
         if (element != null) {
             spriteBatch.begin();
-            spriteBatch.draw(Assets.getTexture("gems/" + element.toString().toLowerCase(),
-                    player.getTreasure().getElement(element)), x, y, width, height);
+            spriteBatch.draw(Assets.getTexture("gems/" + element.toString().toLowerCase()), x, y, width, height);
             if (player.getFreeElements() == 0) {
                 spriteBatch.draw(Assets.getTexture("blocked"), x, y, width, height);
             }
