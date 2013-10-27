@@ -52,10 +52,10 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
 
         width = Gdx.graphics.getWidth();
 
-        float Height = (int) guiScale / 3 * 2.8f;
+        //float Height = (int) guiScale / 3 * 2.8f;
         int stripHeight = (int) (squareHeight / 3f * 2f);
         int offset = (int) squareHeight / 36;
-        float iconSize = (squareHeight - offset) / 3f;
+        //float iconSize = (squareHeight - offset) / 3f;
         float statusHeightBlock = statusHeight / 5;
         float statusOffSet = statusHeightBlock / 2;
         statusHeight = statusHeightBlock * 4;
