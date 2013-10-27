@@ -9,21 +9,22 @@ import com.badlogic.gdx.math.Rectangle;
 import com.xkings.pokemontd.App;
 import com.xkings.pokemontd.entity.tower.TowerType;
 
+import java.util.ArrayList;
+
 /**
  * User: Seda
  * Date: 24.10.13
  * Time: 20:42
  */
 
-public class TowerInfo extends CommonInfo {
+public class ShopInfo extends CommonInfo {
     protected final Ui ui;
     protected final SpriteBatch spriteBatch;
     protected final BitmapFont pixelFont;
     protected final DisplayText damage;
     protected final DisplayText speed;
     protected final DisplayText range;
-    protected final Button sell;
-    protected final Button buy;
+    private final ArrayList<Clickable> clickables;
     protected TowerType tower;
     private String damageCache;
     private String speedCache;
@@ -31,51 +32,27 @@ public class TowerInfo extends CommonInfo {
     private boolean sellCache;
     private boolean buyCache;
 
-    public TowerInfo(final Ui ui, Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
+    public ShopInfo(final Ui ui, Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
         super(ui, rectangle, shapeRenderer, spriteBatch);
         this.spriteBatch = spriteBatch;
         this.ui = ui;
         this.pixelFont = App.getAssets().getPixelFont();
         float offset = height / 5;
-        float offsetBlocks = height / 2;
+        clickables = new ArrayList<Clickable>();
         damage = new DisplayText(new Rectangle(x + offset * 5, y + offset * 3, offset * 2, offset), shapeRenderer,
                 spriteBatch);
         speed = new DisplayText(new Rectangle(x + offset * 5, y + offset * 2, offset * 2, offset), shapeRenderer,
                 spriteBatch);
         range = new DisplayText(new Rectangle(x + offset * 5, y + offset, offset * 2, offset), shapeRenderer,
                 spriteBatch);
-        sell = new Button(new Rectangle(x + width - offsetBlocks, y, offsetBlocks, offsetBlocks), shapeRenderer,
-                spriteBatch, BitmapFont.HAlignment.CENTER, new Color(Color.RED).mul(0.6f)) {
-            @Override
-            public void process(float x, float y) {
-                ui.getTowerManager().sellTower();
-            }
-        };
-        buy = new Button(new Rectangle(x + width - offsetBlocks, y + offsetBlocks, offsetBlocks, offsetBlocks),
-                shapeRenderer, spriteBatch, BitmapFont.HAlignment.CENTER, new Color(Color.GREEN).mul(0.6f)) {
-            @Override
-            public void process(float x, float y) {
-                ui.getTowerManager().getNewOrUpgrade();
-            }
-        };
-        ui.register(sell);
-        ui.register(buy);
-        clickables.add(sell);
-        clickables.add(buy);
     }
 
     @Override
     public void render() {
         App.getAssets().getPixelFont().setScale(height / 8 / 32);
-        this.sell.setEnabled(sellCache);
-        this.buy.setEnabled(buyCache);
-
-        super.render();
         this.damage.render(damageCache);
         this.speed.render(speedCache);
         this.range.render(rangeCache);
-        this.sell.render("sell");
-        this.buy.render("buy");
     }
 
     public void render(TextureAtlas.AtlasRegion region, String damage, String speed, String range, String name,
@@ -86,6 +63,14 @@ public class TowerInfo extends CommonInfo {
         this.sellCache = sell;
         this.buyCache = buy;
         render(region, name);
+        render();
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        for (Clickable clickable : clickables) {
+            clickable.setEnabled(enabled);
+        }
     }
 
     @Override

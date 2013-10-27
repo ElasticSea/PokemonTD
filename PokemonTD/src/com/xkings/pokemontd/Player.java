@@ -7,6 +7,7 @@ public class Player {
     private final Treasure treasure;
     private final Health health;
     private final Score score;
+    private int freeElements;
 
     public Player(int health, int gold, int water, int fire, int nature, int light, int darkness, int neutral,
                   int pure) {
@@ -23,9 +24,19 @@ public class Player {
         return health;
     }
 
-   public Score getScore(){
+    public Score getScore() {
         return score;
     }
 
+    public int getFreeElements() {
+        return freeElements;
+    }
 
+    public void addFreeElement() {
+        this.freeElements++;
+    }
+
+    public void subtractFreeElement() {
+        this.freeElements--;
+    }
 }

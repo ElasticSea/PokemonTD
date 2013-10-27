@@ -46,13 +46,14 @@ abstract class Button extends InteractiveBlock {
     @Override
     public void render() {
         if (color != Color.CLEAR) {
+            Color color = isEnabled() ? this.color : Color.DARK_GRAY;
             shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
             shapeRenderer.setColor(color);
             shapeRenderer.rect(x, y, width, height);
             shapeRenderer.end();
         }
-
         spriteBatch.begin();
+        font.setColor(isEnabled() ? Color.WHITE : Color.GRAY);
         font.drawMultiLine(spriteBatch, text, x, y + position.y, width, alignment);
         spriteBatch.end();
     }

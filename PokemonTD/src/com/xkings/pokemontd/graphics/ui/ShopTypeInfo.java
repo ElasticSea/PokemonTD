@@ -11,14 +11,15 @@ import com.xkings.pokemontd.entity.tower.TowerType;
  * Time: 20:08
  */
 
-public class ShopTypeInfo extends TowerInfo {
+public class ShopTypeInfo extends TowerTypeInfo {
 
     ShopTypeInfo(final Ui ui, Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
-            super(ui,rectangle,shapeRenderer,spriteBatch);
+        super(ui, rectangle, shapeRenderer, spriteBatch);
     }
 
-    public void render(TowerType tower){
-        render(tower.getTexture(),"","","",(tower.getName().toString()), false, true);
+
+    public void render(TowerType tower) {
+        render(tower.getTexture(), "", "", "", (tower.getName().toString()), false, true);
     }
 
 }

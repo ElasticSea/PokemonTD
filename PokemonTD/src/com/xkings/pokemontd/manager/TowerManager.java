@@ -193,12 +193,12 @@ public class TowerManager implements Clickable {
         player.getTreasure().subtract(towerType.getCost());
     }
 
-    public List<TowerType> getCurrentTree() {
+    public TowerName getCurrentTowerName() {
         // FIXME get hierarchy working
         TowerName towerName =
                 clickedTower != null ? clickedTower.getComponent(TowerTypeComponent.class).getTowerType().getName() :
                         null;
-        return TowerType.getHierarchy(towerName);
+        return towerName;
     }
 
     public boolean canAfford(TowerType towerType) {

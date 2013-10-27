@@ -206,7 +206,7 @@ public class App extends Game2D {
 
     private MapData createMap() {
         return new MapBuilder(3, 11, PATH_SIZE, MapBuilder.Direction.DOWN, 0.40f,
-                new Rectangle(1, 1, 1, 2)).addStraight().addRight().addStraight().addLeft().addStraight(
+                new Rectangle(1, 2, 1, 2)).addStraight().addRight().addStraight().addLeft().addStraight(
                 2).addLeft().addStraight().addLeft().addRight().addStraight().addRight().addStraight(
                 2).addRight().addStraight(3).addLeft().addStraight().addLeft().addStraight(5).addLeft().addStraight(
                 6).addLeft().addStraight().addRight().addStraight().build();

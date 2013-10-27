@@ -9,15 +9,13 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.xkings.core.graphics.Renderable;
 import com.xkings.pokemontd.Player;
-import com.xkings.pokemontd.entity.tower.TowerType;
+import com.xkings.pokemontd.entity.tower.TowerName;
 import com.xkings.pokemontd.manager.CreepManager;
 import com.xkings.pokemontd.manager.Interest;
 import com.xkings.pokemontd.manager.TowerManager;
 import com.xkings.pokemontd.manager.WaveManager;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Created by Tomas on 10/8/13.
@@ -29,15 +27,14 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
     private final TowerManager towerManager;
     private final ArrayList<InteractiveBlock> clickables;
     private final int width;
+    private final TowerIcons towerIcons;
+    private final ShopIcons shopIcons;
     private int height = 0;
-    private final List<TowerIcon> towerIcons;
     private final EntityInfo entityInfo;
     private final GuiBox statusBar;
     private final GuiBox nextWaveInfo;
     private final GuiBox status;
     private final CreepManager creepManager;
-    private InteractiveBlock towerTable;
-    private List<TowerType> lastHierarchy;
 
     public Ui(Player player, WaveManager waveManager, CreepManager creepManager, TowerManager towerManager,
               float guiScale, Interest interest) {
@@ -75,68 +72,37 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
 
         nextWaveInfo = new WaveInfo(new Rectangle(0, 0, squareHeight, squareHeight), offset, shapeRenderer, spriteBatch,
                 waveManager);
-        towerTable =
-                new GuiBox(new Rectangle(Gdx.graphics.getWidth() - squareHeight, 0, squareHeight, squareHeight), offset,
-                        shapeRenderer);
         entityInfo = new EntityInfo(this,
                 new Rectangle(squareHeight - offset, 0, width - (squareHeight - offset) * 2, stripHeight), offset,
                 shapeRenderer, spriteBatch);
 
-        clickables.add(towerTable);
         clickables.add(entityInfo);
         clickables.add(statusBar);
+
+
         clickables.add(nextWaveInfo);
         clickables.add(status);
 
-        towerIcons = createTowerIcons(iconSize, towerTable);
-
-        for (TowerIcon towerIcon : towerIcons) {
-            clickables.add(towerIcon);
-        }
-    }
-
-    private List<TowerIcon> createTowerIcons(float size, Rectangle rect) {
-        List<TowerIcon> towerIcons = new ArrayList<TowerIcon>();
-        for (int i = 0; i < 9; i++) {
-            towerIcons.add(createTowerIcon(rect, i, null, size));
-        }
-        return towerIcons;
-    }
-
-    private TowerIcon createTowerIcon(Rectangle rect, int position, TowerType tower, float size) {
-        int x = (int) (rect.x + position % 3 * size);
-        int y = (int) (rect.y + position / 3 * size);
-        TowerIcon towerIcon =
-                new TowerIcon(new Rectangle(x, rect.height - y - size, size, size), tower, spriteBatch, towerManager) {
-                    @Override
-                    public void process(float x, float y) {
-                        towerManager.setPickedTower(towerType);
-                    }
-                };
-
-        return towerIcon;
+        Rectangle pickTableRectangle =
+                new Rectangle(Gdx.graphics.getWidth() - squareHeight, 0, squareHeight, squareHeight);
+        towerIcons = new TowerIcons(pickTableRectangle, offset, shapeRenderer, spriteBatch, towerManager);
+        shopIcons = new ShopIcons(pickTableRectangle, offset, shapeRenderer, spriteBatch, player);
     }
 
 
     @Override
     public void render() {
-        if (lastHierarchy != towerManager.getCurrentTree()) {
-            lastHierarchy = towerManager.getCurrentTree();
-            update(lastHierarchy);
-        }
+        TowerName towerName = towerManager.getCurrentTowerName();
+        clickables.remove(towerIcons);
+        clickables.remove(shopIcons);
+            if (towerName != null &&towerName.equals(TowerName.Shop)) {
+                clickables.add(shopIcons);
+            } else {
+                towerIcons.update(towerName);
+                clickables.add(towerIcons);
+            }
         for (DisplayBlock displayBlock : clickables) {
             displayBlock.render();
-        }
-    }
-
-    private void update(List<TowerType> hierarchy) {
-        Iterator<TowerType> hierarchyIterator = hierarchy.iterator();
-        for (TowerIcon towerIcon : towerIcons) {
-            if (hierarchyIterator.hasNext()) {
-                towerIcon.towerType = hierarchyIterator.next();
-            } else {
-                towerIcon.towerType = null;
-            }
         }
     }
 
@@ -156,7 +122,6 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
     private boolean checkUiHit(float x, float y) {
         boolean condition = false;
         for (InteractiveBlock interactiveBlock : clickables) {
-            System.out.println(interactiveBlock);
             if (interactiveBlock.hit(x, Gdx.graphics.getHeight() - y)) {
                 condition = true;
             }

@@ -12,25 +12,26 @@ abstract class TowerIcon extends InteractiveBlock {
 
     protected TowerType towerType;
     private final SpriteBatch spriteBatch;
-    private final TowerManager towerManager;
+    private TowerManager towerManager;
 
-    TowerIcon(Rectangle rectangle, TowerType towerType, SpriteBatch spriteBatch, TowerManager towerManager) {
+    TowerIcon(Rectangle rectangle, SpriteBatch spriteBatch) {
         super(rectangle);
-        this.towerType = towerType;
         this.spriteBatch = spriteBatch;
-        this.towerManager = towerManager;
     }
 
     @Override
     public void render() {
-        if (towerType != null) {
+        if (towerType != null && towerManager != null) {
             spriteBatch.begin();
             spriteBatch.draw(towerType.getTexture(), x, y, width, height);
             if (!towerManager.canAfford(towerType)) {
-                spriteBatch.draw(towerType.getBlockedTexture(), x, y, width,
-                        height);
+                spriteBatch.draw(towerType.getBlockedTexture(), x, y, width, height);
             }
             spriteBatch.end();
         }
+    }
+
+    public void setTowerManager(TowerManager towerManager) {
+        this.towerManager = towerManager;
     }
 }

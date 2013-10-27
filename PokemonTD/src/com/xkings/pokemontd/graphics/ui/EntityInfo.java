@@ -9,6 +9,8 @@ import com.xkings.pokemontd.App;
 import com.xkings.pokemontd.component.HealthComponent;
 import com.xkings.pokemontd.component.NameComponent;
 import com.xkings.pokemontd.component.SpriteComponent;
+import com.xkings.pokemontd.component.TowerTypeComponent;
+import com.xkings.pokemontd.entity.tower.TowerName;
 import com.xkings.pokemontd.entity.tower.TowerType;
 
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ class EntityInfo extends GuiBox {
     private final TowerEntityInfo towerEntityInfo;
     private final ArrayList<Clickable> clickables;
     private final ShopEntityInfo shopEntityInfo;
+    private final ShopTypeInfo shopTypeInfo;
     private CreepEntityInfo creepEntityInfo;
     private Entity entity;
     private final BitmapFont pixelFont;
@@ -33,17 +36,21 @@ class EntityInfo extends GuiBox {
         super(rectangle, offset, shapeRenderer);
         this.ui = ui;
         this.spriteBatch = spriteBatch;
-        towerTypeInfo = new TowerTypeInfo(ui, offsetRectange, shapeRenderer, spriteBatch);
 
         this.pixelFont = App.getAssets().getPixelFont();
+
+        towerTypeInfo = new TowerTypeInfo(ui, offsetRectange, shapeRenderer, spriteBatch);
         towerEntityInfo = new TowerEntityInfo(ui, offsetRectange, shapeRenderer, spriteBatch);
         creepEntityInfo = new CreepEntityInfo(ui, offsetRectange, shapeRenderer, spriteBatch);
+        shopTypeInfo = new ShopTypeInfo(ui, offsetRectange, shapeRenderer, spriteBatch);
         shopEntityInfo = new ShopEntityInfo(ui, offsetRectange, shapeRenderer, spriteBatch);
 
         clickables = new ArrayList<Clickable>();
         clickables.add(towerTypeInfo);
         clickables.add(towerEntityInfo);
         clickables.add(creepEntityInfo);
+        clickables.add(shopTypeInfo);
+        clickables.add(shopEntityInfo);
     }
 
     @Override
@@ -52,13 +59,23 @@ class EntityInfo extends GuiBox {
         disableClickables();
         TowerType towerType = ui.getTowerManager().getSelectedTowerType();
         if (towerType != null) {
-            towerTypeInfo.render(towerType);
+
+            if (towerType.getName().equals(TowerName.Shop)) {
+                shopTypeInfo.render(towerType);
+            } else {
+                towerTypeInfo.render(towerType);
+            }
             return;
         }
 
         entity = ui.getTowerManager().getClicked();
         if (entity != null) {
-            towerEntityInfo.render(entity);
+
+            if (entity.getComponent(TowerTypeComponent.class).getTowerType().getName().equals(TowerName.Shop)) {
+                shopEntityInfo.render(entity);
+            } else {
+                towerEntityInfo.render(entity);
+            }
             return;
         }
 
@@ -88,7 +105,6 @@ class EntityInfo extends GuiBox {
         if (spriteComponent != null && nameComponent != null && healthComponent != null) {
         }
     }
-
 
 
 }
