@@ -23,7 +23,7 @@ import static java.lang.Math.PI;
 public class MapBuilder {
 
     public static final double QUADRANT = PI / 2.0;
-    public static final int SEGMENTS = 9;
+    public static final int SEGMENTS = 20;
     public static final int PATHS = 11;
     public static final float DEFAULT_PATH_OFFSET = 1 / 4f;
     public static final float SEGMENT = (float) (QUADRANT / SEGMENTS);
