@@ -139,6 +139,10 @@ public class Treasure {
         return this.getElement(element) == limit.getElement(element);
     }
 
+    public static Treasure fromNone() {
+        return new Treasure(0);
+    }
+
     public static Treasure fromGold(int count) {
         return new Treasure(count, 0, 0, 0, 0, 0, 0, 0);
     }

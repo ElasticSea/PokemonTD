@@ -39,28 +39,28 @@ public class TowerTypeBuilder {
     private List<TowerType> getData(float scale) {
         List<Specs> specs = new ArrayList<Specs>();
         // Shop
-        specs.add(new Specs(TowerName.Shop, 0, 0, 0, null, new Treasure(0)));
+        specs.add(new Specs(TowerName.Shop, 0, 0, 0, null, Treasure.fromNone()));
         /// ######################  PURES
         // Basic
         specs.add(new Specs(TowerName.Needle, 1, NORMAL_SPEED, N_RANGE, ProjectileComponent.getNormal(scale),
-                new Treasure(0)));
+                Treasure.fromNone()));
         specs.add(new Specs(TowerName.Pinch, 2, NORMAL_SPEED, N_RANGE, ProjectileComponent.getNormal(scale),
-                new Treasure(0)));
+                Treasure.fromNone()));
         specs.add(new Specs(TowerName.Sting, 3, NORMAL_SPEED, N_RANGE, ProjectileComponent.getNormal(scale),
-                new Treasure(0)));
+                Treasure.fromNone()));
         specs.add(new Specs(TowerName.Scratch, 1, SLOW_SPEED, N_RANGE, ProjectileComponent.getSplash(scale, 2),
-                new Treasure(0)));
+                Treasure.fromNone()));
         specs.add(new Specs(TowerName.Bite, 2, SLOW_SPEED, N_RANGE, ProjectileComponent.getSplash(scale, 2),
-                new Treasure(0)));
+                Treasure.fromNone()));
         specs.add(new Specs(TowerName.Smash, 3, SLOW_SPEED, N_RANGE, ProjectileComponent.getSplash(scale, 2),
-                new Treasure(0)));
+                Treasure.fromNone()));
         // blue
         specs.add(new Specs(TowerName.Splash, 4, NORMAL_SPEED, N_RANGE, ProjectileComponent.getNormal(scale),
-                new Treasure(0, 1, 0, 0, 0, 0, 0, 0)));
+                Treasure.fromWater(1)));
         specs.add(new Specs(TowerName.Wave, 5, NORMAL_SPEED, N_RANGE, ProjectileComponent.getBubble(scale),
-                new Treasure(0, 2, 0, 0, 0, 0, 0, 0)));
+                Treasure.fromWater(2)));
         specs.add(new Specs(TowerName.Tsunami, 10, NORMAL_SPEED, N_RANGE, ProjectileComponent.getBubble(scale),
-                new Treasure(0, 3, 0, 0, 0, 0, 0, 0)));
+                Treasure.fromWater(3)));
         //red
         specs.add(new Specs(TowerName.Sparkle, 4, NORMAL_SPEED, S_RANGE, ProjectileComponent.getFire(scale),
                 new Treasure(0, 0, 1, 0, 0, 0, 0, 0)));
