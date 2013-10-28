@@ -34,6 +34,16 @@ public class TowerInfo extends CommonInfo {
     private boolean buyCache;
     private Treasure costCache;
 
+    /**
+     * public constuctor makes 3 text rectangles uses class DisplayText (damage,range,speed).
+     * Makes two anonymous classes  for buttons buy and sell these anonymous classes use public method process which
+     * allows sell or upgrade tower and because class TowerInfo extends class CommonInfo (which implements Clickable)
+     * there are clickables.add(buy) and clickables.add(sell) which makes function buy and sell.
+     * @param ui
+     * @param rectangle
+     * @param shapeRenderer
+     * @param spriteBatch
+     */
     public TowerInfo(final Ui ui, Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
                      BitmapFont font) {
         super(ui, rectangle, shapeRenderer, spriteBatch, font);
@@ -71,6 +81,9 @@ public class TowerInfo extends CommonInfo {
         clickables.add(buy);
     }
 
+    /**
+     *  this method overrides method render in class CommonInfo and setted buttons sell and buy
+     */
     @Override
     public void render() {
         App.getAssets().getPixelFont().setScale(height / 8 / 32);
