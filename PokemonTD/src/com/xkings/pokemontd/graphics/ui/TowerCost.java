@@ -45,8 +45,6 @@ public class TowerCost extends InteractiveBlock {
     public void render(Treasure cost) {
         this.cost = cost;
         caches = new ArrayList<costValueCache>();
-
-
         if (cost.getGold() > 0) {
             caches.add(new costValueCache(Color.WHITE, "Cost:"));
             caches.add(new costValueCache(Color.YELLOW, "" + cost.getGold()));

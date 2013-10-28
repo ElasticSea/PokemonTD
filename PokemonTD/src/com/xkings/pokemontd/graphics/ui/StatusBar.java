@@ -1,8 +1,6 @@
 package com.xkings.pokemontd.graphics.ui;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.xkings.pokemontd.Player;
 
@@ -14,22 +12,22 @@ public class StatusBar extends GuiBox {
     private final Player player;
     private final DisplayText scoreTitleText;
     private final DisplayText scoreText;
-    private final MusicUi musicUi;
+    private final MenuUi menuUi;
 
-    StatusBar(Player player, Rectangle rectangle, int offset, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
-              float squareHeight, BitmapFont font) {
-        super(rectangle, offset, shapeRenderer);
-        this.player = player;
+    StatusBar(Ui ui, Rectangle rectangle, float squareHeight, BitmapFont font) {
+        super(ui, rectangle);
+        this.player = ui.getPlayer();
         Rectangle rect = new Rectangle(x + width - squareHeight, offsetRectange.y, squareHeight - 3 * offset,
                 offsetRectange.height);
-        musicUi = new MusicUi(x,y,height*3,height);
-        scoreTitleText = new DisplayText(rect, shapeRenderer, spriteBatch, font, BitmapFont.HAlignment.LEFT);
-        scoreText = new DisplayText(rect, shapeRenderer, spriteBatch, font, BitmapFont.HAlignment.RIGHT);
+        menuUi = new MenuUi(ui, x, y - height * 0.5f, height * 3, height * 1.5f);
+        scoreTitleText = new DisplayText(ui, rect, font, BitmapFont.HAlignment.LEFT);
+        scoreText = new DisplayText(ui, rect, font, BitmapFont.HAlignment.RIGHT);
     }
 
     @Override
     public void render() {
         super.render();
+        menuUi.render();
         scoreTitleText.render("Score");
         scoreText.render(player.getScore().toString());
     }

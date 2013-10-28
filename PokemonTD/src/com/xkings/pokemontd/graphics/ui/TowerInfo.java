@@ -39,6 +39,7 @@ public class TowerInfo extends CommonInfo {
      * Makes two anonymous classes  for buttons buy and sell these anonymous classes use public method process which
      * allows sell or upgrade tower and because class TowerInfo extends class CommonInfo (which implements Clickable)
      * there are clickables.add(buy) and clickables.add(sell) which makes function buy and sell.
+     *
      * @param ui
      * @param rectangle
      * @param shapeRenderer
@@ -53,23 +54,20 @@ public class TowerInfo extends CommonInfo {
         float offset = height / 5;
         float offsetBlocks = height / 2;
         float towerCostOffset = offset / 3f;
-        cost = new TowerCost(new Rectangle(x + offset, y, width - offset * 2, offset), shapeRenderer,
-                spriteBatch, font);
-        damage = new DisplayText(new Rectangle(x + offset * 5, y + offset * 3, offset * 2, offset), shapeRenderer,
-                spriteBatch, font);
-        speed = new DisplayText(new Rectangle(x + offset * 5, y + offset * 2, offset * 2, offset), shapeRenderer,
-                spriteBatch, font);
-        range = new DisplayText(new Rectangle(x + offset * 5, y + offset, offset, offset), shapeRenderer, spriteBatch,
+        cost = new TowerCost(new Rectangle(x + offset, y, width - offset * 2, offset), shapeRenderer, spriteBatch,
                 font);
-        sell = new Button(new Rectangle(x + width - offsetBlocks, y, offsetBlocks, offsetBlocks), shapeRenderer,
-                spriteBatch, font, BitmapFont.HAlignment.CENTER, new Color(Color.RED).mul(0.6f)) {
+        damage = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset * 3, offset * 2, offset), font);
+        speed = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset * 2, offset * 2, offset), font);
+        range = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset, offset, offset), font);
+        sell = new Button(ui, new Rectangle(x + width - offsetBlocks, y, offsetBlocks, offsetBlocks), font,
+                BitmapFont.HAlignment.CENTER, new Color(Color.RED).mul(0.6f)) {
             @Override
             public void process(float x, float y) {
                 ui.getTowerManager().sellTower();
             }
         };
-        buy = new Button(new Rectangle(x + width - offsetBlocks, y + offsetBlocks, offsetBlocks, offsetBlocks),
-                shapeRenderer, spriteBatch, font, BitmapFont.HAlignment.CENTER, new Color(Color.GREEN).mul(0.6f)) {
+        buy = new Button(ui, new Rectangle(x + width - offsetBlocks, y + offsetBlocks, offsetBlocks, offsetBlocks),
+                font, BitmapFont.HAlignment.CENTER, new Color(Color.GREEN).mul(0.6f)) {
             @Override
             public void process(float x, float y) {
                 ui.getTowerManager().getNewOrUpgrade();
@@ -82,7 +80,7 @@ public class TowerInfo extends CommonInfo {
     }
 
     /**
-     *  this method overrides method render in class CommonInfo and setted buttons sell and buy
+     * this method overrides method render in class CommonInfo and setted buttons sell and buy
      */
     @Override
     public void render() {

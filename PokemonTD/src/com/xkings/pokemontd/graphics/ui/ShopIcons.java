@@ -17,9 +17,9 @@ public class ShopIcons extends PickTable<ElementIcon> {
     private final Player player;
     private List<TowerType> lastHierarchy;
 
-    ShopIcons(Rectangle rectangle, int offset, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch, Player player) {
-        super(rectangle, offset, shapeRenderer, spriteBatch);
-        this.player = player;
+    ShopIcons(Ui ui,Rectangle rectangle) {
+        super(ui, rectangle);
+        this.player = ui.getPlayer();
         for (int i = 0; i < pickIcons.size(); i++) {
             ElementIcon elementIcon = pickIcons.get(i);
             elementIcon.setPlayer(player);

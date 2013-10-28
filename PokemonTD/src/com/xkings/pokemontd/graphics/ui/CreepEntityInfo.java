@@ -32,10 +32,8 @@ public class CreepEntityInfo extends CommonInfo {
 
         float offset = height / 5;
 
-        health = new DisplayText(new Rectangle(x + offset * 5, y + offset * 3, offset * 2, offset), shapeRenderer,
-                spriteBatch, font);
-        type = new DisplayText(new Rectangle(x + offset * 5, y + offset * 2, offset * 2, offset), shapeRenderer,
-                spriteBatch, font);
+        health = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset * 3, offset * 2, offset), font);
+        type = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset * 2, offset * 2, offset), font);
     }
 
     @Override

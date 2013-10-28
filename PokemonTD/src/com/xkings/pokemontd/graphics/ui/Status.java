@@ -1,8 +1,6 @@
 package com.xkings.pokemontd.graphics.ui;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.xkings.core.main.Assets;
@@ -18,7 +16,6 @@ import com.xkings.pokemontd.manager.WaveManager;
  */
 
 public class Status extends GuiBox {
-    private final SpriteBatch spriteBatch;
     private final DisplayText interestText;
     private final DisplayText waveText;
     private final DisplayText livesText;
@@ -26,30 +23,27 @@ public class Status extends GuiBox {
     private final DisplayText waveTimeText;
     private final DisplayText interestTimeText;
     private final DisplayPicture livesPicture;
-    private final ShapeRenderer shapeRenderer;
     private final DisplayPicture moneyPicture;
     private final WaveManager waveManager;
     private final Interest interest;
 
     private final Player player;
     private final BitmapFont font;
+    private final Vector2 textSize;
 
-    Status(Player player, Rectangle rectangle, int offset, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
-           WaveManager waveManager, Interest interest, BitmapFont font) {
-        super(rectangle, offset, shapeRenderer);
+    Status(Ui ui, Rectangle rectangle, WaveManager waveManager, Interest interest, BitmapFont font) {
+        super(ui, rectangle);
 
         offsetRectange.x += offset;
         offsetRectange.width -= offset * 2;
 
-        this.player = player;
-        this.shapeRenderer = shapeRenderer;
-        this.spriteBatch = spriteBatch;
+        this.player = ui.getPlayer();
         this.waveManager = waveManager;
         this.interest = interest;
         this.font = font;
 
         Vector2 textFieldCount = new Vector2(2, 4);
-        Vector2 textSize = new Vector2(offsetRectange.width / textFieldCount.x, offsetRectange.
+        textSize = new Vector2(offsetRectange.width / textFieldCount.x, offsetRectange.
                 height / textFieldCount.y);
 
         interestText = createDisplayBlock(0, 0, textSize, BitmapFont.HAlignment.LEFT);
@@ -64,16 +58,16 @@ public class Status extends GuiBox {
     }
 
     private DisplayText createDisplayBlock(float x, float y, Vector2 size, BitmapFont.HAlignment alignment) {
-        return new DisplayText(
-                new Rectangle(offsetRectange.x + size.x * x, offsetRectange.y + size.y * y, size.x, size.y),
-                shapeRenderer, spriteBatch, font, alignment);
+        return new DisplayText(ui,
+                new Rectangle(offsetRectange.x + size.x * x, offsetRectange.y + size.y * y, size.x, size.y), font,
+                alignment);
     }
 
     private DisplayPicture createDisplayPicture(float x, float y, Vector2 size, BitmapFont.HAlignment alignment) {
         float shorterSize = Math.min(size.x, size.y);
         float xPosition = alignment.equals(BitmapFont.HAlignment.LEFT) ? size.x * x : size.x * (x + 1) - shorterSize;
-        return new DisplayPicture(offsetRectange.x + xPosition, offsetRectange.y + size.y * y, shorterSize, shorterSize,
-                shapeRenderer, spriteBatch);
+        return new DisplayPicture(ui, offsetRectange.x + xPosition, offsetRectange.y + size.y * y, shorterSize,
+                shorterSize);
     }
 
     @Override
@@ -84,8 +78,8 @@ public class Status extends GuiBox {
         waveText.render("Wave");
         waveTimeText.render(String.valueOf(waveManager.getRemainingTime()));
         livesText.render(String.valueOf(player.getHealth().getCurrentHealth()));
-        livesPicture.render(Assets.getTexture("hearth"));
+        livesPicture.render(Assets.getTexture("hearth"), textSize.y * 0.7f, true);
         moneyText.render(String.valueOf(player.getTreasure().getGold()));
-        moneyPicture.render(Assets.getTexture("coin"));
+        moneyPicture.render(Assets.getTexture("coin"), textSize.y * 0.7f, true);
     }
 }

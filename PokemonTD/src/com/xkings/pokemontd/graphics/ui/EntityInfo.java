@@ -35,7 +35,7 @@ class EntityInfo extends GuiBox {
 
     EntityInfo(final Ui ui, Rectangle rectangle, int offset, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
                BitmapFont font, Player player) {
-        super(rectangle, offset, shapeRenderer);
+        super(ui,rectangle);
         this.ui = ui;
         this.spriteBatch = spriteBatch;
 

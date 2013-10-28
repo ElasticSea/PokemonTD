@@ -1,6 +1,7 @@
 package com.xkings.pokemontd.graphics.ui;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 
@@ -14,14 +15,18 @@ class GuiBox extends InteractiveBlock {
     public static final Color darkerColor = new Color(darker, darker, darker, 1f);
     public static final Color lighterColor = new Color(lighter, lighter, lighter, 1f);
     protected final int offset;
-    private final ShapeRenderer shapeRenderer;
+    protected final ShapeRenderer shapeRenderer;
     protected final Rectangle offsetRectange;
+    protected final SpriteBatch spriteBatch;
+    protected final Ui ui;
 
-    GuiBox(Rectangle rectangle, int offset, ShapeRenderer shapeRenderer) {
+    GuiBox(Ui ui,Rectangle rectangle) {
         super(rectangle);
+        this.ui = ui;
+        this.offset = ui.getOffset();
+        this.shapeRenderer = ui.getShapeRenderer();
+        this.spriteBatch = ui.getSpriteBatch();
         this.offsetRectange = new Rectangle(x + offset, y + offset, width - offset * 2, height - offset * 2);
-        this.offset = offset;
-        this.shapeRenderer = shapeRenderer;
     }
 
     @Override

@@ -1,7 +1,5 @@
 package com.xkings.pokemontd.graphics.ui;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -13,12 +11,10 @@ import java.util.List;
  */
 public abstract class PickTable<E extends InteractiveBlock> extends GuiBox {
 
-    protected final SpriteBatch spriteBatch;
     protected final List<E> pickIcons;
 
-    PickTable(Rectangle rectangle, int offset, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
-        super(rectangle, offset, shapeRenderer);
-        this.spriteBatch = spriteBatch;
+    PickTable(Ui ui, Rectangle rectangle) {
+        super(ui, rectangle);
         pickIcons = createPickIcons(3);
     }
 
@@ -30,7 +26,7 @@ public abstract class PickTable<E extends InteractiveBlock> extends GuiBox {
         return pickIcons;
     }
 
-    private E createPickIcon(int position,  int count) {
+    private E createPickIcon(int position, int count) {
         Vector2 size = new Vector2(width / count, height / count);
         int x = (int) (this.x + position % count * size.x);
         int y = (int) (this.y + position / count * size.y);
@@ -42,7 +38,7 @@ public abstract class PickTable<E extends InteractiveBlock> extends GuiBox {
     @Override
     public boolean hit(float x, float y) {
         for (Clickable clickable : pickIcons) {
-            if(clickable.hit(x, y)){
+            if (clickable.hit(x, y)) {
                 return true;
             }
         }

@@ -20,20 +20,20 @@ abstract class Button extends InteractiveBlock {
     private final ShapeRenderer shapeRenderer;
     private final Color color;
 
-    protected Button(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch, BitmapFont font) {
-        this(rectangle, shapeRenderer, spriteBatch, font, BitmapFont.HAlignment.LEFT, Color.CLEAR);
+    protected Button(Ui ui,Rectangle rectangle, BitmapFont font) {
+        this(ui,rectangle,  font, BitmapFont.HAlignment.LEFT, Color.CLEAR);
     }
 
-    protected Button(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch, BitmapFont font,
+    protected Button(Ui ui,Rectangle rectangle,  BitmapFont font,
                      BitmapFont.HAlignment alignment) {
-        this(rectangle, shapeRenderer, spriteBatch, font, alignment, Color.CLEAR);
+        this(ui,rectangle,  font, alignment, Color.CLEAR);
     }
 
-    public Button(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch, BitmapFont font,
+    public Button(Ui ui,Rectangle rectangle, BitmapFont font,
                   BitmapFont.HAlignment alignment, Color color) {
         super(rectangle);
-        this.shapeRenderer = shapeRenderer;
-        this.spriteBatch = spriteBatch;
+        this.shapeRenderer = ui.getShapeRenderer();
+        this.spriteBatch = ui.getSpriteBatch();
         this.text = new String();
         this.color = color;
         this.font = font;
@@ -56,7 +56,6 @@ abstract class Button extends InteractiveBlock {
             shapeRenderer.end();
         }
         spriteBatch.begin();
-        System.out.println(spriteBatch);
         font.setColor(isEnabled() ? Color.WHITE : Color.GRAY);
         font.drawMultiLine(spriteBatch, text, x, y + position.y, width, alignment);
         spriteBatch.end();

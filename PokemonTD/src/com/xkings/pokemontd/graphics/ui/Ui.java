@@ -27,7 +27,7 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
     private final ShapeRenderer shapeRenderer;
     private final SpriteBatch spriteBatch;
     private final TowerManager towerManager;
-    private final ArrayList<InteractiveBlock> clickables;
+    private static final ArrayList<InteractiveBlock> clickables = new ArrayList<InteractiveBlock>();
     private final int width;
     private final TowerIcons towerIcons;
     private final ShopIcons shopIcons;
@@ -38,14 +38,16 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
     private final GuiBox nextWaveInfo;
     private final GuiBox status;
     private final CreepManager creepManager;
+    private int offset;
+    private Player player;
 
     public Ui(Player player, WaveManager waveManager, CreepManager creepManager, TowerManager towerManager,
               float guiScale, Interest interest) {
+        this.player = player;
         this.creepManager = creepManager;
         this.towerManager = towerManager;
         shapeRenderer = new ShapeRenderer();
         spriteBatch = new SpriteBatch();
-        clickables = new ArrayList<InteractiveBlock>();
         height = Gdx.graphics.getHeight();
         float squareHeight = MathUtils.clamp(Gdx.graphics.getDensity() * 160 * 2, height / 4, height / 3.3f);
         float statusBarHeight = squareHeight / 5;
@@ -54,31 +56,31 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         width = Gdx.graphics.getWidth();
 
         int stripHeight = (int) (squareHeight / 3f * 2f);
-        int offset = (int) squareHeight / 36;
+        offset = (int) squareHeight / 36;
         float statusHeightBlock = statusHeight / 5;
         float statusOffSet = statusHeightBlock / 2;
         statusHeight = statusHeightBlock * 4;
 
         Rectangle pickTableRectangle =
                 new Rectangle(Gdx.graphics.getWidth() - squareHeight, 0, squareHeight, squareHeight);
-        towerIcons = new TowerIcons(pickTableRectangle, offset, shapeRenderer, spriteBatch, towerManager);
-        shopIcons = new ShopIcons(pickTableRectangle, offset, shapeRenderer, spriteBatch, player);
+        towerIcons = new TowerIcons(this, pickTableRectangle, towerManager);
+        shopIcons = new ShopIcons(this, pickTableRectangle);
 
         Vector2 statusBarDimensions = new Vector2(width, statusBarHeight);
         Vector2 statusDimensions = new Vector2(squareHeight, statusHeight);
 
         this.font = Assets.createFont("pixelFont");
-        font.setScale(statusHeight / 300f);
-        statusBar = new StatusBar(player,
+        System.out.println(statusHeight);
+        font.setScale(Math.round(statusHeight / 60));
+        statusBar = new StatusBar(this,
                 new Rectangle(0, this.height - statusBarDimensions.y, statusBarDimensions.x, statusBarDimensions.y),
-                offset, shapeRenderer, spriteBatch, shopIcons.offsetRectange.width, font);
-        status = new Status(player, new Rectangle(width - statusDimensions.x,
+                shopIcons.offsetRectange.width, font);
+        status = new Status(this, new Rectangle(width - statusDimensions.x,
                 this.height - statusBar.height - statusOffSet - statusDimensions.y, statusDimensions.x,
-                statusDimensions.y), offset, shapeRenderer, spriteBatch, waveManager, interest, font);
+                statusDimensions.y), waveManager, interest, font);
 
 
-        nextWaveInfo = new WaveInfo(new Rectangle(0, 0, squareHeight, squareHeight), offset, shapeRenderer, spriteBatch,
-                waveManager, font);
+        nextWaveInfo = new WaveInfo(this, new Rectangle(0, 0, squareHeight, squareHeight), waveManager, font);
         entityInfo = new EntityInfo(this,
                 new Rectangle(squareHeight - offset, 0, width - (squareHeight - offset) * 2, stripHeight), offset,
                 shapeRenderer, spriteBatch, font, player);
@@ -122,7 +124,7 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         return condition;
     }
 
-    public void register(InteractiveBlock button) {
+    public static void register(InteractiveBlock button) {
         clickables.add(button);
     }
 
@@ -132,5 +134,21 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
 
     public TowerManager getTowerManager() {
         return towerManager;
+    }
+
+    public ShapeRenderer getShapeRenderer() {
+        return shapeRenderer;
+    }
+
+    public int getOffset() {
+        return offset;
+    }
+
+    public SpriteBatch getSpriteBatch() {
+        return spriteBatch;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }

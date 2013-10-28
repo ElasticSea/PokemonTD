@@ -40,12 +40,9 @@ public class ShopInfo extends CommonInfo {
         float offset = height / 5;
         clickables = new ArrayList<Clickable>();
         float scale = height / 96f;
-        damage = new DisplayText(new Rectangle(x + offset * 5, y + offset * 3, offset * 2, offset), shapeRenderer,
-                spriteBatch, font);
-        speed = new DisplayText(new Rectangle(x + offset * 5, y + offset * 2, offset * 2, offset), shapeRenderer,
-                spriteBatch, font);
-        range = new DisplayText(new Rectangle(x + offset * 5, y + offset, offset * 2, offset), shapeRenderer,
-                spriteBatch, font);
+        damage = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset * 3, offset * 2, offset), font);
+        speed = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset * 2, offset * 2, offset), font);
+        range = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset, offset * 2, offset), font);
     }
 
     @Override

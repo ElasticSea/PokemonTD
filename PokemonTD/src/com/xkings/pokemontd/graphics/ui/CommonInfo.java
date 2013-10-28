@@ -34,10 +34,8 @@ public class CommonInfo extends InteractiveBlock {
         this.ui = ui;
         this.pixelFont = App.getAssets().getPixelFont();
         float offset = height / 5;
-        picture = new DisplayPicture(x + offset, y + offset, height - offset * 2, height - offset * 2, shapeRenderer,
-                spriteBatch, Color.DARK_GRAY);
-        name = new DisplayText(new Rectangle(x + offset, y + offset, height - offset * 2, offset), shapeRenderer,
-                spriteBatch, font, BitmapFont.HAlignment.CENTER);
+        picture = new DisplayPicture(ui,x + offset, y + offset, height - offset * 2, height - offset * 2);
+        name = new DisplayText(ui,new Rectangle(x + offset, y + offset, height - offset * 2, offset), font, BitmapFont.HAlignment.CENTER);
     }
 
     @Override
