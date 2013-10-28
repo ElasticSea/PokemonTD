@@ -40,5 +40,4 @@ public class TowerEntityInfo extends TowerInfo {
 
     }
 
-
 }

@@ -18,7 +18,6 @@ public class TowerIcons extends PickTable<TowerIcon> {
     private final TowerManager towerManager;
     private List<TowerType> lastHierarchy;
 
-
     TowerIcons(Rectangle rectangle, int offset, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
                TowerManager towerManager) {
         super(rectangle, offset, shapeRenderer, spriteBatch);

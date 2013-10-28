@@ -100,10 +100,10 @@ public class MapBuilder {
 
     private final List<BuilderCommand> commands = new LinkedList<BuilderCommand>();
 
-    public MapBuilder(int x, int y, int pathSize, Direction direction) {
+   /* public MapBuilder(int x, int y, int pathSize, Direction direction) {
         this(x, y, pathSize, direction, DEFAULT_PATH_OFFSET,
                 new Rectangle(DEFAULT_MAP_OFFSET, DEFAULT_MAP_OFFSET, DEFAULT_MAP_OFFSET, DEFAULT_MAP_OFFSET));
-    }
+    } */
 
     public MapBuilder(int x, int y, int pathSize, Direction direction, float pathOffset, Rectangle mapOffset) {
         this.position = new Vector3(x, y, 0);

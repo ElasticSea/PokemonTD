@@ -44,18 +44,14 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         spriteBatch = new SpriteBatch();
         clickables = new ArrayList<InteractiveBlock>();
         height = Gdx.graphics.getHeight();
-        float heightInInch = height / Gdx.graphics.getDensity() * 160 * 2;
         float squareHeight = MathUtils.clamp(Gdx.graphics.getDensity() * 160 * 2, height / 4, height / 3);
         float statusBarHeight = squareHeight / 5;
         float statusHeight = statusBarHeight * 4;
 
-
         width = Gdx.graphics.getWidth();
 
-        float Height = (int) guiScale / 3 * 2.8f;
         int stripHeight = (int) (squareHeight / 3f * 2f);
         int offset = (int) squareHeight / 36;
-        float iconSize = (squareHeight - offset) / 3f;
         float statusHeightBlock = statusHeight / 5;
         float statusOffSet = statusHeightBlock / 2;
         statusHeight = statusHeightBlock * 4;
@@ -89,7 +85,6 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         clickables.add(status);
     }
 
-
     @Override
     public void render() {
         TowerName towerName = towerManager.getCurrentTowerName();
@@ -106,18 +101,10 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         }
     }
 
-
     @Override
     public boolean tap(float x, float y, int count, int button) {
         return checkUiHit(x, y);
     }
-
-   /* @Override
-    public boolean pan(float x, float y, float deltaX, float deltaY) {
-        // TODO: Event if its a hit, other listener remembers pressed finger/button and as soon as it leaves UI hit
-        // TODO: area, the camera will jump the distance between first press and current release.
-        return checkUiHit(x, y);
-    }      */
 
     private boolean checkUiHit(float x, float y) {
         boolean condition = false;

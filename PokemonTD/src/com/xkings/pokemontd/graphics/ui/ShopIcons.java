@@ -7,7 +7,6 @@ import com.xkings.pokemontd.Element;
 import com.xkings.pokemontd.Player;
 import com.xkings.pokemontd.entity.tower.TowerType;
 
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -17,7 +16,6 @@ public class ShopIcons extends PickTable<ElementIcon> {
 
     private final Player player;
     private List<TowerType> lastHierarchy;
-
 
     ShopIcons(Rectangle rectangle, int offset, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch, Player player) {
         super(rectangle, offset, shapeRenderer, spriteBatch);

@@ -18,7 +18,6 @@ public class ShopTypeInfo extends TowerTypeInfo {
         super(ui, rectangle, shapeRenderer, spriteBatch);
     }
 
-
     public void render(TowerType tower) {
         render(tower.getTexture(), "", "", "",new Treasure(0), (tower.getName().toString()), false, true);
     }

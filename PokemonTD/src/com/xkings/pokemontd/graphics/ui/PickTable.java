@@ -4,11 +4,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.xkings.pokemontd.entity.tower.TowerType;
-import com.xkings.pokemontd.manager.TowerManager;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -51,7 +48,6 @@ public abstract class PickTable<E extends InteractiveBlock> extends GuiBox {
         }
         return false;
     }
-
 
     @Override
     public void render() {

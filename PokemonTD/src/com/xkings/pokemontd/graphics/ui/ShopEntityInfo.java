@@ -19,7 +19,6 @@ public class ShopEntityInfo extends TowerTypeInfo {
         super(ui, rectangle, shapeRenderer, spriteBatch);
     }
 
-
     public void render(Entity entity) {
         SpriteComponent spriteComponent = entity.getComponent(SpriteComponent.class);
         NameComponent nameComponent = entity.getComponent(NameComponent.class);
