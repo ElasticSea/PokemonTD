@@ -14,7 +14,7 @@ public class StatusBar extends GuiBox {
     private final Player player;
     private final DisplayText scoreTitleText;
     private final DisplayText scoreText;
-    private final MusicUi musicUi;
+    private final MusicUI musicUI;
 
     StatusBar(Player player, Rectangle rectangle, int offset, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
               float squareHeight, BitmapFont font) {
@@ -22,7 +22,7 @@ public class StatusBar extends GuiBox {
         this.player = player;
         Rectangle rect = new Rectangle(x + width - squareHeight, offsetRectange.y, squareHeight - 3 * offset,
                 offsetRectange.height);
-        musicUi = new MusicUi(x,y,height*3,height);
+        musicUI = new MusicUI(x,y,height*3,height);
         scoreTitleText = new DisplayText(rect, shapeRenderer, spriteBatch, font, BitmapFont.HAlignment.LEFT);
         scoreText = new DisplayText(rect, shapeRenderer, spriteBatch, font, BitmapFont.HAlignment.RIGHT);
     }
