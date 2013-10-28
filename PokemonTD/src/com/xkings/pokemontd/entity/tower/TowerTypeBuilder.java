@@ -63,35 +63,35 @@ public class TowerTypeBuilder {
                 Treasure.fromWater(3)));
         //red
         specs.add(new Specs(TowerName.Sparkle, 4, NORMAL_SPEED, S_RANGE, ProjectileComponent.getFire(scale),
-                new Treasure(0, 0, 1, 0, 0, 0, 0, 0)));
+                Treasure.fromFire(1)));
         specs.add(new Specs(TowerName.Burning, 5, FAST_SPEED, S_RANGE, ProjectileComponent.getFire(scale),
-                new Treasure(0, 0, 2, 0, 0, 0, 0, 0)));
+                Treasure.fromFire(2)));
         specs.add(new Specs(TowerName.Inferno, 10, SUPER_FAST_SPEED, S_RANGE, ProjectileComponent.getFireDot(scale),
-                new Treasure(0, 0, 3, 0, 0, 0, 0, 0)));
+                Treasure.fromFire(3)));
         //green
         specs.add(new Specs(TowerName.Flower, 4, SUPER_SLOW_SPEED, S_RANGE,
-                ProjectileComponent.getNature(scale, 0.2f, 1, 0.2f), new Treasure(0, 1, 0, 0, 0, 0, 0, 0)));
+                ProjectileComponent.getNature(scale, 0.2f, 1, 0.2f), Treasure.fromNature(1)));
         specs.add(new Specs(TowerName.Forest, 5, SUPER_SLOW_SPEED, S_RANGE,
-                ProjectileComponent.getNature(scale, 0.3f, 1.2f, 0.3f), new Treasure(0, 1, 0, 0, 0, 0, 0, 0)));
+                ProjectileComponent.getNature(scale, 0.3f, 1.2f, 0.3f), Treasure.fromNature(2)));
         specs.add(new Specs(TowerName.Nature, 10, SUPER_SLOW_SPEED, S_RANGE,
-                ProjectileComponent.getNature(scale, 0.7f, 2f, 0.5f), new Treasure(0, 1, 0, 0, 0, 0, 0, 0)));
+                ProjectileComponent.getNature(scale, 0.7f, 2f, 0.5f),  Treasure.fromNature(3)));
         //yellow
         specs.add(new Specs(TowerName.Chicken, 4, FAST_SPEED, N_RANGE, ProjectileComponent.getClaw(scale, 0f, 0),
-                new Treasure(0, 1, 0, 0, 0, 0, 0, 0)));
+                Treasure.fromLight(1)));
         specs.add(new Specs(TowerName.Screech, 5, FAST_SPEED, N_RANGE, ProjectileComponent.getClaw(scale, 0.1f, 1),
-                new Treasure(0, 1, 0, 0, 0, 0, 0, 0)));
+                Treasure.fromLight(2)));
         specs.add(new Specs(TowerName.Claw, 10, FAST_SPEED, N_RANGE, ProjectileComponent.getClaw(scale, 0.3f, 2),
-                new Treasure(0, 1, 0, 0, 0, 0, 0, 0)));
+                Treasure.fromLight(3)));
         //purple
         specs.add(new Specs(TowerName.Spooky, 4, NORMAL_SPEED, XL_RANGE, ProjectileComponent.getNormal(scale),
-                new Treasure(0, 1, 0, 0, 0, 0, 0, 0)));
+                Treasure.fromDarkness(1)));
         specs.add(new Specs(TowerName.Haunted, 5, NORMAL_SPEED, XL_RANGE, ProjectileComponent.getNormal(scale),
-                new Treasure(0, 1, 0, 0, 0, 0, 0, 0)));
+                Treasure.fromDarkness(2)));
         specs.add(new Specs(TowerName.Nightmare, 10, NORMAL_SPEED, XL_RANGE,
-                ProjectileComponent.getTemLifeSteal(scale, 0.3f, 5f), new Treasure(0, 1, 0, 0, 0, 0, 0, 0)));
+                ProjectileComponent.getTemLifeSteal(scale, 0.3f, 5f), Treasure.fromDarkness(3)));;
         /// ######################  ONE ELEMENT
         specs.add(new Specs(TowerName.Noble, 5, NORMAL_SPEED, N_RANGE, BuffAbility.getDamage(1.5f, 45),
-                new Treasure(0, 1, 1, 0, 0, 0, 0, 0)));
+                Treasure.fromWater(1).fromFire(1)));
 
         List<TowerType> data = new ArrayList<TowerType>();
         for (Specs specification : specs) {
