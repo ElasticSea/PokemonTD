@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.xkings.core.component.PositionComponent;
 import com.xkings.core.component.SizeComponent;
+import com.xkings.pokemontd.App;
 import com.xkings.pokemontd.component.TextComponent;
 import com.xkings.pokemontd.component.TintComponent;
 
@@ -35,6 +36,7 @@ public class RenderTextSystem extends EntityProcessingSystem {
     public RenderTextSystem(SpriteBatch spriteBatch) {
         super(Aspect.getAspectForAll(PositionComponent.class, SizeComponent.class, TextComponent.class));
         this.spriteBatch = spriteBatch;
+        font.setScale(5);
     }
 
     @Override
