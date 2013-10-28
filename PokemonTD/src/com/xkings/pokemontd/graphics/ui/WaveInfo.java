@@ -27,7 +27,7 @@ public class WaveInfo extends GuiBox {
         this.pixelFont = font;
         float textHeight = height / 7f;
         Rectangle scaled =
-                new Rectangle(x + textHeight, y + textHeight, width - textHeight * 2, height - textHeight * 2);
+                new Rectangle(x + offset*2, y + offset, width - offset * 4, height - offset * 2);
         float quarterSize = scaled.height / 4f;
         Rectangle waveRectangle =
                 new Rectangle(scaled.x, scaled.y + scaled.height - textHeight, scaled.width, textHeight);
