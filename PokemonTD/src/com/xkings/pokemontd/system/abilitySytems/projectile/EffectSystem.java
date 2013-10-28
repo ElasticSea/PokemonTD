@@ -7,7 +7,6 @@ import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
 import com.xkings.core.main.Assets;
 import com.xkings.pokemontd.Animation;
-import com.xkings.pokemontd.component.HealthComponent;
 import com.xkings.pokemontd.component.SpriteComponent;
 import com.xkings.pokemontd.component.attack.effects.AbstractEffect;
 
@@ -35,21 +34,35 @@ public class EffectSystem extends EntityProcessingSystem {
     @Override
     protected void process(Entity e) {
         AbstractEffect effect = effectMapper.get(e);
+        SpriteComponent spriteComponent = spriteMapper.get(e);
         if (!effect.isStarted()) {
-            spriteMapper.get(e).add(SpriteComponent.Type.EFFECT,
-                    new Animation(Assets.getTextureArray(effect.getEffect())));
+            addEffect(effect, spriteComponent);
             started(e);
         }
         effect.update(world.delta);
+        if (spriteComponent.get(SpriteComponent.Type.EFFECT) == null) {
+            // DISCUS Is it a good enough solution to simply check if we have an animation going on or not,
+            // this happens because this effect component is transfered to different tower that does not have
+            // particular animation component.
+            addEffect(effect, spriteComponent);
+        }
         while (effect.isReady()) {
             processEffect(e);
         }
         if (effect.isFinished()) {
             finished(e);
-            spriteMapper.get(e).remove(SpriteComponent.Type.EFFECT);
+            removeEffect(spriteComponent);
             e.removeComponent(effect.getClass());
             e.changedInWorld();
         }
+    }
+
+    private void removeEffect(SpriteComponent spriteComponent) {
+        spriteComponent.remove(SpriteComponent.Type.EFFECT);
+    }
+
+    private void addEffect(AbstractEffect effect, SpriteComponent spriteComponent) {
+        spriteComponent.add(SpriteComponent.Type.EFFECT, new Animation(Assets.getTextureArray(effect.getEffect())));
     }
 
     protected void finished(Entity e) {

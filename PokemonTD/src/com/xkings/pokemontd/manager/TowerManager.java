@@ -1,7 +1,9 @@
 package com.xkings.pokemontd.manager;
 
+import com.artemis.Component;
 import com.artemis.Entity;
 import com.artemis.World;
+import com.artemis.utils.Bag;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.component.PositionComponent;
@@ -11,6 +13,7 @@ import com.xkings.pokemontd.Player;
 import com.xkings.pokemontd.component.TowerTypeComponent;
 import com.xkings.pokemontd.component.TreasureComponent;
 import com.xkings.pokemontd.component.UpgradeComponent;
+import com.xkings.pokemontd.component.attack.effects.AbstractEffect;
 import com.xkings.pokemontd.entity.StaticObject;
 import com.xkings.pokemontd.entity.tower.Tower;
 import com.xkings.pokemontd.entity.tower.TowerName;
@@ -18,8 +21,6 @@ import com.xkings.pokemontd.entity.tower.TowerType;
 import com.xkings.pokemontd.graphics.ui.Clickable;
 import com.xkings.pokemontd.system.FindShop;
 import com.xkings.pokemontd.system.GetTower;
-
-import java.util.List;
 
 /**
  * Created by Tomas on 10/7/13.
@@ -87,31 +88,49 @@ public class TowerManager implements Clickable {
         return selectedTower;
     }
 
-    public void getNewOrUpgrade() {
+    public void buyNewOrUpgrade() {
         if (canAfford(selectedTower)) {
             if (clickedTower == null && placeholderTower != null) {
-                Vector3 placeholderPosition = placeholderTower.getComponent(PositionComponent.class).getPoint();
-                purchaseTower(selectedTower);
-                Entity entity = Tower.registerTower(world, selectedTower, placeholderPosition.x, placeholderPosition.y);
-                clickedTower = entity;
-                this.setStatus(Status.NONE);
-                selectedTower = null;
-                removePlaceholderTower();
+                buyNewTower();
             } else if (clickedTower != null) {
-                purchaseTower(selectedTower);
-                Vector3 towerPosition = clickedTower.getComponent(PositionComponent.class).getPoint();
-                Entity entity = Tower.registerTower(world, selectedTower, towerPosition.x, towerPosition.y);
-                entity.getComponent(UpgradeComponent.class).add(clickedTower.getComponent(UpgradeComponent
-                        .class));
-                entity.getComponent(UpgradeComponent.class).add(clickedTower.getComponent(TowerTypeComponent
-                        .class).getTowerType());
-                clickedTower.deleteFromWorld();
-                clickedTower = entity;
-                this.setStatus(Status.NONE);
-                selectedTower = null;
+                upgradeTower();
+            }
+            this.setStatus(Status.NONE);
+            selectedTower = null;
+        }
+    }
 
+    private void upgradeTower() {
+        purchaseTower(selectedTower);
+        Vector3 towerPosition = clickedTower.getComponent(PositionComponent.class).getPoint();
+        Entity entity = Tower.registerTower(world, selectedTower, towerPosition.x, towerPosition.y);
+        entity.getComponent(UpgradeComponent.class).add(clickedTower.getComponent(UpgradeComponent
+                .class));
+        entity.getComponent(UpgradeComponent.class).add(clickedTower.getComponent(TowerTypeComponent
+                .class).getTowerType());
+        transferEffects(clickedTower, entity);
+        clickedTower.deleteFromWorld();
+        clickedTower = entity;
+    }
+
+    private void transferEffects(Entity from, Entity to) {
+        Bag<Component> fillBag = new Bag<Component>();
+        from.getComponents(fillBag);
+        for (int i = 0; i < fillBag.size(); i++) {
+            Component component = fillBag.get(i);
+            if (component instanceof AbstractEffect) {
+                to.addComponent(component);
+                System.out.println("added component: "+component);
             }
         }
+        to.changedInWorld();
+    }
+
+    private void buyNewTower() {
+        Vector3 placeholderPosition = placeholderTower.getComponent(PositionComponent.class).getPoint();
+        purchaseTower(selectedTower);
+        clickedTower = Tower.registerTower(world, selectedTower, placeholderPosition.x, placeholderPosition.y);
+        removePlaceholderTower();
     }
 
     public Entity getShop() {

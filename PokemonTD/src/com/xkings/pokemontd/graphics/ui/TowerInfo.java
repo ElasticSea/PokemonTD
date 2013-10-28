@@ -70,7 +70,7 @@ public class TowerInfo extends CommonInfo {
                 font, BitmapFont.HAlignment.CENTER, new Color(Color.GREEN).mul(0.6f)) {
             @Override
             public void process(float x, float y) {
-                ui.getTowerManager().getNewOrUpgrade();
+                ui.getTowerManager().buyNewOrUpgrade();
             }
         };
         ui.register(sell);
