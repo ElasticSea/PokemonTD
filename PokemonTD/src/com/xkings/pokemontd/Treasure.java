@@ -24,15 +24,15 @@ public class Treasure {
         this(gold, 0, 0, 0, 0, 0, 0, 0);
     }
 
-    public Treasure(int gold, int water, int fire, int nature, int light, int darkness, int neutral, int pure) {
+    public Treasure(int gold, int water, int fire, int nature, int light, int darkness, int pure, int soul) {
         this.gold = gold;
         addElement(WATER, water);
         addElement(FIRE, fire);
         addElement(NATURE, nature);
         addElement(LIGHT, light);
         addElement(DARKNESS, darkness);
-        addElement(PURE, neutral);
-        addElement(SOUL, pure);
+        addElement(PURE, pure);
+        addElement(SOUL, soul);
     }
 
     public void addElement(Element element, int count) {
