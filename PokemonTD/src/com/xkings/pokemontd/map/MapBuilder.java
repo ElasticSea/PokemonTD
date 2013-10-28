@@ -141,18 +141,18 @@ public class MapBuilder {
         width = (int) (dimensions.x + 1 + mapOffset.x + mapOffset.width);
         height = (int) (dimensions.y + mapOffset.y + mapOffset.height);
         position.y = dimensions.y - 1 + mapOffset.y;
-        position.x = 2 + mapOffset.x;
+        position.x = 1 + mapOffset.x;
 
 
         createPoint(direction + PI, pathSize);
 
         blueprint = new Blueprint(width * pathSize, height * pathSize, true);
         textureMap = new TileMap<TextureAtlas.AtlasRegion>();
-        textureMap.addLevel(width, height, 2);
-        textureMap.addLevel(width, height, 2);
-        textureMap.addLevel(width, height, 2);
-        textureMap.addLevel(width, height, 2);
-        textureMap.addLevel(width * 2, height * 2, 1);
+        textureMap.addLevel(width, height, pathSize);
+        textureMap.addLevel(width, height, pathSize);
+        textureMap.addLevel(width, height, pathSize);
+        textureMap.addLevel(width, height, pathSize);
+        textureMap.addLevel(width * pathSize, height * pathSize, 1);
 
         centerPath = paths.get(paths.size() / 2);
 
