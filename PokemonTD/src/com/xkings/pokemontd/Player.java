@@ -9,11 +9,11 @@ public class Player {
     private final Score score;
     private int freeElements;
 
-    public Player(int health, int gold, int water, int fire, int nature, int light, int darkness, int neutral,
-                  int pure) {
-        this.treasure = new Treasure(gold, water, fire, nature, light, darkness, neutral, pure);
+    public Player(int health, int gold, int freeElements) {
+        this.treasure = new Treasure(gold);
         this.health = new Health(health);
         this.score = new Score(0);
+        this.freeElements = freeElements;
     }
 
     public Treasure getTreasure() {

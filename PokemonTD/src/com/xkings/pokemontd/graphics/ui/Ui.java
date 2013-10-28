@@ -68,7 +68,7 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         Vector2 statusDimensions = new Vector2(squareHeight, statusHeight);
 
         this.font = Assets.createFont("pixelFont");
-        font.setScale(statusHeight/300f);
+        font.setScale(statusHeight / 300f);
         statusBar = new StatusBar(player,
                 new Rectangle(0, this.height - statusBarDimensions.y, statusBarDimensions.x, statusBarDimensions.y),
                 offset, shapeRenderer, spriteBatch, shopIcons.offsetRectange.width, font);
@@ -78,10 +78,10 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
 
 
         nextWaveInfo = new WaveInfo(new Rectangle(0, 0, squareHeight, squareHeight), offset, shapeRenderer, spriteBatch,
-                waveManager,font);
+                waveManager, font);
         entityInfo = new EntityInfo(this,
                 new Rectangle(squareHeight - offset, 0, width - (squareHeight - offset) * 2, stripHeight), offset,
-                shapeRenderer, spriteBatch, font);
+                shapeRenderer, spriteBatch, font, player);
 
         clickables.add(entityInfo);
         clickables.add(statusBar);

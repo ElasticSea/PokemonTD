@@ -12,6 +12,7 @@ public class Treasure {
 
     private int gold;
     private final Map<Element, Integer> elementSet = new EnumMap<Element, Integer>(Element.class);
+    private static final Treasure limit = new Treasure(Integer.MAX_VALUE, 3, 3, 3, 3, 3, 3, 1);
 
     public Treasure(Treasure treasure) {
         this(treasure.getGold(), treasure.getElement(WATER), treasure.getElement(FIRE), treasure.getElement(NATURE),
@@ -122,6 +123,22 @@ public class Treasure {
                 '}';
     }
 
+
+    public boolean canAdd(Element element, int count) {
+        Treasure treasure = new Treasure(this);
+
+        int add = treasure.getElement(element) + count;
+        if (add > 0) {
+            treasure.elementSet.put(element, add);
+        }
+
+        return limit.includes(treasure);
+    }
+
+    public boolean reachedMaximum(Element element) {
+        return this.getElement(element) == limit.getElement(element);
+    }
+
     public static Treasure fromGold(int count) {
         return new Treasure(count, 0, 0, 0, 0, 0, 0, 0);
     }
@@ -153,5 +170,4 @@ public class Treasure {
     public static Treasure fromSoul(int count) {
         return new Treasure(0, 0, 0, 0, 0, 0, 0, count);
     }
-
 }

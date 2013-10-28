@@ -24,6 +24,9 @@ class ElementIcon extends InteractiveBlock {
     public void render() {
         if (element != null) {
             spriteBatch.begin();
+            if (player.getTreasure().reachedMaximum(element)) {
+                spriteBatch.draw(Assets.getTexture("maxed"), x, y, width, height);
+            }
             spriteBatch.draw(Assets.getTexture("gems/" + element.toString().toLowerCase()), x, y, width, height);
             if (player.getFreeElements() == 0) {
                 spriteBatch.draw(Assets.getTexture("blocked"), x, y, width, height);
@@ -35,8 +38,10 @@ class ElementIcon extends InteractiveBlock {
     @Override
     public void process(float x, float y) {
         if (player.getFreeElements() != 0) {
-            player.getTreasure().addElement(element, 1);
-            player.subtractFreeElement();
+            if (player.getTreasure().canAdd(element, 1)) {
+                player.getTreasure().addElement(element, 1);
+                player.subtractFreeElement();
+            }
         }
     }
 

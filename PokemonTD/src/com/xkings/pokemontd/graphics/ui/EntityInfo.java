@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.xkings.pokemontd.App;
+import com.xkings.pokemontd.Player;
 import com.xkings.pokemontd.component.HealthComponent;
 import com.xkings.pokemontd.component.NameComponent;
 import com.xkings.pokemontd.component.SpriteComponent;
@@ -33,7 +34,7 @@ class EntityInfo extends GuiBox {
     private final BitmapFont pixelFont;
 
     EntityInfo(final Ui ui, Rectangle rectangle, int offset, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
-               BitmapFont font) {
+               BitmapFont font, Player player) {
         super(rectangle, offset, shapeRenderer);
         this.ui = ui;
         this.spriteBatch = spriteBatch;
@@ -44,7 +45,7 @@ class EntityInfo extends GuiBox {
         towerEntityInfo = new TowerEntityInfo(ui, offsetRectange, shapeRenderer, spriteBatch, font);
         creepEntityInfo = new CreepEntityInfo(ui, offsetRectange, shapeRenderer, spriteBatch, font);
         shopTypeInfo = new ShopTypeInfo(ui, offsetRectange, shapeRenderer, spriteBatch, font);
-        shopEntityInfo = new ShopEntityInfo(ui, offsetRectange, shapeRenderer, spriteBatch, font);
+        shopEntityInfo = new ShopEntityInfo(ui, offsetRectange, shapeRenderer, spriteBatch, font, player);
 
         clickables = new ArrayList<Clickable>();
         clickables.add(towerTypeInfo);

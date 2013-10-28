@@ -26,7 +26,7 @@ public class Main {
         cfg.useGL20 = true;
         cfg.width = 1920;
         cfg.height = 1080;
-        cfg.fullscreen = true;
+      //  cfg.fullscreen = true;
 
         new LwjglApplication(new App(args), cfg);
     }

@@ -54,7 +54,7 @@ public class TowerCost extends InteractiveBlock {
         for (Element element : Element.values()) {
             int element1 = cost.getElement(element);
             if (element1 > 0) {
-                caches.add(new costValueCache(Color.WHITE, "1x"));
+                caches.add(new costValueCache(Color.WHITE, element1 + "x"));
                 caches.add(new costValueCache(element.getColor(), element.toString()));
             }
         }
