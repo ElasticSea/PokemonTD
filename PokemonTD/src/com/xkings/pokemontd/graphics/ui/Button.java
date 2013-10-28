@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.xkings.core.main.Assets;
+import com.xkings.pokemontd.App;
 
 /**
  * Created by Tomas on 10/8/13.
@@ -45,10 +46,10 @@ abstract class Button extends InteractiveBlock {
 
     @Override
     public void render() {
-        if (color != Color.CLEAR) {
+        if (color != Color.CLEAR || App.DEBUG != null) {
             Color color = isEnabled() ? this.color : Color.DARK_GRAY;
             shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            shapeRenderer.setColor(color);
+            shapeRenderer.setColor(App.DEBUG != null ? Color.GREEN :color);
             shapeRenderer.rect(x, y, width, height);
             shapeRenderer.end();
         }
