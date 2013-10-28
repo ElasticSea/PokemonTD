@@ -32,19 +32,21 @@ public class Status extends GuiBox {
     private final Interest interest;
 
     private final Player player;
+    private final BitmapFont font;
 
     Status(Player player, Rectangle rectangle, int offset, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
-           WaveManager waveManager, Interest interest) {
+           WaveManager waveManager, Interest interest, BitmapFont font) {
         super(rectangle, offset, shapeRenderer);
 
         offsetRectange.x += offset;
-        offsetRectange.width -= offset*2;
+        offsetRectange.width -= offset * 2;
 
         this.player = player;
         this.shapeRenderer = shapeRenderer;
         this.spriteBatch = spriteBatch;
         this.waveManager = waveManager;
         this.interest = interest;
+        this.font = font;
 
         Vector2 textFieldCount = new Vector2(2, 4);
         Vector2 textSize = new Vector2(offsetRectange.width / textFieldCount.x, offsetRectange.
@@ -64,7 +66,7 @@ public class Status extends GuiBox {
     private DisplayText createDisplayBlock(float x, float y, Vector2 size, BitmapFont.HAlignment alignment) {
         return new DisplayText(
                 new Rectangle(offsetRectange.x + size.x * x, offsetRectange.y + size.y * y, size.x, size.y),
-                shapeRenderer, spriteBatch, alignment);
+                shapeRenderer, spriteBatch, font, alignment);
     }
 
     private DisplayPicture createDisplayPicture(float x, float y, Vector2 size, BitmapFont.HAlignment alignment) {

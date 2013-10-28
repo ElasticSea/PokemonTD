@@ -1,6 +1,5 @@
 package com.xkings.pokemontd.graphics.ui;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -32,19 +31,21 @@ public class ShopInfo extends CommonInfo {
     private boolean sellCache;
     private boolean buyCache;
 
-    public ShopInfo(final Ui ui, Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
-        super(ui, rectangle, shapeRenderer, spriteBatch);
+    public ShopInfo(final Ui ui, Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
+                    BitmapFont font) {
+        super(ui, rectangle, shapeRenderer, spriteBatch, font);
         this.spriteBatch = spriteBatch;
         this.ui = ui;
         this.pixelFont = App.getAssets().getPixelFont();
         float offset = height / 5;
         clickables = new ArrayList<Clickable>();
+        float scale = height / 96f;
         damage = new DisplayText(new Rectangle(x + offset * 5, y + offset * 3, offset * 2, offset), shapeRenderer,
-                spriteBatch);
+                spriteBatch, font);
         speed = new DisplayText(new Rectangle(x + offset * 5, y + offset * 2, offset * 2, offset), shapeRenderer,
-                spriteBatch);
+                spriteBatch, font);
         range = new DisplayText(new Rectangle(x + offset * 5, y + offset, offset * 2, offset), shapeRenderer,
-                spriteBatch);
+                spriteBatch, font);
     }
 
     @Override

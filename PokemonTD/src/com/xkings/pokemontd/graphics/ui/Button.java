@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.xkings.core.main.Assets;
 import com.xkings.pokemontd.App;
 
 /**
@@ -17,30 +16,34 @@ abstract class Button extends InteractiveBlock {
     private final BitmapFont.HAlignment alignment;
     private String text;
     private final BitmapFont font;
-    private final Vector2 position;
+    private Vector2 position;
     private final ShapeRenderer shapeRenderer;
     private final Color color;
 
-    protected Button(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
-        this(rectangle, shapeRenderer, spriteBatch, BitmapFont.HAlignment.LEFT, Color.CLEAR);
+    protected Button(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch, BitmapFont font) {
+        this(rectangle, shapeRenderer, spriteBatch, font, BitmapFont.HAlignment.LEFT, Color.CLEAR);
     }
 
-    protected Button(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
+    protected Button(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch, BitmapFont font,
                      BitmapFont.HAlignment alignment) {
-        this(rectangle, shapeRenderer, spriteBatch, alignment, Color.CLEAR);
+        this(rectangle, shapeRenderer, spriteBatch, font, alignment, Color.CLEAR);
     }
 
-    public Button(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
+    public Button(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch, BitmapFont font,
                   BitmapFont.HAlignment alignment, Color color) {
         super(rectangle);
         this.shapeRenderer = shapeRenderer;
         this.spriteBatch = spriteBatch;
         this.text = new String();
         this.color = color;
-        this.font = Assets.createFont("pixelFont");
-        this.font.setScale(0.50f);
-        this.position = recalculatePosition(text);
+        this.font = font;
         this.alignment = alignment;
+        this.position = recalculatePosition(text);
+    }
+
+    public void setScale(float scale) {
+        this.font.setScale(scale);
+        this.position = recalculatePosition(text);
     }
 
     @Override
@@ -48,11 +51,12 @@ abstract class Button extends InteractiveBlock {
         if (color != Color.CLEAR || App.DEBUG != null) {
             Color color = isEnabled() ? this.color : Color.DARK_GRAY;
             shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            shapeRenderer.setColor(App.DEBUG != null ? Color.GREEN :color);
+            shapeRenderer.setColor(App.DEBUG != null ? Color.GREEN : color);
             shapeRenderer.rect(x, y, width, height);
             shapeRenderer.end();
         }
         spriteBatch.begin();
+        System.out.println(spriteBatch);
         font.setColor(isEnabled() ? Color.WHITE : Color.GRAY);
         font.drawMultiLine(spriteBatch, text, x, y + position.y, width, alignment);
         spriteBatch.end();
@@ -70,5 +74,6 @@ abstract class Button extends InteractiveBlock {
         BitmapFont.TextBounds fontBounds = font.getBounds(text);
         return new Vector2((width - fontBounds.width) / 2f, (height + fontBounds.height) / 2f);
     }
+
 
 }

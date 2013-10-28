@@ -16,13 +16,13 @@ public class StatusBar extends GuiBox {
     private final DisplayText scoreText;
 
     StatusBar(Player player, Rectangle rectangle, int offset, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
-              float squareHeight) {
+              float squareHeight, BitmapFont font) {
         super(rectangle, offset, shapeRenderer);
         this.player = player;
         Rectangle rect = new Rectangle(x + width - squareHeight, offsetRectange.y, squareHeight - 3 * offset,
                 offsetRectange.height);
-        scoreTitleText = new DisplayText(rect, shapeRenderer, spriteBatch, BitmapFont.HAlignment.LEFT);
-        scoreText = new DisplayText(rect, shapeRenderer, spriteBatch, BitmapFont.HAlignment.RIGHT);
+        scoreTitleText = new DisplayText(rect, shapeRenderer, spriteBatch, font, BitmapFont.HAlignment.LEFT);
+        scoreText = new DisplayText(rect, shapeRenderer, spriteBatch, font, BitmapFont.HAlignment.RIGHT);
     }
 
     @Override

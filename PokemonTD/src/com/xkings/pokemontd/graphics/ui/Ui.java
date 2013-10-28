@@ -1,6 +1,7 @@
 package com.xkings.pokemontd.graphics.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
@@ -8,6 +9,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.xkings.core.graphics.Renderable;
+import com.xkings.core.main.Assets;
 import com.xkings.pokemontd.Player;
 import com.xkings.pokemontd.entity.tower.TowerName;
 import com.xkings.pokemontd.manager.CreepManager;
@@ -29,6 +31,7 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
     private final int width;
     private final TowerIcons towerIcons;
     private final ShopIcons shopIcons;
+    private final BitmapFont font;
     private int height = 0;
     private final EntityInfo entityInfo;
     private final GuiBox statusBar;
@@ -44,7 +47,7 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         spriteBatch = new SpriteBatch();
         clickables = new ArrayList<InteractiveBlock>();
         height = Gdx.graphics.getHeight();
-        float squareHeight = MathUtils.clamp(Gdx.graphics.getDensity() * 160 * 2, height / 4, height / 3);
+        float squareHeight = MathUtils.clamp(Gdx.graphics.getDensity() * 160 * 2, height / 4, height / 3.3f);
         float statusBarHeight = squareHeight / 5;
         float statusHeight = statusBarHeight * 4;
 
@@ -63,19 +66,22 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
 
         Vector2 statusBarDimensions = new Vector2(width, statusBarHeight);
         Vector2 statusDimensions = new Vector2(squareHeight, statusHeight);
+
+        this.font = Assets.createFont("pixelFont");
+        font.setScale(statusHeight/300f);
         statusBar = new StatusBar(player,
                 new Rectangle(0, this.height - statusBarDimensions.y, statusBarDimensions.x, statusBarDimensions.y),
-                offset, shapeRenderer, spriteBatch, shopIcons.offsetRectange.width);
+                offset, shapeRenderer, spriteBatch, shopIcons.offsetRectange.width, font);
         status = new Status(player, new Rectangle(width - statusDimensions.x,
                 this.height - statusBar.height - statusOffSet - statusDimensions.y, statusDimensions.x,
-                statusDimensions.y), offset, shapeRenderer, spriteBatch, waveManager, interest);
+                statusDimensions.y), offset, shapeRenderer, spriteBatch, waveManager, interest, font);
 
 
         nextWaveInfo = new WaveInfo(new Rectangle(0, 0, squareHeight, squareHeight), offset, shapeRenderer, spriteBatch,
-                waveManager);
+                waveManager,font);
         entityInfo = new EntityInfo(this,
                 new Rectangle(squareHeight - offset, 0, width - (squareHeight - offset) * 2, stripHeight), offset,
-                shapeRenderer, spriteBatch);
+                shapeRenderer, spriteBatch, font);
 
         clickables.add(entityInfo);
         clickables.add(statusBar);

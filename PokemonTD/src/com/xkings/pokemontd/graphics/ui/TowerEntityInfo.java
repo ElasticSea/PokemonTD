@@ -1,6 +1,7 @@
 package com.xkings.pokemontd.graphics.ui;
 
 import com.artemis.Entity;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
@@ -19,8 +20,9 @@ import com.xkings.pokemontd.component.TreasureComponent;
 
 public class TowerEntityInfo extends TowerInfo {
 
-    public TowerEntityInfo(Ui ui, Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
-        super(ui, rectangle, shapeRenderer, spriteBatch);
+    public TowerEntityInfo(Ui ui, Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
+                           BitmapFont font) {
+        super(ui, rectangle, shapeRenderer, spriteBatch, font);
     }
 
     public void render(Entity entity) {

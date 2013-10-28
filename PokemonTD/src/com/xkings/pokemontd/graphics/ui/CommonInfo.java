@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.xkings.pokemontd.App;
-import com.xkings.pokemontd.entity.tower.TowerType;
 
 import java.util.ArrayList;
 
@@ -27,16 +26,18 @@ public class CommonInfo extends InteractiveBlock {
     private String nameCache;
     protected final ArrayList<Clickable> clickables = new ArrayList<Clickable>();
 
-    public CommonInfo(final Ui ui, Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
+    public CommonInfo(final Ui ui, Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
+                      BitmapFont font) {
         super(rectangle);
+        float scale = height / App.FONT_SCALE2;
         this.spriteBatch = spriteBatch;
         this.ui = ui;
         this.pixelFont = App.getAssets().getPixelFont();
         float offset = height / 5;
         picture = new DisplayPicture(x + offset, y + offset, height - offset * 2, height - offset * 2, shapeRenderer,
                 spriteBatch, Color.DARK_GRAY);
-        name = new DisplayText(new Rectangle(x + offset, y + offset / 7, height - offset * 2, offset), shapeRenderer,
-                spriteBatch, BitmapFont.HAlignment.CENTER);
+        name = new DisplayText(new Rectangle(x + offset, y + offset, height - offset * 2, offset), shapeRenderer,
+                spriteBatch, font, BitmapFont.HAlignment.CENTER);
     }
 
     @Override

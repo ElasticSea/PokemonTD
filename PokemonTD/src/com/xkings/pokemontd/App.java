@@ -46,7 +46,9 @@ public class App extends Game2D {
 
     public static final Random RANDOM = new Random();
     public static final Chance CHANCE = new Chance(RANDOM);
+    public static final float FONT_SCALE = 300f;
     public static final int WORLD_SCALE = 100;
+    public static final float FONT_SCALE2 = 270f;
     public static int WORLD_WIDTH;
     public static int WORLD_HEIGHT;
     public static Rectangle WORLD_RECT;
@@ -136,7 +138,7 @@ public class App extends Game2D {
     }
 
     private void initializeContent() {
-        player = new Player(50, 15481, 0, 0, 0, 0, 0, 0, 0);
+        player = new Player(50, 15481, 3, 3, 3, 3, 3, 3, 3);
     }
 
     private void initializeManagers() {

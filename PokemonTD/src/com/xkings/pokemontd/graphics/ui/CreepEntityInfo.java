@@ -25,16 +25,17 @@ public class CreepEntityInfo extends CommonInfo {
     private int healthCache;
     private String typeCache;
 
-    public CreepEntityInfo(final Ui ui, Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
-        super(ui, rectangle, shapeRenderer, spriteBatch);
+    public CreepEntityInfo(final Ui ui, Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
+                           BitmapFont font) {
+        super(ui, rectangle, shapeRenderer, spriteBatch, font);
         this.pixelFont = App.getAssets().getPixelFont();
 
         float offset = height / 5;
 
         health = new DisplayText(new Rectangle(x + offset * 5, y + offset * 3, offset * 2, offset), shapeRenderer,
-                spriteBatch);
+                spriteBatch, font);
         type = new DisplayText(new Rectangle(x + offset * 5, y + offset * 2, offset * 2, offset), shapeRenderer,
-                spriteBatch);
+                spriteBatch, font);
     }
 
     @Override

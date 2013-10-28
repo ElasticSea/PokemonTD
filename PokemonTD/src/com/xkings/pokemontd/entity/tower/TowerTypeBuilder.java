@@ -24,7 +24,7 @@ public class TowerTypeBuilder {
     public static final float SIZE = 1.5f;
     public static final float XS_RANGE = 1.25f;
     public static final float S_RANGE = 1.75f;
-    public static final float N_RANGE = 2.25f;
+    public static final float N_RANGE = 2.00f;
     public static final float L_RANGE = 2.75f;
     public static final float XL_RANGE = 3.25f;
     public static final float SUPER_FAST_SPEED = 0.25f;
@@ -39,41 +39,59 @@ public class TowerTypeBuilder {
     private List<TowerType> getData(float scale) {
         List<Specs> specs = new ArrayList<Specs>();
         // Shop
-        specs.add(new Specs(TowerName.Shop, 0, 0, 0, null));
+        specs.add(new Specs(TowerName.Shop, 0, 0, 0, null, new Treasure(0)));
         /// ######################  PURES
         // Basic
-        specs.add(new Specs(TowerName.Needle, 1, NORMAL_SPEED, N_RANGE, ProjectileComponent.getNormal(scale)));
-        specs.add(new Specs(TowerName.Pinch, 2, NORMAL_SPEED, N_RANGE, ProjectileComponent.getNormal(scale)));
-        specs.add(new Specs(TowerName.Sting, 3, NORMAL_SPEED, N_RANGE, ProjectileComponent.getNormal(scale)));
-        specs.add(new Specs(TowerName.Scratch, 1, SLOW_SPEED, N_RANGE, ProjectileComponent.getSplash(scale, 2)));
-        specs.add(new Specs(TowerName.Bite, 2, SLOW_SPEED, N_RANGE, ProjectileComponent.getSplash(scale, 2)));
-        specs.add(new Specs(TowerName.Smash, 3, SLOW_SPEED, N_RANGE, ProjectileComponent.getSplash(scale, 2)));
+        specs.add(new Specs(TowerName.Needle, 1, NORMAL_SPEED, N_RANGE, ProjectileComponent.getNormal(scale),
+                new Treasure(0)));
+        specs.add(new Specs(TowerName.Pinch, 2, NORMAL_SPEED, N_RANGE, ProjectileComponent.getNormal(scale),
+                new Treasure(0)));
+        specs.add(new Specs(TowerName.Sting, 3, NORMAL_SPEED, N_RANGE, ProjectileComponent.getNormal(scale),
+                new Treasure(0)));
+        specs.add(new Specs(TowerName.Scratch, 1, SLOW_SPEED, N_RANGE, ProjectileComponent.getSplash(scale, 2),
+                new Treasure(0)));
+        specs.add(new Specs(TowerName.Bite, 2, SLOW_SPEED, N_RANGE, ProjectileComponent.getSplash(scale, 2),
+                new Treasure(0)));
+        specs.add(new Specs(TowerName.Smash, 3, SLOW_SPEED, N_RANGE, ProjectileComponent.getSplash(scale, 2),
+                new Treasure(0)));
         // blue
-        specs.add(new Specs(TowerName.Splash, 4, NORMAL_SPEED, N_RANGE, ProjectileComponent.getNormal(scale)));
-        specs.add(new Specs(TowerName.Wave, 5, NORMAL_SPEED, N_RANGE, ProjectileComponent.getBubble(scale)));
-        specs.add(new Specs(TowerName.Tsunami, 10, NORMAL_SPEED, N_RANGE, ProjectileComponent.getBubble(scale)));
+        specs.add(new Specs(TowerName.Splash, 4, NORMAL_SPEED, N_RANGE, ProjectileComponent.getNormal(scale),
+                new Treasure(0, 1, 0, 0, 0, 0, 0, 0)));
+        specs.add(new Specs(TowerName.Wave, 5, NORMAL_SPEED, N_RANGE, ProjectileComponent.getBubble(scale),
+                new Treasure(0, 2, 0, 0, 0, 0, 0, 0)));
+        specs.add(new Specs(TowerName.Tsunami, 10, NORMAL_SPEED, N_RANGE, ProjectileComponent.getBubble(scale),
+                new Treasure(0, 3, 0, 0, 0, 0, 0, 0)));
         //red
-        specs.add(new Specs(TowerName.Sparkle, 4, NORMAL_SPEED, S_RANGE, ProjectileComponent.getFire(scale)));
-        specs.add(new Specs(TowerName.Burning, 5, FAST_SPEED, S_RANGE, ProjectileComponent.getFire(scale)));
-        specs.add(new Specs(TowerName.Inferno, 10, SUPER_FAST_SPEED, S_RANGE, ProjectileComponent.getFireDot(scale)));
+        specs.add(new Specs(TowerName.Sparkle, 4, NORMAL_SPEED, S_RANGE, ProjectileComponent.getFire(scale),
+                new Treasure(0, 0, 1, 0, 0, 0, 0, 0)));
+        specs.add(new Specs(TowerName.Burning, 5, FAST_SPEED, S_RANGE, ProjectileComponent.getFire(scale),
+                new Treasure(0, 0, 2, 0, 0, 0, 0, 0)));
+        specs.add(new Specs(TowerName.Inferno, 10, SUPER_FAST_SPEED, S_RANGE, ProjectileComponent.getFireDot(scale),
+                new Treasure(0, 0, 3, 0, 0, 0, 0, 0)));
         //green
         specs.add(new Specs(TowerName.Flower, 4, SUPER_SLOW_SPEED, S_RANGE,
-                ProjectileComponent.getNature(scale, 0.2f, 1, 0.2f)));
+                ProjectileComponent.getNature(scale, 0.2f, 1, 0.2f), new Treasure(0, 1, 0, 0, 0, 0, 0, 0)));
         specs.add(new Specs(TowerName.Forest, 5, SUPER_SLOW_SPEED, S_RANGE,
-                ProjectileComponent.getNature(scale, 0.3f, 1.2f, 0.3f)));
+                ProjectileComponent.getNature(scale, 0.3f, 1.2f, 0.3f), new Treasure(0, 1, 0, 0, 0, 0, 0, 0)));
         specs.add(new Specs(TowerName.Nature, 10, SUPER_SLOW_SPEED, S_RANGE,
-                ProjectileComponent.getNature(scale, 0.7f, 2f, 0.5f)));
+                ProjectileComponent.getNature(scale, 0.7f, 2f, 0.5f), new Treasure(0, 1, 0, 0, 0, 0, 0, 0)));
         //yellow
-        specs.add(new Specs(TowerName.Chicken, 4, FAST_SPEED, N_RANGE, ProjectileComponent.getClaw(scale, 0f, 0)));
-        specs.add(new Specs(TowerName.Screech, 5, FAST_SPEED, N_RANGE, ProjectileComponent.getClaw(scale, 0.1f, 1)));
-        specs.add(new Specs(TowerName.Claw, 10, FAST_SPEED, N_RANGE, ProjectileComponent.getClaw(scale, 0.3f, 2)));
+        specs.add(new Specs(TowerName.Chicken, 4, FAST_SPEED, N_RANGE, ProjectileComponent.getClaw(scale, 0f, 0),
+                new Treasure(0, 1, 0, 0, 0, 0, 0, 0)));
+        specs.add(new Specs(TowerName.Screech, 5, FAST_SPEED, N_RANGE, ProjectileComponent.getClaw(scale, 0.1f, 1),
+                new Treasure(0, 1, 0, 0, 0, 0, 0, 0)));
+        specs.add(new Specs(TowerName.Claw, 10, FAST_SPEED, N_RANGE, ProjectileComponent.getClaw(scale, 0.3f, 2),
+                new Treasure(0, 1, 0, 0, 0, 0, 0, 0)));
         //purple
-        specs.add(new Specs(TowerName.Spooky, 4, NORMAL_SPEED, XL_RANGE, ProjectileComponent.getNormal(scale)));
-        specs.add(new Specs(TowerName.Haunted, 5, NORMAL_SPEED, XL_RANGE, ProjectileComponent.getNormal(scale)));
+        specs.add(new Specs(TowerName.Spooky, 4, NORMAL_SPEED, XL_RANGE, ProjectileComponent.getNormal(scale),
+                new Treasure(0, 1, 0, 0, 0, 0, 0, 0)));
+        specs.add(new Specs(TowerName.Haunted, 5, NORMAL_SPEED, XL_RANGE, ProjectileComponent.getNormal(scale),
+                new Treasure(0, 1, 0, 0, 0, 0, 0, 0)));
         specs.add(new Specs(TowerName.Nightmare, 10, NORMAL_SPEED, XL_RANGE,
-                ProjectileComponent.getTemLifeSteal(scale, 0.3f, 5f)));
+                ProjectileComponent.getTemLifeSteal(scale, 0.3f, 5f), new Treasure(0, 1, 0, 0, 0, 0, 0, 0)));
         /// ######################  ONE ELEMENT
-        specs.add(new Specs(TowerName.Noble, 5, NORMAL_SPEED, N_RANGE, BuffAbility.getDamage(1.5f,45)));
+        specs.add(new Specs(TowerName.Noble, 5, NORMAL_SPEED, N_RANGE, BuffAbility.getDamage(1.5f, 45),
+                new Treasure(0, 1, 1, 0, 0, 0, 0, 0)));
 
         List<TowerType> data = new ArrayList<TowerType>();
         for (Specs specification : specs) {
@@ -84,8 +102,10 @@ public class TowerTypeBuilder {
 
     private TowerType createTowerType(float scale, Specs specs) {
         float damage = getDamage(getBaseDamage(INITIAL_BASE_DAMAGE, specs.level), specs.range, specs.speed);
+        Treasure treasure = new Treasure(getGold(INITIAL_GOLD, specs.level));
+        treasure.add(specs.treasure);
         return new TowerType(specs.name, SIZE * scale, specs.speed, damage, specs.range * scale, specs.attackComponent,
-                new Treasure(getGold(INITIAL_GOLD, specs.level)));
+                treasure);
     }
 
     private float getDamage(float baseDamage, float range, float speed) {
@@ -112,13 +132,16 @@ public class TowerTypeBuilder {
         private final float speed;
         private final float range;
         private final AbilityComponent attackComponent;
+        private final Treasure treasure;
 
-        private Specs(TowerName name, int level, float speed, float range, AbilityComponent attackComponent) {
+        private Specs(TowerName name, int level, float speed, float range, AbilityComponent attackComponent,
+                      Treasure treasure) {
             this.name = name;
             this.level = level;
             this.speed = speed;
             this.range = range;
             this.attackComponent = attackComponent;
+            this.treasure = treasure;
         }
     }
 

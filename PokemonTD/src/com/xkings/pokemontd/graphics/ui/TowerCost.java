@@ -1,12 +1,11 @@
 package com.xkings.pokemontd.graphics.ui;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.xkings.core.graphics.Renderable;
-import com.xkings.core.main.Assets;
 import com.xkings.pokemontd.Element;
 import com.xkings.pokemontd.Treasure;
 
@@ -22,12 +21,11 @@ public class TowerCost extends InteractiveBlock {
     private final BitmapFont font;
     private Treasure cost;
 
-    public TowerCost(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
+    public TowerCost(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch, BitmapFont font) {
         super(rectangle);
         this.shapeRenderer = shapeRenderer;
         this.spriteBatch = spriteBatch;
-        this.font = Assets.createFont("pixelFont");
-        this.font.setScale(0.50f);
+        this.font = font;
     }
 
     @Override
@@ -50,13 +48,14 @@ public class TowerCost extends InteractiveBlock {
 
 
         if (cost.getGold() > 0) {
-            costValueCache coin = new costValueCache(cost.getGold(), Assets.getTexture("coin"));
-            caches.add(coin);
+            caches.add(new costValueCache(Color.WHITE, "Cost:"));
+            caches.add(new costValueCache(Color.YELLOW, "" + cost.getGold()));
         }
         for (Element element : Element.values()) {
             int element1 = cost.getElement(element);
             if (element1 > 0) {
-                caches.add(new costValueCache(element1, Assets.getTexture("gems/" + element.toString().toLowerCase())));
+                caches.add(new costValueCache(Color.WHITE, "1x"));
+                caches.add(new costValueCache(element.getColor(), element.toString()));
             }
         }
         render();
@@ -71,14 +70,14 @@ public class TowerCost extends InteractiveBlock {
 
     private class costValueCache implements Renderable {
         private final String text;
-        private final TextureAtlas.AtlasRegion region;
         private final BitmapFont.TextBounds bounds;
+        private final Color color;
         private float xPosition;
 
-        private costValueCache(int count, TextureAtlas.AtlasRegion region) {
-            this.text = String.valueOf(count);
-            this.bounds = new BitmapFont.TextBounds(font.getBounds(text));
-            this.region = region;
+        private costValueCache(Color color, String text) {
+            this.text = text;
+            this.bounds = new BitmapFont.TextBounds(font.getBounds(this.text));
+            this.color = color;
 
             for (costValueCache cashe : caches) {
                 this.xPosition += cashe.bounds.width + maximalHeight;
@@ -92,11 +91,8 @@ public class TowerCost extends InteractiveBlock {
             float fontY = y + (height + maximalHeight) / 2f;
 
             spriteBatch.begin();
+            font.setColor(color);
             font.draw(spriteBatch, text, fontX, fontY);
-            spriteBatch.end();
-
-            spriteBatch.begin();
-            spriteBatch.draw(region, fontX + bounds.width, y, maximalHeight, maximalHeight);
             spriteBatch.end();
         }
 

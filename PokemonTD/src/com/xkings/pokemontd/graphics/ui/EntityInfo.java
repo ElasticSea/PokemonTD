@@ -32,18 +32,19 @@ class EntityInfo extends GuiBox {
     private Entity entity;
     private final BitmapFont pixelFont;
 
-    EntityInfo(final Ui ui, Rectangle rectangle, int offset, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
+    EntityInfo(final Ui ui, Rectangle rectangle, int offset, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
+               BitmapFont font) {
         super(rectangle, offset, shapeRenderer);
         this.ui = ui;
         this.spriteBatch = spriteBatch;
 
         this.pixelFont = App.getAssets().getPixelFont();
 
-        towerTypeInfo = new TowerTypeInfo(ui, offsetRectange, shapeRenderer, spriteBatch);
-        towerEntityInfo = new TowerEntityInfo(ui, offsetRectange, shapeRenderer, spriteBatch);
-        creepEntityInfo = new CreepEntityInfo(ui, offsetRectange, shapeRenderer, spriteBatch);
-        shopTypeInfo = new ShopTypeInfo(ui, offsetRectange, shapeRenderer, spriteBatch);
-        shopEntityInfo = new ShopEntityInfo(ui, offsetRectange, shapeRenderer, spriteBatch);
+        towerTypeInfo = new TowerTypeInfo(ui, offsetRectange, shapeRenderer, spriteBatch, font);
+        towerEntityInfo = new TowerEntityInfo(ui, offsetRectange, shapeRenderer, spriteBatch, font);
+        creepEntityInfo = new CreepEntityInfo(ui, offsetRectange, shapeRenderer, spriteBatch, font);
+        shopTypeInfo = new ShopTypeInfo(ui, offsetRectange, shapeRenderer, spriteBatch, font);
+        shopEntityInfo = new ShopEntityInfo(ui, offsetRectange, shapeRenderer, spriteBatch, font);
 
         clickables = new ArrayList<Clickable>();
         clickables.add(towerTypeInfo);

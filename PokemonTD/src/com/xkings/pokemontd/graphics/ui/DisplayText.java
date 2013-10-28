@@ -11,18 +11,18 @@ import com.badlogic.gdx.math.Rectangle;
  */
 public class DisplayText extends Button {
 
-    public DisplayText(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
-        super(rectangle, shapeRenderer, spriteBatch);
+    public DisplayText(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch, BitmapFont font) {
+        super(rectangle, shapeRenderer, spriteBatch, font);
     }
 
-    public DisplayText(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
+    public DisplayText(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch, BitmapFont font,
                        BitmapFont.HAlignment alignment) {
-        super(rectangle, shapeRenderer, spriteBatch, alignment);
+        super(rectangle, shapeRenderer, spriteBatch, font, alignment);
     }
 
-    public DisplayText(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
+    public DisplayText(Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,BitmapFont font,
                        BitmapFont.HAlignment alignment, Color color) {
-        super(rectangle, shapeRenderer, spriteBatch, alignment, color);
+        super(rectangle, shapeRenderer, spriteBatch, font, alignment, color);
     }
 
     @Override

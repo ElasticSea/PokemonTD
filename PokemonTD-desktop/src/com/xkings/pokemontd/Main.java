@@ -24,8 +24,9 @@ public class Main {
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "PokemonTD";
         cfg.useGL20 = true;
-        cfg.width = 800;
-        cfg.height = 640;
+        cfg.width = 1920;
+        cfg.height = 1080;
+        cfg.fullscreen = true;
 
         new LwjglApplication(new App(args), cfg);
     }

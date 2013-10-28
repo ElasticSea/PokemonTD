@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.xkings.pokemontd.App;
 import com.xkings.pokemontd.entity.creep.CreepType;
 import com.xkings.pokemontd.manager.WaveManager;
 
@@ -15,45 +14,44 @@ public class WaveInfo extends GuiBox {
     private final SpriteBatch spriteBatch;
     private final BitmapFont pixelFont;
     private final WaveManager waveManager;
+    private final DisplayText waveText;
+    private final DisplayText waveNumberText;
+    private final DisplayText abilityText;
+    private final DisplayPicture creepTexture;
 
     WaveInfo(Rectangle rectangle, int offset, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
-             WaveManager waveManager) {
+             WaveManager waveManager, BitmapFont font) {
         super(rectangle, offset, shapeRenderer);
         this.spriteBatch = spriteBatch;
         this.waveManager = waveManager;
-        this.pixelFont = App.getAssets().getPixelFont();
+        this.pixelFont = font;
+        float textHeight = height / 7f;
+        Rectangle scaled =
+                new Rectangle(x + textHeight, y + textHeight, width - textHeight * 2, height - textHeight * 2);
+        float quarterSize = scaled.height / 4f;
+        Rectangle waveRectangle =
+                new Rectangle(scaled.x, scaled.y + scaled.height - textHeight, scaled.width, textHeight);
+        Rectangle abilityRectangle = new Rectangle(scaled.x, scaled.y, scaled.width, textHeight);
+        this.waveText = new DisplayText(waveRectangle, shapeRenderer, spriteBatch, font, BitmapFont.HAlignment.LEFT);
+        this.waveNumberText =
+                new DisplayText(waveRectangle, shapeRenderer, spriteBatch, font, BitmapFont.HAlignment.RIGHT);
+        this.abilityText =
+                new DisplayText(abilityRectangle, shapeRenderer, spriteBatch, font, BitmapFont.HAlignment.CENTER);
+        this.creepTexture =
+                new DisplayPicture(scaled.x + quarterSize, scaled.y + quarterSize, quarterSize * 2, quarterSize * 2,
+                        shapeRenderer, spriteBatch);
     }
 
     @Override
     public void render() {
-        pixelFont.setScale(height / 32 / 10);
         super.render();
-        spriteBatch.begin();
         CreepType nextWave = waveManager.getNextWave();
         if (nextWave != null) {
-            float textureOffset = height / 5f;
-            spriteBatch.draw(waveManager.getNextWave().getTexture(), x + textureOffset, y + textureOffset,
-                    width - textureOffset * 2, height - textureOffset * 2);
+            waveText.render("Wave");
+            waveNumberText.render(String.valueOf(nextWave.getId()));
+            abilityText.render(nextWave.getAbilityType().toString());
+            creepTexture.render(nextWave.getTexture());
         }
-        int textOffset = offset * 2;
-        drawWaveInfo(textOffset);
-        drawAbilityInfo(textOffset);
-        spriteBatch.end();
-    }
-
-    private void drawAbilityInfo(int textOffset) {
-        CreepType nextWave = waveManager.getNextWave();
-        if (nextWave != null) {
-            pixelFont.drawMultiLine(spriteBatch, nextWave.getAbilityType().toString(), x + width / 2f,
-                    y + pixelFont.getCapHeight() * 2, 0, BitmapFont.HAlignment.CENTER);
-        }
-    }
-
-    private void drawWaveInfo(int textOffset) {
-        pixelFont.drawMultiLine(spriteBatch, "Wave : ", x + textOffset, y + height - pixelFont.getCapHeight(), 0,
-                BitmapFont.HAlignment.LEFT);
-        pixelFont.drawMultiLine(spriteBatch, String.valueOf(waveManager.getCurrentWave().getId() + 1),
-                x + width - textOffset, y + height - pixelFont.getCapHeight(), 0, BitmapFont.HAlignment.RIGHT);
     }
 
 }

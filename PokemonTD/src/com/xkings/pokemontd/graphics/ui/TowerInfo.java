@@ -34,30 +34,32 @@ public class TowerInfo extends CommonInfo {
     private boolean buyCache;
     private Treasure costCache;
 
-    public TowerInfo(final Ui ui, Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
-        super(ui, rectangle, shapeRenderer, spriteBatch);
+    public TowerInfo(final Ui ui, Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
+                     BitmapFont font) {
+        super(ui, rectangle, shapeRenderer, spriteBatch, font);
         this.spriteBatch = spriteBatch;
         this.ui = ui;
         this.pixelFont = App.getAssets().getPixelFont();
         float offset = height / 5;
         float offsetBlocks = height / 2;
-        cost = new TowerCost(new Rectangle(x + offset * 5, y + offset * 0, offset * 2, offset), shapeRenderer,
-                spriteBatch);
+        float towerCostOffset = offset / 3f;
+        cost = new TowerCost(new Rectangle(x + offset, y, width - offset * 2, offset), shapeRenderer,
+                spriteBatch, font);
         damage = new DisplayText(new Rectangle(x + offset * 5, y + offset * 3, offset * 2, offset), shapeRenderer,
-                spriteBatch);
-        speed = new DisplayText(new Rectangle(x + offset * 5, y+ offset * 2, offset * 2, offset), shapeRenderer,
-                spriteBatch);
-        range = new DisplayText(new Rectangle(x + offset * 5, y + offset, offset , offset), shapeRenderer,
-                spriteBatch);
+                spriteBatch, font);
+        speed = new DisplayText(new Rectangle(x + offset * 5, y + offset * 2, offset * 2, offset), shapeRenderer,
+                spriteBatch, font);
+        range = new DisplayText(new Rectangle(x + offset * 5, y + offset, offset, offset), shapeRenderer, spriteBatch,
+                font);
         sell = new Button(new Rectangle(x + width - offsetBlocks, y, offsetBlocks, offsetBlocks), shapeRenderer,
-                spriteBatch, BitmapFont.HAlignment.CENTER, new Color(Color.RED).mul(0.6f)) {
+                spriteBatch, font, BitmapFont.HAlignment.CENTER, new Color(Color.RED).mul(0.6f)) {
             @Override
             public void process(float x, float y) {
                 ui.getTowerManager().sellTower();
             }
         };
         buy = new Button(new Rectangle(x + width - offsetBlocks, y + offsetBlocks, offsetBlocks, offsetBlocks),
-                shapeRenderer, spriteBatch, BitmapFont.HAlignment.CENTER, new Color(Color.GREEN).mul(0.6f)) {
+                shapeRenderer, spriteBatch, font, BitmapFont.HAlignment.CENTER, new Color(Color.GREEN).mul(0.6f)) {
             @Override
             public void process(float x, float y) {
                 ui.getTowerManager().getNewOrUpgrade();
