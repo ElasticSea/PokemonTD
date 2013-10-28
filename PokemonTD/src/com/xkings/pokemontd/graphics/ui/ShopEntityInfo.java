@@ -4,6 +4,7 @@ import com.artemis.Entity;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.xkings.pokemontd.Treasure;
 import com.xkings.pokemontd.component.NameComponent;
 import com.xkings.pokemontd.component.SpriteComponent;
 
@@ -23,7 +24,7 @@ public class ShopEntityInfo extends TowerTypeInfo {
         SpriteComponent spriteComponent = entity.getComponent(SpriteComponent.class);
         NameComponent nameComponent = entity.getComponent(NameComponent.class);
         if (spriteComponent != null && nameComponent != null) {
-            render(spriteComponent.getSprite(), "", "", "","", nameComponent.getName(), true, false);
+            render(spriteComponent.getSprite(), "", "", "",new Treasure(0), nameComponent.getName(), true, false);
         }
     }
 

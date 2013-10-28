@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.xkings.pokemontd.App;
+import com.xkings.pokemontd.Treasure;
 import com.xkings.pokemontd.entity.tower.TowerType;
 
 /**
@@ -24,14 +25,14 @@ public class TowerInfo extends CommonInfo {
     protected final DisplayText range;
     protected final Button sell;
     protected final Button buy;
-    private final DisplayText cost;
+    private final TowerCost cost;
     protected TowerType tower;
     private String damageCache;
     private String speedCache;
     private String rangeCache;
     private boolean sellCache;
     private boolean buyCache;
-    private String costCache;
+    private Treasure costCache;
 
     public TowerInfo(final Ui ui, Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
         super(ui, rectangle, shapeRenderer, spriteBatch);
@@ -40,13 +41,13 @@ public class TowerInfo extends CommonInfo {
         this.pixelFont = App.getAssets().getPixelFont();
         float offset = height / 5;
         float offsetBlocks = height / 2;
-        cost = new DisplayText(new Rectangle(x + offset * 5 , y+ offset * 3, offset * 2, offset), shapeRenderer,
+        cost = new TowerCost(new Rectangle(x + offset * 5, y + offset * 0, offset * 2, offset), shapeRenderer,
                 spriteBatch);
-        damage = new DisplayText(new Rectangle(x + offset * 5, y + offset * 2, offset * 2, offset), shapeRenderer,
+        damage = new DisplayText(new Rectangle(x + offset * 5, y + offset * 3, offset * 2, offset), shapeRenderer,
                 spriteBatch);
-        range = new DisplayText(new Rectangle(x + offset * 5, y + offset, offset * 2, offset), shapeRenderer,
+        speed = new DisplayText(new Rectangle(x + offset * 5, y+ offset * 2, offset * 2, offset), shapeRenderer,
                 spriteBatch);
-        speed = new DisplayText(new Rectangle(x + offset * 5, y, offset * 2, offset), shapeRenderer,
+        range = new DisplayText(new Rectangle(x + offset * 5, y + offset, offset , offset), shapeRenderer,
                 spriteBatch);
         sell = new Button(new Rectangle(x + width - offsetBlocks, y, offsetBlocks, offsetBlocks), shapeRenderer,
                 spriteBatch, BitmapFont.HAlignment.CENTER, new Color(Color.RED).mul(0.6f)) {
@@ -83,8 +84,8 @@ public class TowerInfo extends CommonInfo {
         this.buy.render("buy");
     }
 
-    public void render(TextureAtlas.AtlasRegion region, String damage, String speed, String range,String cost, String name,
-                       boolean sell, boolean buy) {
+    public void render(TextureAtlas.AtlasRegion region, String damage, String speed, String range, Treasure cost,
+                       String name, boolean sell, boolean buy) {
         this.damageCache = damage;
         this.speedCache = speed;
         this.rangeCache = range;

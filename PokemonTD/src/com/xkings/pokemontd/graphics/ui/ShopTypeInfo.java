@@ -3,6 +3,7 @@ package com.xkings.pokemontd.graphics.ui;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.xkings.pokemontd.Treasure;
 import com.xkings.pokemontd.entity.tower.TowerType;
 
 /**
@@ -19,7 +20,7 @@ public class ShopTypeInfo extends TowerTypeInfo {
 
 
     public void render(TowerType tower) {
-        render(tower.getTexture(), "", "", "","", (tower.getName().toString()), false, true);
+        render(tower.getTexture(), "", "", "",new Treasure(0), (tower.getName().toString()), false, true);
     }
 
 }
