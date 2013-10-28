@@ -25,7 +25,6 @@ public class CreepEntityInfo extends CommonInfo {
     private int healthCache;
     private String typeCache;
 
-
     public CreepEntityInfo(final Ui ui, Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
         super(ui, rectangle, shapeRenderer, spriteBatch);
         this.pixelFont = App.getAssets().getPixelFont();
@@ -45,7 +44,6 @@ public class CreepEntityInfo extends CommonInfo {
         this.health.render("HP: " + healthCache);
         this.type.render("" + typeCache);
     }
-
 
     public void render(Entity entity) {
         SpriteComponent spriteComponent = entity.getComponent(SpriteComponent.class);

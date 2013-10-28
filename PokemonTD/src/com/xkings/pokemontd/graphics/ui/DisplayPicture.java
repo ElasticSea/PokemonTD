@@ -15,7 +15,6 @@ public class DisplayPicture extends DisplayBlock {
     private final Color color;
     private TextureAtlas.AtlasRegion texture;
 
-
     DisplayPicture(float x, float y, float width, float height, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
         this(x, y, width, height, shapeRenderer, spriteBatch, Color.CLEAR);
     }

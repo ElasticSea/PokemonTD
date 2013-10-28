@@ -42,7 +42,6 @@ abstract class Button extends InteractiveBlock {
         this.alignment = alignment;
     }
 
-
     @Override
     public void render() {
         if (color != Color.CLEAR) {
