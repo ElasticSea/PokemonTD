@@ -8,15 +8,14 @@ import com.xkings.core.component.PositionComponent;
 import com.xkings.core.component.SpeedComponent;
 import com.xkings.pokemontd.App;
 import com.xkings.pokemontd.component.DamageComponent;
-import com.xkings.pokemontd.component.attack.projectile.ProjectilAbility;
+import com.xkings.pokemontd.component.attack.projectile.ProjectileAbility;
 import com.xkings.pokemontd.entity.Projectile;
-import com.xkings.pokemontd.system.resolve.ClosestCreepSystem;
 import com.xkings.pokemontd.system.resolve.FirstCreepSystem;
 
 /**
  * Created by Tomas on 10/4/13.
  */
-public class FireProjectilSystem extends ApplyAbilitySystem<ProjectilAbility> {
+public class FireProjectilSystem extends ApplyAbilitySystem<ProjectileAbility> {
 
     @Mapper
     ComponentMapper<SpeedComponent> speedMapper;
@@ -27,12 +26,12 @@ public class FireProjectilSystem extends ApplyAbilitySystem<ProjectilAbility> {
 
 
     public FireProjectilSystem() {
-        //super(ProjectilAbility.class, ClosestCreepSystem.class);
-        super(ProjectilAbility.class, FirstCreepSystem.class);
+        //super(ProjectileAbility.class, ClosestCreepSystem.class);
+        super(ProjectileAbility.class, FirstCreepSystem.class);
     }
 
     @Override
-    protected void processTarget(ProjectilAbility ability, Entity entity, Entity target) {
+    protected void processTarget(ProjectileAbility ability, Entity entity, Entity target) {
         Vector3 position = positionMapper.get(entity).getPoint();
         float speed = speedMapper.get(entity).getSpeed();
         float damage = damageMapper.get(entity).getDamage();
@@ -42,7 +41,7 @@ public class FireProjectilSystem extends ApplyAbilitySystem<ProjectilAbility> {
         createProjectile(ability, position, damage, speed, closestEnemyPosition, target);
     }
 
-    public boolean createProjectile(ProjectilAbility projectileType, Vector3 position, float damage, float speed,
+    public boolean createProjectile(ProjectileAbility projectileType, Vector3 position, float damage, float speed,
                                     Vector3 targetPosition, Entity target) {
         switch (projectileType.getType()) {
             case FOLLOW_TARGET:

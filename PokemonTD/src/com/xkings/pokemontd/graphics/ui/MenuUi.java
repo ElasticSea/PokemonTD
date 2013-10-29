@@ -11,6 +11,7 @@ public class MenuUi extends GuiBox {
 
     private final Music theme;
     private final Icon muteButton;
+    private boolean mute;
 
     public MenuUi(Ui ui, float x, float y, float width, float height) {
         this(ui, new Rectangle(x, y, width, height));
@@ -20,11 +21,14 @@ public class MenuUi extends GuiBox {
         super(ui, rect);
         muteButton = new Icon(ui,
                 new Rectangle(offsetRectange.x, offsetRectange.y, offsetRectange.height, offsetRectange.height)) {
+
             @Override
             public void process(float x, float y) {
-                if (theme.getVolume() == 1) {
+                if (!mute) {
+                    mute = true;
                     theme.setVolume(0);
                 } else {
+                    mute = false;
                     theme.setVolume(1);
                 }
             }
@@ -39,6 +43,6 @@ public class MenuUi extends GuiBox {
     @Override
     public void render() {
         super.render();
-        muteButton.render(Assets.getTexture("mute"), height * 0.7f, true);
+        muteButton.render(Assets.getTexture(mute ? "unmute" : "mute"), height * 0.5f, true);
     }
 }

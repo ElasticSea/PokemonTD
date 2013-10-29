@@ -8,16 +8,15 @@ import com.xkings.pokemontd.Health;
 import com.xkings.pokemontd.component.DamageComponent;
 import com.xkings.pokemontd.component.HealthComponent;
 import com.xkings.pokemontd.component.attack.projectile.data.BonusAttack;
+import com.xkings.pokemontd.component.attack.projectile.data.EffectData;
 
 /**
  * Created by Tomas on 10/4/13.
  */
-public class HitBonusSystem extends HitSystem {
+public class HitBonusSystem extends OldHitSystem<BonusAttack> {
 
     @Mapper
     ComponentMapper<HealthComponent> healthMapper;
-    @Mapper
-    ComponentMapper<BonusAttack> dataMapper;
     @Mapper
     ComponentMapper<DamageComponent> damageMapper;
 
@@ -26,15 +25,13 @@ public class HitBonusSystem extends HitSystem {
     }
 
     @Override
-    public void onHit(Entity e, Entity target) {
-        BonusAttack data = dataMapper.get(e);
-
+    public void onHit(BonusAttack effectData, Entity e, Entity target) {
         float damage = damageMapper.get(e).getDamage();
         Health health = healthMapper.get(target).getHealth();
 
         dealDamage(damage, health);
-        if (App.CHANCE.happens(data.getChance())) {
-            for (int i = 0; i < data.getIterations(); i++) {
+        if (App.CHANCE.happens(effectData.getChance())) {
+            for (int i = 0; i < effectData.getIterations(); i++) {
                 dealDamage(damage, health);
             }
         }

@@ -17,6 +17,7 @@ public class ProjectileAbility extends AbilityComponent {
     public static final float FAST_SPEED = 8.0f;
     public static final float DEFAULT_SIZE = 0.1f;
     public static final float BIG_SIZE = 0.25f;
+    private final float aoe;
     private TextureAtlas.AtlasRegion texture;
     private Type type;
     private float speed;
@@ -45,7 +46,8 @@ public class ProjectileAbility extends AbilityComponent {
     }
 
     public static AbilityComponent getFire(float scale) {
-        return new ProjectileAbility("fire", Type.FOLLOW_TARGET, BIG_SIZE * scale, FAST_SPEED * scale, new NormalData());
+        return new ProjectileAbility("fire", Type.FOLLOW_TARGET, BIG_SIZE * scale, FAST_SPEED * scale,
+                new NormalData());
     }
 
     public static AbilityComponent getFireDot(float scale) {
@@ -69,16 +71,29 @@ public class ProjectileAbility extends AbilityComponent {
     }
 
 
+    public static AbilityComponent getSplashIce(float scale, float range, float slowRatio, float duration,
+                                                float chance) {
+        return new ProjectileAbility("bullet", Type.FOLLOW_TARGET, DEFAULT_SIZE * scale, NORMAL_SPEED * scale, range,
+                new SlowData("ice", slowRatio, duration, chance));
+    }
+
+
     public enum Type {
         FOLLOW_TARGET, LAST_KNOWN_PLACE, AHEAD_TARGET, PASS_THROUGH, IMMEDIATE_ATTACK;
     }
 
     public ProjectileAbility(String texture, Type type, float size, float speed, AbilityComponent... abilities) {
+        this(texture, type, size, speed, 0, abilities);
+    }
+
+    public ProjectileAbility(String texture, Type type, float size, float speed, float aoe,
+                             AbilityComponent... abilities) {
         this.ability = Arrays.asList(abilities);
         this.texture = Assets.getTexture(texture);
         this.type = type;
         this.speed = speed;
         this.size = size;
+        this.aoe = aoe;
     }
 
     public TextureAtlas.AtlasRegion getTexture() {
@@ -103,5 +118,9 @@ public class ProjectileAbility extends AbilityComponent {
 
     public List<AbilityComponent> getAbility() {
         return ability;
+    }
+
+    public float getAoe() {
+        return aoe;
     }
 }

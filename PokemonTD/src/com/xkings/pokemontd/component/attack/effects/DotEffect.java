@@ -6,8 +6,8 @@ package com.xkings.pokemontd.component.attack.effects;
 public class DotEffect extends AbstractEffect {
     private final float damage;
 
-    public DotEffect(float interval, int iterations, float damage) {
-        super("fireAnimation",interval, iterations);
+    public DotEffect(String effect, float interval, int iterations, float damage) {
+        super(effect, interval, iterations);
         this.damage = damage;
     }
 

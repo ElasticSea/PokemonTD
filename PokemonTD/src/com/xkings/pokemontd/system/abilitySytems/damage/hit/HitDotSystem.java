@@ -1,42 +1,28 @@
 package com.xkings.pokemontd.system.abilitySytems.damage.hit;
 
+import com.artemis.Component;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.xkings.pokemontd.component.DamageComponent;
-import com.xkings.pokemontd.component.SpriteComponent;
 import com.xkings.pokemontd.component.attack.effects.DotEffect;
 import com.xkings.pokemontd.component.attack.projectile.data.DotData;
 
 /**
  * Created by Tomas on 10/4/13.
  */
-public class HitDotSystem extends HitSystem {
+public class HitDotSystem extends HitSystem<DotData, DotEffect> {
 
-    @Mapper
-    ComponentMapper<DotData> dotDataMapper;
-    @Mapper
-    ComponentMapper<DotEffect> dotMapper;
     @Mapper
     ComponentMapper<DamageComponent> damageMapper;
-    @Mapper
-    ComponentMapper<SpriteComponent> spriteMapper;
 
     public HitDotSystem() {
-        super(DotData.class);
+        super(DotData.class, DotEffect.class);
     }
 
     @Override
-    public void onHit(Entity e, Entity target) {
-        DotData data = dotDataMapper.get(e);
-        DotEffect effect = dotMapper.getSafe(target);
-        if (effect == null) {
-            target.addComponent(new DotEffect(data.getInterval(), data.getIterations(),
-                    damageMapper.get(e).getDps() * data.getDamageMultiplier() / data.getIterations()));
-            world.changedEntity(target);
-        } else {
-            effect.reset();
-        }
+    protected Component createEffect(Entity e, DotData effectData) {
+        return new DotEffect(effectData.getEffect(), effectData.getInterval(), effectData.getIterations(),
+                damageMapper.get(e).getDps() * effectData.getDamageMultiplier() / effectData.getIterations());
     }
-
 }

@@ -7,8 +7,8 @@ public class SlowEffect extends AbstractEffect {
     private final float slowRatio;
     private float oldSpeed;
 
-    public SlowEffect(float interval, float slowRatio) {
-        super("entangle",interval, 1);
+    public SlowEffect(String effect,float interval, float slowRatio) {
+        super(effect,interval, 1);
         this.slowRatio = slowRatio;
     }
 

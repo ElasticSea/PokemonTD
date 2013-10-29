@@ -1,14 +1,13 @@
 package com.xkings.pokemontd.component.attack.projectile.data;
 
-import com.xkings.pokemontd.component.attack.AbilityComponent;
-
 /**
  * Created by Tomas on 10/13/13.
  */
-public class AoeComponent extends AbilityComponent {
+public class AoeComponent extends EffectData {
     private final float range;
 
     public AoeComponent(float range) {
+        super();
         this.range = range;
     }
 

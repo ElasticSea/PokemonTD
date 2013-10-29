@@ -170,7 +170,6 @@ public class App extends Game2D {
         world.setSystem(new ClosestSystemTower(), true);
         world.setSystem(new ClosestSystemTowerWithoutDamageBuff(), true);
         world.setSystem(new FirstCreepSystem(), true);
-        world.setSystem(new AoeSystem(), true);
         world.setSystem(new InvisibleSystem(), true);
         world.setSystem(new GetTower(), true);
         world.setSystem(new GetCreep(), true);
@@ -188,11 +187,11 @@ public class App extends Game2D {
         world.setSystem(new DamageBuffSystem());
         world.setSystem(new MovementSystem());
 
-
         world.setSystem(new HitLifeStealSystem());
         world.setSystem(new HitDotSystem());
         world.setSystem(new HitNormalSystem());
-        world.setSystem(new HitAoeSystem());
+      //  world.setSystem(new HitAoeSystem());
+      // world.setSystem(new HitSlowAoeSystem());
         world.setSystem(new HitSlowSystem());
         world.setSystem(new HitBonusSystem());
         world.setSystem(new ApplyBuffSystem());

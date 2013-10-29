@@ -1,19 +1,16 @@
 package com.xkings.pokemontd.component.attack.projectile.data;
 
-import com.xkings.pokemontd.component.attack.AbilityComponent;
-
 /**
  * Created by Tomas on 10/13/13.
  */
-public class SlowData extends AbilityComponent {
+public class SlowData extends EffectData {
     private float slowRatio;
     private float duration;
-    private float chance;
 
-    public SlowData(float slowRatio, float duration, float chance) {
+    public SlowData(String effect, float slowRatio, float duration, float chance) {
+        super(effect, chance);
         this.slowRatio = slowRatio;
         this.duration = duration;
-        this.chance = chance;
     }
 
     public float getSlowRatio() {
@@ -22,9 +19,5 @@ public class SlowData extends AbilityComponent {
 
     public float getDuration() {
         return duration;
-    }
-
-    public float getChance() {
-        return chance;
     }
 }

@@ -38,7 +38,6 @@ public class MoneyInfo extends ConcreteEntity {
         final MoneyInfo moneyInfo = new MoneyInfo(world, money, x, y);
         moneyInfo.register();
 
-
         TweenCallback callback = new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
@@ -50,9 +49,4 @@ public class MoneyInfo extends ConcreteEntity {
         Tween.to(moneyInfo.color.getTint(), ColorAccessor.A, 1).target(0).setCallback(callback).start(
                 App.getTweenManager());
     }
-
-
- /*   private static void translateAtoB(Vector3 a, Vector3 b, float duration, TweenCallback callback) {
-        Tween.to(a, Vector3Accessor.XYZ, duration).target(b.x, b.y, b.z).setCallback(callback).start(App.getTweenManager());
-    }    */
 }
