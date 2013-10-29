@@ -17,6 +17,6 @@ public class Chance {
     public boolean happens(double chance) {
         if (chance >= 1) return true;
         if (chance <= 0) return false;
-        return random.nextInt(factor) < (int) (factor * chance);
+        return random.nextInt(factor) <= (int) (factor * chance);
     }
 }
