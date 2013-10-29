@@ -19,8 +19,8 @@ import com.xkings.pokemontd.entity.tower.Tower;
 import com.xkings.pokemontd.entity.tower.TowerName;
 import com.xkings.pokemontd.entity.tower.TowerType;
 import com.xkings.pokemontd.graphics.ui.Clickable;
-import com.xkings.pokemontd.system.FindShop;
-import com.xkings.pokemontd.system.GetTower;
+import com.xkings.pokemontd.system.resolve.FindShop;
+import com.xkings.pokemontd.system.resolve.GetTower;
 
 /**
  * Created by Tomas on 10/7/13.

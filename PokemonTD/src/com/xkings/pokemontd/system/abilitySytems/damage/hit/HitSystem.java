@@ -1,4 +1,4 @@
-package com.xkings.pokemontd.system.abilitySytems.projectile.hit;
+package com.xkings.pokemontd.system.abilitySytems.damage.hit;
 
 import com.artemis.Aspect;
 import com.artemis.Component;
@@ -12,7 +12,7 @@ import com.xkings.core.component.SizeComponent;
 import com.xkings.core.component.TargetComponent;
 import com.xkings.core.utils.Collision;
 import com.xkings.pokemontd.component.DamageComponent;
-import com.xkings.pokemontd.component.attack.projectile.ProjectileComponent;
+import com.xkings.pokemontd.component.attack.projectile.ProjectilAbility;
 
 /**
  * Created by Tomas on 10/4/13.
@@ -28,7 +28,7 @@ public abstract class HitSystem extends EntityProcessingSystem {
     @Mapper
     ComponentMapper<SizeComponent> sizeMapper;
     @Mapper
-    ComponentMapper<ProjectileComponent> projectileMapper;
+    ComponentMapper<ProjectilAbility> projectileMapper;
 
 
     public HitSystem(Class<? extends Component> filter) {
@@ -44,7 +44,7 @@ public abstract class HitSystem extends EntityProcessingSystem {
             e.deleteFromWorld();
             return;
         }
-        if (projectileMapper.get(e).getType().equals(ProjectileComponent.Type.IMMEDIATE_ATTACK)) {
+        if (projectileMapper.get(e).getType().equals(ProjectilAbility.Type.IMMEDIATE_ATTACK)) {
             hit(e, target);
         }
 

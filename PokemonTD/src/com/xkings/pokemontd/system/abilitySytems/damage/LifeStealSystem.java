@@ -1,4 +1,4 @@
-package com.xkings.pokemontd.system.abilitySytems.projectile;
+package com.xkings.pokemontd.system.abilitySytems.damage;
 
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
@@ -10,7 +10,7 @@ import com.xkings.pokemontd.component.attack.effects.LifeStealEffect;
 /**
  * Created by Tomas on 10/4/13.
  */
-public class LifeStealSystem extends EffectSystem {
+public class LifeStealSystem extends EffectSystem<LifeStealEffect> {
 
     @Mapper
     ComponentMapper<HealthComponent> healthMapper;
@@ -22,23 +22,21 @@ public class LifeStealSystem extends EffectSystem {
     }
 
     @Override
-    protected void started(Entity e) {
-        LifeStealEffect lifeSteal = lifeStealMapper.get(e);
+    protected void started(LifeStealEffect effect, Entity e) {
         Health health = healthMapper.get(e).getHealth();
-        float lifeStole = health.getMaxHealth() * lifeSteal.getRatio();
-        lifeSteal.setStoleLife(lifeStole);
-        health.decrees(lifeStole);
+        float lifeStole = health.getMaxHealth() * effect.getRatio();
+        effect.setStoleLife(lifeStole);
+        health.decease(lifeStole);
     }
 
     @Override
-    protected void processEffect(Entity e) {
-        LifeStealEffect lifeSteal = lifeStealMapper.get(e);
+    protected void processEffect(LifeStealEffect effect, Entity e) {
         Health health = healthMapper.get(e).getHealth();
         if (health.isAlive()) {
-            health.increase(lifeSteal.getStoleLife());
-            lifeSteal.setStoleLife(0);
+            health.increase(effect.getStoleLife());
+            effect.setStoleLife(0);
         }
-        e.removeComponent(lifeSteal);
+        e.removeComponent(effect);
         world.changedEntity(e);
     }
 

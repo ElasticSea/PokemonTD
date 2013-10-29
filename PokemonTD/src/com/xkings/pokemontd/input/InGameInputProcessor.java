@@ -1,15 +1,12 @@
 package com.xkings.pokemontd.input;
 
-import com.artemis.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.xkings.core.graphics.camera.CameraHandler;
 import com.xkings.core.input.GestureProcessor;
 import com.xkings.pokemontd.graphics.ui.Clickable;
 import com.xkings.pokemontd.manager.CreepManager;
 import com.xkings.pokemontd.manager.TowerManager;
-import com.xkings.pokemontd.system.GetCreep;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

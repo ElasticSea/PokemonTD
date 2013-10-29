@@ -1,4 +1,4 @@
-package com.xkings.pokemontd.system.abilitySytems.projectile;
+package com.xkings.pokemontd.system.abilitySytems.damage;
 
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
@@ -9,7 +9,7 @@ import com.xkings.pokemontd.component.attack.effects.SlowEffect;
 /**
  * Created by Tomas on 10/4/13.
  */
-public class SlowSystem extends EffectSystem {
+public class SlowSystem extends EffectSystem<SlowEffect> {
 
     @Mapper
     ComponentMapper<SpeedComponent> speedMapper;
@@ -21,16 +21,14 @@ public class SlowSystem extends EffectSystem {
     }
 
     @Override
-    protected void started(Entity e) {
-        SlowEffect effect = effectMMapper.get(e);
+    protected void started(SlowEffect effect, Entity e) {
         SpeedComponent speed = speedMapper.get(e);
         effect.setOldSpeed(speed.getSpeed());
         speed.scaleSpeed(1 - effect.getSlowRatio());
     }
 
     @Override
-    protected void processEffect(Entity e) {
-        SlowEffect effect = effectMMapper.get(e);
+    protected void processEffect(SlowEffect effect, Entity e) {
         SpeedComponent speed = speedMapper.get(e);
         speed.setSpeed(effect.getOldSpeed());
     }

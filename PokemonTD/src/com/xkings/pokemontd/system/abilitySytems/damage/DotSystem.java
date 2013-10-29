@@ -1,4 +1,4 @@
-package com.xkings.pokemontd.system.abilitySytems.projectile;
+package com.xkings.pokemontd.system.abilitySytems.damage;
 
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
@@ -9,7 +9,7 @@ import com.xkings.pokemontd.component.attack.effects.DotEffect;
 /**
  * Created by Tomas on 10/4/13.
  */
-public class DotSystem extends EffectSystem {
+public class DotSystem extends EffectSystem<DotEffect> {
 
     @Mapper
     ComponentMapper<HealthComponent> healthMapper;
@@ -21,7 +21,7 @@ public class DotSystem extends EffectSystem {
     }
 
     @Override
-    protected void processEffect(Entity e) {
-        healthMapper.get(e).getHealth().decrees(dotMapper.get(e).getDamage());
+    protected void processEffect(DotEffect effect, Entity e) {
+        healthMapper.get(e).getHealth().decease(dotMapper.get(e).getDamage());
     }
 }

@@ -3,8 +3,7 @@ package com.xkings.pokemontd.manager;
 import com.artemis.Entity;
 import com.artemis.World;
 import com.xkings.pokemontd.graphics.ui.Clickable;
-import com.xkings.pokemontd.system.GetCreep;
-import com.xkings.pokemontd.system.GetTower;
+import com.xkings.pokemontd.system.resolve.GetCreep;
 
 /**
  * Created by Tomas on 10/7/13.

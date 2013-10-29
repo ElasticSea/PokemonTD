@@ -7,53 +7,53 @@ import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.component.PositionComponent;
 import com.xkings.core.component.RangeComponent;
 import com.xkings.pokemontd.component.attack.AbilityComponent;
-import com.xkings.pokemontd.system.ClosestSystem;
+import com.xkings.pokemontd.system.resolve.ClosestSystem;
 
 /**
  * Created by Tomas on 10/4/13.
  */
-public class ApplyAbilitySystem extends IntervalAbilitySystem {
+public abstract class ApplyAbilitySystem<T extends AbilityComponent> extends IntervalAbilitySystem<T> {
 
-    private Class<? extends ClosestSystem> target;
+    private Class<? extends ClosestSystem> resolveTargetSystem;
     @Mapper
     ComponentMapper<PositionComponent> positionMapper;
     @Mapper
     ComponentMapper<RangeComponent> rangeMapper;
+
     private ClosestSystem closestSystem;
 
 
-    public ApplyAbilitySystem(Class<? extends AbilityComponent> ability, Class<? extends ClosestSystem> target) {
+    public ApplyAbilitySystem(Class<T> ability, Class<? extends ClosestSystem> resolveTargetSystem) {
         super(ability);
-        this.target = target;
+        this.resolveTargetSystem = resolveTargetSystem;
     }
 
     @Override
     protected void initialize() {
-        if (target != null) {
-            this.closestSystem = world.getSystem(target);
+        super.initialize();
+        if (resolveTargetSystem != null) {
+            this.closestSystem = world.getSystem(resolveTargetSystem);
         }
     }
 
     @Override
-    protected void run(Entity entity) {
+    protected void run(T ability, Entity entity) {
         Vector3 position = positionMapper.get(entity).getPoint();
         float range = rangeMapper.get(entity).getRange();
 
-        if (target != null && target != closestSystem.getClass()) {
-            this.closestSystem = world.getSystem(target);
+        if (resolveTargetSystem != null && resolveTargetSystem != closestSystem.getClass()) {
+            this.closestSystem = world.getSystem(resolveTargetSystem);
         }
         closestSystem.start(entity, position, range);
         Entity closestEnemy = closestSystem.getClosestEntity();
         if (closestEnemy != null) {
-            processTarget(entity, closestEnemy);
+            processTarget(ability, entity, closestEnemy);
         }
     }
 
-    public void setClosestEntityAlgorithm(Class<? extends ClosestSystem> target) {
-        this.target = target;
+    public void setClosestEntityAlgorithm(Class<? extends ClosestSystem> resolveTargetSystem) {
+        this.resolveTargetSystem = resolveTargetSystem;
     }
 
-    protected void processTarget(Entity entity, Entity target) {
-
-    }
+    protected abstract void processTarget(T ability, Entity entity, Entity target);
 }

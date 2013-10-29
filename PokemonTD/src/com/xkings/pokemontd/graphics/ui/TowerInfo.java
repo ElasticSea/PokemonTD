@@ -17,6 +17,8 @@ import com.xkings.pokemontd.entity.tower.TowerType;
  */
 
 public class TowerInfo extends CommonInfo {
+    public static final Color SELL_COLOR = new Color(Color.RED).mul(0.6f);
+    public static final Color BUY_COLOR = new Color(Color.GREEN).mul(0.6f);
     protected final Ui ui;
     protected final SpriteBatch spriteBatch;
     protected final BitmapFont pixelFont;
@@ -33,6 +35,9 @@ public class TowerInfo extends CommonInfo {
     private boolean sellCache;
     private boolean buyCache;
     private Treasure costCache;
+    private Color damageColorCache;
+    private Color speedColorCache;
+    private Color rangeColorChache;
 
     /**
      * public constuctor makes 3 text rectangles uses class DisplayText (damage,range,speed).
@@ -60,14 +65,14 @@ public class TowerInfo extends CommonInfo {
         speed = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset * 2, offset * 2, offset), font);
         range = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset, offset, offset), font);
         sell = new Button(ui, new Rectangle(x + width - offsetBlocks, y, offsetBlocks, offsetBlocks), font,
-                BitmapFont.HAlignment.CENTER, new Color(Color.RED).mul(0.6f)) {
+                BitmapFont.HAlignment.CENTER) {
             @Override
             public void process(float x, float y) {
                 ui.getTowerManager().sellTower();
             }
         };
         buy = new Button(ui, new Rectangle(x + width - offsetBlocks, y + offsetBlocks, offsetBlocks, offsetBlocks),
-                font, BitmapFont.HAlignment.CENTER, new Color(Color.GREEN).mul(0.6f)) {
+                font, BitmapFont.HAlignment.CENTER) {
             @Override
             public void process(float x, float y) {
                 ui.getTowerManager().buyNewOrUpgrade();
@@ -89,19 +94,32 @@ public class TowerInfo extends CommonInfo {
         this.buy.setEnabled(buyCache);
 
         super.render();
-        this.damage.render(damageCache);
-        this.speed.render(speedCache);
-        this.range.render(rangeCache);
+        this.damage.render(damageCache, damageColorCache);
+        this.speed.render(speedCache, speedColorCache);
+        this.range.render(rangeCache, rangeColorChache);
         this.cost.render(costCache);
-        this.sell.render("sell");
-        this.buy.render("buy");
+        this.sell.render("sell", Color.WHITE, SELL_COLOR);
+        this.buy.render("buy", Color.WHITE, BUY_COLOR);
+    }
+
+    public void render(TextureAtlas.AtlasRegion region, Treasure cost, String name, boolean sell, boolean buy) {
+        render(region, "", "", "", cost, name, sell, buy);
     }
 
     public void render(TextureAtlas.AtlasRegion region, String damage, String speed, String range, Treasure cost,
                        String name, boolean sell, boolean buy) {
+        render(region, damage, Color.WHITE, speed, Color.WHITE, range, Color.WHITE, cost, name, sell, buy);
+    }
+
+    public void render(TextureAtlas.AtlasRegion region, String damage, Color damageColor, String speed,
+                       Color speedColor, String range, Color rangeColor, Treasure cost, String name, boolean sell,
+                       boolean buy) {
         this.damageCache = damage;
+        this.damageColorCache = damageColor;
         this.speedCache = speed;
+        this.speedColorCache = speedColor;
         this.rangeCache = range;
+        this.rangeColorChache = rangeColor;
         this.costCache = cost;
         this.sellCache = sell;
         this.buyCache = buy;

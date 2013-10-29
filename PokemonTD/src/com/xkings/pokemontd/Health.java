@@ -14,7 +14,8 @@ public class Health {
         return currentHealth / maxHealth;
     }
 
-    public void decrees(float count) {
+    public void decease(float count) {
+        System.out.println("Health decreased: "+count);
         currentHealth = Math.max(0, currentHealth - count);
     }
 

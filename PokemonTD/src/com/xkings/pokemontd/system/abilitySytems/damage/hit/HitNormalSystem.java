@@ -1,4 +1,4 @@
-package com.xkings.pokemontd.system.abilitySytems.projectile.hit;
+package com.xkings.pokemontd.system.abilitySytems.damage.hit;
 
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
@@ -21,7 +21,7 @@ public class HitNormalSystem extends HitSystem {
 
     public void onHit(Entity entity, Entity target) {
         float damage = damageMapper.get(entity).getDamage();
-        healthMapper.get(target).getHealth().decrees((int) damage);
+        healthMapper.get(target).getHealth().decease((int) damage);
     }
 
 }

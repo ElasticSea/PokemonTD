@@ -13,15 +13,26 @@ import com.xkings.pokemontd.component.attack.AbilityComponent;
 /**
  * Created by Tomas on 10/4/13.
  */
-public class IntervalAbilitySystem extends EntityProcessingSystem {
+public abstract class IntervalAbilitySystem<T extends AbilityComponent> extends EntityProcessingSystem {
 
+    private final Class<T> ability;
     @Mapper
     ComponentMapper<SpeedComponent> speedMapper;
     @Mapper
     ComponentMapper<TimeComponent> timeMapper;
 
-    public IntervalAbilitySystem(Class<? extends AbilityComponent> filter) {
-        super(Aspect.getAspectForAll(TimeComponent.class, SpeedComponent.class, filter));
+    ComponentMapper<T> abilityMapper;
+
+    public IntervalAbilitySystem(Class<T> ability) {
+        super(Aspect.getAspectForAll(TimeComponent.class, SpeedComponent.class, ability));
+        this.ability = ability;
+    }
+
+    @Override
+    protected void initialize() {
+        super.initialize();
+        abilityMapper = world.getMapper(ability);
+        System.out.println(abilityMapper);
     }
 
     @Override
@@ -31,11 +42,10 @@ public class IntervalAbilitySystem extends EntityProcessingSystem {
         float speed = speedMapper.get(entity).getSpeed();
         while (time.getAvailableTime() >= speed) {
             time.decrease(speed);
-            run(entity);
+            run(abilityMapper.get(entity), entity);
         }
     }
 
-    protected void run(Entity entity) {
-    }
+    protected abstract void run(T ability, Entity entity);
 
 }

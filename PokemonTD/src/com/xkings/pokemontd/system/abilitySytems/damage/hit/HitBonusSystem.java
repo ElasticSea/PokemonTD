@@ -1,4 +1,4 @@
-package com.xkings.pokemontd.system.abilitySytems.projectile.hit;
+package com.xkings.pokemontd.system.abilitySytems.damage.hit;
 
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
@@ -8,7 +8,6 @@ import com.xkings.pokemontd.Health;
 import com.xkings.pokemontd.component.DamageComponent;
 import com.xkings.pokemontd.component.HealthComponent;
 import com.xkings.pokemontd.component.attack.projectile.data.BonusAttack;
-import com.xkings.pokemontd.component.attack.projectile.data.SlowData;
 
 /**
  * Created by Tomas on 10/4/13.
@@ -42,7 +41,7 @@ public class HitBonusSystem extends HitSystem {
     }
 
     private void dealDamage(float damage, Health health) {
-        health.decrees((int) damage);
+        health.decease((int) damage);
     }
 
 }

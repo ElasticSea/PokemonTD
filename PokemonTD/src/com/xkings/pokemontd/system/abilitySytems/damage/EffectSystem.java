@@ -1,4 +1,4 @@
-package com.xkings.pokemontd.system.abilitySytems.projectile;
+package com.xkings.pokemontd.system.abilitySytems.damage;
 
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
@@ -13,14 +13,14 @@ import com.xkings.pokemontd.component.attack.effects.AbstractEffect;
 /**
  * Created by Tomas on 10/4/13.
  */
-public class EffectSystem extends EntityProcessingSystem {
+public class EffectSystem<T extends AbstractEffect> extends EntityProcessingSystem {
 
-    private ComponentMapper<? extends AbstractEffect> effectMapper;
-    private final Class<? extends AbstractEffect> effect;
+    private ComponentMapper<T> effectMapper;
+    private final Class<T> effect;
     @Mapper
     ComponentMapper<SpriteComponent> spriteMapper;
 
-    public EffectSystem(Class<? extends AbstractEffect> effect) {
+    public EffectSystem(Class<T> effect) {
         super(Aspect.getAspectForAll(effect));
         this.effect = effect;
     }
@@ -33,11 +33,11 @@ public class EffectSystem extends EntityProcessingSystem {
 
     @Override
     protected void process(Entity e) {
-        AbstractEffect effect = effectMapper.get(e);
+        T effect = effectMapper.get(e);
         SpriteComponent spriteComponent = spriteMapper.get(e);
         if (!effect.isStarted()) {
             addEffect(effect, spriteComponent);
-            started(e);
+            started(effect, e);
         }
         effect.update(world.delta);
         if (spriteComponent.get(SpriteComponent.Type.EFFECT) == null) {
@@ -47,10 +47,10 @@ public class EffectSystem extends EntityProcessingSystem {
             addEffect(effect, spriteComponent);
         }
         while (effect.isReady()) {
-            processEffect(e);
+            processEffect(effect, e);
         }
         if (effect.isFinished()) {
-            finished(e);
+            finished(effect, e);
             removeEffect(spriteComponent);
             e.removeComponent(effect.getClass());
             e.changedInWorld();
@@ -65,15 +65,15 @@ public class EffectSystem extends EntityProcessingSystem {
         spriteComponent.add(SpriteComponent.Type.EFFECT, new Animation(Assets.getTextureArray(effect.getEffect())));
     }
 
-    protected void finished(Entity e) {
+    protected void finished(T effect, Entity e) {
 
     }
 
-    protected void started(Entity e) {
+    protected void started(T effect, Entity e) {
 
     }
 
-    protected void processEffect(Entity e) {
+    protected void processEffect(T effect, Entity e) {
 
     }
 }

@@ -1,4 +1,4 @@
-package com.xkings.pokemontd.system.abilitySytems.projectile.hit;
+package com.xkings.pokemontd.system.abilitySytems.damage.hit;
 
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
@@ -14,7 +14,7 @@ import com.xkings.pokemontd.component.HealthComponent;
 import com.xkings.pokemontd.component.PathComponent;
 import com.xkings.pokemontd.component.WaveComponent;
 import com.xkings.pokemontd.component.attack.projectile.data.BubbleData;
-import com.xkings.pokemontd.system.IntersectEnemySystem;
+import com.xkings.pokemontd.system.resolve.IntersectEnemySystem;
 
 /**
  * Created by Tomas on 10/4/13.
@@ -41,7 +41,7 @@ public class BubbleSystem extends EntityProcessingSystem {
         intersectSystem = new IntersectEnemySystem(WaveComponent.class) {
             @Override
             protected void intersect(Entity e) {
-                healthMapper.get(e).getHealth().decrees(damage / bubble.getInterval());
+                healthMapper.get(e).getHealth().decease(damage / bubble.getInterval());
             }
         };
         world.setSystem(intersectSystem, true);

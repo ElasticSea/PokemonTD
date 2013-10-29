@@ -1,6 +1,7 @@
 package com.xkings.pokemontd.component;
 
 import com.artemis.Component;
+import com.xkings.pokemontd.component.attack.effects.buff.DamageBuffEffect;
 
 /**
  * Created by Tomas on 10/13/13.
@@ -8,9 +9,10 @@ import com.artemis.Component;
 public class DamageComponent extends Component {
     private float damage;
     private final float dps;
+    private DamageBuffEffect buff;
 
     public DamageComponent(float damage) {
-        this(damage,1);
+        this(damage, 1);
     }
 
     public DamageComponent(float damage, float speed) {
@@ -19,7 +21,7 @@ public class DamageComponent extends Component {
     }
 
     public float getDamage() {
-        return damage;
+        return damage * (buff != null ? buff.getRatio() : 1);
     }
 
     public void setDamage(float damage) {
@@ -28,5 +30,9 @@ public class DamageComponent extends Component {
 
     public float getDps() {
         return dps;
+    }
+
+    public void setBuff(DamageBuffEffect buff) {
+        this.buff = buff;
     }
 }

@@ -32,11 +32,12 @@ import com.xkings.pokemontd.map.MapBuilder;
 import com.xkings.pokemontd.map.MapData;
 import com.xkings.pokemontd.map.Path;
 import com.xkings.pokemontd.map.PathPack;
-import com.xkings.pokemontd.system.*;
-import com.xkings.pokemontd.system.abilitySytems.projectile.*;
-import com.xkings.pokemontd.system.abilitySytems.projectile.hit.*;
+import com.xkings.pokemontd.system.abilitySytems.damage.*;
+import com.xkings.pokemontd.system.abilitySytems.damage.hit.*;
 import com.xkings.pokemontd.system.autonomous.*;
+import com.xkings.pokemontd.system.resolve.*;
 import com.xkings.pokemontd.system.trigger.ApplyBuffSystem;
+import com.xkings.pokemontd.system.trigger.ApplySunbeamSystem;
 import com.xkings.pokemontd.system.trigger.FireProjectilSystem;
 import com.xkings.pokemontd.tween.ColorAccessor;
 
@@ -171,7 +172,9 @@ public class App extends Game2D {
         world.setSystem(new GetTower(), true);
         world.setSystem(new GetCreep(), true);
         world.setSystem(new FindShop(), true);
-        world.setSystem(new MovementSystem());
+
+        world.setSystem(new DamageOverPolySystem(), true);
+        world.setSystem(new TargetingSystem());
         world.setSystem(new WaveSystem(player));
         world.setSystem(new FireProjectilSystem());
         world.setSystem(new LifeStealSystem());
@@ -179,7 +182,9 @@ public class App extends Game2D {
         world.setSystem(new HealingSystem());
         world.setSystem(new DotSystem());
         world.setSystem(new SlowSystem());
-        world.setSystem(new BuffSystem());
+        world.setSystem(new DamageBuffSystem());
+        world.setSystem(new MovementSystem());
+
 
         world.setSystem(new HitLifeStealSystem());
         world.setSystem(new HitDotSystem());
@@ -188,6 +193,7 @@ public class App extends Game2D {
         world.setSystem(new HitSlowSystem());
         world.setSystem(new HitBonusSystem());
         world.setSystem(new ApplyBuffSystem());
+        world.setSystem(new ApplySunbeamSystem());
 
         world.setSystem(new BubbleSystem(world));
         world.initialize();

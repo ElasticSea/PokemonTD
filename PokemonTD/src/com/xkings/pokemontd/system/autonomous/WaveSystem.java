@@ -37,7 +37,7 @@ public class WaveSystem extends EntityProcessingSystem {
         float damage = damageMapper.get(entity).getDamage();
         PositionComponent positionComponent = positionMapper.get(entity);
         if (path.isFinished()) {
-            player.getHealth().decrees((int) damage);
+            player.getHealth().decease((int) damage);
             path.reset();
             positionComponent.getPoint().set(path.get());
         }

@@ -18,24 +18,18 @@ abstract class Button extends InteractiveBlock {
     private final BitmapFont font;
     private Vector2 position;
     private final ShapeRenderer shapeRenderer;
-    private final Color color;
+    private Color color = Color.CLEAR;
+    private Color backgroundColor = Color.CLEAR;
 
-    protected Button(Ui ui,Rectangle rectangle, BitmapFont font) {
-        this(ui,rectangle,  font, BitmapFont.HAlignment.LEFT, Color.CLEAR);
+    protected Button(Ui ui, Rectangle rectangle, BitmapFont font) {
+        this(ui, rectangle, font, BitmapFont.HAlignment.LEFT);
     }
 
-    protected Button(Ui ui,Rectangle rectangle,  BitmapFont font,
-                     BitmapFont.HAlignment alignment) {
-        this(ui,rectangle,  font, alignment, Color.CLEAR);
-    }
-
-    public Button(Ui ui,Rectangle rectangle, BitmapFont font,
-                  BitmapFont.HAlignment alignment, Color color) {
+    protected Button(Ui ui, Rectangle rectangle, BitmapFont font, BitmapFont.HAlignment alignment) {
         super(rectangle);
         this.shapeRenderer = ui.getShapeRenderer();
         this.spriteBatch = ui.getSpriteBatch();
         this.text = new String();
-        this.color = color;
         this.font = font;
         this.alignment = alignment;
         this.position = recalculatePosition(text);
@@ -48,24 +42,35 @@ abstract class Button extends InteractiveBlock {
 
     @Override
     public void render() {
-        if (color != Color.CLEAR || App.DEBUG != null) {
-            Color color = isEnabled() ? this.color : Color.DARK_GRAY;
+        if (backgroundColor != Color.CLEAR || App.DEBUG != null) {
+            Color color = isEnabled() ? this.backgroundColor : Color.DARK_GRAY;
             shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
             shapeRenderer.setColor(App.DEBUG != null ? Color.GREEN : color);
             shapeRenderer.rect(x, y, width, height);
             shapeRenderer.end();
         }
         spriteBatch.begin();
-        font.setColor(isEnabled() ? Color.WHITE : Color.GRAY);
+        font.setColor(isEnabled() ? color : Color.GRAY);
         font.drawMultiLine(spriteBatch, text, x, y + position.y, width, alignment);
         spriteBatch.end();
     }
 
     public void render(String text) {
+        render(text, Color.WHITE);
+    }
+
+    public void render(String text, Color color) {
+        render(text, color, Color.CLEAR);
+    }
+
+
+    public void render(String text, Color color, Color backgroundColor) {
         if (!text.equals(this.text)) {
             this.text = text;
             recalculatePosition(text);
         }
+        this.color = color;
+        this.backgroundColor = backgroundColor;
         render();
     }
 

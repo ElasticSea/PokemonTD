@@ -50,9 +50,46 @@ public class Treasure {
         addElement(element, -count);
     }
 
-    public void addGold(int count) {
+    public Treasure addGold(int count) {
         gold += count;
+        return this;
     }
+
+    public Treasure addWater(int count) {
+        addElement(WATER, count);
+        return this;
+    }
+
+    public Treasure addFire(int count) {
+        addElement(FIRE, count);
+        return this;
+    }
+
+    public Treasure addNature(int count) {
+        addElement(NATURE, count);
+        return this;
+    }
+
+    public Treasure addLight(int count) {
+        addElement(LIGHT, count);
+        return this;
+    }
+
+    public Treasure addDarkness(int count) {
+        addElement(DARKNESS, count);
+        return this;
+    }
+
+    public Treasure addPure(int count) {
+        addElement(PURE, count);
+        return this;
+    }
+
+    public Treasure addSoul(int count) {
+        addElement(SOUL, count);
+        return this;
+    }
+
 
     public boolean hasGold(int count) {
         return gold >= count;

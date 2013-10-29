@@ -1,4 +1,4 @@
-package com.xkings.pokemontd.system.abilitySytems.projectile.hit;
+package com.xkings.pokemontd.system.abilitySytems.damage.hit;
 
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
