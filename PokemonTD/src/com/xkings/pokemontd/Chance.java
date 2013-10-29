@@ -15,7 +15,7 @@ public class Chance {
 
     private static final int factor = (int) Math.pow(10,9);
     public boolean happens(double chance) {
-        if (chance > 1) return true;
+        if (chance >= 1) return true;
         if (chance <= 0) return false;
         return random.nextInt(factor) < (int) (factor * chance);
     }
