@@ -145,6 +145,12 @@ public class Treasure {
         this.subtractGold(treasure.getGold());
     }
 
+
+    public void purchase(Treasure cost) {
+        this.subtractGold(cost.getGold());
+        this.subtractElement(PURE, cost.getElement(PURE));
+    }
+
     public void add(Treasure treasure) {
         for (Map.Entry<Element, Integer> entry : treasure.elementSet.entrySet()) {
             this.addElement(entry.getKey(), entry.getValue());

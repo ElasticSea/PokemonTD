@@ -100,8 +100,12 @@ public class TowerTypeBuilder {
         specs.add(new Specs(TowerName.Magnificent, 9, 45, BUFF_RANGE, BuffAbility.getDamage(2f, 45),
                 Treasure.fromWater(3).addFire(3)));
 
-        specs.add(new Specs(TowerName.Sunny, 5, SUPER_SLOW_SPEED, L_RANGE, new SunbeamAbility(1, L_RANGE * 2),
+        specs.add(new Specs(TowerName.Sunny, 5, SUPER_SLOW_SPEED, L_RANGE, new SunbeamAbility(0.2f, L_RANGE),
                 Treasure.fromWater(1).addNature(1)));
+        specs.add(new Specs(TowerName.Solar, 7, SUPER_SLOW_SPEED, L_RANGE, new SunbeamAbility(0.7f, L_RANGE * 1.5f),
+                Treasure.fromWater(2).addNature(2)));
+        specs.add(new Specs(TowerName.Photonic, 9, SUPER_SLOW_SPEED, L_RANGE, new SunbeamAbility(1.7f, L_RANGE * 2),
+                Treasure.fromWater(3).addNature(3)));
 
         List<TowerType> data = new ArrayList<TowerType>();
         for (Specs specification : specs) {

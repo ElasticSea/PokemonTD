@@ -8,22 +8,23 @@ import com.xkings.core.component.PositionComponent;
 import com.xkings.core.component.RangeComponent;
 import com.xkings.pokemontd.component.attack.AbilityComponent;
 import com.xkings.pokemontd.system.resolve.ClosestSystem;
+import com.xkings.pokemontd.system.resolve.PickEntitySystem;
 
 /**
  * Created by Tomas on 10/4/13.
  */
 public abstract class ApplyAbilitySystem<T extends AbilityComponent> extends IntervalAbilitySystem<T> {
 
-    private Class<? extends ClosestSystem> resolveTargetSystem;
+    private Class<? extends PickEntitySystem> resolveTargetSystem;
     @Mapper
     ComponentMapper<PositionComponent> positionMapper;
     @Mapper
     ComponentMapper<RangeComponent> rangeMapper;
 
-    private ClosestSystem closestSystem;
+    private PickEntitySystem closestSystem;
 
 
-    public ApplyAbilitySystem(Class<T> ability, Class<? extends ClosestSystem> resolveTargetSystem) {
+    public ApplyAbilitySystem(Class<T> ability, Class<? extends PickEntitySystem> resolveTargetSystem) {
         super(ability);
         this.resolveTargetSystem = resolveTargetSystem;
     }
@@ -45,7 +46,7 @@ public abstract class ApplyAbilitySystem<T extends AbilityComponent> extends Int
             this.closestSystem = world.getSystem(resolveTargetSystem);
         }
         closestSystem.start(entity, position, range);
-        Entity closestEnemy = closestSystem.getClosestEntity();
+        Entity closestEnemy = closestSystem.getPickedEntity();
         if (closestEnemy != null) {
             processTarget(ability, entity, closestEnemy);
         }

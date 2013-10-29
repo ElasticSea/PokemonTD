@@ -15,6 +15,7 @@ public class Path {
     private final List<Vector3> path;
     private final float width;
     private int position;
+    private float toTravel;
 
     public Path(Vector3... path) {
         this(Arrays.asList(path), 0, 0);
@@ -56,5 +57,13 @@ public class Path {
 
     public float getWidth() {
         return width;
+    }
+
+    public void setToTravel(float toTravel) {
+        this.toTravel = toTravel;
+    }
+
+    public float getToTravel() {
+        return toTravel;
     }
 }

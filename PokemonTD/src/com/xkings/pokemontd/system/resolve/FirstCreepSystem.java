@@ -1,7 +1,6 @@
 package com.xkings.pokemontd.system.resolve;
 
 import com.artemis.Aspect;
-import com.artemis.Component;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
@@ -9,8 +8,9 @@ import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.component.PositionComponent;
 import com.xkings.core.component.SizeComponent;
 import com.xkings.pokemontd.component.VisibleComponent;
+import com.xkings.pokemontd.component.WaveComponent;
 
-public class ClosestSystem extends PickEntitySystem {
+public class FirstCreepSystem extends PickEntitySystem {
     @Mapper
     ComponentMapper<PositionComponent> positionMapper;
     @Mapper
@@ -19,36 +19,32 @@ public class ClosestSystem extends PickEntitySystem {
     ComponentMapper<VisibleComponent> visibilityMapper;
 
     private Entity closestEntity;
-    private float closestDistance;
     private Vector3 entityPosition;
     private float entityRange;
     private Entity entity;
 
     /**
-     * Finds closest entity
-     *
-     * @param entityType only concrete entity has this type
+     * Finds first reachable creep in wave
      */
-    public ClosestSystem(Class<? extends Component> entityType) {
-        super(Aspect.getAspectForAll(PositionComponent.class, entityType), false);
+    public FirstCreepSystem() {
+        super(Aspect.getAspectForAll(PositionComponent.class, WaveComponent.class), true);
     }
 
     @Override
     protected void process(Entity e) {
+        // already found something, that is enough for me
+        if (closestEntity != null) {
+            return;
+        }
+
         Vector3 position = positionMapper.get(e).getPoint();
         Vector3 size = sizeMapper.get(e).getPoint();
         if (!visibilityMapper.has(e) || visibilityMapper.get(e).isVisible()) {
             float distance = calculateDistance(entityPosition, position, size);
-            if (this.entity != e && isRequirementMet(e) && e.isEnabled() && distance <= entityRange &&
-                    distance < closestDistance) {
-                closestDistance = distance;
+            if (this.entity != e && e.isEnabled() && distance <= entityRange) {
                 closestEntity = e;
             }
         }
-    }
-
-    protected boolean isRequirementMet(Entity e) {
-        return true;
     }
 
     Vector3[] corners = new Vector3[]{new Vector3(), new Vector3(), new Vector3(), new Vector3()};
@@ -85,7 +81,6 @@ public class ClosestSystem extends PickEntitySystem {
         this.entity = entity;
         this.entityPosition = position;
         this.entityRange = range;
-        this.closestDistance = Float.MAX_VALUE;
         this.closestEntity = null;
         this.process();
     }

@@ -36,6 +36,8 @@ import com.xkings.pokemontd.system.abilitySytems.damage.*;
 import com.xkings.pokemontd.system.abilitySytems.damage.hit.*;
 import com.xkings.pokemontd.system.autonomous.*;
 import com.xkings.pokemontd.system.resolve.*;
+import com.xkings.pokemontd.system.resolve.ui.GetCreep;
+import com.xkings.pokemontd.system.resolve.ui.GetTower;
 import com.xkings.pokemontd.system.trigger.ApplyBuffSystem;
 import com.xkings.pokemontd.system.trigger.ApplySunbeamSystem;
 import com.xkings.pokemontd.system.trigger.FireProjectilSystem;
@@ -165,8 +167,9 @@ public class App extends Game2D {
         }
         world.setSystem(renderRangeSystem, true);
         world.setSystem(new ClosestCreepSystem(), true);
-        world.setSystem(new ClosestTowerSystem(), true);
-        world.setSystem(new ClosestTowerWithoutDamageBuffSystem(), true);
+        world.setSystem(new ClosestSystemTower(), true);
+        world.setSystem(new ClosestSystemTowerWithoutDamageBuff(), true);
+        world.setSystem(new FirstCreepSystem(), true);
         world.setSystem(new AoeSystem(), true);
         world.setSystem(new InvisibleSystem(), true);
         world.setSystem(new GetTower(), true);

@@ -5,7 +5,7 @@ import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.xkings.pokemontd.component.attack.effects.buff.DamageBuffEffect;
 
-public class ClosestTowerWithoutDamageBuffSystem extends ClosestTowerSystem {
+public class ClosestSystemTowerWithoutDamageBuff extends ClosestSystemTower {
 
     @Mapper
     ComponentMapper<DamageBuffEffect> damageBufferMapper;

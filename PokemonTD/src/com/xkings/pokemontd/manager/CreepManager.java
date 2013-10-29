@@ -3,7 +3,7 @@ package com.xkings.pokemontd.manager;
 import com.artemis.Entity;
 import com.artemis.World;
 import com.xkings.pokemontd.graphics.ui.Clickable;
-import com.xkings.pokemontd.system.resolve.GetCreep;
+import com.xkings.pokemontd.system.resolve.ui.GetCreep;
 
 /**
  * Created by Tomas on 10/7/13.

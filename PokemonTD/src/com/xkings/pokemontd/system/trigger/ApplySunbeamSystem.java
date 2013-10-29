@@ -12,6 +12,7 @@ import com.xkings.pokemontd.component.attack.projectile.SunbeamAbility;
 import com.xkings.pokemontd.entity.Sunbeam;
 import com.xkings.pokemontd.system.abilitySytems.damage.DamageOverPolySystem;
 import com.xkings.pokemontd.system.resolve.ClosestCreepSystem;
+import com.xkings.pokemontd.system.resolve.FirstCreepSystem;
 
 /**
  * Created by Tomas on 10/4/13.
@@ -24,7 +25,7 @@ public class ApplySunbeamSystem extends ApplyAbilitySystem<SunbeamAbility> {
     ComponentMapper<PositionComponent> positionMapper;
 
     public ApplySunbeamSystem() {
-        super(SunbeamAbility.class, ClosestCreepSystem.class);
+        super(SunbeamAbility.class, FirstCreepSystem.class);
     }
 
     private DamageOverPolySystem damageOverPolySystem;
@@ -39,13 +40,11 @@ public class ApplySunbeamSystem extends ApplyAbilitySystem<SunbeamAbility> {
     protected void processTarget(SunbeamAbility ability, Entity entity, Entity target) {
         Vector3 start = positionMapper.get(entity).getPoint();
         Vector3 end = positionMapper.get(target).getPoint();
-        // Vector3 center = start.cpy().
 
         float angle = (float) (Math.atan2(end.y - start.y, end.x - start.x));
         float x = (float) (Math.cos(angle) * ability.getHeight());
         float y = (float) (Math.sin(angle) * ability.getHeight());
-
-        Vector2[] rectangle = Collision.getRectOverLine(start.x, start.y, x, y, ability.getWidth());
+        Vector2[] rectangle = Collision.getRectOverLine(start.x, start.y, start.x + x, start.y + y, ability.getWidth());
         damageOverPolySystem.start(rectangle, damageMapper.get(entity).getDamage());
         Sunbeam.registerSunbeam(world, start.x, start.y, ability.getHeight(), ability.getWidth(), target);
     }

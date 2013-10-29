@@ -20,7 +20,7 @@ import com.xkings.pokemontd.entity.tower.TowerName;
 import com.xkings.pokemontd.entity.tower.TowerType;
 import com.xkings.pokemontd.graphics.ui.Clickable;
 import com.xkings.pokemontd.system.resolve.FindShop;
-import com.xkings.pokemontd.system.resolve.GetTower;
+import com.xkings.pokemontd.system.resolve.ui.GetTower;
 
 /**
  * Created by Tomas on 10/7/13.
@@ -209,7 +209,7 @@ public class TowerManager implements Clickable {
     }
 
     private void purchaseTower(TowerType towerType) {
-        player.getTreasure().subtract(towerType.getCost());
+        player.getTreasure().purchase(towerType.getCost());
     }
 
     public TowerName getCurrentTowerName() {

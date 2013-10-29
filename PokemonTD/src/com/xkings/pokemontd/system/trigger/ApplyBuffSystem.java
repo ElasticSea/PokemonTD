@@ -5,8 +5,8 @@ import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.xkings.pokemontd.component.attack.effects.buff.DamageBuffEffect;
 import com.xkings.pokemontd.component.attack.projectile.BuffAbility;
-import com.xkings.pokemontd.system.resolve.ClosestTowerSystem;
-import com.xkings.pokemontd.system.resolve.ClosestTowerWithoutDamageBuffSystem;
+import com.xkings.pokemontd.system.resolve.ClosestSystemTower;
+import com.xkings.pokemontd.system.resolve.ClosestSystemTowerWithoutDamageBuff;
 
 /**
  * Created by Tomas on 10/4/13.
@@ -19,7 +19,7 @@ public class ApplyBuffSystem extends ApplyAbilitySystem<BuffAbility> {
     ComponentMapper<DamageBuffEffect> damageBuffMapper;
 
     public ApplyBuffSystem() {
-        super(BuffAbility.class, ClosestTowerSystem.class);
+        super(BuffAbility.class, ClosestSystemTower.class);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class ApplyBuffSystem extends ApplyAbilitySystem<BuffAbility> {
             case SPEED:
                 throw new UnsupportedOperationException("This is yet to be supported.");
             case DAMAGE:
-                this.setClosestEntityAlgorithm(ClosestTowerWithoutDamageBuffSystem.class);
+                this.setClosestEntityAlgorithm(ClosestSystemTowerWithoutDamageBuff.class);
                 break;
             case RANGE:
                 throw new UnsupportedOperationException("This is yet to be supported.");

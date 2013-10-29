@@ -1,4 +1,4 @@
-package com.xkings.pokemontd.system.resolve;
+package com.xkings.pokemontd.system.resolve.ui;
 
 import com.xkings.pokemontd.component.TowerTypeComponent;
 

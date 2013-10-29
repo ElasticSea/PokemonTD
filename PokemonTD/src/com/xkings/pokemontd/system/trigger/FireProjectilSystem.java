@@ -11,6 +11,7 @@ import com.xkings.pokemontd.component.DamageComponent;
 import com.xkings.pokemontd.component.attack.projectile.ProjectilAbility;
 import com.xkings.pokemontd.entity.Projectile;
 import com.xkings.pokemontd.system.resolve.ClosestCreepSystem;
+import com.xkings.pokemontd.system.resolve.FirstCreepSystem;
 
 /**
  * Created by Tomas on 10/4/13.
@@ -20,15 +21,14 @@ public class FireProjectilSystem extends ApplyAbilitySystem<ProjectilAbility> {
     @Mapper
     ComponentMapper<SpeedComponent> speedMapper;
     @Mapper
-    ComponentMapper<ProjectilAbility> projectileMapper;
-    @Mapper
     ComponentMapper<PositionComponent> positionMapper;
     @Mapper
     ComponentMapper<DamageComponent> damageMapper;
 
 
     public FireProjectilSystem() {
-        super(ProjectilAbility.class, ClosestCreepSystem.class);
+        //super(ProjectilAbility.class, ClosestCreepSystem.class);
+        super(ProjectilAbility.class, FirstCreepSystem.class);
     }
 
     @Override

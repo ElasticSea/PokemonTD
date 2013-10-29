@@ -30,7 +30,10 @@ public class TargetingSystem extends EntityProcessingSystem {
     @Override
     protected void process(Entity e) {
         Vector3 a = positionMapper.get(e).getPoint();
-        Vector3 b = positionMapper.get(targetMapper.get(e).getTarget()).getPoint();
-        rotationMapper.get(e).getPoint().x = (float) (Math.atan2(b.y - a.y, b.x - a.x) / Math.PI * 180f);
+        PositionComponent positionComponent = positionMapper.get(targetMapper.get(e).getTarget());
+        if (positionComponent != null) {
+            Vector3 b = positionComponent.getPoint();
+            rotationMapper.get(e).getPoint().x = (float) (Math.atan2(b.y - a.y, b.x - a.x) / Math.PI * 180f);
+        }
     }
 }
