@@ -11,6 +11,9 @@ import java.util.List;
  * Time: 17:07
  */
 
+/**
+ * Structure containing path and position on it.
+ */
 public class Path {
     private final List<Vector3> path;
     private final float width;

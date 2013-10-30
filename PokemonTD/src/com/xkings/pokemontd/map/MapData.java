@@ -11,6 +11,9 @@ import com.xkings.pokemontd.graphics.TileMap;
  * Time: 17:03
  */
 
+/**
+ * DTO holding map data.
+ */
 public class MapData {
 
     private final Blueprint blueprint;

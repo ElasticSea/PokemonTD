@@ -8,6 +8,10 @@ import java.util.List;
 /**
  * Created by Tomas on 10/12/13.
  */
+
+/**
+ * A path pack containing individual paths.
+ */
 public class PathPack {
 
     private final List<Path> paths;
