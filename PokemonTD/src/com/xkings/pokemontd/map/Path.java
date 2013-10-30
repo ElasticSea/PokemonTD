@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Structure containing path and position on it.
  */
-public class Path {
+public class Path implements Comparable<Path> {
     private final List<Vector3> path;
     private final float width;
     private int position;
@@ -68,5 +68,22 @@ public class Path {
 
     public float getToTravel() {
         return toTravel;
+    }
+
+    @Override
+    public int compareTo(Path o) {
+        if (this.position > o.position) {
+            return 1;
+        } else if (this.position < o.position) {
+            return -1;
+        } else {
+            if (this.getToTravel() > o.getToTravel()) {
+                return 1;
+            } else if (this.getToTravel() > o.getToTravel()) {
+                return -1;
+            } else {
+                return 0;
+            }
+        }
     }
 }
