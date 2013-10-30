@@ -6,6 +6,8 @@ import com.xkings.core.component.*;
 import com.xkings.core.entity.ConcreteEntity;
 import com.xkings.pokemontd.Treasure;
 import com.xkings.pokemontd.component.*;
+import com.xkings.pokemontd.component.attack.effects.buff.BuffableDamageComponent;
+import com.xkings.pokemontd.component.attack.effects.buff.BuffableSpeedComponent;
 
 /**
  * Created by Tomas on 10/5/13.
@@ -17,14 +19,14 @@ public class Tower extends ConcreteEntity {
         addComponent(new PositionComponent(x, y, 0));
         addComponent(new SpriteComponent(towerType.getTexture()));
         addComponent(new SizeComponent(towerType.getSize(), towerType.getSize(), 0));
-        addComponent(new SpeedComponent(towerType.getSpeed()));
+        addComponent(new BuffableSpeedComponent(towerType.getSpeed()));
         addComponent(new NameComponent(towerType.getName().toString()));
         addComponent(new RangeComponent(towerType.getRange()));
         addComponent(new TimeComponent());
         addComponent(new TreasureComponent(new Treasure(towerType.getCost())));
         addComponent(new TowerTypeComponent(towerType));
         addComponent(new UpgradeComponent());
-        addComponent(new DamageComponent(towerType.getDamage()));
+        addComponent(new BuffableDamageComponent(towerType.getDamage()));
         if (towerType.getAttack() != null) {
             addComponent(towerType.getAttack());
         }

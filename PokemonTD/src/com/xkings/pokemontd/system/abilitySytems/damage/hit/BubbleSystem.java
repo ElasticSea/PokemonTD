@@ -6,13 +6,11 @@ import com.artemis.Entity;
 import com.artemis.World;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
-import com.xkings.core.component.TargetComponent;
-import com.xkings.core.component.Time;
-import com.xkings.core.component.TimeComponent;
-import com.xkings.pokemontd.component.DamageComponent;
+import com.xkings.core.component.*;
 import com.xkings.pokemontd.component.HealthComponent;
 import com.xkings.pokemontd.component.PathComponent;
 import com.xkings.pokemontd.component.WaveComponent;
+import com.xkings.pokemontd.component.attack.effects.buff.BuffableDamageComponent;
 import com.xkings.pokemontd.component.attack.projectile.data.BubbleData;
 import com.xkings.pokemontd.system.resolve.IntersectEnemySystem;
 
@@ -23,7 +21,7 @@ public class BubbleSystem extends EntityProcessingSystem {
 
     private final IntersectEnemySystem intersectSystem;
     @Mapper
-    ComponentMapper<DamageComponent> damageMapper;
+    ComponentMapper<BuffableDamageComponent> damageMapper;
     @Mapper
     ComponentMapper<BubbleData> bubbleMapper;
     @Mapper

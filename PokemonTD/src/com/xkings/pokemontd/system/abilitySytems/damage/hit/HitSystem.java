@@ -1,32 +1,26 @@
 package com.xkings.pokemontd.system.abilitySytems.damage.hit;
 
 import com.artemis.Aspect;
-import com.artemis.Component;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.math.Vector3;
-import com.xkings.core.component.PositionComponent;
-import com.xkings.core.component.SizeComponent;
-import com.xkings.core.component.TargetComponent;
+import com.xkings.core.component.*;
 import com.xkings.core.utils.Collision;
-import com.xkings.pokemontd.App;
-import com.xkings.pokemontd.component.DamageComponent;
 import com.xkings.pokemontd.component.HealthComponent;
-import com.xkings.pokemontd.component.attack.effects.AbstractEffect;
-import com.xkings.pokemontd.component.attack.projectile.ProjectileAbility;
+import com.xkings.pokemontd.component.attack.effects.buff.BuffableDamageComponent;
+import com.xkings.pokemontd.component.attack.projectile.HitAbility;
 import com.xkings.pokemontd.component.attack.projectile.data.EffectData;
 
 /**
  * Created by Tomas on 10/4/13.
  */
-public abstract class HitSystem<T extends EffectData, V extends AbstractEffect> extends EntityProcessingSystem {
+public abstract class HitSystem<T extends EffectData> extends EntityProcessingSystem {
 
     private final Class<T> effectDataClass;
-    private final Class<V> effectClass;
     @Mapper
-    ComponentMapper<DamageComponent> damageMapper;
+    ComponentMapper<BuffableDamageComponent> damageMapper;
     @Mapper
     ComponentMapper<PositionComponent> positionMapper;
     @Mapper
@@ -34,33 +28,30 @@ public abstract class HitSystem<T extends EffectData, V extends AbstractEffect> 
     @Mapper
     ComponentMapper<SizeComponent> sizeMapper;
     @Mapper
-    ComponentMapper<ProjectileAbility> projectileMapper;
+    ComponentMapper<HitAbility> projectileMapper;
 
     private ComponentMapper<T> effectDataMapper;
-    private ComponentMapper<V> effectMapper;
     private AoeSystem aoe;
     private T effectData;
     private Entity entity;
     private Entity target;
 
 
-    public HitSystem(Class<T> effectDataClass, Class<V> effectClass) {
+    public HitSystem(Class<T> effectDataClass) {
         super(Aspect.getAspectForAll(TargetComponent.class, effectDataClass));
         this.effectDataClass = effectDataClass;
-        this.effectClass = effectClass;
     }
 
     @Override
     protected void initialize() {
         super.initialize();
         effectDataMapper = world.getMapper(effectDataClass);
-        effectMapper = world.getMapper(effectClass);
     }
 
-    public void initAoe() {
-        aoe = new AoeSystem() {
-        };
-        world.setSystem(aoe, true);
+
+    public void setAoe(AoeSystem aoe) {
+        this.aoe = aoe;
+        world.setSystem(this.aoe, true);
     }
 
     @Override
@@ -71,8 +62,8 @@ public abstract class HitSystem<T extends EffectData, V extends AbstractEffect> 
             e.deleteFromWorld();
             return;
         }
-        ProjectileAbility projectileAbility = projectileMapper.get(e);
-        if (projectileAbility.getType().equals(ProjectileAbility.Type.IMMEDIATE_ATTACK)) {
+        HitAbility hitAbility = projectileMapper.get(e);
+        if (hitAbility.getType().equals(HitAbility.Type.IMMEDIATE_ATTACK)) {
             hit(effectDataMapper.get(e), e, target);
         }
 
@@ -85,8 +76,8 @@ public abstract class HitSystem<T extends EffectData, V extends AbstractEffect> 
             this.effectData = effectDataMapper.get(e);
             this.entity = e;
             this.target = target;
-            if (projectileAbility.getAoe() > 0) {
-                aoe.start(entityPosition, projectileAbility.getAoe());
+            if (hitAbility.getAoe() > 0) {
+                aoe.start(targetPosition, hitAbility.getAoe());
             } else {
                 hit(effectDataMapper.get(e), e, target);
             }
@@ -94,20 +85,7 @@ public abstract class HitSystem<T extends EffectData, V extends AbstractEffect> 
         }
     }
 
-    private void hit(T effectData, Entity e, Entity target) {
-        V effect = effectMapper.get(target);
-        if (effect == null) {
-            if (App.CHANCE.happens(effectData.getChance())) {
-                target.addComponent(createEffect(e, effectData));
-                world.changedEntity(target);
-            }
-        } else {
-            effect.reset();
-        }
-    }
-
-    protected abstract Component createEffect(Entity e, T effectData);
-
+    protected abstract void hit(T effectData, Entity e, Entity target);
 
     public abstract class AoeSystem extends EntityProcessingSystem {
 
@@ -122,12 +100,12 @@ public abstract class HitSystem<T extends EffectData, V extends AbstractEffect> 
 
         @Override
         protected void begin() {
-            System.out.println(getActives().size());
+            System.out.println("LOL NOBODY: "+getActives().size());
         }
 
         @Override
         protected void process(Entity e) {
-            if (position.dst(positionMapper.get(entity).getPoint()) <= aoe) {
+            if (position.dst(positionMapper.get(e).getPoint()) <= aoe) {
                 hit(effectData, entity, e);
             }
         }

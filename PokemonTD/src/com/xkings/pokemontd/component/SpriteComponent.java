@@ -5,7 +5,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.xkings.core.main.Assets;
 import com.xkings.pokemontd.Animation;
 
-import java.util.EnumMap;
+import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -13,32 +14,40 @@ import java.util.Map;
  */
 public class SpriteComponent extends Component {
 
+    Map<String, Animation> map = new LinkedHashMap<String, Animation>();
+    private Animation defaultAnimation;
+
+    public SpriteComponent(String type) {
+        add(type);
+    }
+
     public SpriteComponent(TextureAtlas.AtlasRegion texture) {
-        this.add(Type.NORMAL, new Animation(texture));
-       // this.add(Type.EFFECT, new Animation(Assets.getTexture("fireAnimation")));
+        this(texture.name);
     }
 
     public TextureAtlas.AtlasRegion getSprite() {
-        return spriteMap.get(Type.NORMAL).getSprite();
+        return defaultAnimation.getSprite();
     }
 
-
-    public enum Type {
-        NORMAL, EFFECT;
+    public void add(String type) {
+        Animation a = new Animation(Assets.getTextureArray(type));
+        if (map.isEmpty()) {
+            defaultAnimation = a;
+        }
+        map.put(type, a);
     }
 
-    private final Map<Type, Animation> spriteMap = new EnumMap<Type, Animation>(Type.class);
-
-    public void add(Type type, Animation a) {
-        spriteMap.put(type, a);
+    public Animation remove(String type) {
+        return map.remove(type);
     }
 
-    public Animation remove(Type type) {
-        return spriteMap.remove(type);
+    public Animation get(String type) {
+        return map.get(type);
     }
 
-    public Animation get(Type type) {
-        return spriteMap.get(type);
+    public Collection<Animation> get() {
+        return map.values();
     }
+
 
 }

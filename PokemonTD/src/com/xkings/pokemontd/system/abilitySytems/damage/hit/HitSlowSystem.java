@@ -1,6 +1,5 @@
 package com.xkings.pokemontd.system.abilitySytems.damage.hit;
 
-import com.artemis.Component;
 import com.artemis.Entity;
 import com.xkings.pokemontd.component.attack.effects.SlowEffect;
 import com.xkings.pokemontd.component.attack.projectile.data.SlowData;
@@ -8,7 +7,9 @@ import com.xkings.pokemontd.component.attack.projectile.data.SlowData;
 /**
  * Created by Tomas on 10/4/13.
  */
-public class HitSlowSystem extends HitSystem<SlowData, SlowEffect> {
+public class HitSlowSystem extends HitEffectSystem<SlowData, SlowEffect> {
+
+    private AoeSystem aoe;
 
     public HitSlowSystem() {
         super(SlowData.class, SlowEffect.class);
@@ -17,11 +18,19 @@ public class HitSlowSystem extends HitSystem<SlowData, SlowEffect> {
     @Override
     protected void initialize() {
         super.initialize();
-        initAoe();
+        // DISCUS this on stackoverflow !
+        setAoe(new AoeSystem() {
+        });
     }
 
     @Override
-    protected Component createEffect(Entity e, SlowData effectData) {
-        return new SlowEffect(effectData.getEffect(), effectData.getDuration(), effectData.getSlowRatio());
+    protected SlowEffect resetEffect(Entity e, SlowEffect effect, SlowData effectData) {
+        effect.set(effectData.getEffect(), effectData.getDuration(), effectData.getSlowRatio());
+        return effect;
+    }
+
+    @Override
+    protected SlowEffect createEffect(Entity e, SlowData effectData) {
+        return resetEffect(e, new SlowEffect(), effectData);
     }
 }

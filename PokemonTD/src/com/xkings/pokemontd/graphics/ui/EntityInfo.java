@@ -31,15 +31,12 @@ class EntityInfo extends GuiBox {
     private final ShopTypeInfo shopTypeInfo;
     private CreepEntityInfo creepEntityInfo;
     private Entity entity;
-    private final BitmapFont pixelFont;
 
     EntityInfo(final Ui ui, Rectangle rectangle, int offset, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
                BitmapFont font, Player player) {
         super(ui,rectangle);
         this.ui = ui;
         this.spriteBatch = spriteBatch;
-
-        this.pixelFont = App.getAssets().getPixelFont();
 
         towerTypeInfo = new TowerTypeInfo(ui, offsetRectange, shapeRenderer, spriteBatch, font);
         towerEntityInfo = new TowerEntityInfo(ui, offsetRectange, shapeRenderer, spriteBatch, font);

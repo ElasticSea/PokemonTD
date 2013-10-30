@@ -38,8 +38,12 @@ public class Treasure {
     public void addElement(Element element, int count) {
         int add = getElement(element) + count;
         if (add > 0) {
-            elementSet.put(element, add);
+            setElement(element, add);
         }
+    }
+
+    private void setElement(Element element, int value) {
+        elementSet.put(element, value);
     }
 
     public boolean hasElement(Element element, int count) {
@@ -51,8 +55,12 @@ public class Treasure {
     }
 
     public Treasure addGold(int count) {
-        gold += count;
+        setGold(getGold() + count);
         return this;
+    }
+
+    public void setGold(int count) {
+        gold = count;
     }
 
     public Treasure addWater(int count) {
@@ -158,6 +166,11 @@ public class Treasure {
         this.addGold(treasure.getGold());
     }
 
+
+    public void multiplyGold(float value) {
+        this.setGold((int) (this.getGold()*value));
+    }
+
     @Override
     public String toString() {
         return "Treasure{" +
@@ -172,7 +185,7 @@ public class Treasure {
 
         int add = treasure.getElement(element) + count;
         if (add > 0) {
-            treasure.elementSet.put(element, add);
+            treasure.setElement(element, add);
         }
 
         return limit.includes(treasure);

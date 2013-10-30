@@ -120,7 +120,7 @@ public class TowerManager implements Clickable {
             Component component = fillBag.get(i);
             if (component instanceof AbstractEffect) {
                 to.addComponent(component);
-                System.out.println("added component: "+component);
+                ((AbstractEffect) component).reattach();
             }
         }
         to.changedInWorld();

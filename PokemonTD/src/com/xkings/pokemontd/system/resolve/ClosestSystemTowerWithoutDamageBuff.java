@@ -12,6 +12,7 @@ public class ClosestSystemTowerWithoutDamageBuff extends ClosestSystemTower {
 
     @Override
     protected boolean isRequirementMet(Entity e) {
+        System.out.println("Has damage buff [" + e + "]: " + !damageBufferMapper.has(e));
         return !damageBufferMapper.has(e);
     }
 }

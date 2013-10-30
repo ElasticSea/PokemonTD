@@ -15,7 +15,7 @@ public class LifeStealData extends EffectData {
         this.duration = duration;
     }
 
-    public float getLifeRationToSteal() {
+    public float getLifeRatioToSteal() {
         return lifeRationToSteal;
     }
 

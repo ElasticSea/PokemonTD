@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by Tomas on 10/13/13.
  */
-public class ProjectileAbility extends AbilityComponent {
+public class HitAbility extends AbilityComponent {
     public static final float SLOW_SPEED = 2.0f;
     public static final float NORMAL_SPEED = 4.0f;
     public static final float FAST_SPEED = 8.0f;
@@ -26,55 +26,59 @@ public class ProjectileAbility extends AbilityComponent {
     private static AbilityComponent none;
 
     public static AbilityComponent getNormal(float scale) {
-        return new ProjectileAbility("bullet", Type.FOLLOW_TARGET, DEFAULT_SIZE * scale, NORMAL_SPEED * scale,
+        return new HitAbility("bullet", Type.FOLLOW_TARGET, DEFAULT_SIZE * scale, NORMAL_SPEED * scale,
                 new NormalData());
     }
 
-    public static AbilityComponent getSplash(float scale, float range) {
-        return new ProjectileAbility("bullet", Type.FOLLOW_TARGET, DEFAULT_SIZE * scale, NORMAL_SPEED * scale,
-                new AoeComponent(range * scale), new NormalData());
+    public static AbilityComponent getSplash(String texture, float scale, float range) {
+        return new HitAbility(texture, Type.FOLLOW_TARGET, DEFAULT_SIZE * scale, NORMAL_SPEED * scale, range * scale,
+                new NormalData());
     }
 
     public static AbilityComponent getTemLifeSteal(float scale, float ratio, float duration) {
-        return new ProjectileAbility("bullet", Type.FOLLOW_TARGET, DEFAULT_SIZE * scale, NORMAL_SPEED * scale,
+        return new HitAbility("bullet", Type.FOLLOW_TARGET, DEFAULT_SIZE * scale, NORMAL_SPEED * scale,
                 new LifeStealData(ratio, duration));
     }
 
     public static AbilityComponent getBubble(float scale) {
-        return new ProjectileAbility("bubble", Type.PASS_THROUGH, BIG_SIZE * scale, NORMAL_SPEED * scale,
+        return new HitAbility("bubble", Type.PASS_THROUGH, BIG_SIZE * scale, NORMAL_SPEED * scale,
                 new BubbleData(0.25f));
     }
 
     public static AbilityComponent getFire(float scale) {
-        return new ProjectileAbility("fire", Type.FOLLOW_TARGET, BIG_SIZE * scale, FAST_SPEED * scale,
-                new NormalData());
+        return new HitAbility("fire", Type.FOLLOW_TARGET, BIG_SIZE * scale, FAST_SPEED * scale, new NormalData());
     }
 
     public static AbilityComponent getFireDot(float scale) {
-        return new ProjectileAbility("fireAnimation", Type.FOLLOW_TARGET, BIG_SIZE * scale, FAST_SPEED * scale,
+        return new HitAbility("fireAnimation", Type.FOLLOW_TARGET, BIG_SIZE * scale, FAST_SPEED * scale,
                 new DotData("fire", 16, 0.25f), new NormalData());
     }
 
     public static AbilityComponent getNature(float scale, float slowRatio, float duration, float chance) {
-        return new ProjectileAbility("leaf", Type.FOLLOW_TARGET, BIG_SIZE * scale, SLOW_SPEED * scale, new NormalData(),
+        return new HitAbility("leaf", Type.FOLLOW_TARGET, BIG_SIZE * scale, SLOW_SPEED * scale, new NormalData(),
                 new SlowData("entangle", slowRatio, duration, chance));
     }
 
     public static AbilityComponent getClaw(float scale, float chance, int iterations) {
-        return new ProjectileAbility("leaf", Type.IMMEDIATE_ATTACK, BIG_SIZE * scale, FAST_SPEED * scale,
-                new NormalData(), new BonusAttack(chance, iterations));
+        return new HitAbility("leaf", Type.IMMEDIATE_ATTACK, BIG_SIZE * scale, FAST_SPEED * scale, new NormalData(),
+                new BonusAttack(chance, iterations));
     }
 
     public static AbilityComponent getPoison(float scale, float slowRatio, float duration, float chance) {
-        return new ProjectileAbility("poison", Type.FOLLOW_TARGET, BIG_SIZE * scale, SLOW_SPEED * scale,
+        return new HitAbility("poison", Type.FOLLOW_TARGET, BIG_SIZE * scale, SLOW_SPEED * scale,
                 new DotData("poison", 16, 0.25f), new SlowData("", slowRatio, duration, chance));
     }
 
 
-    public static AbilityComponent getSplashIce(float scale, float range, float slowRatio, float duration,
-                                                float chance) {
-        return new ProjectileAbility("bullet", Type.FOLLOW_TARGET, DEFAULT_SIZE * scale, NORMAL_SPEED * scale, range,
-                new SlowData("ice", slowRatio, duration, chance));
+    public static AbilityComponent getSlow(String texture, float scale, float range, float slowRatio, float duration,
+                                           float chance) {
+        return new HitAbility("bullet", Type.FOLLOW_TARGET, DEFAULT_SIZE * scale, NORMAL_SPEED * scale, range * scale,
+                new SlowData(texture, slowRatio, duration, chance));
+    }
+
+    public static AbilityComponent getMoney(float scale, float ratio) {
+        return new HitAbility("coinAttack", Type.FOLLOW_TARGET, BIG_SIZE * scale, NORMAL_SPEED * scale,
+                new MoneyData("", ratio));
     }
 
 
@@ -82,12 +86,11 @@ public class ProjectileAbility extends AbilityComponent {
         FOLLOW_TARGET, LAST_KNOWN_PLACE, AHEAD_TARGET, PASS_THROUGH, IMMEDIATE_ATTACK;
     }
 
-    public ProjectileAbility(String texture, Type type, float size, float speed, AbilityComponent... abilities) {
+    public HitAbility(String texture, Type type, float size, float speed, AbilityComponent... abilities) {
         this(texture, type, size, speed, 0, abilities);
     }
 
-    public ProjectileAbility(String texture, Type type, float size, float speed, float aoe,
-                             AbilityComponent... abilities) {
+    public HitAbility(String texture, Type type, float size, float speed, float aoe, AbilityComponent... abilities) {
         this.ability = Arrays.asList(abilities);
         this.texture = Assets.getTexture(texture);
         this.type = type;

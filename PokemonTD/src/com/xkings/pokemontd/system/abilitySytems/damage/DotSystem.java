@@ -21,7 +21,27 @@ public class DotSystem extends EffectSystem<DotEffect> {
     }
 
     @Override
+    protected void finished(DotEffect effect, Entity e) {
+
+    }
+
+    @Override
+    protected void started(DotEffect effect, Entity e) {
+
+    }
+
+    @Override
     protected void processEffect(DotEffect effect, Entity e) {
         healthMapper.get(e).getHealth().decease(dotMapper.get(e).getDamage());
+    }
+
+    @Override
+    protected void resetEffect(DotEffect effect, Entity e) {
+
+    }
+
+    @Override
+    protected void reattachEffect(DotEffect effect, Entity e) {
+
     }
 }

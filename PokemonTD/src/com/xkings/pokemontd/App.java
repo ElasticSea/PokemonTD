@@ -20,6 +20,7 @@ import com.xkings.core.graphics.camera.CameraHandler;
 import com.xkings.core.input.EnhancedGestureDetector;
 import com.xkings.core.logic.Clock;
 import com.xkings.core.logic.WorldUpdater;
+import com.xkings.core.main.Assets;
 import com.xkings.core.main.Game2D;
 import com.xkings.core.pathfinding.Blueprint;
 import com.xkings.core.tween.TweenManagerAdapter;
@@ -79,7 +80,6 @@ public class App extends Game2D {
     private PathPack pathPack;
     private Blueprint blueprint;
     private Player player;
-    private static PokemonAssets assets;
     private Ui ui;
     private Interest interest;
     // Tweens
@@ -110,8 +110,8 @@ public class App extends Game2D {
     @Override
     protected void init(OrthographicCamera camera) {
         this.clock = Clock.createInstance("Logic", true, true);
+        new Assets().addAtlas(new TextureAtlas("data/textures/packed.atlas"));
         initializeWorld();
-        assets = new PokemonAssets();
         spriteBatch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
 
@@ -169,6 +169,7 @@ public class App extends Game2D {
         world.setSystem(new ClosestCreepSystem(), true);
         world.setSystem(new ClosestSystemTower(), true);
         world.setSystem(new ClosestSystemTowerWithoutDamageBuff(), true);
+        world.setSystem(new ClosestSystemTowerWithoutSpeedBuff(), true);
         world.setSystem(new FirstCreepSystem(), true);
         world.setSystem(new InvisibleSystem(), true);
         world.setSystem(new GetTower(), true);
@@ -185,14 +186,15 @@ public class App extends Game2D {
         world.setSystem(new DotSystem());
         world.setSystem(new SlowSystem());
         world.setSystem(new DamageBuffSystem());
+        world.setSystem(new SpeedBuffSystem());
         world.setSystem(new MovementSystem());
 
         world.setSystem(new HitLifeStealSystem());
         world.setSystem(new HitDotSystem());
-        world.setSystem(new HitNormalSystem());
-      //  world.setSystem(new HitAoeSystem());
-      // world.setSystem(new HitSlowAoeSystem());
         world.setSystem(new HitSlowSystem());
+        world.setSystem(new HitNormalSystem());
+          world.setSystem(new HitMoneySystem());
+        // world.setSystem(new HitSlowAoeSystem());
         world.setSystem(new HitBonusSystem());
         world.setSystem(new ApplyBuffSystem());
         world.setSystem(new ApplySunbeamSystem());
@@ -315,7 +317,4 @@ public class App extends Game2D {
 
     }
 
-    public static PokemonAssets getAssets() {
-        return assets;
-    }
 }

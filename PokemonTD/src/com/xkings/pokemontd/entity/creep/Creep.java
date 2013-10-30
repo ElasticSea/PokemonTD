@@ -4,8 +4,11 @@ import com.artemis.World;
 import com.xkings.core.component.*;
 import com.xkings.core.entity.ConcreteEntity;
 import com.xkings.pokemontd.Health;
+import com.xkings.pokemontd.Treasure;
 import com.xkings.pokemontd.component.*;
 import com.xkings.pokemontd.component.VisibleComponent;
+import com.xkings.pokemontd.component.attack.effects.buff.BuffableDamageComponent;
+import com.xkings.pokemontd.component.attack.effects.buff.BuffableSpeedComponent;
 import com.xkings.pokemontd.map.Path;
 
 /**
@@ -17,17 +20,17 @@ public class Creep extends ConcreteEntity {
                   WaveComponent waveComponent, World world, float x, float y) {
         super(world);
         addComponent(new PositionComponent(x, y, 0));
-       // addComponent(new RotationComponent(0, 0, 0));
+        // addComponent(new RotationComponent(0, 0, 0));
         addComponent(new PathComponent(path));
         addComponent(new NameComponent(creepType.getName().toString()));
         addComponent(new SpriteComponent(creepType.getTexture()));
         addComponent(new SizeComponent(size, size, 0));
-        addComponent(new SpeedComponent(speed));
+        addComponent(new BuffableSpeedComponent(speed));
         addComponent(new HealthComponent(new Health(creepType.getHealth())));
-        addComponent(new TreasureComponent(creepType.getTreasure()));
+        addComponent(new TreasureComponent(new Treasure(creepType.getTreasure())));
         addComponent(new TimeComponent());
         addComponent(new CreepAbilityComponent(creepAbilityType));
-        addComponent(new DamageComponent(1));
+        addComponent(new BuffableDamageComponent(1));
         addComponent(new CreepTypeComponent(creepType));
         addComponent(new VisibleComponent(true));
         addComponent(new TintComponent());

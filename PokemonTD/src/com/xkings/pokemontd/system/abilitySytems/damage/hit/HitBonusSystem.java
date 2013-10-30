@@ -5,10 +5,9 @@ import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.xkings.pokemontd.App;
 import com.xkings.pokemontd.Health;
-import com.xkings.pokemontd.component.DamageComponent;
+import com.xkings.pokemontd.component.attack.effects.buff.BuffableDamageComponent;
 import com.xkings.pokemontd.component.HealthComponent;
 import com.xkings.pokemontd.component.attack.projectile.data.BonusAttack;
-import com.xkings.pokemontd.component.attack.projectile.data.EffectData;
 
 /**
  * Created by Tomas on 10/4/13.
@@ -18,7 +17,7 @@ public class HitBonusSystem extends OldHitSystem<BonusAttack> {
     @Mapper
     ComponentMapper<HealthComponent> healthMapper;
     @Mapper
-    ComponentMapper<DamageComponent> damageMapper;
+    ComponentMapper<BuffableDamageComponent> damageMapper;
 
     public HitBonusSystem() {
         super(BonusAttack.class);

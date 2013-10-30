@@ -6,12 +6,10 @@ import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.math.Vector3;
-import com.xkings.core.component.PositionComponent;
-import com.xkings.core.component.SizeComponent;
-import com.xkings.core.component.TargetComponent;
+import com.xkings.core.component.*;
 import com.xkings.core.utils.Collision;
-import com.xkings.pokemontd.component.DamageComponent;
-import com.xkings.pokemontd.component.attack.projectile.ProjectileAbility;
+import com.xkings.pokemontd.component.attack.effects.buff.BuffableDamageComponent;
+import com.xkings.pokemontd.component.attack.projectile.HitAbility;
 import com.xkings.pokemontd.component.attack.projectile.data.AoeComponent;
 import com.xkings.pokemontd.component.attack.projectile.data.EffectData;
 
@@ -22,7 +20,7 @@ public abstract class OldHitSystem<T extends EffectData> extends EntityProcessin
 
     private final Class<T> effectDataClass;
     @Mapper
-    ComponentMapper<DamageComponent> damageMapper;
+    ComponentMapper<BuffableDamageComponent> damageMapper;
     @Mapper
     ComponentMapper<PositionComponent> positionMapper;
     @Mapper
@@ -30,7 +28,7 @@ public abstract class OldHitSystem<T extends EffectData> extends EntityProcessin
     @Mapper
     ComponentMapper<SizeComponent> sizeMapper;
     @Mapper
-    ComponentMapper<ProjectileAbility> projectileMapper;
+    ComponentMapper<HitAbility> projectileMapper;
 
     private ComponentMapper<T> effectDataMapper;
 
@@ -59,7 +57,7 @@ public abstract class OldHitSystem<T extends EffectData> extends EntityProcessin
             e.deleteFromWorld();
             return;
         }
-        if (projectileMapper.get(e).getType().equals(ProjectileAbility.Type.IMMEDIATE_ATTACK)) {
+        if (projectileMapper.get(e).getType().equals(HitAbility.Type.IMMEDIATE_ATTACK)) {
             hit(effectDataMapper.get(e), e, target);
         }
 

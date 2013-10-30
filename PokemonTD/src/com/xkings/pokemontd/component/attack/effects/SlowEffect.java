@@ -4,16 +4,17 @@ package com.xkings.pokemontd.component.attack.effects;
  * Created by Tomas on 10/21/13.
  */
 public class SlowEffect extends AbstractEffect {
-    private final float slowRatio;
+    private float slowRatio;
     private float oldSpeed;
-
-    public SlowEffect(String effect,float interval, float slowRatio) {
-        super(effect,interval, 1);
-        this.slowRatio = slowRatio;
-    }
 
     public float getSlowRatio() {
         return slowRatio;
+    }
+
+    public SlowEffect set(String effect, float interval, float slowRatio) {
+        super.set(effect, interval, 1);
+        this.slowRatio = slowRatio;
+        return this;
     }
 
     public void setOldSpeed(float oldSpeed) {
@@ -24,3 +25,4 @@ public class SlowEffect extends AbstractEffect {
         return oldSpeed;
     }
 }
+

@@ -36,7 +36,7 @@ public class Sunbeam extends ConcreteEntity {
         RotationComponent component = new RotationComponent(0, 0, 0);
         addComponent(component);
         component.getOrigin().set(0, 0.5f, 0);
-        addComponent(new SpriteComponent(Assets.getTexture("sunbeam")));
+        addComponent(new SpriteComponent("sunbeam"));
         addComponent(new TargetComponent(target));
 
     }

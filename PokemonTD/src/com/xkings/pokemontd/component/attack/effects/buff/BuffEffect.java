@@ -7,11 +7,12 @@ import com.xkings.pokemontd.component.attack.projectile.BuffAbility;
  * Created by Tomas on 10/21/13.
  */
 public abstract class BuffEffect extends AbstractEffect {
-    private final float ratio;
+    private float ratio;
 
-    public BuffEffect(BuffAbility.Type type, float duration, float ratio) {
-        super(type.toString().toLowerCase(), duration, 1);
+    public BuffEffect set(BuffAbility.Type type, float duration, float ratio) {
+        super.set(type.toString().toLowerCase(), duration, 1);
         this.ratio = ratio;
+        return this;
     }
 
     public float getRatio() {

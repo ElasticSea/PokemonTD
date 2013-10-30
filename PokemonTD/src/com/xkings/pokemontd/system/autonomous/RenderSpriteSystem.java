@@ -19,10 +19,7 @@ import com.xkings.pokemontd.component.SpriteComponent;
 import com.xkings.pokemontd.component.TintComponent;
 import com.xkings.pokemontd.component.VisibleComponent;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Tomas on 10/4/13.
@@ -58,8 +55,7 @@ public class RenderSpriteSystem extends EntitySystem {
         PositionComponent positionComponent = positionMapper.get(e);
         Vector3 size = sizeMapper.get(e).getPoint();
 
-        for (SpriteComponent.Type type : SpriteComponent.Type.values()) {
-            Animation animation = spriteMapper.get(e).get(type);
+        for (Animation animation : spriteMapper.get(e).get()) {
             if (animation != null) {
                 TextureAtlas.AtlasRegion sprite = animation.next();
                 float x = positionComponent.getPoint().x - size.x / 2f;
@@ -85,7 +81,7 @@ public class RenderSpriteSystem extends EntitySystem {
 
     @Override
     protected void processEntities(ImmutableBag<Entity> entities) {
-        ArrayList<PositionComponent> positions = new ArrayList<PositionComponent>(entities.size());
+        List<PositionComponent> positions = new ArrayList<PositionComponent>(entities.size());
         Map<PositionComponent, Entity> map = new HashMap<PositionComponent, Entity>();
         for (int i = 0; i < entities.size(); i++) {
             Entity entity = entities.get(i);

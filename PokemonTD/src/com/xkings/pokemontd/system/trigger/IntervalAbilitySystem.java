@@ -5,7 +5,7 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
-import com.xkings.core.component.SpeedComponent;
+import com.xkings.pokemontd.component.attack.effects.buff.BuffableSpeedComponent;
 import com.xkings.core.component.Time;
 import com.xkings.core.component.TimeComponent;
 import com.xkings.pokemontd.component.attack.AbilityComponent;
@@ -17,14 +17,14 @@ public abstract class IntervalAbilitySystem<T extends AbilityComponent> extends 
 
     private final Class<T> ability;
     @Mapper
-    ComponentMapper<SpeedComponent> speedMapper;
+    ComponentMapper<BuffableSpeedComponent> speedMapper;
     @Mapper
     ComponentMapper<TimeComponent> timeMapper;
 
     ComponentMapper<T> abilityMapper;
 
     public IntervalAbilitySystem(Class<T> ability) {
-        super(Aspect.getAspectForAll(TimeComponent.class, SpeedComponent.class, ability));
+        super(Aspect.getAspectForAll(TimeComponent.class, BuffableSpeedComponent.class, ability));
         this.ability = ability;
     }
 

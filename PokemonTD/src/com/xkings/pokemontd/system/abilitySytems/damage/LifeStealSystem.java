@@ -22,6 +22,11 @@ public class LifeStealSystem extends EffectSystem<LifeStealEffect> {
     }
 
     @Override
+    protected void finished(LifeStealEffect effect, Entity e) {
+
+    }
+
+    @Override
     protected void started(LifeStealEffect effect, Entity e) {
         Health health = healthMapper.get(e).getHealth();
         float lifeStole = health.getMaxHealth() * effect.getRatio();
@@ -38,6 +43,17 @@ public class LifeStealSystem extends EffectSystem<LifeStealEffect> {
         }
         e.removeComponent(effect);
         world.changedEntity(e);
+    }
+
+    @Override
+    protected void resetEffect(LifeStealEffect effect, Entity e) {
+        processEffect(effect, e);
+        started(effect, e);
+    }
+
+    @Override
+    protected void reattachEffect(LifeStealEffect effect, Entity e) {
+
     }
 
 }

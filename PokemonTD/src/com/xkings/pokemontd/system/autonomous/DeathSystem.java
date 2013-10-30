@@ -6,6 +6,7 @@ import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.math.Vector3;
+import com.xkings.pokemontd.component.attack.effects.buff.BuffableDamageComponent;
 import com.xkings.core.component.PositionComponent;
 import com.xkings.pokemontd.App;
 import com.xkings.pokemontd.Health;
@@ -45,11 +46,11 @@ public class DeathSystem extends EntityProcessingSystem {
     @Mapper
     ComponentMapper<CreepTypeComponent> creepTypeMapper;
     @Mapper
-    ComponentMapper<DamageComponent> damageMapper;
+    ComponentMapper<BuffableDamageComponent> damageMapper;
 
     public DeathSystem(Player player) {
         super(Aspect.getAspectForAll(HealthComponent.class, TreasureComponent.class, CreepAbilityComponent.class,
-                DamageComponent.class));
+                BuffableDamageComponent.class));
         this.player = player;
     }
 

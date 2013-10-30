@@ -19,7 +19,6 @@ import java.util.ArrayList;
 public class CommonInfo extends InteractiveBlock {
     protected final Ui ui;
     protected final SpriteBatch spriteBatch;
-    protected final BitmapFont pixelFont;
     protected final DisplayText name;
     private DisplayPicture picture;
     private TextureAtlas.AtlasRegion regionCache;
@@ -32,7 +31,6 @@ public class CommonInfo extends InteractiveBlock {
         float scale = height / App.FONT_SCALE2;
         this.spriteBatch = spriteBatch;
         this.ui = ui;
-        this.pixelFont = App.getAssets().getPixelFont();
         float offset = height / 5;
         picture = new DisplayPicture(ui,x + offset, y + offset, height - offset * 2, height - offset * 2);
         name = new DisplayText(ui,new Rectangle(x + offset, y + offset, height - offset * 2, offset), font, BitmapFont.HAlignment.CENTER);
@@ -40,7 +38,6 @@ public class CommonInfo extends InteractiveBlock {
 
     @Override
     public void render() {
-        App.getAssets().getPixelFont().setScale(height / 8 / 32);
         picture.render(regionCache);
         name.render(nameCache);
     }

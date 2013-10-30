@@ -5,15 +5,13 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
-import com.xkings.core.main.Assets;
-import com.xkings.pokemontd.Animation;
 import com.xkings.pokemontd.component.SpriteComponent;
 import com.xkings.pokemontd.component.attack.effects.AbstractEffect;
 
 /**
  * Created by Tomas on 10/4/13.
  */
-public class EffectSystem<T extends AbstractEffect> extends EntityProcessingSystem {
+public abstract class EffectSystem<T extends AbstractEffect> extends EntityProcessingSystem {
 
     private ComponentMapper<T> effectMapper;
     private final Class<T> effect;
@@ -33,14 +31,25 @@ public class EffectSystem<T extends AbstractEffect> extends EntityProcessingSyst
 
     @Override
     protected void process(Entity e) {
-        T effect = effectMapper.get(e);
         SpriteComponent spriteComponent = spriteMapper.get(e);
+        T effect = effectMapper.get(e);
+
+        if (effect.isReset()) {
+            resetEffect(effect, e);
+            effect.setReset(false);
+        }
+
+        if (effect.isReattach()) {
+            reattachEffect(effect, e);
+            effect.setReattach(false);
+        }
+
         if (!effect.isStarted()) {
             addEffect(effect, spriteComponent);
             started(effect, e);
         }
         effect.update(world.delta);
-        if (spriteComponent.get(SpriteComponent.Type.EFFECT) == null) {
+        if (spriteComponent.get(effect.getEffect()) == null) {
             // DISCUS Is it a good enough solution to simply check if we have an animation going on or not,
             // this happens because this effect component is transfered to different tower that does not have
             // particular animation component.
@@ -51,29 +60,27 @@ public class EffectSystem<T extends AbstractEffect> extends EntityProcessingSyst
         }
         if (effect.isFinished()) {
             finished(effect, e);
-            removeEffect(spriteComponent);
+            removeEffect(effect, spriteComponent);
             e.removeComponent(effect.getClass());
             e.changedInWorld();
         }
     }
 
-    private void removeEffect(SpriteComponent spriteComponent) {
-        spriteComponent.remove(SpriteComponent.Type.EFFECT);
+    private void removeEffect(T effect, SpriteComponent spriteComponent) {
+        spriteComponent.remove(effect.getEffect());
     }
 
-    private void addEffect(AbstractEffect effect, SpriteComponent spriteComponent) {
-        spriteComponent.add(SpriteComponent.Type.EFFECT, new Animation(Assets.getTextureArray(effect.getEffect())));
+    private void addEffect(T effect, SpriteComponent spriteComponent) {
+        spriteComponent.add(effect.getEffect());
     }
 
-    protected void finished(T effect, Entity e) {
+    protected abstract void finished(T effect, Entity e);
 
-    }
+    protected abstract void started(T effect, Entity e);
 
-    protected void started(T effect, Entity e) {
+    protected abstract void processEffect(T effect, Entity e);
 
-    }
+    protected abstract void resetEffect(T effect, Entity e);
 
-    protected void processEffect(T effect, Entity e) {
-
-    }
+    protected abstract void reattachEffect(T effect, Entity e);
 }

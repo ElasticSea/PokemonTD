@@ -7,11 +7,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.component.PositionComponent;
 import com.xkings.core.utils.Collision;
-import com.xkings.pokemontd.component.DamageComponent;
+import com.xkings.pokemontd.component.attack.effects.buff.BuffableDamageComponent;
 import com.xkings.pokemontd.component.attack.projectile.SunbeamAbility;
 import com.xkings.pokemontd.entity.Sunbeam;
 import com.xkings.pokemontd.system.abilitySytems.damage.DamageOverPolySystem;
-import com.xkings.pokemontd.system.resolve.ClosestCreepSystem;
 import com.xkings.pokemontd.system.resolve.FirstCreepSystem;
 
 /**
@@ -20,7 +19,7 @@ import com.xkings.pokemontd.system.resolve.FirstCreepSystem;
 public class ApplySunbeamSystem extends ApplyAbilitySystem<SunbeamAbility> {
 
     @Mapper
-    ComponentMapper<DamageComponent> damageMapper;
+    ComponentMapper<BuffableDamageComponent> damageMapper;
     @Mapper
     ComponentMapper<PositionComponent> positionMapper;
 

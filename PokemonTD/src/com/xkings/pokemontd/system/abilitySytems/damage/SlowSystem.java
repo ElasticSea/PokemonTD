@@ -3,7 +3,7 @@ package com.xkings.pokemontd.system.abilitySytems.damage;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
-import com.xkings.core.component.SpeedComponent;
+import com.xkings.pokemontd.component.attack.effects.buff.BuffableSpeedComponent;
 import com.xkings.pokemontd.component.attack.effects.SlowEffect;
 
 /**
@@ -12,24 +12,37 @@ import com.xkings.pokemontd.component.attack.effects.SlowEffect;
 public class SlowSystem extends EffectSystem<SlowEffect> {
 
     @Mapper
-    ComponentMapper<SpeedComponent> speedMapper;
-    @Mapper
-    ComponentMapper<SlowEffect> effectMMapper;
+    ComponentMapper<BuffableSpeedComponent> speedMapper;
 
     public SlowSystem() {
         super(SlowEffect.class);
     }
 
     @Override
+    protected void finished(SlowEffect effect, Entity e) {
+    }
+
+    @Override
     protected void started(SlowEffect effect, Entity e) {
-        SpeedComponent speed = speedMapper.get(e);
+        BuffableSpeedComponent speed = speedMapper.get(e);
         effect.setOldSpeed(speed.getSpeed());
         speed.scaleSpeed(1 - effect.getSlowRatio());
     }
 
     @Override
     protected void processEffect(SlowEffect effect, Entity e) {
-        SpeedComponent speed = speedMapper.get(e);
+        BuffableSpeedComponent speed = speedMapper.get(e);
         speed.setSpeed(effect.getOldSpeed());
+    }
+
+    @Override
+    protected void resetEffect(SlowEffect effect, Entity e) {
+        processEffect(effect, e);
+        started(effect, e);
+    }
+
+    @Override
+    protected void reattachEffect(SlowEffect effect, Entity e) {
+
     }
 }

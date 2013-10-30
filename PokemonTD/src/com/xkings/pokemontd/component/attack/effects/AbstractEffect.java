@@ -1,20 +1,21 @@
 package com.xkings.pokemontd.component.attack.effects;
 
 import com.artemis.Component;
-import com.badlogic.gdx.graphics.Color;
 import com.xkings.core.logic.Updateable;
 
 /**
  * Created by Tomas on 10/21/13.
  */
 public abstract class AbstractEffect extends Component implements Effect, Updateable {
-    private final String effect;
+    private String effect;
     private int currentIterations;
     private float currentTime;
-    private final float interval;
+    private float interval;
     private int iterations;
+    private boolean reset;
+    private boolean reattach;
 
-    protected AbstractEffect( String effect,float interval, int iterations) {
+    protected void set(String effect, float interval, int iterations) {
         this.effect = effect;
         this.interval = interval;
         this.iterations = iterations;
@@ -60,9 +61,30 @@ public abstract class AbstractEffect extends Component implements Effect, Update
         // FIXME this is a hack that wont trigger is started, because its not zero but very close to zero.
         currentIterations = iterations;
         currentTime = Float.MIN_VALUE;
+        reset = true;
     }
 
     public String getEffect() {
         return effect;
+    }
+
+    public void reattach() {
+        reattach = true;
+    }
+
+    public boolean isReset() {
+        return reset;
+    }
+
+    public void setReset(boolean reset) {
+        this.reset = reset;
+    }
+
+    public boolean isReattach() {
+        return reattach;
+    }
+
+    public void setReattach(boolean reattach) {
+        this.reattach = reattach;
     }
 }

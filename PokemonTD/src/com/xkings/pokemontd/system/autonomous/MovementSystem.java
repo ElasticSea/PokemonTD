@@ -8,6 +8,7 @@ import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.component.*;
 import com.xkings.pokemontd.component.PathComponent;
+import com.xkings.pokemontd.component.attack.effects.buff.BuffableSpeedComponent;
 import com.xkings.pokemontd.map.Path;
 
 /**
@@ -18,7 +19,7 @@ public class MovementSystem extends EntityProcessingSystem {
     @Mapper
     ComponentMapper<PathComponent> pathMapper;
     @Mapper
-    ComponentMapper<SpeedComponent> speedMapper;
+    ComponentMapper<BuffableSpeedComponent> speedMapper;
     @Mapper
     ComponentMapper<RotationComponent> rotationMapper;
     @Mapper
@@ -28,7 +29,7 @@ public class MovementSystem extends EntityProcessingSystem {
 
 
     public MovementSystem() {
-        super(Aspect.getAspectForAll(PositionComponent.class, SizeComponent.class, SpeedComponent.class,
+        super(Aspect.getAspectForAll(PositionComponent.class, SizeComponent.class, BuffableSpeedComponent.class,
                 TimeComponent.class, PathComponent.class));
     }
 

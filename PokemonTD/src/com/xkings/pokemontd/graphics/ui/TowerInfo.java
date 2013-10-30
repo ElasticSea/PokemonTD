@@ -21,7 +21,6 @@ public class TowerInfo extends CommonInfo {
     public static final Color BUY_COLOR = new Color(Color.GREEN).mul(0.6f);
     protected final Ui ui;
     protected final SpriteBatch spriteBatch;
-    protected final BitmapFont pixelFont;
     protected final DisplayText damage;
     protected final DisplayText speed;
     protected final DisplayText range;
@@ -55,7 +54,6 @@ public class TowerInfo extends CommonInfo {
         super(ui, rectangle, shapeRenderer, spriteBatch, font);
         this.spriteBatch = spriteBatch;
         this.ui = ui;
-        this.pixelFont = App.getAssets().getPixelFont();
         float offset = height / 5;
         float offsetBlocks = height / 2;
         float towerCostOffset = offset / 3f;
@@ -89,7 +87,6 @@ public class TowerInfo extends CommonInfo {
      */
     @Override
     public void render() {
-        App.getAssets().getPixelFont().setScale(height / 8 / 32);
         this.sell.setEnabled(sellCache);
         this.buy.setEnabled(buyCache);
 

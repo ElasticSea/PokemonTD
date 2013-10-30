@@ -19,7 +19,6 @@ import com.xkings.pokemontd.component.SpriteComponent;
 
 public class CreepEntityInfo extends CommonInfo {
 
-    private final BitmapFont pixelFont;
     private final DisplayText health;
     private final DisplayText type;
     private int healthCache;
@@ -28,7 +27,6 @@ public class CreepEntityInfo extends CommonInfo {
     public CreepEntityInfo(final Ui ui, Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
                            BitmapFont font) {
         super(ui, rectangle, shapeRenderer, spriteBatch, font);
-        this.pixelFont = App.getAssets().getPixelFont();
 
         float offset = height / 5;
 
@@ -38,7 +36,6 @@ public class CreepEntityInfo extends CommonInfo {
 
     @Override
     public void render() {
-        App.getAssets().getPixelFont().setScale(height / 8 / 32);
         super.render();
         this.health.render("HP: " + healthCache);
         this.type.render("" + typeCache);
