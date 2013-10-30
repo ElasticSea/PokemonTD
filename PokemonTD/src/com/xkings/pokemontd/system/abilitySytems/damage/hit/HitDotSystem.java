@@ -31,7 +31,7 @@ public class HitDotSystem extends HitEffectSystem<DotData, DotEffect> {
     @Override
     protected DotEffect resetEffect(Entity e, DotEffect effect, DotData effectData) {
         effect.set(effectData.getEffect(), effectData.getInterval(), effectData.getIterations(),
-                damageMapper.get(e).getDps() * effectData.getDamageMultiplier() / effectData.getIterations());
+                damageMapper.get(e).getDps() * effectData.getDamageMultiplier());
         return effect;
     }
 

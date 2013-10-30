@@ -9,8 +9,6 @@ import com.xkings.pokemontd.component.attack.projectile.data.SlowData;
  */
 public class HitSlowSystem extends HitEffectSystem<SlowData, SlowEffect> {
 
-    private AoeSystem aoe;
-
     public HitSlowSystem() {
         super(SlowData.class, SlowEffect.class);
     }

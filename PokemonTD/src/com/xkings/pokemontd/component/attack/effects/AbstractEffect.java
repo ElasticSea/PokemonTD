@@ -6,7 +6,7 @@ import com.xkings.core.logic.Updateable;
 /**
  * Created by Tomas on 10/21/13.
  */
-public abstract class AbstractEffect extends Component implements Effect, Updateable {
+public abstract class AbstractEffect<T> extends Component implements Effect, Updateable, Comparable<T> {
     private String effect;
     private int currentIterations;
     private float currentTime;

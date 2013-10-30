@@ -31,10 +31,11 @@ public abstract class HitEffectSystem<T extends EffectData, V extends AbstractEf
     protected void hit(T effectData, Entity e, Entity target) {
         V effect = effectMapper.get(target);
         if (App.CHANCE.happens(effectData.getChance())) {
+            V newEffect = createEffect(e, effectData);
             if (effect == null) {
-                target.addComponent(createEffect(e, effectData));
+                target.addComponent(newEffect);
                 world.changedEntity(target);
-            } else {
+            } else if (newEffect.compareTo(effect) >= 0) {
                 effect.reset();
                 resetEffect(e, effect, effectData);
             }
