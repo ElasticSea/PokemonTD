@@ -18,35 +18,39 @@ import com.xkings.pokemontd.tween.ColorAccessor;
 /**
  * Created by Tomas on 10/5/13.
  */
-public class MoneyInfo extends ConcreteEntity {
+public class TextInfo extends ConcreteEntity {
 
-    private final TintComponent color;
+    private final TintComponent tint;
     private final PositionComponent position;
 
-    private MoneyInfo(World world, int money, float x, float y) {
+    private TextInfo(World world, String text, Color color, float x, float y) {
         super(world);
-        color = new TintComponent(Color.YELLOW);
+        tint = new TintComponent(color);
         position = new PositionComponent(x, y, 0);
         addComponent(position);
         addComponent(new SizeComponent(1f, 0, 0));
-        addComponent(color);
-        addComponent(new TextComponent("+" + String.valueOf(money)));
+        addComponent(tint);
+        addComponent(new TextComponent(text));
 
     }
 
-    public static void registerMoneyInfo(World world, int money, float x, float y) {
-        final MoneyInfo moneyInfo = new MoneyInfo(world, money, x, y);
-        moneyInfo.register();
+    public static void registerTextInfo(World world, String text, Color color, float x, float y) {
+        final TextInfo textInfo = new TextInfo(world, text, color, x, y);
+        textInfo.register();
 
         TweenCallback callback = new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
-                moneyInfo.entity.deleteFromWorld();
+                textInfo.entity.deleteFromWorld();
             }
         };
-        Tween.to(moneyInfo.position.getPoint(), Vector3Accessor.VECTOR_Y, 1).target(
-                moneyInfo.position.getPoint().y + 10).start(App.getTweenManager());
-        Tween.to(moneyInfo.color.getTint(), ColorAccessor.A, 1).target(0).setCallback(callback).start(
+        Tween.to(textInfo.position.getPoint(), Vector3Accessor.VECTOR_Y, 1).target(
+                textInfo.position.getPoint().y + 10).start(App.getTweenManager());
+        Tween.to(textInfo.tint.getTint(), ColorAccessor.A, 1).target(0).setCallback(callback).start(
                 App.getTweenManager());
+    }
+
+    public static void registerMoneyInfo(World world, int money, float x, float y) {
+        registerTextInfo(world, "+" + money, Color.YELLOW, x, y);
     }
 }

@@ -13,7 +13,7 @@ import com.xkings.pokemontd.Health;
 import com.xkings.pokemontd.Player;
 import com.xkings.pokemontd.Treasure;
 import com.xkings.pokemontd.component.*;
-import com.xkings.pokemontd.entity.MoneyInfo;
+import com.xkings.pokemontd.entity.TextInfo;
 import com.xkings.pokemontd.entity.StaticObject;
 import com.xkings.pokemontd.entity.creep.Creep;
 import com.xkings.pokemontd.entity.creep.CreepAbilityType;
@@ -113,7 +113,7 @@ public class DeathSystem extends EntityProcessingSystem {
     private void earn(Entity e) {
         Vector3 position = positionMapper.get(e).getPoint();
         Treasure treasure = treasureMapper.get(e).getTreasure();
-        MoneyInfo.registerMoneyInfo(world, treasure.getGold(), position.x, position.y);
+        TextInfo.registerMoneyInfo(world, treasure.getGold(), position.x, position.y);
         treasure.transferTo(player.getTreasure());
         player.getScore().increase((int) damageMapper.get(e).getDamage());
     }

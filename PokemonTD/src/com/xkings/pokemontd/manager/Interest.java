@@ -8,7 +8,7 @@ import com.xkings.core.logic.Clock;
 import com.xkings.core.logic.UpdateFilter;
 import com.xkings.core.logic.Updateable;
 import com.xkings.pokemontd.Treasure;
-import com.xkings.pokemontd.entity.MoneyInfo;
+import com.xkings.pokemontd.entity.TextInfo;
 
 
 /**
@@ -41,7 +41,7 @@ public class Interest implements Updateable {
         Entity shop = towerManager.getShop();
         if (shop != null) {
             Vector3 position = shop.getComponent(PositionComponent.class).getPoint();
-            MoneyInfo.registerMoneyInfo(world, earnGold, position.x, position.y);
+            TextInfo.registerMoneyInfo(world, earnGold, position.x, position.y);
         }
     }
 
