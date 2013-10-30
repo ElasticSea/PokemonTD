@@ -1,12 +1,9 @@
 package com.xkings.pokemontd.system.abilitySytems.damage.hit;
 
-import com.artemis.Component;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.xkings.pokemontd.App;
 import com.xkings.pokemontd.component.attack.effects.AbstractEffect;
-import com.xkings.pokemontd.component.attack.effects.DotEffect;
-import com.xkings.pokemontd.component.attack.effects.SlowEffect;
 import com.xkings.pokemontd.component.attack.projectile.data.EffectData;
 
 /**
@@ -32,12 +29,16 @@ public abstract class HitEffectSystem<T extends EffectData, V extends AbstractEf
         V effect = effectMapper.get(target);
         if (App.CHANCE.happens(effectData.getChance())) {
             if (effect == null) {
+                System.out.println("Effect [NEW]");
                 target.addComponent(createEffect(e, effectData));
                 world.changedEntity(target);
             } else {
+                System.out.println("Effect [RESET]");
                 effect.reset();
                 resetEffect(e, effect, effectData);
             }
+        } else {
+            System.out.println("Effect [FAILED]");
         }
     }
 
