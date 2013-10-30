@@ -2,6 +2,7 @@ package com.xkings.pokemontd;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.xkings.core.utils.ParamHolder;
 
 import java.io.File;
 
@@ -19,14 +20,16 @@ public class Main {
         String destination = new File(".").toString() + "/data/textures/";
         process(texturePackerSettings, source, destination, "packed");
 
-        System.out.println(new File(".").getAbsoluteFile().getParentFile().getParentFile().getParentFile());
-
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "PokemonTD";
         cfg.useGL20 = true;
         cfg.width = 800;
         cfg.height = 640;
-      //  cfg.fullscreen = true;
+        if (new ParamHolder(args).getParam("-fullscreen") != null) {
+            cfg.fullscreen = true;
+            cfg.width = 2560;
+            cfg.height = 1440;
+        }
 
         new LwjglApplication(new App(args), cfg);
     }
