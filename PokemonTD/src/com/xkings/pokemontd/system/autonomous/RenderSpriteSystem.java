@@ -56,7 +56,7 @@ public class RenderSpriteSystem extends EntitySystem {
         Vector3 size = sizeMapper.get(e).getPoint();
 
         for (Animation animation : spriteMapper.get(e).get()) {
-            if (animation != null) {
+            if (animation != null && animation.hasNext()) {
                 TextureAtlas.AtlasRegion sprite = animation.next();
                 float x = positionComponent.getPoint().x - size.x / 2f;
                 float y = positionComponent.getPoint().y - size.y / 2f;

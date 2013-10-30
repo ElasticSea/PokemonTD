@@ -31,4 +31,8 @@ public class Animation {
         }
         return getSprite();
     }
+
+    public boolean hasNext(){
+        return sprites.size > position;
+    }
 }
