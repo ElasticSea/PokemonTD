@@ -19,7 +19,7 @@ public class CreepTypeBuilder {
 
     private List<CreepTypeSpecification> getData() {
         List<CreepTypeSpecification> list = new ArrayList<CreepTypeSpecification>();
-        list.add(new CreepTypeSpecification(CreepName.Hoothoot, 75, Treasure.fromGold(1),
+        list.add(new CreepTypeSpecification(CreepName.Hoothoot, 75000000, Treasure.fromGold(1),
                 CreepAbilityType.NORMAL));
         list.add(new CreepTypeSpecification(CreepName.Ledian, 88, Treasure.fromGold(1), CreepAbilityType.NORMAL));
         list.add(new CreepTypeSpecification(CreepName.Crobat, 103, Treasure.fromGold(1), CreepAbilityType.SWARM));
@@ -122,7 +122,11 @@ public class CreepTypeBuilder {
         return list;
     }
 
-
+    /**
+     * Creates predefined Map of {@link CreepType} templates.
+     * @param scale scale of templates size, speed, etc..
+     * @return map of CreepType templates
+     */
     public Map<CreepName, CreepType> build(float scale) {
         List<CreepType> list = new ArrayList<CreepType>();
         for (int id = 0; id < data.size(); id++) {
