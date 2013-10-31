@@ -49,9 +49,9 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         shapeRenderer = new ShapeRenderer();
         spriteBatch = new SpriteBatch();
         height = Gdx.graphics.getHeight();
-        float squareHeight = MathUtils.clamp(Gdx.graphics.getDensity() * 160 * 2, height / 4, height / 3.3f);
-        float statusBarHeight = squareHeight / 5;
-        float statusHeight = statusBarHeight * 4;
+        int squareHeight = (int) MathUtils.clamp(Gdx.graphics.getDensity() * 160 * 2, height / 4, height / 3.3f);
+        int statusBarHeight = squareHeight / 5;
+        int statusHeight = statusBarHeight * 4;
 
         width = Gdx.graphics.getWidth();
 
@@ -59,7 +59,9 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         offset = (int) squareHeight / 36;
         float statusHeightBlock = statusHeight / 5;
         float statusOffSet = statusHeightBlock / 2;
-        statusHeight = statusHeightBlock * 4;
+        statusHeight = (int) (statusHeightBlock * 4);
+
+        squareHeight = ((int)squareHeight/3)*3+offset*2;
 
         Rectangle pickTableRectangle =
                 new Rectangle(Gdx.graphics.getWidth() - squareHeight, 0, squareHeight, squareHeight);

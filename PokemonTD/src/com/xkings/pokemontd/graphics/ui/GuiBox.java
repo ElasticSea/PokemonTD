@@ -20,7 +20,7 @@ class GuiBox extends InteractiveBlock {
     protected final SpriteBatch spriteBatch;
     protected final Ui ui;
 
-    GuiBox(Ui ui,Rectangle rectangle) {
+    GuiBox(Ui ui, Rectangle rectangle) {
         super(rectangle);
         this.ui = ui;
         this.offset = ui.getOffset();
@@ -31,15 +31,15 @@ class GuiBox extends InteractiveBlock {
 
     @Override
     public void render() {
-        drawRect(offset);
+        drawRect();
     }
 
-    private void drawRect(int offset) {
+    private void drawRect() {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(darkerColor);
         shapeRenderer.rect(x, y, width, height);
         shapeRenderer.setColor(lighterColor);
-        shapeRenderer.rect(x + offset, y + offset, width - offset * 2, height - offset * 2);
+        shapeRenderer.rect(offsetRectange.x, offsetRectange.y, offsetRectange.width, offsetRectange.height);
         shapeRenderer.end();
     }
 

@@ -27,10 +27,11 @@ public abstract class PickTable<E extends InteractiveBlock> extends GuiBox {
     }
 
     private E createPickIcon(int position, int count) {
-        Vector2 size = new Vector2(width / count, height / count);
-        int x = (int) (this.x + position % count * size.x);
-        int y = (int) (this.y + position / count * size.y);
-        return createPickIconInstance(x, height - y - size.y, size.x, size.y);
+        Vector2 size = new Vector2(offsetRectange.width / count, offsetRectange.height / count);
+        int x = (int) (position % count * size.x);
+        int y = (int) (position / count * size.y);
+        return createPickIconInstance(offsetRectange.x + x, offsetRectange.y + offsetRectange.height - y - size.y,
+                size.x, size.y);
     }
 
     protected abstract E createPickIconInstance(float x, float y, float w, float h);
