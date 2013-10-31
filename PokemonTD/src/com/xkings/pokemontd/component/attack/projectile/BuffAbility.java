@@ -20,12 +20,12 @@ public class BuffAbility extends AbilityComponent {
         SPEED, DAMAGE, RANGE;
     }
 
-    public static BuffAbility getDamage(float ratio, float duration) {
-        return new BuffAbility(Type.DAMAGE, ratio, duration);
-    }
-
     public static BuffAbility getSpeed(float ratio, float duration) {
         return new BuffAbility(Type.SPEED, ratio, duration);
+    }
+
+    public static BuffAbility getDamage(float ratio, float duration) {
+        return new BuffAbility(Type.DAMAGE, ratio, duration);
     }
 
     public Type getType() {

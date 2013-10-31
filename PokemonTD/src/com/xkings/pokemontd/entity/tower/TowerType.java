@@ -107,13 +107,13 @@ public class TowerType implements CommonDataType {
             map.put(Haunted, getTypes(Nightmare));
 
             // 2 Element
-            map.put(Noble, getTypes(Majestic, Grind, Trotting, Slime));
+            map.put(Noble, getTypes(Majestic, Grind, Throttling, Slime));
             map.put(Majestic, getTypes(Magnificent));
 
             map.put(Sunny, getTypes(Solar, Grind, Vampire, Disease));
             map.put(Solar, getTypes(Photonic));
 
-            map.put(Poison, getTypes(Toxic, Trotting, Vampire, Confuzed));
+            map.put(Poison, getTypes(Toxic, Throttling, Vampire, Confuzed));
             map.put(Toxic, getTypes(Venom));
 
             map.put(Ice, getTypes(Freezing, Slime, Disease, Confuzed));
@@ -122,7 +122,7 @@ public class TowerType implements CommonDataType {
             map.put(Burst, getTypes(Pyro, Grind, Charged, Stomp));
             map.put(Pyro, getTypes(Flamethrower));
 
-            map.put(Punch, getTypes(Takedown, Trotting, Charged, Erruption));
+            map.put(Punch, getTypes(Takedown, Throttling, Charged, Erruption));
             map.put(Takedown, getTypes(Knockout));
 
             map.put(Sneaky, getTypes(Stealth, Slime, Stomp, Erruption));
@@ -139,7 +139,7 @@ public class TowerType implements CommonDataType {
 
             // 3 Element
             map.put(Grind, getTypes(Pulverize));
-            map.put(Trotting, getTypes(Galloping));
+            map.put(Throttling, getTypes(Galloping));
             map.put(Slime, getTypes(Acid));
             map.put(Vampire, getTypes(Dracula));
             map.put(Disease, getTypes(Epidemic));

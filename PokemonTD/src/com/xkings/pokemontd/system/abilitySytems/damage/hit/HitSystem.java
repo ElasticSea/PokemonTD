@@ -6,7 +6,9 @@ import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.math.Vector3;
-import com.xkings.core.component.*;
+import com.xkings.core.component.PositionComponent;
+import com.xkings.core.component.SizeComponent;
+import com.xkings.core.component.TargetComponent;
 import com.xkings.core.utils.Collision;
 import com.xkings.pokemontd.component.HealthComponent;
 import com.xkings.pokemontd.component.attack.effects.buff.BuffableDamageComponent;
@@ -56,32 +58,35 @@ public abstract class HitSystem<T extends EffectData> extends EntityProcessingSy
 
     @Override
     protected void process(Entity e) {
-        Entity target = targetMapper.get(e).getTarget();
-
-        if (positionMapper.get(target) == null) {
-            e.deleteFromWorld();
-            return;
-        }
-        HitAbility hitAbility = projectileMapper.get(e);
-        if (hitAbility.getType().equals(HitAbility.Type.IMMEDIATE_ATTACK)) {
-            hit(effectDataMapper.get(e), e, target);
-        }
+        this.entity = e;
+        this.effectData = effectDataMapper.get(e);
 
         Vector3 entityPosition = positionMapper.get(e).getPoint();
-        Vector3 targetPosition = positionMapper.get(target).getPoint();
         Vector3 entitySize = sizeMapper.get(e).getPoint();
-        Vector3 targetSize = sizeMapper.get(target).getPoint();
+        HitAbility hitAbility = projectileMapper.get(e);
+        target = targetMapper.get(e).getTarget();
 
-        if (Collision.intersectRects(entityPosition, targetPosition, entitySize, targetSize)) {
-            this.effectData = effectDataMapper.get(e);
-            this.entity = e;
-            this.target = target;
-            if (hitAbility.getAoe() > 0) {
-                aoe.start(targetPosition, hitAbility.getAoe());
-            } else {
-                hit(effectDataMapper.get(e), e, target);
-            }
+        if (hitAbility.getType().equals(HitAbility.Type.IMMEDIATE_NOCONTACT_DAMAGE)) {
+            aoe.start(entityPosition, hitAbility.getAoe());
             e.deleteFromWorld();
+        } else if (positionMapper.get(target) == null) {
+            e.deleteFromWorld();
+        } else if (hitAbility.getType().equals(HitAbility.Type.IMMEDIATE_ATTACK)) {
+            hit(effectDataMapper.get(e), e, target);
+            e.deleteFromWorld();
+        } else {
+
+            Vector3 targetPosition = positionMapper.get(target).getPoint();
+            Vector3 targetSize = sizeMapper.get(target).getPoint();
+
+            if (Collision.intersectRects(entityPosition, targetPosition, entitySize, targetSize)) {
+                if (hitAbility.getAoe() > 0) {
+                    aoe.start(targetPosition, hitAbility.getAoe());
+                } else {
+                    hit(effectDataMapper.get(e), e, target);
+                }
+                e.deleteFromWorld();
+            }
         }
     }
 
@@ -100,7 +105,7 @@ public abstract class HitSystem<T extends EffectData> extends EntityProcessingSy
 
         @Override
         protected void begin() {
-            System.out.println("LOL NOBODY: "+getActives().size());
+            System.out.println("LOL NOBODY: " + getActives().size());
         }
 
         @Override

@@ -44,16 +44,15 @@ public class FireProjectilSystem extends ApplyAbilitySystem<HitAbility> {
     public boolean createProjectile(HitAbility projectileType, Vector3 position, float damage, float speed,
                                     Vector3 targetPosition, Entity target) {
         switch (projectileType.getType()) {
-            case FOLLOW_TARGET:
-                Projectile.registerProjectile(world, projectileType, position.x, position.y, damage, speed,
-                        targetPosition, target);
-                break;
             case PASS_THROUGH:
                 Vector3 direction = targetPosition.cpy().sub(position).nor().scl(5 * App.WORLD_SCALE).add(position);
                 Projectile.registerProjectile(world, projectileType, position.x, position.y, damage, speed, direction,
                         target);
                 break;
+
+            case FOLLOW_TARGET:
             case IMMEDIATE_ATTACK:
+            case IMMEDIATE_NOCONTACT_DAMAGE:
                 Projectile.registerProjectile(world, projectileType, position.x, position.y, damage, speed,
                         targetPosition, target);
                 break;

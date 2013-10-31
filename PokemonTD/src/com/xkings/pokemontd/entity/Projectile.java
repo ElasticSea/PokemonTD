@@ -38,6 +38,7 @@ public class Projectile extends ConcreteEntity {
 
     public static void registerProjectile(World world, HitAbility projectileType, float x, float y,
                                           float damage, float speed, Vector3 targetPosition, Entity target) {
+        System.out.println("Projectile registered");
         Projectile projectile = new Projectile(world, projectileType, x, y, damage, speed, targetPosition, target);
         projectile.register();
     }

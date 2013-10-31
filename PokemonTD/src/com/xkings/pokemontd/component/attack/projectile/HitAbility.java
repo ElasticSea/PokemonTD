@@ -17,16 +17,16 @@ public class HitAbility extends AbilityComponent {
     public static final float FAST_SPEED = 8.0f;
     public static final float DEFAULT_SIZE = 0.1f;
     public static final float BIG_SIZE = 0.25f;
+    public static final float SUPER_BIG_SIZE = 0.5f;
     private final float aoe;
     private TextureAtlas.AtlasRegion texture;
     private Type type;
     private float speed;
     private float size;
     private final List<AbilityComponent> ability;
-    private static AbilityComponent none;
 
-    public static AbilityComponent getNormal(float scale) {
-        return new HitAbility("bullet", Type.FOLLOW_TARGET, DEFAULT_SIZE * scale, NORMAL_SPEED * scale,
+    public static AbilityComponent getNormal(String texture, float scale) {
+        return new HitAbility(texture, Type.FOLLOW_TARGET, DEFAULT_SIZE * scale, NORMAL_SPEED * scale,
                 new NormalData());
     }
 
@@ -69,11 +69,10 @@ public class HitAbility extends AbilityComponent {
                 new DotData("poison", 16, 0.25f), new SlowData("", slowRatio, duration, chance));
     }
 
-
-    public static AbilityComponent getSlow(String texture, float scale, float range, float slowRatio, float duration,
-                                           float chance) {
-        return new HitAbility("bullet", Type.FOLLOW_TARGET, DEFAULT_SIZE * scale, NORMAL_SPEED * scale, range * scale,
-                new SlowData(texture, slowRatio, duration, chance));
+    public static AbilityComponent getSlow(String bulletTexture, String texture, float scale, float range,
+                                           float slowRatio, float duration, float chance) {
+        return new HitAbility(bulletTexture, Type.FOLLOW_TARGET, DEFAULT_SIZE * scale, NORMAL_SPEED * scale,
+                range * scale, new SlowData(texture, slowRatio, duration, chance));
     }
 
     public static AbilityComponent getMoney(float scale, float ratio) {
@@ -81,9 +80,23 @@ public class HitAbility extends AbilityComponent {
                 new MoneyData("", ratio));
     }
 
+    public static AbilityComponent getEruption(float scale, float range) {
+        return new HitAbility("bullet", Type.IMMEDIATE_NOCONTACT_DAMAGE, BIG_SIZE * scale, NORMAL_SPEED * scale,
+                range * scale, new NormalData());
+    }
+
+    public static AbilityComponent getVolcano(float scale, float range) {
+        return new HitAbility("bullet", Type.IMMEDIATE_NOCONTACT_DAMAGE, BIG_SIZE * scale, NORMAL_SPEED * scale,
+                range * scale, new NormalData(), new DotData("fire", 16, 0.25f));
+    }
+
+    public static AbilityComponent getCharge(float scale) {
+        return new HitAbility("charge", Type.FOLLOW_TARGET, SUPER_BIG_SIZE * scale, FAST_SPEED * scale,
+                new NormalData());
+    }
 
     public enum Type {
-        FOLLOW_TARGET, LAST_KNOWN_PLACE, AHEAD_TARGET, PASS_THROUGH, IMMEDIATE_ATTACK;
+        FOLLOW_TARGET, LAST_KNOWN_PLACE, AHEAD_TARGET, PASS_THROUGH, IMMEDIATE_ATTACK, IMMEDIATE_NOCONTACT_DAMAGE;
     }
 
     public HitAbility(String texture, Type type, float size, float speed, AbilityComponent... abilities) {
