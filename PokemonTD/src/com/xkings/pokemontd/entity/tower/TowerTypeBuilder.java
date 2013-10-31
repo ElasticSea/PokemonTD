@@ -92,6 +92,10 @@ public class TowerTypeBuilder {
         specs.add(new Specs(TowerName.Polar, 9, N_SPEED, N_RANGE, HitAbility.getSlow("bullet", "ice", scale, 2f, 0.7f, 2, 1f), Treasure.fromWater(3).addDarkness(3)));
 
         // FIXME MISSING TOWERS (FLAMTHROWER...)
+        specs.add(new Specs(TowerName.Punch, 5, N_SPEED, N_RANGE, HitAbility.getSlow("rock", "rockEffect", scale, 2f, 0.1f, 1, 1f), Treasure.fromFire(1).addLight(1)));
+        specs.add(new Specs(TowerName.Takedown, 7, N_SPEED, N_RANGE, HitAbility.getSlow("rock", "rockEffect", scale, 2f, 0.2f, 2, 1f), Treasure.fromFire(2).addLight(2)));
+        specs.add(new Specs(TowerName.Knockout, 9, N_SPEED, N_RANGE, HitAbility.getSlow("rock", "rockEffect", scale, 2f, 0.3f, 3, 1f), Treasure.fromFire(3).addLight(3)));
+
         specs.add(new Specs(TowerName.Sneaky, 5, N_SPEED, N_RANGE, HitAbility.getMoney(scale, 1.5f), Treasure.fromFire(1).addDarkness(1)));
         specs.add(new Specs(TowerName.Stealth, 7, N_SPEED, N_RANGE, HitAbility.getMoney(scale, 1.75f), Treasure.fromFire(2).addDarkness(2)));
         specs.add(new Specs(TowerName.Thief, 9, N_SPEED, N_RANGE, HitAbility.getMoney(scale, 2f), Treasure.fromFire(3).addDarkness(3)));
@@ -110,14 +114,24 @@ public class TowerTypeBuilder {
 
 
         /// ######################  TREE ELEMENT
+        specs.add(new Specs(TowerName.Grind, 6, N_SPEED, XS_SPEED, HitAbility.getSplash("rock",scale, 3f), Treasure.fromWater(1).addFire(1).addNature(1)));
+        specs.add(new Specs(TowerName.Pulverize, 9, N_SPEED, XXS_SPEED, HitAbility.getSplash("rock",scale, 6f), Treasure.fromWater(1).addFire(1).addNature(1)));
+
+        specs.add(new Specs(TowerName.Vampire, 6, N_SPEED, N_RANGE, HitAbility.getLife(scale, 1f, 0.5f), Treasure.fromWater(1).addNature(1).addLight(1)));
+        specs.add(new Specs(TowerName.Dracula, 9, N_SPEED, N_RANGE, HitAbility.getLife(scale, 1f, 1f), Treasure.fromWater(2).addNature(2).addLight(2)));
+
+        specs.add(new Specs(TowerName.Disease, 6, XS_SPEED, N_RANGE, HitAbility.getAuraDmg(scale, N_RANGE), Treasure.fromWater(1).addLight(1).addDarkness(1)));
+        specs.add(new Specs(TowerName.Epidemic, 9, XL_SPEED, L_RANGE, HitAbility.getAuraDmg(scale, L_RANGE), Treasure.fromWater(2).addLight(2).addDarkness(2)));
+
+        specs.add(new Specs(TowerName.Confused, 6, L_SPEED, N_RANGE, HitAbility.getDumbClaw(scale, 0f, 0), Treasure.fromWater(1).addLight(1).addDarkness(1)));
+
         specs.add(new Specs(TowerName.Charged, 6, S_SPEED, XL_RANGE, HitAbility.getCharge(scale), Treasure.fromFire(1).addNature(1).addLight(1)));
         specs.add(new Specs(TowerName.Supercharged, 9, XS_SPEED, XXXL_RANGE, HitAbility.getCharge(scale * 2), Treasure.fromFire(2).addNature(2).addLight(2)));
-
 
         specs.add(new Specs(TowerName.Stomp, 6, N_SPEED, N_RANGE, HitAbility.getSlow("rock", "", scale, 0, 1f, 1, 1), Treasure.fromFire(1).addNature(1).addDarkness(1)));
         specs.add(new Specs(TowerName.Earthquake, 9, N_SPEED, N_RANGE, HitAbility.getSlow("rock", "", scale, 0, 1f, 3, 1), Treasure.fromFire(2).addNature(2).addDarkness(2)));
 
-        specs.add(new Specs(TowerName.Erruption, 6, XS_SPEED, N_RANGE, HitAbility.getEruption(scale, N_RANGE), Treasure.fromFire(1).addLight(1).addDarkness(1)));
+        specs.add(new Specs(TowerName.Erruption, 6, XS_SPEED, N_RANGE, HitAbility.getAuraDmg(scale, N_RANGE), Treasure.fromFire(1).addLight(1).addDarkness(1)));
         specs.add(new Specs(TowerName.Volcanic, 9, XXS_SPEED, S_RANGE, HitAbility.getVolcano(scale, S_RANGE), Treasure.fromFire(2).addLight(2).addDarkness(2)));
 
         List<TowerType> data = new ArrayList<TowerType>();

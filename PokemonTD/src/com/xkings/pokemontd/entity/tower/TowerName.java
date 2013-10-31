@@ -10,6 +10,6 @@ public enum TowerName {
     Poison, Toxic, Venom, Ice, Freezing, Polar, Burst, Pyro, Flamethrower, Punch, Takedown, Knockout, Sneaky, Stealth,
     Thief, Pebble, Rocky, Massive, Dizzy, Paralyze, Crippling, Spell, Enchanted, Magic, Grind, Pulverize, Throttling,
     Galloping,
-    Slime, Acid, Vampire, Dracula, Disease, Epidemic, Confuzed, Supersonic, Charged, Supercharged, Stomp, Earthquake,
+    Slime, Acid, Vampire, Dracula, Disease, Epidemic, Confused, Supersonic, Charged, Supercharged, Stomp, Earthquake,
     Erruption, Volcanic, Hypnotic, Illusion;
 }

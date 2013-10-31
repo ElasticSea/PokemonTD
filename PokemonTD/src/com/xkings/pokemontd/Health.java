@@ -6,8 +6,12 @@ public class Health {
     private float currentHealth;
 
     public Health(int maxHealth) {
+        this(maxHealth, maxHealth);
+    }
+
+    public Health(int maxHealth, int currentHealth) {
         this.maxHealth = maxHealth;
-        this.currentHealth = maxHealth;
+        this.currentHealth = currentHealth;
     }
 
     public float getRatio() {
@@ -15,7 +19,7 @@ public class Health {
     }
 
     public void decease(float count) {
-        System.out.println("Health decreased: "+count);
+        System.out.println("Health decreased: " + count);
         currentHealth = Math.max(0, currentHealth - count);
     }
 

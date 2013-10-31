@@ -193,7 +193,8 @@ public class App extends Game2D {
         world.setSystem(new HitDotSystem());
         world.setSystem(new HitSlowSystem());
         world.setSystem(new HitNormalSystem());
-          world.setSystem(new HitMoneySystem());
+        world.setSystem(new HitMoneySystem());
+        world.setSystem(new HitLifeSystem(player.getHealth()));
         // world.setSystem(new HitSlowAoeSystem());
         world.setSystem(new HitBonusSystem());
         world.setSystem(new ApplyBuffSystem());
@@ -223,15 +224,15 @@ public class App extends Game2D {
                 6).addLeft().addStraight(2).addRight().addStraight().build();
     }
 
-                   /*
-    private MapData createMap() {
-        return new MapBuilder(3, 11, PATH_SIZE, MapBuilder.Direction.DOWN, 0.40f,
-                new Rectangle(1, 2, 1, 2)).addStraight().addRight().addStraight().addLeft().addStraight(
-                2).addLeft().addStraight().addLeft().addRight().addStraight().addRight().addStraight(
-                2).addRight().addStraight(3).addLeft().addStraight().addLeft().addStraight(5).addLeft().addStraight(
-                6).addLeft().addStraight().addRight().addStraight().build();
-    }
-                    */
+    /*
+private MapData createMap() {
+return new MapBuilder(3, 11, PATH_SIZE, MapBuilder.Direction.DOWN, 0.40f,
+ new Rectangle(1, 2, 1, 2)).addStraight().addRight().addStraight().addLeft().addStraight(
+ 2).addLeft().addStraight().addLeft().addRight().addStraight().addRight().addStraight(
+ 2).addRight().addStraight(3).addLeft().addStraight().addLeft().addStraight(5).addLeft().addStraight(
+ 6).addLeft().addStraight().addRight().addStraight().build();
+}
+     */
     @Override
     public void dispose() {
 

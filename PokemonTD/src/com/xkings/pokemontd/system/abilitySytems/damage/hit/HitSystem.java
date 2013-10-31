@@ -5,15 +5,18 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.component.PositionComponent;
 import com.xkings.core.component.SizeComponent;
 import com.xkings.core.component.TargetComponent;
 import com.xkings.core.utils.Collision;
+import com.xkings.pokemontd.App;
 import com.xkings.pokemontd.component.HealthComponent;
 import com.xkings.pokemontd.component.attack.effects.buff.BuffableDamageComponent;
 import com.xkings.pokemontd.component.attack.projectile.HitAbility;
 import com.xkings.pokemontd.component.attack.projectile.data.EffectData;
+import com.xkings.pokemontd.entity.TextInfo;
 
 /**
  * Created by Tomas on 10/4/13.
@@ -72,7 +75,7 @@ public abstract class HitSystem<T extends EffectData> extends EntityProcessingSy
         } else if (positionMapper.get(target) == null) {
             e.deleteFromWorld();
         } else if (hitAbility.getType().equals(HitAbility.Type.IMMEDIATE_ATTACK)) {
-            hit(effectDataMapper.get(e), e, target);
+            tryToHit(effectDataMapper.get(e), e, target);
             e.deleteFromWorld();
         } else {
 
@@ -83,10 +86,19 @@ public abstract class HitSystem<T extends EffectData> extends EntityProcessingSy
                 if (hitAbility.getAoe() > 0) {
                     aoe.start(targetPosition, hitAbility.getAoe());
                 } else {
-                    hit(effectDataMapper.get(e), e, target);
+                    tryToHit(effectDataMapper.get(e), e, target);
                 }
                 e.deleteFromWorld();
             }
+        }
+    }
+
+    protected void tryToHit(T effectData, Entity e, Entity target) {
+        if (App.CHANCE.happens(effectData.getChance())) {
+            hit(effectData, e, target);
+        } else {
+            Vector3 position = positionMapper.get(target).getPoint();
+            TextInfo.registerTextInfo(world, "MISSED", Color.RED, position.x, position.y);
         }
     }
 
@@ -104,14 +116,9 @@ public abstract class HitSystem<T extends EffectData> extends EntityProcessingSy
         }
 
         @Override
-        protected void begin() {
-            System.out.println("LOL NOBODY: " + getActives().size());
-        }
-
-        @Override
         protected void process(Entity e) {
             if (position.dst(positionMapper.get(e).getPoint()) <= aoe) {
-                hit(effectData, entity, e);
+                tryToHit(effectData, entity, e);
             }
         }
 

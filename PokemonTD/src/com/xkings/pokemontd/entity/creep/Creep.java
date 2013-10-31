@@ -30,7 +30,7 @@ public class Creep extends ConcreteEntity {
         addComponent(new TreasureComponent(new Treasure(creepType.getTreasure())));
         addComponent(new TimeComponent());
         addComponent(new CreepAbilityComponent(creepAbilityType));
-        addComponent(new BuffableDamageComponent(1));
+        addComponent(new DamageComponent(1));
         addComponent(new CreepTypeComponent(creepType));
         addComponent(new VisibleComponent(true));
         addComponent(new TintComponent());
