@@ -5,10 +5,10 @@ import com.artemis.World;
 import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.component.*;
 import com.xkings.core.entity.ConcreteEntity;
-import com.xkings.pokemontd.component.attack.effects.buff.BuffableDamageComponent;
 import com.xkings.pokemontd.component.PathComponent;
 import com.xkings.pokemontd.component.SpriteComponent;
 import com.xkings.pokemontd.component.attack.AbilityComponent;
+import com.xkings.pokemontd.component.attack.effects.buff.BuffableDamageComponent;
 import com.xkings.pokemontd.component.attack.effects.buff.BuffableSpeedComponent;
 import com.xkings.pokemontd.component.attack.projectile.HitAbility;
 import com.xkings.pokemontd.map.Path;
@@ -36,9 +36,8 @@ public class Projectile extends ConcreteEntity {
         }
     }
 
-    public static void registerProjectile(World world, HitAbility projectileType, float x, float y,
-                                          float damage, float speed, Vector3 targetPosition, Entity target) {
-        System.out.println("Projectile registered");
+    public static void registerProjectile(World world, HitAbility projectileType, float x, float y, float damage,
+                                          float speed, Vector3 targetPosition, Entity target) {
         Projectile projectile = new Projectile(world, projectileType, x, y, damage, speed, targetPosition, target);
         projectile.register();
     }

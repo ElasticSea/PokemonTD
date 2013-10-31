@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class CommonInfo extends InteractiveBlock {
     protected final Ui ui;
     protected final SpriteBatch spriteBatch;
-    protected final DisplayText name;
+  //  protected final DisplayText name;
     private DisplayPicture picture;
     private TextureAtlas.AtlasRegion regionCache;
     private String nameCache;
@@ -28,18 +28,17 @@ public class CommonInfo extends InteractiveBlock {
     public CommonInfo(final Ui ui, Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
                       BitmapFont font) {
         super(rectangle);
-        float scale = height / App.FONT_SCALE2;
         this.spriteBatch = spriteBatch;
         this.ui = ui;
         float offset = height / 5;
         picture = new DisplayPicture(ui,x + offset, y + offset, height - offset * 2, height - offset * 2);
-        name = new DisplayText(ui,new Rectangle(x + offset, y + offset, height - offset * 2, offset), font, BitmapFont.HAlignment.CENTER);
+      //  name = new DisplayText(ui,new Rectangle(x + offset, y + offset, height - offset * 2, offset), font, BitmapFont.HAlignment.CENTER);
     }
 
     @Override
     public void render() {
-        picture.render(regionCache);
-        name.render(nameCache);
+        picture.render(regionCache,nameCache);
+       // name.render(nameCache);
     }
 
     public void render(TextureAtlas.AtlasRegion region, String name) {

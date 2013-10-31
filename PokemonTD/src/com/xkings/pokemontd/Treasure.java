@@ -43,7 +43,9 @@ public class Treasure {
     }
 
     private void setElement(Element element, int value) {
-        elementSet.put(element, value);
+        if (element != null) {
+            elementSet.put(element, value);
+        }
     }
 
     public boolean hasElement(Element element, int count) {
@@ -168,7 +170,7 @@ public class Treasure {
 
 
     public void multiplyGold(float value) {
-        this.setGold((int) (this.getGold()*value));
+        this.setGold((int) (this.getGold() * value));
     }
 
     @Override

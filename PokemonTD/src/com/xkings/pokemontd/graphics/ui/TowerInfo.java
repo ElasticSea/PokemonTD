@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.xkings.pokemontd.App;
 import com.xkings.pokemontd.Treasure;
 import com.xkings.pokemontd.entity.tower.TowerType;
 
@@ -57,8 +56,8 @@ public class TowerInfo extends CommonInfo {
         float offset = height / 5;
         float offsetBlocks = height / 2;
         float towerCostOffset = offset / 3f;
-        cost = new TowerCost(new Rectangle(x + offset, y, width - offset * 2, offset), shapeRenderer, spriteBatch,
-                font);
+        cost = new TowerCost(new Rectangle(x + offset, y, width - offset * 2, offset), width - offsetBlocks,
+                shapeRenderer, spriteBatch, font);
         damage = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset * 3, offset * 2, offset), font);
         speed = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset * 2, offset * 2, offset), font);
         range = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset, offset, offset), font);

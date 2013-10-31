@@ -31,7 +31,7 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
     private final int width;
     private final TowerIcons towerIcons;
     private final ShopIcons shopIcons;
-    private final BitmapFont font;
+    private final BitmapFont font = Assets.createFont("pixelFont");
     private int height = 0;
     private final EntityInfo entityInfo;
     private final GuiBox statusBar;
@@ -61,7 +61,7 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         float statusOffSet = statusHeightBlock / 2;
         statusHeight = (int) (statusHeightBlock * 4);
 
-        squareHeight = ((int)squareHeight/3)*3+offset*2;
+        squareHeight = ((int) squareHeight / 3) * 3 + offset * 2;
 
         Rectangle pickTableRectangle =
                 new Rectangle(Gdx.graphics.getWidth() - squareHeight, 0, squareHeight, squareHeight);
@@ -71,7 +71,6 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         Vector2 statusBarDimensions = new Vector2(width, statusBarHeight);
         Vector2 statusDimensions = new Vector2(squareHeight, statusHeight);
 
-        this.font = Assets.createFont("pixelFont");
         System.out.println(statusHeight);
         font.setScale(Math.round(statusHeight / 60));
         statusBar = new StatusBar(this,
@@ -152,5 +151,9 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public BitmapFont getFont() {
+        return font;
     }
 }

@@ -43,6 +43,6 @@ public class MenuUi extends GuiBox {
     @Override
     public void render() {
         super.render();
-        muteButton.render(Assets.getTexture(mute ? "unmute" : "mute"), height * 0.5f, true);
+        muteButton.render(Assets.getTexture(mute ? "unmute" : "mute"), "", height * 0.5f, true);
     }
 }

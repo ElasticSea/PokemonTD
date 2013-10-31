@@ -29,7 +29,7 @@ public class ShopIcons extends PickTable<ElementIcon> {
 
     @Override
     protected ElementIcon createPickIconInstance(float x, float y, float w, float h) {
-        return new ElementIcon(new Rectangle(x, y, w, h), spriteBatch);
+        return new ElementIcon(ui,new Rectangle(x, y, w, h), spriteBatch);
     }
 
     @Override

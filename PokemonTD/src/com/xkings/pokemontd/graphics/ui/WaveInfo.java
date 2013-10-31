@@ -41,7 +41,7 @@ public class WaveInfo extends GuiBox {
             waveText.render("Wave");
             waveNumberText.render(String.valueOf(nextWave.getId()));
             abilityText.render(nextWave.getAbilityType().toString());
-            creepTexture.render(nextWave.getTexture());
+            creepTexture.render(nextWave.getTexture(),"");
         }
     }
 

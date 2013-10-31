@@ -11,23 +11,26 @@ import com.xkings.pokemontd.Player;
  */
 class ElementIcon extends InteractiveBlock {
 
+    private final DisplayPicture picture;
     protected Element element;
     private Player player;
     private final SpriteBatch spriteBatch;
 
-    ElementIcon(Rectangle rectangle, SpriteBatch spriteBatch) {
+    ElementIcon(Ui ui, Rectangle rectangle, SpriteBatch spriteBatch) {
         super(rectangle);
         this.spriteBatch = spriteBatch;
+        picture = new DisplayPicture(ui, rectangle);
     }
 
     @Override
     public void render() {
         if (element != null) {
+            String text = player.getTreasure().reachedMaximum(element) ? "max" :
+                    "lvl "+ player.getTreasure().getElement(element);
+
+            picture.render(Assets.getTexture("gems/" + element.toString().toLowerCase()), text, true);
+            //spriteBatch.draw(Assets.getTexture("gems/" + element.toString().toLowerCase()), x, y, width, height);
             spriteBatch.begin();
-            if (player.getTreasure().reachedMaximum(element)) {
-                spriteBatch.draw(Assets.getTexture("maxed"), x, y, width, height);
-            }
-            spriteBatch.draw(Assets.getTexture("gems/" + element.toString().toLowerCase()), x, y, width, height);
             if (player.getFreeElements() == 0) {
                 spriteBatch.draw(Assets.getTexture("blocked"), x, y, width, height);
             }

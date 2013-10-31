@@ -25,7 +25,7 @@ public class CostInfo extends CommonInfo {
                     BitmapFont font) {
         super(ui,rectangle,shapeRenderer,spriteBatch,font);
         float offset = height / 5;
-        treasure = new TowerCost(new Rectangle(x + offset, y, width - offset * 2, offset), shapeRenderer,
+        treasure = new TowerCost(new Rectangle(x + offset, y, width - offset * 2, offset), width,shapeRenderer,
                 spriteBatch, font);
     }
 
