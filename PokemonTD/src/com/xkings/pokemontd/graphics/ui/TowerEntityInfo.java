@@ -10,10 +10,9 @@ import com.xkings.core.component.RangeComponent;
 import com.xkings.pokemontd.component.NameComponent;
 import com.xkings.pokemontd.component.SpriteComponent;
 import com.xkings.pokemontd.component.TreasureComponent;
+import com.xkings.pokemontd.component.attack.AbilityComponent;
 import com.xkings.pokemontd.component.attack.effects.buff.BuffableDamageComponent;
 import com.xkings.pokemontd.component.attack.effects.buff.BuffableSpeedComponent;
-import com.xkings.pokemontd.component.attack.effects.buff.DamageBuffEffect;
-import com.xkings.pokemontd.component.attack.effects.buff.SpeedBuffEffect;
 
 /**
  * User: Seda
@@ -32,6 +31,7 @@ public class TowerEntityInfo extends TowerInfo {
         SpriteComponent spriteComponent = entity.getComponent(SpriteComponent.class);
         NameComponent nameComponent = entity.getComponent(NameComponent.class);
         RangeComponent rangeComponent = entity.getComponent(RangeComponent.class);
+        AbilityComponent abilityComponent = entity.getComponent(AbilityComponent.class);
         Color damageColor = Color.WHITE;
         BuffableDamageComponent damageComponent = entity.getComponent(BuffableDamageComponent.class);
         Color rangeColor = Color.WHITE;
@@ -61,7 +61,7 @@ public class TowerEntityInfo extends TowerInfo {
 
             render(spriteComponent.getSprite(), "Dmg: " + (int) damageComponent.getDamage(), damageColor, "Spd: " + (int) speedComponent.getSpeed(), speedColor,
                     "Rng: " + (int) range, rangeColor, costComponent.getTreasure(), nameComponent.getName(), true,
-                    false);
+                    false, true);
         }
 
     }

@@ -28,7 +28,7 @@ public class ShopEntityInfo extends TowerTypeInfo {
         SpriteComponent spriteComponent = entity.getComponent(SpriteComponent.class);
         NameComponent nameComponent = entity.getComponent(NameComponent.class);
         if (spriteComponent != null && nameComponent != null) {
-            render(spriteComponent.getSprite(), "", "", "", player.getTreasure(), nameComponent.getName(), true, false);
+            render(spriteComponent.getSprite(), "", "", "", player.getTreasure(), nameComponent.getName(), true, false,true);
         }
     }
 
