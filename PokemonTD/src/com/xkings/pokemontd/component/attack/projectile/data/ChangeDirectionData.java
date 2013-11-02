@@ -14,4 +14,7 @@ public class ChangeDirectionData extends EffectData {
     public float getEarnRatio() {
         return earnRatio;
     }
+    public String setText(){
+        return "asdasd";
+    }
 }

@@ -14,4 +14,7 @@ public class AoeComponent extends EffectData {
     public float getRange() {
         return range;
     }
+    public String setText(){
+        return "asdasd";
+    }
 }

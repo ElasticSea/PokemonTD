@@ -71,6 +71,8 @@ public class TowerInfo extends CommonInfo {
             /*   float offset = height / 5;
                 float offsetBlocks = height / 2;
                 new DisplayText(ui, new Rectangle(x+offset*10,y+offset*3,offsetBlocks,offsetBlocks/2),font);  */
+                //ui.abilityText();
+                ui.getRectangle();
             }
         };
         sell = new Button(ui, new Rectangle(x + width - offsetBlocks, y, offsetBlocks, offsetBlocks), font,

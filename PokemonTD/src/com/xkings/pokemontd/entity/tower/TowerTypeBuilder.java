@@ -5,6 +5,7 @@ import com.xkings.pokemontd.component.attack.AbilityComponent;
 import com.xkings.pokemontd.component.attack.projectile.BuffAbility;
 import com.xkings.pokemontd.component.attack.projectile.HitAbility;
 import com.xkings.pokemontd.component.attack.projectile.SunbeamAbility;
+import com.xkings.pokemontd.component.attack.projectile.data.EffectData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,11 +41,13 @@ public class TowerTypeBuilder {
     public static final int INITIAL_BASE_DAMAGE = 15;
     public static final int INITIAL_GOLD = 10;
     private static final float koefficient = (float) (scaleByRange(XS_RANGE) - scaleByRange(XXXL_RANGE)) * 2f;
+    private static final String EFFECT = "normal";
+    private EffectData ability;
 
     private List<TowerType> getData(float scale) {
         List<Specs> specs = new ArrayList<Specs>();
         // Shop
-        specs.add(new Specs(TowerName.Shop, 0, 0, 0, null, Treasure.fromNone(),"blabla"));
+        specs.add(new Specs(TowerName.Shop, 0, 0, 0, null, Treasure.fromNone(),ability.setText()));
         /// ######################  PURES
         // Basic
         specs.add(new Specs(TowerName.Needle, 1, N_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromNone(),"blabla"));
@@ -145,7 +148,7 @@ public class TowerTypeBuilder {
         float damage = getDamage(getBaseDamage(INITIAL_BASE_DAMAGE, specs.level), specs.range, specs.speed);
         Treasure treasure = new Treasure(getGold(INITIAL_GOLD, specs.level));
         treasure.add(specs.treasure);
-        return new TowerType(specs.name, SIZE * scale, specs.speed, damage, specs.range * scale, specs.attackComponent, treasure, specs.ability);
+        return new TowerType(specs.name, SIZE * scale, specs.speed, damage, specs.range * scale, specs.attackComponent, treasure, ability);
     }
 
     private float getDamage(float baseDamage, float range, float speed) {
@@ -172,9 +175,9 @@ public class TowerTypeBuilder {
         private final float range;
         private final AbilityComponent attackComponent;
         private final Treasure treasure;
-        public String ability;
+        public EffectData ability;
 
-        private Specs(TowerName name, int level, float speed, float range, AbilityComponent attackComponent, Treasure treasure,String ability) {
+        private Specs(TowerName name, int level, float speed, float range, AbilityComponent attackComponent, Treasure treasure,EffectData ability) {
             this.name = name;
             this.level = level;
             this.speed = speed;

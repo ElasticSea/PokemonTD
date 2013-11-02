@@ -16,4 +16,7 @@ public class BonusAttack extends EffectData {
     public int getIterations() {
         return iterations;
     }
+    public String setText(){
+        return "asdasd";
+    }
 }

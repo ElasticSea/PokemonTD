@@ -20,4 +20,7 @@ public class SlowData extends EffectData {
     public float getDuration() {
         return duration;
     }
+    public String setText(){
+        return "asdasd";
+    }
 }
