@@ -23,7 +23,7 @@ public class HitAbility extends AbilityComponent {
     private Type type;
     private float speed;
     private float size;
-    private final List<AbilityComponent> ability;
+    private final List<EffectData> effectData;
 
     public static AbilityComponent getNormal(String texture, float scale) {
         return new HitAbility(texture, Type.FOLLOW_TARGET, DEFAULT_SIZE * scale, NORMAL_SPEED * scale,
@@ -121,12 +121,12 @@ public class HitAbility extends AbilityComponent {
         FOLLOW_TARGET, LAST_KNOWN_PLACE, AHEAD_TARGET, PASS_THROUGH, IMMEDIATE_ATTACK, IMMEDIATE_NOCONTACT_DAMAGE;
     }
 
-    public HitAbility(String texture, Type type, float size, float speed, AbilityComponent... abilities) {
-        this(texture, type, size, speed, 0, abilities);
+    public HitAbility(String texture, Type type, float size, float speed, EffectData... effectData) {
+        this(texture, type, size, speed, 0, effectData);
     }
 
-    public HitAbility(String texture, Type type, float size, float speed, float aoe, AbilityComponent... abilities) {
-        this.ability = Arrays.asList(abilities);
+    public HitAbility(String texture, Type type, float size, float speed, float aoe, EffectData... effectData) {
+        this.effectData = Arrays.asList(effectData);
         this.texture = Assets.getTexture(texture);
         this.type = type;
         this.speed = speed;
@@ -154,8 +154,8 @@ public class HitAbility extends AbilityComponent {
         this.size = size;
     }
 
-    public List<AbilityComponent> getAbility() {
-        return ability;
+    public List<EffectData> getEffectData() {
+        return effectData;
     }
 
     public float getAoe() {

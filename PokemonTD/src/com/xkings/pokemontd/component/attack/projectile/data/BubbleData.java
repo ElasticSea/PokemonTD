@@ -1,11 +1,9 @@
 package com.xkings.pokemontd.component.attack.projectile.data;
 
-import com.xkings.pokemontd.component.attack.AbilityComponent;
-
 /**
  * Created by Tomas on 10/13/13.
  */
-public class BubbleData extends AbilityComponent {
+public class BubbleData extends EffectData {
     private final float interval;
     private final float grow;
 
@@ -20,5 +18,10 @@ public class BubbleData extends AbilityComponent {
 
     public float getGrow() {
         return grow;
+    }
+
+    @Override
+    public String getEffectDescription(float speed, float damage) {
+        return " ";
     }
 }

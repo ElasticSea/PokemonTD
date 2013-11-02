@@ -17,11 +17,11 @@ public class ShopTypeInfo extends TowerTypeInfo {
 
     ShopTypeInfo(final Ui ui, Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
                  BitmapFont font) {
-        super(ui, rectangle, shapeRenderer, spriteBatch, font);
+        super(ui, rectangle, shapeRenderer, spriteBatch, font,null);
     }
 
     public void render(TowerType tower) {
-        render(tower.getTexture(), tower.getCost(), (tower.getName().toString()), false, true,true);
+        render(tower.getTexture(), tower.getCost(), (tower.getName().toString()), false, true);
     }
 
 }

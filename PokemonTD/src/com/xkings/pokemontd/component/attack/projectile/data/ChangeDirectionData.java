@@ -15,7 +15,9 @@ public class ChangeDirectionData extends EffectData {
     public float getDuration() {
         return duration;
     }
-    public String setText(){
-        return "asdasd";
+
+    @Override
+    public String getEffectDescription(float speed, float damage) {
+        return "asd";
     }
 }

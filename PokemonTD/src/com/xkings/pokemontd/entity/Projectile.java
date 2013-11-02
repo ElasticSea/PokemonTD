@@ -31,7 +31,7 @@ public class Projectile extends ConcreteEntity {
         addComponent(projectileType);
         addComponent(new TimeComponent());
         addComponent(new TargetComponent(target));
-        for (AbilityComponent abilityComponent : projectileType.getAbility()) {
+        for (AbilityComponent abilityComponent : projectileType.getEffectData()) {
             addComponent(abilityComponent);
         }
     }

@@ -20,7 +20,7 @@ public class ShopEntityInfo extends TowerTypeInfo {
 
     ShopEntityInfo(Ui ui, Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch, BitmapFont font,
                    Player player) {
-        super(ui, rectangle, shapeRenderer, spriteBatch, font);
+        super(ui, rectangle, shapeRenderer, spriteBatch, font,null);
         this.player = player;
     }
 
@@ -28,7 +28,7 @@ public class ShopEntityInfo extends TowerTypeInfo {
         SpriteComponent spriteComponent = entity.getComponent(SpriteComponent.class);
         NameComponent nameComponent = entity.getComponent(NameComponent.class);
         if (spriteComponent != null && nameComponent != null) {
-            render(spriteComponent.getSprite(), "", "", "", player.getTreasure(), nameComponent.getName(), true, false,true);
+            render(spriteComponent.getSprite(), "", "", "", player.getTreasure(), nameComponent.getName(),null, 1, 1, true, false);
         }
     }
 

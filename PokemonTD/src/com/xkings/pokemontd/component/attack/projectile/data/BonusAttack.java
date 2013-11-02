@@ -16,7 +16,7 @@ public class BonusAttack extends EffectData {
     public int getIterations() {
         return iterations;
     }
-    public String setText(){
+    public String getEffectDescription(float speed,float damage){
         return "asdasd";
     }
 }

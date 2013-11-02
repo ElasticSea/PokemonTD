@@ -31,9 +31,9 @@ public class DotData extends EffectData {
         return damageMultiplier;
     }
 
-    public String setText(){
-        return "asdasd";
+
+    @Override
+    public String getEffectDescription(float speed, float damage) {
+        return " Damage over time  ";
     }
-
-
 }

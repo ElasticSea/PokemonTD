@@ -5,10 +5,10 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
+import com.xkings.pokemontd.component.attack.AbilityComponent;
 import com.xkings.pokemontd.component.attack.effects.buff.BuffableSpeedComponent;
 import com.xkings.core.component.Time;
 import com.xkings.core.component.TimeComponent;
-import com.xkings.pokemontd.component.attack.AbilityComponent;
 
 /**
  * Created by Tomas on 10/4/13.

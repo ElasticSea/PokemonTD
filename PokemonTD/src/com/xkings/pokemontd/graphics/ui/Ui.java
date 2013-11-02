@@ -80,13 +80,13 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         status = new Status(this, new Rectangle(width - statusDimensions.x,
                 this.height - statusBar.height - statusOffSet - statusDimensions.y, statusDimensions.x,
                 statusDimensions.y), waveManager, interest, font);
-        abilityText = new AbilityInfo(this, new Rectangle(0, this.height - statusBarDimensions.y, statusBarDimensions.x, statusBarDimensions.y),squareHeight);
 
+        abilityText = new AbilityInfo(this, pickTableRectangle);
 
         nextWaveInfo = new WaveInfo(this, new Rectangle(0, 0, squareHeight, squareHeight), waveManager, font);
         entityInfo = new EntityInfo(this,
                 new Rectangle(squareHeight - offset, 0, width - (squareHeight - offset) * 2, stripHeight), offset,
-                shapeRenderer, spriteBatch, font, player);
+                shapeRenderer, spriteBatch, font, player, null);
 
         clickables.add(entityInfo);
         clickables.add(statusBar);
