@@ -65,7 +65,7 @@ public class TowerInfo extends CommonInfo {
         speed = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset * 2, offset * 2, offset), font);
         range = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset, offset, offset), font);
 
-        ability = new Button(ui, new Rectangle(x+offset*10,y+offset*3,offsetBlocks*1.2f,offsetBlocks/2f),font,BitmapFont.HAlignment.CENTER){
+        ability = new Button(ui, new Rectangle(x+offset*10f,y+offset*3,offsetBlocks*1.2f,offsetBlocks/2f),font,BitmapFont.HAlignment.CENTER){
             @Override
             public void process(float x, float y) {
             /*   float offset = height / 5;
