@@ -18,6 +18,7 @@ import com.xkings.pokemontd.entity.tower.TowerType;
 public class TowerInfo extends CommonInfo {
     public static final Color SELL_COLOR = new Color(Color.RED).mul(0.6f);
     public static final Color BUY_COLOR = new Color(Color.GREEN).mul(0.6f);
+    public static final Color ABILITY_COLOR = new Color(Color.GREEN).mul(0.6f);
     protected final Ui ui;
     protected final SpriteBatch spriteBatch;
     protected final DisplayText damage;
@@ -26,6 +27,7 @@ public class TowerInfo extends CommonInfo {
     protected final Button sell;
     protected final Button buy;
     private final TowerCost cost;
+    private final Button ability;
     protected TowerType tower;
     private String damageCache;
     private String speedCache;
@@ -36,6 +38,7 @@ public class TowerInfo extends CommonInfo {
     private Color damageColorCache;
     private Color speedColorCache;
     private Color rangeColorChache;
+    private boolean abilityCache;
 
     /**
      * public constuctor makes 3 text rectangles uses class DisplayText (damage,range,speed).
@@ -61,6 +64,17 @@ public class TowerInfo extends CommonInfo {
         damage = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset * 3, offset * 2, offset), font);
         speed = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset * 2, offset * 2, offset), font);
         range = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset, offset, offset), font);
+
+        ability = new Button(ui, new Rectangle(x+offset*10f,y+offset*3,offsetBlocks*1.2f,offsetBlocks/2f),font,BitmapFont.HAlignment.CENTER){
+            @Override
+            public void process(float x, float y) {
+            /*   float offset = height / 5;
+                float offsetBlocks = height / 2;
+                new DisplayText(ui, new Rectangle(x+offset*10,y+offset*3,offsetBlocks,offsetBlocks/2),font);  */
+                //ui.abilityText();
+                ui.getRectangle();
+            }
+        };
         sell = new Button(ui, new Rectangle(x + width - offsetBlocks, y, offsetBlocks, offsetBlocks), font,
                 BitmapFont.HAlignment.CENTER) {
             @Override
@@ -77,8 +91,10 @@ public class TowerInfo extends CommonInfo {
         };
         ui.register(sell);
         ui.register(buy);
+        ui.register(ability);
         clickables.add(sell);
         clickables.add(buy);
+        clickables.add(ability);
     }
 
     /**
@@ -88,6 +104,7 @@ public class TowerInfo extends CommonInfo {
     public void render() {
         this.sell.setEnabled(sellCache);
         this.buy.setEnabled(buyCache);
+        this.ability.setEnabled(abilityCache);
 
         super.render();
         this.damage.render(damageCache, damageColorCache);
@@ -96,20 +113,21 @@ public class TowerInfo extends CommonInfo {
         this.cost.render(costCache);
         this.sell.render("sell", Color.WHITE, SELL_COLOR);
         this.buy.render("buy", Color.WHITE, BUY_COLOR);
+        this.ability.render("ability", Color.WHITE, ABILITY_COLOR);
     }
 
-    public void render(TextureAtlas.AtlasRegion region, Treasure cost, String name, boolean sell, boolean buy) {
-        render(region, "", "", "", cost, name, sell, buy);
+    public void render(TextureAtlas.AtlasRegion region, Treasure cost, String name, boolean sell, boolean buy, boolean ability) {
+        render(region, "", "", "", cost, name, sell, buy, ability);
     }
 
     public void render(TextureAtlas.AtlasRegion region, String damage, String speed, String range, Treasure cost,
-                       String name, boolean sell, boolean buy) {
-        render(region, damage, Color.WHITE, speed, Color.WHITE, range, Color.WHITE, cost, name, sell, buy);
+                       String name, boolean sell, boolean buy, boolean ability) {
+        render(region, damage, Color.WHITE, speed, Color.WHITE, range, Color.WHITE, cost, name, sell, buy, ability);
     }
 
     public void render(TextureAtlas.AtlasRegion region, String damage, Color damageColor, String speed,
                        Color speedColor, String range, Color rangeColor, Treasure cost, String name, boolean sell,
-                       boolean buy) {
+                       boolean buy, boolean ability) {
         this.damageCache = damage;
         this.damageColorCache = damageColor;
         this.speedCache = speed;
@@ -119,6 +137,7 @@ public class TowerInfo extends CommonInfo {
         this.costCache = cost;
         this.sellCache = sell;
         this.buyCache = buy;
+        this.abilityCache = ability;
         render(region, name);
     }
 

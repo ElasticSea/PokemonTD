@@ -15,4 +15,7 @@ public class ChangeDirectionData extends EffectData {
     public float getDuration() {
         return duration;
     }
+    public String setText(){
+        return "asdasd";
+    }
 }

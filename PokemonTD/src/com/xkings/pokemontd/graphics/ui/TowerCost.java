@@ -57,13 +57,13 @@ public class TowerCost extends InteractiveBlock {
 
         caches = new ArrayList<costValueCache>();
         if (cost.getGold() > 0) {
-            caches.add(new costValueCache(Color.WHITE, "Cost:"));
+            caches.add(new costValueCache(Color.WHITE, "Cost: "));
             caches.add(new costValueCache(Color.YELLOW, cost.getGold() + " "));
         }
         for (Element element : Element.values()) {
             int element1 = cost.getElement(element);
             if (element1 > 0) {
-                caches.add(new costValueCache(Color.WHITE, element1 + "x"));
+                caches.add(new costValueCache(Color.WHITE, element1 + "x "));
                 caches.add(new costValueCache(element.getColor(), element.toString() + " "));
             }
         }
@@ -77,7 +77,7 @@ public class TowerCost extends InteractiveBlock {
     private String getText(Treasure cost) {
         String text = "";
         if (cost.getGold() > 0) {
-            text += "Cost:";
+            text += "Cost: ";
             text += cost.getGold() + " ";
         }
         for (Element element : Element.values()) {

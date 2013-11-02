@@ -27,9 +27,10 @@ public class TowerType implements CommonDataType {
     private final float range;
     private final AbilityComponent attack;
     private final Treasure cost;
+    private final String ability;
 
     public TowerType(TowerName name, float size, float speed, float damage, float range, AbilityComponent attack,
-                     Treasure cost) {
+                     Treasure cost, String ability) {
         this.name = name;
         this.texture = Assets.getTexture("towers/" + name.toString().toLowerCase());
         this.blockedTexture = Assets.getTexture("blocked");
@@ -39,6 +40,7 @@ public class TowerType implements CommonDataType {
         this.range = range;
         this.attack = attack;
         this.cost = cost;
+        this.ability = ability;
     }
 
 
@@ -76,6 +78,10 @@ public class TowerType implements CommonDataType {
 
     public float getDamage() {
         return damage;
+    }
+
+    public String getAbility(){
+        return ability;
     }
 
     public static List<TowerType> getHierarchy(TowerName towerName) {

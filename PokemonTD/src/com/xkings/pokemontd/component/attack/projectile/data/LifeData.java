@@ -14,4 +14,8 @@ public class LifeData extends EffectData {
     public float getEarnRatio() {
         return earnRatio;
     }
+    public String setText(){
+        return "asdasd";
+    }
+
 }

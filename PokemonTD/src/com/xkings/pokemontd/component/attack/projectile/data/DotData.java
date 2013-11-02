@@ -30,4 +30,10 @@ public class DotData extends EffectData {
     public float getDamageMultiplier() {
         return damageMultiplier;
     }
+
+    public String setText(){
+        return "asdasd";
+    }
+
+
 }

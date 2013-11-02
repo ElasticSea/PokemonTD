@@ -21,7 +21,7 @@ public class TowerTypeInfo extends TowerInfo {
 
     public void render(TowerType tower) {
         render(tower.getTexture(), "Dmg: " + (int) tower.getDamage(), "Spd: " + (int) tower.getSpeed(),
-                "Rng: " + (int) tower.getRange(), tower.getCost(), (tower.getName().toString()), false, true);
+                "Rng: " + (int) tower.getRange(), tower.getCost(), (tower.getName().toString()), false, true, true);
     }
 
 }
