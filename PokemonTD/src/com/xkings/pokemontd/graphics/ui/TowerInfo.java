@@ -18,6 +18,7 @@ import com.xkings.pokemontd.entity.tower.TowerType;
 public class TowerInfo extends CommonInfo {
     public static final Color SELL_COLOR = new Color(Color.RED).mul(0.6f);
     public static final Color BUY_COLOR = new Color(Color.GREEN).mul(0.6f);
+    public static final Color ABILITY_COLOR = new Color(Color.GREEN).mul(0.6f);
     protected final Ui ui;
     protected final SpriteBatch spriteBatch;
     protected final DisplayText damage;
@@ -64,10 +65,12 @@ public class TowerInfo extends CommonInfo {
         speed = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset * 2, offset * 2, offset), font);
         range = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset, offset, offset), font);
 
-        ability = new Button(ui, new Rectangle(x+offset*5,y+offset,offset,offset),font,BitmapFont.HAlignment.CENTER){
+        ability = new Button(ui, new Rectangle(x+offset*10,y+offset*3,offsetBlocks*1.2f,offsetBlocks/2f),font,BitmapFont.HAlignment.CENTER){
             @Override
             public void process(float x, float y) {
-                ui.getTowerManager().sellTower();
+            /*   float offset = height / 5;
+                float offsetBlocks = height / 2;
+                new DisplayText(ui, new Rectangle(x+offset*10,y+offset*3,offsetBlocks,offsetBlocks/2),font);  */
             }
         };
         sell = new Button(ui, new Rectangle(x + width - offsetBlocks, y, offsetBlocks, offsetBlocks), font,
@@ -81,7 +84,7 @@ public class TowerInfo extends CommonInfo {
                 font, BitmapFont.HAlignment.CENTER) {
             @Override
             public void process(float x, float y) {
-                // vytvoření nějakého rectanglu s textem ability  "zavolání jiné metody"
+                ui.getTowerManager().buyNewOrUpgrade();
             }
         };
         ui.register(sell);
@@ -108,6 +111,7 @@ public class TowerInfo extends CommonInfo {
         this.cost.render(costCache);
         this.sell.render("sell", Color.WHITE, SELL_COLOR);
         this.buy.render("buy", Color.WHITE, BUY_COLOR);
+        this.ability.render("ability", Color.WHITE, ABILITY_COLOR);
     }
 
     public void render(TextureAtlas.AtlasRegion region, Treasure cost, String name, boolean sell, boolean buy, boolean ability) {
