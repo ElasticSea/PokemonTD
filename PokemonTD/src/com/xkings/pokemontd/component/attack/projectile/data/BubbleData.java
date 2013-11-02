@@ -7,12 +7,18 @@ import com.xkings.pokemontd.component.attack.AbilityComponent;
  */
 public class BubbleData extends AbilityComponent {
     private final float interval;
+    private final float grow;
 
-    public BubbleData(float interval) {
+    public BubbleData(float interval, float grow) {
         this.interval = interval;
+        this.grow = grow;
     }
 
     public float getInterval() {
         return interval;
+    }
+
+    public float getGrow() {
+        return grow;
     }
 }

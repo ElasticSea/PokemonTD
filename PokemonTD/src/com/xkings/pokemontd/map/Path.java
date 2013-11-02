@@ -19,6 +19,7 @@ public class Path implements Comparable<Path> {
     private final float width;
     private int position;
     private float toTravel;
+    private boolean changedDirection;
 
     public Path(Vector3... path) {
         this(Arrays.asList(path), 0, 0);
@@ -43,11 +44,20 @@ public class Path implements Comparable<Path> {
     }
 
     public void next() {
-        this.position++;
+        if (changedDirection) {
+            if (position == 0) {
+                changedDirection = false;
+                next();
+            } else {
+                this.position--;
+            }
+        } else {
+            this.position++;
+        }
     }
 
     public boolean isFinished() {
-        return position == path.size();
+        return !changedDirection ? position == path.size() : false;
     }
 
     public void reset() {
@@ -56,6 +66,15 @@ public class Path implements Comparable<Path> {
 
     public int getPosition() {
         return position;
+    }
+
+    public void changeDirection() {
+        if (!changedDirection && position > 0) {
+            changedDirection = true;
+            next();
+        } else {
+            changedDirection = false;
+        }
     }
 
     public float getWidth() {
@@ -68,6 +87,10 @@ public class Path implements Comparable<Path> {
 
     public float getToTravel() {
         return toTravel;
+    }
+
+    public boolean isChangedDirection() {
+        return changedDirection;
     }
 
     @Override

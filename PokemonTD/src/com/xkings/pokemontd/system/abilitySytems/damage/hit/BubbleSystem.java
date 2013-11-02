@@ -6,7 +6,10 @@ import com.artemis.Entity;
 import com.artemis.World;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
-import com.xkings.core.component.*;
+import com.xkings.core.component.SizeComponent;
+import com.xkings.core.component.TargetComponent;
+import com.xkings.core.component.Time;
+import com.xkings.core.component.TimeComponent;
 import com.xkings.pokemontd.component.HealthComponent;
 import com.xkings.pokemontd.component.PathComponent;
 import com.xkings.pokemontd.component.WaveComponent;
@@ -30,6 +33,8 @@ public class BubbleSystem extends EntityProcessingSystem {
     ComponentMapper<TimeComponent> timeMapper;
     @Mapper
     ComponentMapper<PathComponent> pathMapper;
+    @Mapper
+    ComponentMapper<SizeComponent> sizeMapper;
     private BubbleData bubble;
     private float damage;
 
@@ -37,8 +42,11 @@ public class BubbleSystem extends EntityProcessingSystem {
     public BubbleSystem(World world) {
         super(Aspect.getAspectForAll(TargetComponent.class, BubbleData.class));
         intersectSystem = new IntersectEnemySystem(WaveComponent.class) {
+
             @Override
             protected void intersect(Entity e) {
+                System.out.println("B: "+  sizeMapper.get(e).getPoint());
+                System.out.println( "A: "+  sizeMapper.get(e).getPoint());
                 healthMapper.get(e).getHealth().decease(damage / bubble.getInterval());
             }
         };
@@ -48,7 +56,7 @@ public class BubbleSystem extends EntityProcessingSystem {
 
     @Override
     protected void process(Entity e) {
-        if(pathMapper.get(e).getPath().isFinished()){
+        if (pathMapper.get(e).getPath().isFinished()) {
             e.deleteFromWorld();
         }
         bubble = bubbleMapper.get(e);
@@ -56,6 +64,7 @@ public class BubbleSystem extends EntityProcessingSystem {
 
         Time time = timeMapper.get(e).getTime(this.getClass());
         time.increase(world.getDelta());
+        sizeMapper.get(e).getPoint().scl(bubble.getGrow());
 
         if (time.getAvailableTime() >= bubble.getInterval()) {
             time.decrease(bubble.getInterval());

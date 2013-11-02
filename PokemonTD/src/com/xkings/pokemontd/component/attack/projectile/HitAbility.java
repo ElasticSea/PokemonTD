@@ -40,10 +40,6 @@ public class HitAbility extends AbilityComponent {
                 new LifeStealData(ratio, duration));
     }
 
-    public static AbilityComponent getBubble(float scale) {
-        return new HitAbility("bubble", Type.PASS_THROUGH, BIG_SIZE * scale, NORMAL_SPEED * scale,
-                new BubbleData(0.25f));
-    }
 
     public static AbilityComponent getFire(float scale) {
         return new HitAbility("fire", Type.FOLLOW_TARGET, BIG_SIZE * scale, FAST_SPEED * scale, new NormalData());
@@ -103,6 +99,22 @@ public class HitAbility extends AbilityComponent {
     public static AbilityComponent getCharge(float scale) {
         return new HitAbility("charge", Type.FOLLOW_TARGET, SUPER_BIG_SIZE * scale, FAST_SPEED * scale,
                 new NormalData());
+    }
+
+    public static AbilityComponent getChangeDirection(float scale, int duration, float chance) {
+        return new HitAbility("hypno", Type.FOLLOW_TARGET, DEFAULT_SIZE * scale, FAST_SPEED * scale,
+                new ChangeDirectionData(duration, chance));
+    }
+
+
+    public static AbilityComponent getBubble(float scale) {
+        return new HitAbility("bubble", Type.PASS_THROUGH, BIG_SIZE * scale, NORMAL_SPEED * scale,
+                new BubbleData(0.25f, 1f));
+    }
+
+    public static AbilityComponent getBubbleGrowing(float scale) {
+        return new HitAbility("bubble", Type.PASS_THROUGH, BIG_SIZE * scale, NORMAL_SPEED * scale,
+                new BubbleData(0.25f, 1.02f));
     }
 
     public enum Type {

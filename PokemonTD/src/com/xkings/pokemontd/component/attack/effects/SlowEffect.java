@@ -10,12 +10,10 @@ public class SlowEffect extends AbstractEffect<SlowEffect> {
     public SlowEffect set(String effect, float interval, float slowRatio) {
         super.set(effect, interval, 1);
         this.slowRatio = slowRatio;
-        System.out.println(this+" setting slow ratio: "+slowRatio);
         return this;
     }
 
     public float getSlowRatio() {
-        System.out.println(this+" Getting slow ratio: "+slowRatio);
         return slowRatio;
     }
 

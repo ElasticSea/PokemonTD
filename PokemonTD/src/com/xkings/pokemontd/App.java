@@ -185,6 +185,7 @@ public class App extends Game2D {
         world.setSystem(new HealingSystem());
         world.setSystem(new DotSystem());
         world.setSystem(new SlowSystem());
+        world.setSystem(new ChangeDirectionSystem());
         world.setSystem(new DamageBuffSystem());
         world.setSystem(new SpeedBuffSystem());
         world.setSystem(new MovementSystem());
@@ -192,6 +193,7 @@ public class App extends Game2D {
         world.setSystem(new HitLifeStealSystem());
         world.setSystem(new HitDotSystem());
         world.setSystem(new HitSlowSystem());
+        world.setSystem(new HitChangeDirection());
         world.setSystem(new HitNormalSystem());
         world.setSystem(new HitMoneySystem());
         world.setSystem(new HitLifeSystem(player.getHealth()));

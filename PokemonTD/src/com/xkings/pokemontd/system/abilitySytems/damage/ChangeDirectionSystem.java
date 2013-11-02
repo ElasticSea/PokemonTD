@@ -3,46 +3,48 @@ package com.xkings.pokemontd.system.abilitySytems.damage;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
-import com.xkings.pokemontd.component.attack.effects.buff.BuffableSpeedComponent;
-import com.xkings.pokemontd.component.attack.effects.SlowEffect;
+import com.xkings.pokemontd.component.PathComponent;
+import com.xkings.pokemontd.component.attack.effects.ChangeDirectionEffect;
+import com.xkings.pokemontd.map.Path;
 
 /**
  * Created by Tomas on 10/4/13.
  */
-public class ChangeDirectionSystem extends EffectSystem<SlowEffect> {
+public class ChangeDirectionSystem extends EffectSystem<ChangeDirectionEffect> {
 
     @Mapper
-    ComponentMapper<BuffableSpeedComponent> speedMapper;
+    ComponentMapper<PathComponent> pathMapper;
 
     public ChangeDirectionSystem() {
-        super(SlowEffect.class);
+        super(ChangeDirectionEffect.class);
     }
 
     @Override
-    protected void finished(SlowEffect effect, Entity e) {
+    protected void finished(ChangeDirectionEffect effect, Entity e) {
     }
 
     @Override
-    protected void started(SlowEffect effect, Entity e) {
-        BuffableSpeedComponent speed = speedMapper.get(e);
-        effect.setOldSpeed(speed.getSpeed());
-        speed.scaleSpeed(1 - effect.getSlowRatio());
+    protected void started(ChangeDirectionEffect effect, Entity e) {
+        Path path = pathMapper.get(e).getPath();
+        if (!path.isChangedDirection()) {
+            path.changeDirection();
+        }
     }
 
     @Override
-    protected void processEffect(SlowEffect effect, Entity e) {
-        BuffableSpeedComponent speed = speedMapper.get(e);
-        speed.setSpeed(effect.getOldSpeed());
+    protected void processEffect(ChangeDirectionEffect effect, Entity e) {
+        Path path = pathMapper.get(e).getPath();
+        path.changeDirection();
     }
 
     @Override
-    protected void resetEffect(SlowEffect effect, Entity e) {
+    protected void resetEffect(ChangeDirectionEffect effect, Entity e) {
         processEffect(effect, e);
         started(effect, e);
     }
 
     @Override
-    protected void reattachEffect(SlowEffect effect, Entity e) {
+    protected void reattachEffect(ChangeDirectionEffect effect, Entity e) {
 
     }
 }

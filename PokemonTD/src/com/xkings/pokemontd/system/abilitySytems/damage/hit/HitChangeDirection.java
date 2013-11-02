@@ -1,16 +1,16 @@
 package com.xkings.pokemontd.system.abilitySytems.damage.hit;
 
 import com.artemis.Entity;
-import com.xkings.pokemontd.component.attack.effects.SlowEffect;
-import com.xkings.pokemontd.component.attack.projectile.data.SlowData;
+import com.xkings.pokemontd.component.attack.effects.ChangeDirectionEffect;
+import com.xkings.pokemontd.component.attack.projectile.data.ChangeDirectionData;
 
 /**
  * Created by Tomas on 10/4/13.
  */
-public class HitChangeDirection extends HitEffectSystem<SlowData, SlowEffect> {
+public class HitChangeDirection extends HitEffectSystem<ChangeDirectionData, ChangeDirectionEffect> {
 
     public HitChangeDirection() {
-        super(SlowData.class, SlowEffect.class);
+        super(ChangeDirectionData.class, ChangeDirectionEffect.class);
     }
 
     @Override
@@ -22,13 +22,16 @@ public class HitChangeDirection extends HitEffectSystem<SlowData, SlowEffect> {
     }
 
     @Override
-    protected SlowEffect resetEffect(Entity e, SlowEffect effect, SlowData effectData) {
-        effect.set(effectData.getEffect(), effectData.getDuration(), effectData.getSlowRatio());
+    protected ChangeDirectionEffect resetEffect(Entity e, ChangeDirectionEffect effect,
+                                                ChangeDirectionData effectData) {
+        effect.set(effectData.getEffect(), effectData.getDuration());
+        System.out.println("RST");
         return effect;
     }
 
     @Override
-    protected SlowEffect createEffect(Entity e, SlowData effectData) {
-        return resetEffect(e, new SlowEffect(), effectData);
+    protected ChangeDirectionEffect createEffect(Entity e, ChangeDirectionData effectData) {
+        System.out.println("Create");
+        return resetEffect(e, new ChangeDirectionEffect(), effectData);
     }
 }

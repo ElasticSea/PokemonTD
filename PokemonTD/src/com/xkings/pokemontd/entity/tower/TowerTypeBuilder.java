@@ -56,7 +56,7 @@ public class TowerTypeBuilder {
         // blue
         specs.add(new Specs(TowerName.Splash, 4, N_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromWater(1)));
         specs.add(new Specs(TowerName.Wave, 5, N_SPEED, N_RANGE, HitAbility.getBubble(scale), Treasure.fromWater(2)));
-        specs.add(new Specs(TowerName.Tsunami, 10, N_SPEED, N_RANGE, HitAbility.getBubble(scale), Treasure.fromWater(3)));
+        specs.add(new Specs(TowerName.Tsunami, 10, N_SPEED, N_RANGE, HitAbility.getBubbleGrowing(scale), Treasure.fromWater(3)));
         //red
         specs.add(new Specs(TowerName.Sparkle, 4, N_SPEED, S_RANGE, HitAbility.getFire(scale), Treasure.fromFire(1)));
         specs.add(new Specs(TowerName.Burning, 5, L_SPEED, S_RANGE, HitAbility.getFire(scale), Treasure.fromFire(2)));
@@ -124,6 +124,7 @@ public class TowerTypeBuilder {
         specs.add(new Specs(TowerName.Epidemic, 9, XL_SPEED, L_RANGE, HitAbility.getAuraDmg(scale, L_RANGE), Treasure.fromWater(2).addLight(2).addDarkness(2)));
 
         specs.add(new Specs(TowerName.Confused, 6, L_SPEED, N_RANGE, HitAbility.getDumbClaw(scale, 0f, 0), Treasure.fromWater(1).addLight(1).addDarkness(1)));
+        specs.add(new Specs(TowerName.Supersonic, 9, L_SPEED, N_RANGE, HitAbility.getBubble(scale), Treasure.fromWater(2).addLight(2).addDarkness(2)));
 
         specs.add(new Specs(TowerName.Charged, 6, S_SPEED, XL_RANGE, HitAbility.getCharge(scale), Treasure.fromFire(1).addNature(1).addLight(1)));
         specs.add(new Specs(TowerName.Supercharged, 9, XS_SPEED, XXXL_RANGE, HitAbility.getCharge(scale * 2), Treasure.fromFire(2).addNature(2).addLight(2)));
@@ -133,6 +134,10 @@ public class TowerTypeBuilder {
 
         specs.add(new Specs(TowerName.Erruption, 6, XS_SPEED, N_RANGE, HitAbility.getAuraDmg(scale, N_RANGE), Treasure.fromFire(1).addLight(1).addDarkness(1)));
         specs.add(new Specs(TowerName.Volcanic, 9, XXS_SPEED, S_RANGE, HitAbility.getVolcano(scale, S_RANGE), Treasure.fromFire(2).addLight(2).addDarkness(2)));
+
+
+        specs.add(new Specs(TowerName.Hypnotic, 6, N_SPEED, N_RANGE, HitAbility.getChangeDirection(scale, 1,0.1f), Treasure.fromNature(1).addLight(1).addDarkness(1)));
+        specs.add(new Specs(TowerName.Illusion,9, N_SPEED, N_RANGE, HitAbility.getChangeDirection(scale,5,0.1f), Treasure.fromNature(2).addLight(2).addDarkness(2)));
 
         List<TowerType> data = new ArrayList<TowerType>();
         for (Specs specification : specs) {
