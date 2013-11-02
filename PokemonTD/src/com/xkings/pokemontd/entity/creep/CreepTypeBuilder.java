@@ -50,7 +50,7 @@ public class CreepTypeBuilder {
         list.add(new CreepTypeSpecification(CreepName.Whiscash, 5290, Treasure.fromGold(14), CreepAbilityType.NORMAL));
         list.add(new CreepTypeSpecification(CreepName.Claydol, 6203, Treasure.fromGold(16), CreepAbilityType.NORMAL));
         list.add(
-                new CreepTypeSpecification(CreepName.Lileep, 72273, Treasure.fromGold(17), CreepAbilityType.RESURRECT));
+                new CreepTypeSpecification(CreepName.Lileep, 7273, Treasure.fromGold(17), CreepAbilityType.RESURRECT));
         list.add(new CreepTypeSpecification(CreepName.Feebas, 8546, Treasure.fromGold(19), CreepAbilityType.NORMAL));
         list.add(new CreepTypeSpecification(CreepName.Kecleon, 10041, Treasure.fromGold(21), CreepAbilityType.NORMAL));
         list.add(new CreepTypeSpecification(CreepName.Banette, 11799, Treasure.fromGold(23), CreepAbilityType.NORMAL));
