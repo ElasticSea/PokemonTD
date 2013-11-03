@@ -61,7 +61,7 @@ public class TowerEntityInfo extends TowerInfo {
 
             render(spriteComponent.getSprite(), "Dmg: " + (int) damageComponent.getDamage(), damageColor, "Spd: " + (int) speedComponent.getSpeed(), speedColor,
                     "Rng: " + (int) range, rangeColor, costComponent.getTreasure(), nameComponent.getName(), null, 1, 1,
-                    false, true);
+                    true, false);
         }
 
     }

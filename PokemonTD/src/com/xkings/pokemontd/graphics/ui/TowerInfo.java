@@ -88,6 +88,7 @@ public class TowerInfo extends CommonInfo {
             @Override
             public void process(float x, float y) {
                 ui.getTowerManager().buyNewOrUpgrade();
+                System.out.println("aaaaa");
             }
         };
         ui.register(sell);

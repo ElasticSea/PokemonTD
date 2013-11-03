@@ -24,8 +24,9 @@ public class TowerTypeInfo extends TowerInfo {
     }
 
     public void render(TowerType tower) {
+        boolean canbuy = ui.getTowerManager().canAfford(tower);
         render(tower.getTexture(), "Dmg: " + (int) tower.getDamage(), "Spd: " + (int) tower.getSpeed(),
-                "Rng: " + (int) tower.getRange(), tower.getCost(), (tower.getName().toString()), getAbility(tower), tower.getSpeed(), tower.getDamage(), false, true);
+                "Rng: " + (int) tower.getRange(), tower.getCost(), (tower.getName().toString()), getAbility(tower), tower.getSpeed(), tower.getDamage(), false, canbuy);
     }
 
     private EffectData getAbility(TowerType tower) {
