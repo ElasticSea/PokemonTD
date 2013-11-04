@@ -32,9 +32,7 @@ public class IncreasingDamageSystem extends EffectSystem<IncreasingDamageEffect>
 
     @Override
     protected void started(IncreasingDamageEffect effect, Entity e) {
-
         healthMapper.get(e).getHealth().decease(effect.getCurrentDamage());
-        System.out.println(effect.getCurrentDamage());
        /* BuffableSpeedComponent speed = speedMapper.get(e);
         effect.setOldSpeed(speed.getSpeed());
         speed.scaleSpeed(1 - effect.getSlowRatio()); */

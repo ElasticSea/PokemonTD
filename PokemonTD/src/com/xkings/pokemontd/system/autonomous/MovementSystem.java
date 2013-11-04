@@ -48,11 +48,8 @@ public class MovementSystem extends EntityProcessingSystem {
             if (!path.isFinished()) {
                 Vector3 goal = path.get();
                 RotationComponent rotationComponent = rotationMapper.getSafe(e);
-                if (rotationComponent != null) {
-                    rotationComponent.getPoint().x =
-                            (float) (Math.atan2(goal.y - position.y, goal.x - position.x) * 180 / Math.PI);
-                }
-                if (moveTowards(position, goal, speed, path, time)) {
+                if (moveTowards(position, goal, rotationComponent != null ? rotationComponent.getPoint() : null, speed,
+                        path, time)) {
                     path.next();
                     if (path.isFinished()) {
                         return;
@@ -64,7 +61,7 @@ public class MovementSystem extends EntityProcessingSystem {
         }
     }
 
-    private boolean moveTowards(Vector3 from, Vector3 to, float speed, Path path, Time time) {
+    private boolean moveTowards(Vector3 from, Vector3 to, Vector3 rotation, float speed, Path path, Time time) {
         float distance = getDistance(from, to);
         float travelAbility = speed * time.getAvailableTime();
         float travelTime = time.getAvailableTime();
@@ -74,6 +71,9 @@ public class MovementSystem extends EntityProcessingSystem {
             return true;
         } else {
             double ang = getRotation(from, to);
+            if (rotation != null) {
+                rotation.x = (float) (ang / Math.PI * 180);
+            }
             from.x = from.x + (float) (Math.cos(ang) * travelAbility);
             from.y = from.y + (float) (Math.sin(ang) * travelAbility);
             time.decrease(travelTime);
