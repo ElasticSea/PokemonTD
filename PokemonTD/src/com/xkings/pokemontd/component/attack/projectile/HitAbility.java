@@ -67,7 +67,7 @@ public class HitAbility extends AbilityComponent {
 
     public static AbilityComponent getPoison(float scale, float slowRatio, float duration, float chance) {
         return new HitAbility("poison", Type.FOLLOW_TARGET, BIG_SIZE * scale, SLOW_SPEED * scale,
-                new DotData("poison", 16, 0.25f), new SlowData("", slowRatio, duration, chance));
+                new DotData("poisonEffect", 16, 0.25f), new SlowData("", slowRatio, duration, chance));
     }
 
     public static AbilityComponent getSlow(String bulletTexture, String texture, float scale, float range,
@@ -114,7 +114,7 @@ public class HitAbility extends AbilityComponent {
 
     public static AbilityComponent getBubbleGrowing(float scale) {
         return new HitAbility("bubble", Type.PASS_THROUGH, BIG_SIZE * scale, NORMAL_SPEED * scale,
-                new BubbleData(0.25f, 1.02f));
+                new BubbleData(0.25f, 1f));
     }
 
 
