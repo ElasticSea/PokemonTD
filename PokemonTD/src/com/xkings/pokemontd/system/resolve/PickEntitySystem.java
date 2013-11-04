@@ -5,8 +5,13 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.artemis.annotations.Mapper;
+import com.artemis.utils.Bag;
 import com.artemis.utils.ImmutableBag;
+import com.badlogic.gdx.math.Vector3;
+import com.xkings.core.component.PositionComponent;
+import com.xkings.core.component.SizeComponent;
 import com.xkings.pokemontd.component.PathComponent;
+import com.xkings.pokemontd.component.VisibleComponent;
 import com.xkings.pokemontd.map.Path;
 
 import java.util.*;
@@ -15,8 +20,19 @@ public abstract class PickEntitySystem extends EntitySystem implements PickEntit
 
     @Mapper
     ComponentMapper<PathComponent> pathMapper;
+    @Mapper
+    ComponentMapper<PositionComponent> positionMapper;
+    @Mapper
+    ComponentMapper<SizeComponent> sizeMapper;
+    @Mapper
+    ComponentMapper<VisibleComponent> visibilityMapper;
 
     private final boolean sort;
+    protected Entity entity;
+    protected Vector3 entityPosition;
+    protected float entityRange;
+    protected float closestDistance;
+    protected Entity closestEntity;
 
     public PickEntitySystem(Aspect aspect, boolean sort) {
         super(aspect);
@@ -32,6 +48,8 @@ public abstract class PickEntitySystem extends EntitySystem implements PickEntit
 
     @Override
     protected final void processEntities(ImmutableBag<Entity> entities) {
+        entities = getReachable(entities);
+
         if (sort) {
             List<Path> paths = new ArrayList<Path>(entities.size());
             Map<Path, Entity> map = new HashMap<Path, Entity>();
@@ -41,7 +59,7 @@ public abstract class PickEntitySystem extends EntitySystem implements PickEntit
                 paths.add(pathComponent.getPath());
                 map.put(pathComponent.getPath(), entity);
             }
-            Collections.sort(paths,Collections.reverseOrder());
+            Collections.sort(paths, Collections.reverseOrder());
             for (Path path : paths) {
                 process(map.get(path));
             }
@@ -57,4 +75,68 @@ public abstract class PickEntitySystem extends EntitySystem implements PickEntit
         return true;
     }
 
+
+    protected boolean isRequirementMet(Entity e) {
+        return true;
+    }
+
+    Vector3[] corners = new Vector3[]{new Vector3(), new Vector3(), new Vector3(), new Vector3()};
+
+    protected float calculateDistance(Vector3 originalPosition, Vector3 position, Vector3 size) {
+        /*corners[0].x = position.x - size.x / 2;
+        corners[0].y = position.y - size.y / 2;
+        corners[1].x = corners[0].x + size.x;
+        corners[1].y = corners[0].y;
+        corners[2].x = corners[0].x;
+        corners[2].y = corners[0].y + size.y;
+        corners[3].x = corners[0].x + size.x;
+        corners[3].y = corners[0].y + size.y;
+
+        float distance = Float.MAX_VALUE;
+        for (Vector3 corner : corners) {
+            float candidate = calculateDistance(corner, originalPosition);
+            if (candidate < distance) {
+                distance = candidate;
+            }
+        }      */
+        return  calculateDistance(position, originalPosition);
+    }
+
+    private float calculateDistance(Vector3 a, Vector3 b) {
+        float tx = b.x - a.x;
+        float ty = b.y - a.y;
+        return (float) Math.sqrt(tx * tx + ty * ty);
+
+    }
+
+    @Override
+    public void start(Entity entity, Vector3 position, float range) {
+        this.entity = entity;
+        this.entityPosition = position;
+        this.entityRange = range;
+        this.closestDistance = Float.MAX_VALUE;
+        this.closestEntity = null;
+        this.process();
+    }
+
+    @Override
+    public Entity getPickedEntity() {
+        return closestEntity;
+    }
+
+    public ImmutableBag<Entity> getReachable(ImmutableBag<Entity> entities) {
+        Bag<Entity> reachable = new Bag<Entity>();
+        for (int i = 0; i < entities.size(); i++) {
+            Entity e = entities.get(i);
+            Vector3 position = positionMapper.get(e).getPoint();
+            Vector3 size = sizeMapper.get(e).getPoint();
+            if (!visibilityMapper.has(e) || visibilityMapper.get(e).isVisible()) {
+                float distance = calculateDistance(entityPosition, position, size);
+                if (this.entity != e && e.isEnabled() && distance <= entityRange) {
+                    reachable.add(e);
+                }
+            }
+        }
+        return reachable;
+    }
 }

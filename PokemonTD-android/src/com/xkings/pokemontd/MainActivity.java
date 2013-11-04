@@ -13,6 +13,16 @@ public class MainActivity extends AndroidApplication {
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
         cfg.useGL20 = true;
         
-        initialize(new App(), cfg);
+        initialize(new App("-stress"), cfg);
+    }
+
+    @Override
+    public void log(String tag, String message, Throwable exception) {
+
+    }
+
+    @Override
+    public int getLogLevel() {
+        return 0;
     }
 }

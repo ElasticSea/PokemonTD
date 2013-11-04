@@ -22,16 +22,14 @@ public class HitChangeDirection extends HitEffectSystem<ChangeDirectionData, Cha
     }
 
     @Override
-    protected ChangeDirectionEffect resetEffect(Entity e, ChangeDirectionEffect effect,
+    protected ChangeDirectionEffect resetEffect(Entity e, Entity target, ChangeDirectionEffect effect,
                                                 ChangeDirectionData effectData) {
         effect.set(effectData.getEffect(), effectData.getDuration());
-        System.out.println("RST");
         return effect;
     }
 
     @Override
-    protected ChangeDirectionEffect createEffect(Entity e, ChangeDirectionData effectData) {
-        System.out.println("Create");
-        return resetEffect(e, new ChangeDirectionEffect(), effectData);
+    protected ChangeDirectionEffect createEffect(Entity e, Entity target, ChangeDirectionData effectData) {
+        return resetEffect(e, target, new ChangeDirectionEffect(), effectData);
     }
 }

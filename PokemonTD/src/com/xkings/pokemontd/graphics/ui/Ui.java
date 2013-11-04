@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.xkings.core.graphics.Renderable;
 import com.xkings.core.main.Assets;
+import com.xkings.pokemontd.App;
 import com.xkings.pokemontd.Player;
 import com.xkings.pokemontd.entity.tower.TowerName;
 import com.xkings.pokemontd.manager.CreepManager;
@@ -32,6 +33,9 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
     private final TowerIcons towerIcons;
     private final ShopIcons shopIcons;
     private final BitmapFont font = Assets.createFont("pixelFont");
+    private final WaveManager waveManager;
+    private final Interest interest;
+    private final App app;
     private int height = 0;
     private final EntityInfo entityInfo;
     private final GuiBox statusBar;
@@ -42,11 +46,13 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
     private int offset;
     private Player player;
 
-    public Ui(Player player, WaveManager waveManager, CreepManager creepManager, TowerManager towerManager,
-              float guiScale, Interest interest) {
-        this.player = player;
-        this.creepManager = creepManager;
-        this.towerManager = towerManager;
+    public Ui(App app) {
+        this.app = app;
+        this.player = app.getPlayer();
+        this.creepManager = app.getCreepManager();
+        this.towerManager = app.getTowerManager();
+        this.waveManager = app.getWaveManager();
+        this.interest = app.getInterest();
         shapeRenderer = new ShapeRenderer();
         spriteBatch = new SpriteBatch();
         height = Gdx.graphics.getHeight();
@@ -57,12 +63,12 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         width = Gdx.graphics.getWidth();
 
         int stripHeight = (int) (squareHeight / 3f * 2f);
-        offset = (int) squareHeight / 36;
+        offset = squareHeight / 36;
         float statusHeightBlock = statusHeight / 5;
         float statusOffSet = statusHeightBlock / 2;
         statusHeight = (int) (statusHeightBlock * 4);
 
-        squareHeight = ((int) squareHeight / 3) * 3 + offset * 2;
+        squareHeight = (squareHeight / 3) * 3 + offset * 2;
 
         Rectangle pickTableRectangle =
                 new Rectangle(Gdx.graphics.getWidth() - squareHeight, 0, squareHeight, squareHeight);
@@ -80,7 +86,9 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         status = new Status(this, new Rectangle(width - statusDimensions.x,
                 this.height - statusBar.height - statusOffSet - statusDimensions.y, statusDimensions.x,
                 statusDimensions.y), waveManager, interest, font);
-        abilityText = new AbilityInfo(this, new Rectangle(0, this.height - statusBarDimensions.y, statusBarDimensions.x, statusBarDimensions.y),squareHeight);
+        abilityText = new AbilityInfo(this,
+                new Rectangle(0, this.height - statusBarDimensions.y, statusBarDimensions.x, statusBarDimensions.y),
+                squareHeight);
 
 
         nextWaveInfo = new WaveInfo(this, new Rectangle(0, 0, squareHeight, squareHeight), waveManager, font);
@@ -159,7 +167,11 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         return font;
     }
 
-    public GuiBox getRectangle(){
+    public GuiBox getRectangle() {
         return abilityText;
+    }
+
+    public App getApp() {
+        return app;
     }
 }

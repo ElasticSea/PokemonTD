@@ -107,14 +107,20 @@ public class HitAbility extends AbilityComponent {
     }
 
 
-    public static AbilityComponent getBubble(float scale) {
-        return new HitAbility("bubble", Type.PASS_THROUGH, BIG_SIZE * scale, NORMAL_SPEED * scale,
+    public static AbilityComponent getBubble(String texture, float scale) {
+        return new HitAbility(texture, Type.PASS_THROUGH, BIG_SIZE * scale, NORMAL_SPEED * scale,
                 new BubbleData(0.25f, 1f));
     }
 
     public static AbilityComponent getBubbleGrowing(float scale) {
         return new HitAbility("bubble", Type.PASS_THROUGH, BIG_SIZE * scale, NORMAL_SPEED * scale,
                 new BubbleData(0.25f, 1.02f));
+    }
+
+
+    public static AbilityComponent getIncreasingDamage(float scale) {
+        return new HitAbility("leaf", Type.FOLLOW_TARGET, DEFAULT_SIZE * scale, FAST_SPEED * scale,
+                new IncreasingDamageData("", 1.1f, 0.5f, 4));
     }
 
     public enum Type {

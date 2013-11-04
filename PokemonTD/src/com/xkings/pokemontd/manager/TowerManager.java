@@ -32,7 +32,6 @@ public class TowerManager implements Clickable {
     private Entity placeholderTower;
     private Entity clickedTower;
 
-
     public void setPickedTower(TowerType towerType) {
         removePlaceholderTower();
         if (towerType != null) {
@@ -158,8 +157,22 @@ public class TowerManager implements Clickable {
         this.world = world;
         this.blueprint = blueprint;
         this.player = player;
+        if (App.STRESS_TEST != null) {
+            for (int i = 0; i < blueprint.getWidth(); i++) {
+                for (int j = 0; j < blueprint.getHeight(); j++) {
+                    if (blueprint.isWalkable(i, j)) {
+                        TowerType tower;
+                        do {
+                            TowerName name = TowerName.values()[App.RANDOM.nextInt(TowerName.values().length)];
+                            tower = TowerType.getType(name);
+                        } while (tower == null);
+                        Vector3 towerPosition = getTowerPositionByBlock(i, j);
+                        Tower.registerTower(world, tower, towerPosition.x, towerPosition.y);
+                    }
+                }
+            }
+        }
     }
-
 
     private boolean placeTower(int x, int y) {
         if (selectedTower != null && status != Status.MOVE_PLACEHOLDER) {
@@ -229,8 +242,11 @@ public class TowerManager implements Clickable {
     }
 
     private Vector3 getTowerPosition(float worldX, float worldY) {
-        int blockX = (int) (worldX / App.WORLD_SCALE);
-        int blockY = (int) (worldY / App.WORLD_SCALE);
+        Vector3 block = getBlockPosition(worldX, worldY);
+        return getTowerPositionByBlock(block.x, block.y);
+    }
+
+    private Vector3 getTowerPositionByBlock(float blockX, float blockY) {
         float towerX = (blockX + .5f) * App.WORLD_SCALE;
         float towerY = (blockY + .5f) * App.WORLD_SCALE;
         return new Vector3(towerX, towerY, 0);

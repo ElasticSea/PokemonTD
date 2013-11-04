@@ -44,7 +44,7 @@ abstract class Button extends InteractiveBlock {
     public void render() {
         if (backgroundColor != Color.CLEAR || App.DEBUG != null) {
             Color color = isEnabled() ? this.backgroundColor : Color.DARK_GRAY;
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
             shapeRenderer.setColor(App.DEBUG != null ? Color.GREEN : color);
             shapeRenderer.rect(x, y, width, height);
             shapeRenderer.end();

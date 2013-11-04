@@ -100,7 +100,7 @@ public class Path implements Comparable<Path> {
         } else if (this.position < o.position) {
             return -1;
         } else {
-            if (this.getToTravel() > o.getToTravel()) {
+            if (this.getToTravel() < o.getToTravel()) {
                 return 1;
             } else if (this.getToTravel() > o.getToTravel()) {
                 return -1;

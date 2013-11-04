@@ -22,13 +22,13 @@ public class HitLifeStealSystem extends HitEffectSystem<LifeStealData, LifeSteal
     }
 
     @Override
-    protected LifeStealEffect resetEffect(Entity e, LifeStealEffect effect, LifeStealData effectData) {
+    protected LifeStealEffect resetEffect(Entity e, Entity target, LifeStealEffect effect, LifeStealData effectData) {
         effect.set( effectData.getDuration(), effectData.getLifeRatioToSteal());
         return effect;
     }
 
     @Override
-    protected LifeStealEffect createEffect(Entity e, LifeStealData effectData) {
-        return resetEffect(e, new LifeStealEffect(), effectData);
+    protected LifeStealEffect createEffect(Entity e, Entity target, LifeStealData effectData) {
+        return resetEffect(e, target, new LifeStealEffect(), effectData);
     }
 }

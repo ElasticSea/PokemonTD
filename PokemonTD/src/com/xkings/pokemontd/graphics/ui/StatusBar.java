@@ -19,7 +19,8 @@ public class StatusBar extends GuiBox {
         this.player = ui.getPlayer();
         Rectangle rect = new Rectangle(x + width - squareHeight, offsetRectange.y, squareHeight - 3 * offset,
                 offsetRectange.height);
-        menuUi = new MenuUi(ui, x, y - height * 0.5f, height * 3, height * 1.5f);
+        float height1 = height * 1.5f;
+        menuUi = new MenuUi(ui, x, y - height * 0.5f, height1 * 3 + offset * 2, height1, font);
         scoreTitleText = new DisplayText(ui, rect, font, BitmapFont.HAlignment.LEFT);
         scoreText = new DisplayText(ui, rect, font, BitmapFont.HAlignment.RIGHT);
     }

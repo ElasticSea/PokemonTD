@@ -165,4 +165,8 @@ public class TowerType implements CommonDataType {
         }
         return Collections.unmodifiableList(list);
     }
+
+    public static TowerType getType(TowerName towerName) {
+        return towerTypeMap.get(towerName);
+    }
 }

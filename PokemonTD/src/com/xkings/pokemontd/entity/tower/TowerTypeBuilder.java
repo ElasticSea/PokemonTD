@@ -31,6 +31,7 @@ public class TowerTypeBuilder {
     public static final float XXL_RANGE = 4.25f;
     public static final float XXXL_RANGE = 5.25f;
     public static final float BUFF_RANGE = 6f;
+    public static final float XXL_SPEED = 0.125f;
     public static final float XL_SPEED = 0.25f;
     public static final float L_SPEED = 0.5f;
     public static final float N_SPEED = 1;
@@ -55,7 +56,7 @@ public class TowerTypeBuilder {
         specs.add(new Specs(TowerName.Smash, 3, S_SPEED, N_RANGE, HitAbility.getSplash("bullet", scale, 2), Treasure.fromNone()));
         // blue
         specs.add(new Specs(TowerName.Splash, 4, N_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromWater(1)));
-        specs.add(new Specs(TowerName.Wave, 5, N_SPEED, N_RANGE, HitAbility.getBubble(scale), Treasure.fromWater(2)));
+        specs.add(new Specs(TowerName.Wave, 5, N_SPEED, N_RANGE, HitAbility.getBubble("bubble", scale), Treasure.fromWater(2)));
         specs.add(new Specs(TowerName.Tsunami, 10, N_SPEED, N_RANGE, HitAbility.getBubbleGrowing(scale), Treasure.fromWater(3)));
         //red
         specs.add(new Specs(TowerName.Sparkle, 4, N_SPEED, S_RANGE, HitAbility.getFire(scale), Treasure.fromFire(1)));
@@ -91,7 +92,10 @@ public class TowerTypeBuilder {
         specs.add(new Specs(TowerName.Freezing, 7, N_SPEED, N_RANGE, HitAbility.getSlow("bullet", "ice", scale, 1f, 0.3f, 1.5f, 1f), Treasure.fromWater(2).addDarkness(2)));
         specs.add(new Specs(TowerName.Polar, 9, N_SPEED, N_RANGE, HitAbility.getSlow("bullet", "ice", scale, 2f, 0.7f, 2, 1f), Treasure.fromWater(3).addDarkness(3)));
 
-        // FIXME MISSING TOWERS (FLAMTHROWER...)
+        specs.add(new Specs(TowerName.Burst, 5, XXL_SPEED, N_RANGE, HitAbility.getIncreasingDamage(scale), Treasure.fromFire(1).addNature(1)));
+        specs.add(new Specs(TowerName.Pyro, 7, XXL_SPEED, N_RANGE, HitAbility.getIncreasingDamage(scale), Treasure.fromFire(2).addNature(2)));
+        specs.add(new Specs(TowerName.Flamethrower, 9, XXL_SPEED, N_RANGE, HitAbility.getIncreasingDamage(scale), Treasure.fromFire(3).addNature(3)));
+
         specs.add(new Specs(TowerName.Punch, 5, N_SPEED, N_RANGE, HitAbility.getSlow("rock", "rockEffect", scale, 2f, 0.1f, 1, 1f), Treasure.fromFire(1).addLight(1)));
         specs.add(new Specs(TowerName.Takedown, 7, N_SPEED, N_RANGE, HitAbility.getSlow("rock", "rockEffect", scale, 2f, 0.2f, 2, 1f), Treasure.fromFire(2).addLight(2)));
         specs.add(new Specs(TowerName.Knockout, 9, N_SPEED, N_RANGE, HitAbility.getSlow("rock", "rockEffect", scale, 2f, 0.3f, 3, 1f), Treasure.fromFire(3).addLight(3)));
@@ -114,8 +118,11 @@ public class TowerTypeBuilder {
 
 
         /// ######################  TREE ELEMENT
-        specs.add(new Specs(TowerName.Grind, 6, N_SPEED, XS_SPEED, HitAbility.getSplash("rock",scale, 3f), Treasure.fromWater(1).addFire(1).addNature(1)));
-        specs.add(new Specs(TowerName.Pulverize, 9, N_SPEED, XXS_SPEED, HitAbility.getSplash("rock",scale, 6f), Treasure.fromWater(1).addFire(1).addNature(1)));
+        specs.add(new Specs(TowerName.Grind, 6, XS_SPEED, N_RANGE, HitAbility.getSplash("rock",scale, 3f), Treasure.fromWater(1).addFire(1).addNature(1)));
+        specs.add(new Specs(TowerName.Pulverize, 9, XXS_SPEED, S_RANGE, HitAbility.getSplash("rock",scale, 6f), Treasure.fromWater(1).addFire(1).addNature(1)));
+
+        specs.add(new Specs(TowerName.Throttling, 6, XXL_SPEED, S_RANGE, HitAbility.getBubble("fire", scale), Treasure.fromWater(1).addFire(1).addLight(1)));
+        specs.add(new Specs(TowerName.Galloping, 9, XXL_SPEED, S_RANGE, HitAbility.getBubble("fire", scale), Treasure.fromWater(2).addFire(2).addLight(2)));
 
         specs.add(new Specs(TowerName.Vampire, 6, N_SPEED, N_RANGE, HitAbility.getLife(scale, 1f, 0.5f), Treasure.fromWater(1).addNature(1).addLight(1)));
         specs.add(new Specs(TowerName.Dracula, 9, N_SPEED, N_RANGE, HitAbility.getLife(scale, 1f, 1f), Treasure.fromWater(2).addNature(2).addLight(2)));
@@ -124,7 +131,7 @@ public class TowerTypeBuilder {
         specs.add(new Specs(TowerName.Epidemic, 9, XL_SPEED, L_RANGE, HitAbility.getAuraDmg(scale, L_RANGE), Treasure.fromWater(2).addLight(2).addDarkness(2)));
 
         specs.add(new Specs(TowerName.Confused, 6, L_SPEED, N_RANGE, HitAbility.getDumbClaw(scale, 0f, 0), Treasure.fromWater(1).addLight(1).addDarkness(1)));
-        specs.add(new Specs(TowerName.Supersonic, 9, L_SPEED, N_RANGE, HitAbility.getBubble(scale), Treasure.fromWater(2).addLight(2).addDarkness(2)));
+        specs.add(new Specs(TowerName.Supersonic, 9, L_SPEED, N_RANGE, HitAbility.getBubble("bubble", scale), Treasure.fromWater(2).addLight(2).addDarkness(2)));
 
         specs.add(new Specs(TowerName.Charged, 6, S_SPEED, XL_RANGE, HitAbility.getCharge(scale), Treasure.fromFire(1).addNature(1).addLight(1)));
         specs.add(new Specs(TowerName.Supercharged, 9, XS_SPEED, XXXL_RANGE, HitAbility.getCharge(scale * 2), Treasure.fromFire(2).addNature(2).addLight(2)));
@@ -135,9 +142,8 @@ public class TowerTypeBuilder {
         specs.add(new Specs(TowerName.Erruption, 6, XS_SPEED, N_RANGE, HitAbility.getAuraDmg(scale, N_RANGE), Treasure.fromFire(1).addLight(1).addDarkness(1)));
         specs.add(new Specs(TowerName.Volcanic, 9, XXS_SPEED, S_RANGE, HitAbility.getVolcano(scale, S_RANGE), Treasure.fromFire(2).addLight(2).addDarkness(2)));
 
-
-        specs.add(new Specs(TowerName.Hypnotic, 6, N_SPEED, N_RANGE, HitAbility.getChangeDirection(scale, 1,0.1f), Treasure.fromNature(1).addLight(1).addDarkness(1)));
-        specs.add(new Specs(TowerName.Illusion,9, N_SPEED, N_RANGE, HitAbility.getChangeDirection(scale,5,0.1f), Treasure.fromNature(2).addLight(2).addDarkness(2)));
+        specs.add(new Specs(TowerName.Hypnotic, 6, N_SPEED, N_RANGE, HitAbility.getChangeDirection(scale, 1,0.02f), Treasure.fromNature(1).addLight(1).addDarkness(1)));
+        specs.add(new Specs(TowerName.Illusion,9, N_SPEED, N_RANGE, HitAbility.getChangeDirection(scale,5,0.03f), Treasure.fromNature(2).addLight(2).addDarkness(2)));
 
         List<TowerType> data = new ArrayList<TowerType>();
         for (Specs specification : specs) {

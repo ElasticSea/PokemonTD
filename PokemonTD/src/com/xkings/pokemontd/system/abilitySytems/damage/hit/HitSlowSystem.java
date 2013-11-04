@@ -22,13 +22,13 @@ public class HitSlowSystem extends HitEffectSystem<SlowData, SlowEffect> {
     }
 
     @Override
-    protected SlowEffect resetEffect(Entity e, SlowEffect effect, SlowData effectData) {
+    protected SlowEffect resetEffect(Entity e, Entity target, SlowEffect effect, SlowData effectData) {
         effect.set(effectData.getEffect(), effectData.getDuration(), effectData.getSlowRatio());
         return effect;
     }
 
     @Override
-    protected SlowEffect createEffect(Entity e, SlowData effectData) {
-        return resetEffect(e, new SlowEffect(), effectData);
+    protected SlowEffect createEffect(Entity e, Entity target, SlowData effectData) {
+        return resetEffect(e, target, new SlowEffect(), effectData);
     }
 }

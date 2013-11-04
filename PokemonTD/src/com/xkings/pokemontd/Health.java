@@ -19,8 +19,10 @@ public class Health {
     }
 
     public void decease(float count) {
-        System.out.println("Health decreased: " + count);
-        currentHealth = Math.max(0, currentHealth - count);
+        if (App.STRESS_TEST == null) {
+            System.out.println("Health decreased: " + count);
+            currentHealth = Math.max(0, currentHealth - count);
+        }
     }
 
     public void increase(float count) {

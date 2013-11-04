@@ -45,8 +45,6 @@ public class BubbleSystem extends EntityProcessingSystem {
 
             @Override
             protected void intersect(Entity e) {
-                System.out.println("B: "+  sizeMapper.get(e).getPoint());
-                System.out.println( "A: "+  sizeMapper.get(e).getPoint());
                 healthMapper.get(e).getHealth().decease(damage / bubble.getInterval());
             }
         };

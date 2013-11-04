@@ -127,7 +127,7 @@ public class App extends Game2D {
         initializeContent();
         initializeManagers();
         initializeSystems();
-        ui = new Ui(player, waveManager, creepManager, towerManager, 1, interest);
+        ui = new Ui(this);
         renderer = new DefaultRenderer(ui, camera);
         initializeInput();
         initializeTween();
@@ -185,6 +185,7 @@ public class App extends Game2D {
         world.setSystem(new HealingSystem());
         world.setSystem(new DotSystem());
         world.setSystem(new SlowSystem());
+        world.setSystem(new IncreasingDamageSystem());
         world.setSystem(new ChangeDirectionSystem());
         world.setSystem(new DamageBuffSystem());
         world.setSystem(new SpeedBuffSystem());
@@ -197,7 +198,7 @@ public class App extends Game2D {
         world.setSystem(new HitNormalSystem());
         world.setSystem(new HitMoneySystem());
         world.setSystem(new HitLifeSystem(player.getHealth()));
-        // world.setSystem(new HitSlowAoeSystem());
+        world.setSystem(new HitIncreasingDamageSystem());
         world.setSystem(new HitBonusSystem());
         world.setSystem(new ApplyBuffSystem());
         world.setSystem(new ApplySunbeamSystem());
@@ -238,6 +239,30 @@ return new MapBuilder(3, 11, PATH_SIZE, MapBuilder.Direction.DOWN, 0.40f,
     @Override
     public void dispose() {
 
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public CreepManager getCreepManager() {
+        return creepManager;
+    }
+
+    public TowerManager getTowerManager() {
+        return towerManager;
+    }
+
+    public WaveManager getWaveManager() {
+        return waveManager;
+    }
+
+    public Interest getInterest() {
+        return interest;
+    }
+
+    public Clock getClock() {
+        return clock;
     }
 
     private class DefaultRenderer implements Renderable {

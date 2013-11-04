@@ -26,18 +26,18 @@ public abstract class HitEffectSystem<T extends EffectData, V extends AbstractEf
 
     protected void hit(T effectData, Entity e, Entity target) {
         V effect = effectMapper.get(target);
-        V newEffect = createEffect(e, effectData);
+        V newEffect = createEffect(e, target,effectData);
         if (effect == null) {
             target.addComponent(newEffect);
             world.changedEntity(target);
         } else if (newEffect.compareTo(effect) >= 0) {
             effect.reset();
-            resetEffect(e, effect, effectData);
+            resetEffect(e,target, effect, effectData);
         }
     }
 
-    protected abstract V resetEffect(Entity e, V effect, T effectData);
+    protected abstract V resetEffect(Entity e, Entity target, V effect, T effectData);
 
-    protected abstract V createEffect(Entity e, T effectData);
+    protected abstract V createEffect(Entity e, Entity target, T effectData);
 
 }

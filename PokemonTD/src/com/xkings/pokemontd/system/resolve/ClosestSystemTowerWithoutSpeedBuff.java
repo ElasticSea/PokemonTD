@@ -12,7 +12,7 @@ public class ClosestSystemTowerWithoutSpeedBuff extends ClosestSystemTower {
 
     @Override
     protected boolean isRequirementMet(Entity e) {
-        System.out.println("Has speed buff [" + e + "]: " + !speedBuffEffect.has(e));
+    //    System.out.println("Has speed buff [" + e + "]: " + !speedBuffEffect.has(e));
         return !speedBuffEffect.has(e);
     }
 }
