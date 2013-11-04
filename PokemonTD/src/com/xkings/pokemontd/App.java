@@ -106,6 +106,11 @@ public class App extends Game2D {
         renderer.render();
     }
 
+    @Override
+    public void resize(int width, int height) {
+        super.resize(width, height);
+        cameraHandler.update();
+    }
 
     @Override
     protected void init(OrthographicCamera camera) {
