@@ -136,8 +136,8 @@ public class TowerTypeBuilder {
         specs.add(new Specs(TowerName.Charged, 6, S_SPEED, XL_RANGE, HitAbility.getCharge(scale), Treasure.fromFire(1).addNature(1).addLight(1)));
         specs.add(new Specs(TowerName.Supercharged, 9, XS_SPEED, XXXL_RANGE, HitAbility.getCharge(scale * 2), Treasure.fromFire(2).addNature(2).addLight(2)));
 
-        specs.add(new Specs(TowerName.Stomp, 6, N_SPEED, N_RANGE, HitAbility.getSlow("rock", "", scale, 0, 1f, 1, 1), Treasure.fromFire(1).addNature(1).addDarkness(1)));
-        specs.add(new Specs(TowerName.Earthquake, 9, N_SPEED, N_RANGE, HitAbility.getSlow("rock", "", scale, 0, 1f, 3, 1), Treasure.fromFire(2).addNature(2).addDarkness(2)));
+        specs.add(new Specs(TowerName.Stomp, 6, N_SPEED, N_RANGE, HitAbility.getSlow("rock", "", scale, 0, 1f, 0.5f, 0.8f), Treasure.fromFire(1).addNature(1).addDarkness(1)));
+        specs.add(new Specs(TowerName.Earthquake, 9, S_SPEED, N_RANGE, HitAbility.getSlow("rock", "", scale, 0, 1f, 1.5f, 1), Treasure.fromFire(2).addNature(2).addDarkness(2)));
 
         specs.add(new Specs(TowerName.Erruption, 6, XS_SPEED, N_RANGE, HitAbility.getAuraDmg(scale, N_RANGE), Treasure.fromFire(1).addLight(1).addDarkness(1)));
         specs.add(new Specs(TowerName.Volcanic, 9, XXS_SPEED, S_RANGE, HitAbility.getVolcano(scale, S_RANGE), Treasure.fromFire(2).addLight(2).addDarkness(2)));
