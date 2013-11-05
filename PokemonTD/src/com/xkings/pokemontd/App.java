@@ -98,8 +98,8 @@ public class App extends Game2D {
 
     public App(String... args) {
         super(args);
-    }
 
+    }
     @Override
     protected void renderInternal() {
         clock.run();

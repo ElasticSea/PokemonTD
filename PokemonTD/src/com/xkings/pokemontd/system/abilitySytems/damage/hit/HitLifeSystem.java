@@ -49,9 +49,8 @@ public class HitLifeSystem extends HitSystem<LifeData> {
         Health health = healthMapper.get(target).getHealth();
         health.decease((int) damage);
         if (!health.isAlive()) {
-            int healthStole = (int) (damageMapper.get(target).getDamage() * effectData.getEarnRatio());
-            this.health.increase(healthStole);
-            TextInfo.registerTextInfo(world, "+" + healthStole + " <3", Color.RED, position.x, position.y);
+            health.setStealLife(true);
+            health.setEarnTreasure(false);
         }
     }
 

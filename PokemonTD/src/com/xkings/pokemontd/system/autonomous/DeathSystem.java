@@ -7,15 +7,14 @@ import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.component.DamageComponent;
-import com.xkings.pokemontd.component.attack.effects.buff.BuffableDamageComponent;
 import com.xkings.core.component.PositionComponent;
 import com.xkings.pokemontd.App;
 import com.xkings.pokemontd.Health;
 import com.xkings.pokemontd.Player;
 import com.xkings.pokemontd.Treasure;
 import com.xkings.pokemontd.component.*;
-import com.xkings.pokemontd.entity.TextInfo;
 import com.xkings.pokemontd.entity.StaticObject;
+import com.xkings.pokemontd.entity.TextInfo;
 import com.xkings.pokemontd.entity.creep.Creep;
 import com.xkings.pokemontd.entity.creep.CreepAbilityType;
 import com.xkings.pokemontd.entity.creep.CreepType;
@@ -113,10 +112,25 @@ public class DeathSystem extends EntityProcessingSystem {
 
     private void earn(Entity e) {
         Vector3 position = positionMapper.get(e).getPoint();
+        if (healthMapper.get(e).getHealth().isEarnTreasure()) {
+            earnTreasure(e, position);
+        }
+        if (healthMapper.get(e).getHealth().isStealLife()) {
+            stealLife(e, position);
+        }
+        player.getScore().increase((int) damageMapper.get(e).getDamage());
+    }
+
+    private void earnTreasure(Entity e, Vector3 position) {
         Treasure treasure = treasureMapper.get(e).getTreasure();
         TextInfo.registerMoneyInfo(world, treasure.getGold(), position.x, position.y);
         treasure.transferTo(player.getTreasure());
-        player.getScore().increase((int) damageMapper.get(e).getDamage());
+    }
+
+    private void stealLife(Entity e, Vector3 position) {
+        int lifeToSteal = (int) damageMapper.get(e).getDamage();
+        TextInfo.registerLifeStealInfo(world, lifeToSteal, position.x, position.y);
+        player.getHealth().increase(lifeToSteal);
     }
 
     private void die(Entity e) {

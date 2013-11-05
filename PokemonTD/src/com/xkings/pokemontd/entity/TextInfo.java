@@ -50,7 +50,12 @@ public class TextInfo extends ConcreteEntity {
                 App.getTweenManager());
     }
 
+
     public static void registerMoneyInfo(World world, int money, float x, float y) {
         registerTextInfo(world, "+" + money, Color.YELLOW, x, y);
+    }
+
+    public static void registerLifeStealInfo(World world, int lifeSteal, float x, float y) {
+        registerTextInfo(world, "+" + lifeSteal+" <3", Color.RED, x, y);
     }
 }

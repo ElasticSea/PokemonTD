@@ -14,8 +14,6 @@ public class LifeStealSystem extends EffectSystem<LifeStealEffect> {
 
     @Mapper
     ComponentMapper<HealthComponent> healthMapper;
-    @Mapper
-    ComponentMapper<LifeStealEffect> lifeStealMapper;
 
     public LifeStealSystem() {
         super(LifeStealEffect.class);

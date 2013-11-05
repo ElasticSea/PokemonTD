@@ -4,10 +4,10 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.badlogic.gdx.math.Vector3;
-import com.xkings.pokemontd.component.attack.effects.buff.BuffableDamageComponent;
-import com.xkings.pokemontd.component.attack.effects.buff.BuffableSpeedComponent;
 import com.xkings.core.component.PositionComponent;
 import com.xkings.pokemontd.App;
+import com.xkings.pokemontd.component.attack.effects.buff.BuffableDamageComponent;
+import com.xkings.pokemontd.component.attack.effects.buff.BuffableSpeedComponent;
 import com.xkings.pokemontd.component.attack.projectile.HitAbility;
 import com.xkings.pokemontd.entity.Projectile;
 import com.xkings.pokemontd.system.resolve.FirstCreepSystem;
@@ -38,22 +38,22 @@ public class FireProjectilSystem extends ApplyAbilitySystem<HitAbility> {
 
         Vector3 closestEnemyPosition = positionMapper.get(target).getPoint();
 
-        createProjectile(ability, position, damage, speed, closestEnemyPosition, target);
+        createProjectile(entity, ability, position, damage, speed, closestEnemyPosition, target);
     }
 
-    public boolean createProjectile(HitAbility projectileType, Vector3 position, float damage, float speed,
-                                    Vector3 targetPosition, Entity target) {
+    public boolean createProjectile(Entity entity, HitAbility projectileType, Vector3 position, float damage,
+                                    float speed, Vector3 targetPosition, Entity target) {
         switch (projectileType.getType()) {
             case PASS_THROUGH:
                 Vector3 direction = targetPosition.cpy().sub(position).nor().scl(5 * App.WORLD_SCALE).add(position);
-                Projectile.registerProjectile(world, projectileType, position.x, position.y, damage, speed, direction,
-                        target);
+                Projectile.registerProjectile(world, entity, projectileType, position.x, position.y, damage, speed,
+                        direction, target);
                 break;
 
             case FOLLOW_TARGET:
             case IMMEDIATE_ATTACK:
             case IMMEDIATE_NOCONTACT_DAMAGE:
-                Projectile.registerProjectile(world, projectileType, position.x, position.y, damage, speed,
+                Projectile.registerProjectile(world, entity, projectileType, position.x, position.y, damage, speed,
                         targetPosition, target);
                 break;
         }

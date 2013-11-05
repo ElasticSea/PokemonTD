@@ -4,6 +4,8 @@ public class Health {
 
     private float maxHealth;
     private float currentHealth;
+    private boolean stealLife;
+    private boolean earnTreasure = true;
 
     public Health(int maxHealth) {
         this(maxHealth, maxHealth);
@@ -39,5 +41,21 @@ public class Health {
 
     public boolean isAlive() {
         return currentHealth > 0;
+    }
+
+    public void setStealLife(boolean stealLife) {
+        this.stealLife = stealLife;
+    }
+
+    public boolean isStealLife() {
+        return stealLife;
+    }
+
+    public void setEarnTreasure(boolean earnTreasure) {
+        this.earnTreasure = earnTreasure;
+    }
+
+    public boolean isEarnTreasure() {
+        return earnTreasure;
     }
 }
