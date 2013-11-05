@@ -20,7 +20,7 @@ public class CreepTypeBuilder {
 
     public static List<Specs> getNormal() {
         List<Specs> list = new ArrayList<Specs>();
-        list.add(new Specs(CreepName.Hoothoot, 75, Treasure.fromGold(1), CreepAbilityType.NORMAL));
+        list.add(new Specs(CreepName.Hoothoot, 75, Treasure.fromGold(1), CreepAbilityType.RESURRECT));
         list.add(new Specs(CreepName.Ledian, 88, Treasure.fromGold(1), CreepAbilityType.NORMAL));
         list.add(new Specs(CreepName.Crobat, 103, Treasure.fromGold(1), CreepAbilityType.SWARM));
         list.add(new Specs(CreepName.Lanturn, 120, Treasure.fromGold(1), CreepAbilityType.RESURRECT));

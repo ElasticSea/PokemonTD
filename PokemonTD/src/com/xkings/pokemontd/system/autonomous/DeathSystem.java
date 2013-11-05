@@ -76,12 +76,13 @@ public class DeathSystem extends EntityProcessingSystem {
         final Path path = pathMapper.get(e).getPath();
         final WaveComponent waveComponent = waveMapper.get(e);
         final CreepType creepType = creepTypeMapper.get(e).getCreepType();
-        die(e);
+        e.deleteFromWorld();
         final Entity grave = StaticObject.registerStaticObject(world, StaticObjectType.GRAVE, position.x, position.y);
 
         Runnable task = new Runnable() {
             public void run() {
-                die(grave);
+                waveComponent.removeCreep(e);
+                grave.deleteFromWorld();
                 Creep.registerCreep(world, path, waveComponent, creepType, CreepAbilityType.NORMAL,
                         creepType.getSpeed(), creepType.getSize(), position.x, position.y);
             }
