@@ -5,6 +5,9 @@ import com.badlogic.gdx.math.Rectangle;
 import com.xkings.core.main.Assets;
 import com.xkings.pokemontd.Element;
 import com.xkings.pokemontd.Player;
+import com.xkings.pokemontd.Treasure;
+import com.xkings.pokemontd.entity.creep.CreepType;
+import com.xkings.pokemontd.manager.WaveManager;
 
 /**
  * Created by Tomas on 10/8/13.
@@ -12,21 +15,26 @@ import com.xkings.pokemontd.Player;
 class ElementIcon extends InteractiveBlock {
 
     private final DisplayPicture picture;
+    private final WaveManager waveManager;
     protected Element element;
     private Player player;
     private final SpriteBatch spriteBatch;
+    private Treasure currentElements;
 
     ElementIcon(Ui ui, Rectangle rectangle, SpriteBatch spriteBatch) {
         super(rectangle);
         this.spriteBatch = spriteBatch;
         picture = new DisplayPicture(ui, rectangle);
+        waveManager = ui.getWaveManager();
     }
 
     @Override
     public void render() {
         if (element != null) {
-            String text = player.getTreasure().reachedMaximum(element) ? "max" :
-                    "lvl "+ player.getTreasure().getElement(element);
+
+            int elementCount = currentElements.getElement(element) + 1;
+            String text = Treasure.LIMIT.getElement(element) < elementCount ? "max" :
+                    "lvl "+ elementCount;
 
             picture.render(Assets.getTexture("gems/" + element.toString().toLowerCase()), text, true);
             //spriteBatch.draw(Assets.getTexture("gems/" + element.toString().toLowerCase()), x, y, width, height);
@@ -41,8 +49,12 @@ class ElementIcon extends InteractiveBlock {
     @Override
     public void process(float x, float y) {
         if (player.getFreeElements() != 0) {
-            if (player.getTreasure().canAdd(element, 1)) {
-                player.getTreasure().addElement(element, 1);
+            int elements = currentElements.getElement(element)+1;
+            if (Treasure.LIMIT.getElement(element) >= elements) {
+                System.out.println(element+" "+elements);
+                waveManager.fireNextWave(CreepType.getWave(element, elements));
+                currentElements.addElement(element,1);
+             //   player.getTreasure().addElement(element, 1);
                 player.subtractFreeElement();
             }
         }
@@ -58,5 +70,13 @@ class ElementIcon extends InteractiveBlock {
 
     public Element getElement() {
         return element;
+    }
+
+    public void setCurrentElements(Treasure currentElements) {
+        this.currentElements = currentElements;
+    }
+
+    public Treasure getCurrentElements() {
+        return currentElements;
     }
 }

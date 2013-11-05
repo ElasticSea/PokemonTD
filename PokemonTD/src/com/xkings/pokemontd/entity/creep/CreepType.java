@@ -1,7 +1,10 @@
 package com.xkings.pokemontd.entity.creep;
 
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
 import com.xkings.core.main.Assets;
 import com.xkings.pokemontd.App;
+import com.xkings.pokemontd.Element;
 import com.xkings.pokemontd.Treasure;
 import com.xkings.pokemontd.entity.datatypes.CommonDataType;
 
@@ -15,10 +18,33 @@ import static com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 public class CreepType implements CommonDataType {
 
 
-    private static final Map<CreepName, CreepType> dataStore = new CreepTypeBuilder().build(App.WORLD_SCALE);
+    public static final CreepTypeBuilder creepTypeBuilder = new CreepTypeBuilder();
+    private static final Map<CreepName, CreepType> waveStore =
+            creepTypeBuilder.build(App.WORLD_SCALE, CreepTypeBuilder.normal);
 
-    public static CreepType getType(CreepName next) {
-        return dataStore.get(next);
+    public static CreepType getWave(CreepName next) {
+        return waveStore.get(next);
+    }
+
+    public static CreepType getWave(Element element, Integer count) {
+        return elementWaves.get(element, count);
+    }
+
+    private static Table<Element, Integer, CreepType> elementWaves = getElementWave();
+
+    public static Table<Element, Integer, CreepType> getElementWave() {
+        Map<CreepName, CreepType> waves = creepTypeBuilder.build(App.WORLD_SCALE, CreepTypeBuilder.element);
+        Table<Element, Integer, CreepType> table = HashBasedTable.create();
+        for (Map.Entry<CreepName, CreepType> creep : waves.entrySet()) {
+            Treasure treasure = creep.getValue().getTreasure();
+            for (Element element : Element.values()) {
+                if (treasure.hasElement(element, 1)) {
+                    table.put(element, treasure.getElement(element), creep.getValue());
+                    break;
+                }
+            }
+        }
+        return table;
     }
 
     private final CreepName name;
@@ -96,6 +122,5 @@ public class CreepType implements CommonDataType {
         list.add(new CreepType(Mew, 1f, 0.5f, 1, new Treasure(5), 5, CreepAbilityType.HEALING));
         new FileHandle("json").writeString(new Gson().toJson(list), false);   */
     }
-
 
 }

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.xkings.pokemontd.Element;
 import com.xkings.pokemontd.Player;
+import com.xkings.pokemontd.Treasure;
 import com.xkings.pokemontd.entity.tower.TowerType;
 
 import java.util.List;
@@ -15,15 +16,18 @@ import java.util.List;
 public class ShopIcons extends PickTable<ElementIcon> {
 
     private final Player player;
+    private final Treasure currentElements;
     private List<TowerType> lastHierarchy;
 
     ShopIcons(Ui ui,Rectangle rectangle) {
         super(ui, rectangle);
         this.player = ui.getPlayer();
+        this.currentElements = new Treasure(0);
         for (int i = 0; i < pickIcons.size(); i++) {
             ElementIcon elementIcon = pickIcons.get(i);
             elementIcon.setPlayer(player);
             elementIcon.setElement(i < Element.values().length ? Element.values()[i] : null);
+            elementIcon.setCurrentElements(currentElements);
         }
     }
 

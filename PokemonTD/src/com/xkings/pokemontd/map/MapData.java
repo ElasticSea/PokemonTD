@@ -10,7 +10,7 @@ import com.xkings.pokemontd.graphics.TileMap;
  */
 
 /**
- * DTO holding map data.
+ * DTO holding map normal.
  */
 public class MapData {
 

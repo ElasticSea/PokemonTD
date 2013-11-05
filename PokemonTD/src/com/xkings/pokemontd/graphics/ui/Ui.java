@@ -147,6 +147,10 @@ public class Ui extends GestureDetector.GestureAdapter implements Renderable {
         return towerManager;
     }
 
+    public WaveManager getWaveManager() {
+        return waveManager;
+    }
+
     public ShapeRenderer getShapeRenderer() {
         return shapeRenderer;
     }

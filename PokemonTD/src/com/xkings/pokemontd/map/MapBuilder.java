@@ -171,7 +171,7 @@ public class MapBuilder {
      * Triggers the map generation. Generation starts on coordinates [x, y] and continues along starting direction,
      * direction than changes based on accumulated build commands.
      *
-     * @return generated map data
+     * @return generated map normal
      */
     public MapData build() {
         Vector3 dimensions = computeMapDimensions(direction, commands);

@@ -8,10 +8,7 @@ import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.component.DamageComponent;
 import com.xkings.core.component.PositionComponent;
-import com.xkings.pokemontd.App;
-import com.xkings.pokemontd.Health;
-import com.xkings.pokemontd.Player;
-import com.xkings.pokemontd.Treasure;
+import com.xkings.pokemontd.*;
 import com.xkings.pokemontd.component.*;
 import com.xkings.pokemontd.entity.StaticObject;
 import com.xkings.pokemontd.entity.TextInfo;
@@ -123,7 +120,14 @@ public class DeathSystem extends EntityProcessingSystem {
 
     private void earnTreasure(Entity e, Vector3 position) {
         Treasure treasure = treasureMapper.get(e).getTreasure();
-        TextInfo.registerMoneyInfo(world, treasure.getGold(), position.x, position.y);
+        if (treasure.getGold() != 0) {
+            TextInfo.registerMoneyInfo(world, treasure.getGold(), position.x, position.y);
+        }
+        for (Element element : Element.values()) {
+            if (treasure.hasElement(element, 1)) {
+                TextInfo.registerElementInfo(world, treasure.getElement(element), element, position.x, position.y);
+            }
+        }
         treasure.transferTo(player.getTreasure());
     }
 

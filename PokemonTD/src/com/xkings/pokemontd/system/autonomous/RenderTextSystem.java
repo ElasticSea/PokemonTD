@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.xkings.core.component.PositionComponent;
 import com.xkings.core.component.SizeComponent;
+import com.xkings.core.main.Assets;
 import com.xkings.pokemontd.App;
 import com.xkings.pokemontd.component.TextComponent;
 import com.xkings.pokemontd.component.TintComponent;
@@ -23,8 +24,7 @@ import static com.xkings.core.main.Assets.getTexture;
  */
 public class RenderTextSystem extends EntityProcessingSystem {
     private final SpriteBatch spriteBatch;
-    private final BitmapFont font =
-            new BitmapFont(Gdx.files.internal("data/fonts/pixelFont.fnt"), getTexture("pixelFont"), false);
+    private final BitmapFont font = Assets.createFont("pixelFont");
 
     @Mapper
     ComponentMapper<PositionComponent> positionMapper;

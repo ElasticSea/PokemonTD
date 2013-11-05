@@ -10,6 +10,7 @@ import com.xkings.core.component.SizeComponent;
 import com.xkings.core.entity.ConcreteEntity;
 import com.xkings.core.tween.Vector3Accessor;
 import com.xkings.pokemontd.App;
+import com.xkings.pokemontd.Element;
 import com.xkings.pokemontd.component.TextComponent;
 import com.xkings.pokemontd.component.TintComponent;
 import com.xkings.pokemontd.tween.ColorAccessor;
@@ -55,7 +56,12 @@ public class TextInfo extends ConcreteEntity {
         registerTextInfo(world, "+" + money, Color.YELLOW, x, y);
     }
 
+
+    public static void registerElementInfo(World world, int count, Element element, float x, float y) {
+        registerTextInfo(world, "+" + count + " " + element, element.getColor(), x, y);
+    }
+
     public static void registerLifeStealInfo(World world, int lifeSteal, float x, float y) {
-        registerTextInfo(world, "+" + lifeSteal+" <3", Color.RED, x, y);
+        registerTextInfo(world, "+" + lifeSteal + " <3", Color.RED, x, y);
     }
 }

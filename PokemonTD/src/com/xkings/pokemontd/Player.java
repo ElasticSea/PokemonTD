@@ -10,7 +10,7 @@ public class Player {
     private int freeElements;
 
     public Player(int health, int gold, int freeElements) {
-        this.treasure = new Treasure(gold, 3, 3, 3, 3, 3, 3, 1);
+        this.treasure = new Treasure(gold);
         this.health = new Health(Integer.MAX_VALUE, health);
         this.score = new Score(0);
         this.freeElements = freeElements;

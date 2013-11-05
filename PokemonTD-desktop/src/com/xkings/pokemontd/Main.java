@@ -17,7 +17,7 @@ public class Main {
 
         String source = new File(".").getAbsoluteFile().getParentFile().getParentFile().getParentFile().toString() +
                 "/unprocessed/textures/";
-        String destination = new File(".").toString() + "/data/textures/";
+        String destination = new File(".").toString() + "/normal/textures/";
         process(texturePackerSettings, source, destination, "packed");
 
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
