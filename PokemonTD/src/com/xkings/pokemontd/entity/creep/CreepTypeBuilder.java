@@ -19,15 +19,15 @@ public class CreepTypeBuilder {
 
     private List<CreepTypeSpecification> getData() {
         List<CreepTypeSpecification> list = new ArrayList<CreepTypeSpecification>();
-        list.add(new CreepTypeSpecification(CreepName.Hoothoot, 75000000, Treasure.fromGold(1),
+        list.add(new CreepTypeSpecification(CreepName.Hoothoot, 75, Treasure.fromGold(1),
                 CreepAbilityType.NORMAL));
         list.add(new CreepTypeSpecification(CreepName.Ledian, 88, Treasure.fromGold(1), CreepAbilityType.NORMAL));
         list.add(new CreepTypeSpecification(CreepName.Crobat, 103, Treasure.fromGold(1), CreepAbilityType.SWARM));
-        list.add(new CreepTypeSpecification(CreepName.Lanturn, 120, Treasure.fromGold(1), CreepAbilityType.NORMAL));
-        list.add(new CreepTypeSpecification(CreepName.Quagsire, 141, Treasure.fromGold(2), CreepAbilityType.NORMAL));
-        list.add(new CreepTypeSpecification(CreepName.Espeon, 164, Treasure.fromGold(2), CreepAbilityType.RESURRECT));
-        list.add(new CreepTypeSpecification(CreepName.Forretress, 192, Treasure.fromGold(2), CreepAbilityType.NORMAL));
-        list.add(new CreepTypeSpecification(CreepName.Snubbull, 225, Treasure.fromGold(2), CreepAbilityType.NORMAL));
+        list.add(new CreepTypeSpecification(CreepName.Lanturn, 120, Treasure.fromGold(1), CreepAbilityType.RESURRECT));
+        list.add(new CreepTypeSpecification(CreepName.Quagsire, 141, Treasure.fromGold(2), CreepAbilityType.HEALING));
+        list.add(new CreepTypeSpecification(CreepName.Espeon, 164, Treasure.fromGold(2), CreepAbilityType.SPAWN));
+        list.add(new CreepTypeSpecification(CreepName.Forretress, 192, Treasure.fromGold(2), CreepAbilityType.FAST));
+        list.add(new CreepTypeSpecification(CreepName.Snubbull, 225, Treasure.fromGold(2), CreepAbilityType.BOSS));
         list.add(new CreepTypeSpecification(CreepName.Corsola, 263, Treasure.fromGold(2), CreepAbilityType.HEALING));
         list.add(new CreepTypeSpecification(CreepName.Miltank, 308, Treasure.fromGold(3), CreepAbilityType.SPAWN));
         list.add(new CreepTypeSpecification(CreepName.Entei, 361, Treasure.fromGold(3), CreepAbilityType.NORMAL));

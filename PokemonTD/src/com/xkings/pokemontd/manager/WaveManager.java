@@ -16,6 +16,8 @@ import com.xkings.pokemontd.map.PathPack;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Tomas on 10/5/13.
@@ -29,6 +31,7 @@ public class WaveManager implements Updateable {
     private boolean active;
     private CreepType nextWave;
     private CreepType currentWave;
+    private final List<WaveComponent> waves = new LinkedList<WaveComponent>();
 
     /**
      * @param clock internal update timer
@@ -51,7 +54,7 @@ public class WaveManager implements Updateable {
     }
 
     private void fireNextWave(CreepType next) {
-        WaveComponent wave = new WaveComponent();
+        WaveComponent wave = new WaveComponent(this);
         for (int i = 0; i < next.getCreepsInWave(); i++) {
             Path path = getAppropriatePath(pathPack, next);
             Vector3 startPoint = path.getPath().get(0);
@@ -59,11 +62,19 @@ public class WaveManager implements Updateable {
             double angleToNextPoint = Math.atan2(nextPoint.y - startPoint.y, nextPoint.x - startPoint.x);
             float xOffset = (float) (Math.cos(angleToNextPoint + Math.PI) * next.getDistanceBetweenCreeps() * i);
             float yOffset = (float) (Math.sin(angleToNextPoint + Math.PI) * next.getDistanceBetweenCreeps() * i);
-            Creep.registerCreep(world, new Path(path), wave, next, startPoint.x + xOffset,
-                    startPoint.y + yOffset);
+            Creep.registerCreep(world, new Path(path), wave, next, startPoint.x + xOffset, startPoint.y + yOffset);
         }
+        registerWave(wave);
 
         updateWave();
+    }
+
+    private void registerWave(WaveComponent wave) {
+        waves.add(wave);
+    }
+
+    private void unregisterWave(WaveComponent wave) {
+        waves.remove(wave);
     }
 
     private Path getAppropriatePath(PathPack pathPack, CreepType next) {
@@ -97,7 +108,10 @@ public class WaveManager implements Updateable {
         return nextWave;
     }
 
-    public CreepType getCurrentWave(){
-        return currentWave;
+    public void removeWave(WaveComponent waveComponent) {
+        this.unregisterWave(waveComponent);
+        if (waves.isEmpty()) {
+            filter.triggerUpdate();
+        }
     }
 }

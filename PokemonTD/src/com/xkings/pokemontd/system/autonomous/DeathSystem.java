@@ -121,7 +121,7 @@ public class DeathSystem extends EntityProcessingSystem {
 
     private void die(Entity e) {
         // FIXME tested so far on resurrect and does not work.
-        // waveMapper.get(e).removeCreep(e);
+        waveMapper.get(e).removeCreep(e);
         e.deleteFromWorld();
     }
 
