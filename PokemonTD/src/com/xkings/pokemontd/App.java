@@ -84,6 +84,7 @@ public class App extends Game2D {
     private Interest interest;
     // Tweens
     private static TweenManagerAdapter tweenManager = initTweenManager();
+    private Blueprint gameBlueprint;
 
     public static TweenManagerAdapter getTweenManager() {
         return tweenManager;
@@ -100,6 +101,7 @@ public class App extends Game2D {
         super(args);
 
     }
+
     @Override
     protected void renderInternal() {
         clock.run();
@@ -123,6 +125,7 @@ public class App extends Game2D {
         MapData map = createMap();
         tileMap = map.getTileMap();
         blueprint = map.getBlueprint();
+        gameBlueprint = map.getGameBlueprint();
         pathPack = map.getPathPack();
         WORLD_WIDTH = blueprint.getWidth();
         WORLD_HEIGHT = blueprint.getHeight();
@@ -195,6 +198,7 @@ public class App extends Game2D {
         world.setSystem(new DamageBuffSystem());
         world.setSystem(new SpeedBuffSystem());
         world.setSystem(new MovementSystem());
+        world.setSystem(new IndestructibilitySystem(gameBlueprint));
 
         world.setSystem(new HitLifeStealSystem());
         world.setSystem(new HitDotSystem());
@@ -348,6 +352,23 @@ return new MapBuilder(3, 11, PATH_SIZE, MapBuilder.Direction.DOWN, 0.40f,
         }
 
 
+    }
+
+    public static Vector3 getTowerPosition(float worldX, float worldY) {
+        Vector3 block = getBlockPosition(worldX, worldY);
+        return getTowerPositionByBlock(block.x, block.y);
+    }
+
+    public static Vector3 getTowerPositionByBlock(float blockX, float blockY) {
+        float towerX = (blockX + .5f) * App.WORLD_SCALE;
+        float towerY = (blockY + .5f) * App.WORLD_SCALE;
+        return new Vector3(towerX, towerY, 0);
+    }
+
+    public static Vector3 getBlockPosition(float worldX, float worldY) {
+        int blockX = (int) (worldX / App.WORLD_SCALE);
+        int blockY = (int) (worldY / App.WORLD_SCALE);
+        return new Vector3(blockX, blockY, 0);
     }
 
 }

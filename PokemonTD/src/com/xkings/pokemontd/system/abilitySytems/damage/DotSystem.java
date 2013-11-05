@@ -32,7 +32,10 @@ public class DotSystem extends EffectSystem<DotEffect> {
 
     @Override
     protected void processEffect(DotEffect effect, Entity e) {
-        healthMapper.get(e).getHealth().decease(dotMapper.get(e).getDamage());
+        HealthComponent healthComponent = healthMapper.getSafe(e);
+        if (healthComponent != null) {
+            healthComponent.getHealth().decease(dotMapper.get(e).getDamage());
+        }
     }
 
     @Override

@@ -131,6 +131,7 @@ public class MapBuilder {
 
     /**
      * Adds left building block.
+     *
      * @return current instance for convinience
      */
     public MapBuilder addLeft() {
@@ -140,6 +141,7 @@ public class MapBuilder {
 
     /**
      * Adds right building block.
+     *
      * @return current instance for convinience
      */
     public MapBuilder addRight() {
@@ -149,6 +151,7 @@ public class MapBuilder {
 
     /**
      * Adds right building block.
+     *
      * @return current instance for convinience
      */
     public MapBuilder addStraight() {
@@ -180,7 +183,9 @@ public class MapBuilder {
 
         createPoint(direction + PI, pathWidth);
 
-        blueprint = new Blueprint(width * pathWidth, height * pathWidth, true);
+        blueprint = new Blueprint(0, 0, width * pathWidth, height * pathWidth, true);
+        Blueprint gameBlueprint = new Blueprint((int) mapOffset.x * pathWidth, (int) mapOffset.y * pathWidth,
+                (int) (dimensions.x+1) * pathWidth, (int) (dimensions.y+0) * pathWidth, true);
         textureMap = new TileMap<TextureAtlas.AtlasRegion>();
         textureMap.addLevel(width, height, pathWidth);
         textureMap.addLevel(width, height, pathWidth);
@@ -211,7 +216,7 @@ public class MapBuilder {
         fixTextures();
         createPoint(direction, 0);
         scaleTo(paths, App.WORLD_SCALE);
-        return new MapData(blueprint, new PathPack(paths, (.5f - pathOffset) * pathWidth), textureMap);
+        return new MapData(blueprint, gameBlueprint,new PathPack(paths, (.5f - pathOffset) * pathWidth), textureMap);
     }
 
     private void createEntrance(Vector3 position) {

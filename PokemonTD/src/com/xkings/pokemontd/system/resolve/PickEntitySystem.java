@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.component.PositionComponent;
 import com.xkings.core.component.SizeComponent;
 import com.xkings.core.utils.Collision;
+import com.xkings.pokemontd.component.HealthComponent;
 import com.xkings.pokemontd.component.PathComponent;
 import com.xkings.pokemontd.component.VisibleComponent;
 import com.xkings.pokemontd.map.Path;
@@ -27,6 +28,8 @@ public abstract class PickEntitySystem extends EntitySystem implements PickEntit
     ComponentMapper<SizeComponent> sizeMapper;
     @Mapper
     ComponentMapper<VisibleComponent> visibilityMapper;
+    @Mapper
+    ComponentMapper<HealthComponent> healthMapper;
 
     private final boolean sort;
     protected Entity entity;
@@ -132,11 +135,13 @@ public abstract class PickEntitySystem extends EntitySystem implements PickEntit
             Vector3 position = positionMapper.get(e).getPoint();
             //Vector3 size = sizeMapper.get(e).getPoint();
             if (!visibilityMapper.has(e) || visibilityMapper.get(e).isVisible()) {
-                // FIXME: Collision should not be negated, there must be a mistake.
-                if (!Collision.intersectpointInRect(position, entityPosition, entityRange, entityRange)) {
-                    float distance = calculateDistance(entityPosition, position);
-                    if (this.entity != e && e.isEnabled() && distance <= entityRange) {
-                        reachable.add(e);
+                if (!healthMapper.has(e) || healthMapper.get(e).getHealth().isDestructible()) {
+                    // FIXME: Collision should not be negated, there must be a mistake.
+                    if (!Collision.intersectpointInRect(position, entityPosition, entityRange, entityRange)) {
+                        float distance = calculateDistance(entityPosition, position);
+                        if (this.entity != e && e.isEnabled() && distance <= entityRange) {
+                            reachable.add(e);
+                        }
                     }
                 }
             }

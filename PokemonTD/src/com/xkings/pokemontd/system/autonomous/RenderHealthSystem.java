@@ -30,6 +30,7 @@ public class RenderHealthSystem extends EntityProcessingSystem {
         super(Aspect.getAspectForAll(PositionComponent.class, SizeComponent.class, HealthComponent.class));
         this.shapeRenderer = shapeRenderer;
     }
+
     @Override
     protected void begin() {
         shapeRenderer.end();
@@ -47,14 +48,16 @@ public class RenderHealthSystem extends EntityProcessingSystem {
         Vector3 position = positionMapper.get(e).getPoint();
         Vector3 size = sizeMapper.get(e).getPoint();
         Health health = healthMapper.get(e).getHealth();
+        if (health.isDestructible()) {
 
-        float healthBarHeight = size.y / 10f;
-        float x = position.x - size.x / 2;
-        float y = position.y + size.y / 2 + healthBarHeight;
+            float healthBarHeight = size.y / 10f;
+            float x = position.x - size.x / 2;
+            float y = position.y + size.y / 2 + healthBarHeight;
 
-        shapeRenderer.setColor(Color.RED);
-        shapeRenderer.rect(x, y, size.x, healthBarHeight);
-        shapeRenderer.setColor(Color.GREEN);
-        shapeRenderer.rect(x, y, size.x * health.getRatio(), healthBarHeight);
+            shapeRenderer.setColor(Color.RED);
+            shapeRenderer.rect(x, y, size.x, healthBarHeight);
+            shapeRenderer.setColor(Color.GREEN);
+            shapeRenderer.rect(x, y, size.x * health.getRatio(), healthBarHeight);
+        }
     }
 }

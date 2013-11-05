@@ -166,7 +166,7 @@ public class TowerManager implements Clickable {
                             TowerName name = TowerName.values()[App.RANDOM.nextInt(TowerName.values().length)];
                             tower = TowerType.getType(name);
                         } while (tower == null);
-                        Vector3 towerPosition = getTowerPositionByBlock(i, j);
+                        Vector3 towerPosition = App.getTowerPositionByBlock(i, j);
                         Tower.registerTower(world, tower, towerPosition.x, towerPosition.y);
                     }
                 }
@@ -176,10 +176,10 @@ public class TowerManager implements Clickable {
 
     private boolean placeTower(int x, int y) {
         if (selectedTower != null && status != Status.MOVE_PLACEHOLDER) {
-            Vector3 block = getBlockPosition(x, y);
+            Vector3 block = App.getBlockPosition(x, y);
             if (canAfford(selectedTower) && blueprint.isWalkable((int) block.x, (int) block.y)) {
                 status = Status.MOVE_PLACEHOLDER;
-                Vector3 towerPosition = getTowerPosition(x, y);
+                Vector3 towerPosition = App.getTowerPosition(x, y);
                 this.placeholderTower =
                         StaticObject.registerFakeTower(this.world, selectedTower, towerPosition.x, towerPosition.y,
                                 TINT);
@@ -190,9 +190,9 @@ public class TowerManager implements Clickable {
     }
 
     private void movePlaceholder(int x, int y) {
-        Vector3 block = getBlockPosition(x, y);
+        Vector3 block = App.getBlockPosition(x, y);
         if (blueprint.isWalkable((int) block.x, (int) block.y)) {
-            Vector3 desiredPosition = getTowerPosition(x, y);
+            Vector3 desiredPosition = App.getTowerPosition(x, y);
             placeholderTower.getComponent(PositionComponent.class).getPoint().set(desiredPosition);
         }
     }
@@ -239,23 +239,6 @@ public class TowerManager implements Clickable {
 
     private void setStatus(Status status) {
         this.status = status;
-    }
-
-    private Vector3 getTowerPosition(float worldX, float worldY) {
-        Vector3 block = getBlockPosition(worldX, worldY);
-        return getTowerPositionByBlock(block.x, block.y);
-    }
-
-    private Vector3 getTowerPositionByBlock(float blockX, float blockY) {
-        float towerX = (blockX + .5f) * App.WORLD_SCALE;
-        float towerY = (blockY + .5f) * App.WORLD_SCALE;
-        return new Vector3(towerX, towerY, 0);
-    }
-
-    private Vector3 getBlockPosition(float worldX, float worldY) {
-        int blockX = (int) (worldX / App.WORLD_SCALE);
-        int blockY = (int) (worldY / App.WORLD_SCALE);
-        return new Vector3(blockX, blockY, 0);
     }
 
 }

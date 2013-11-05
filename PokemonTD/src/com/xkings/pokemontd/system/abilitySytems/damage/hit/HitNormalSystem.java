@@ -30,7 +30,10 @@ public class HitNormalSystem extends HitSystem<NormalData> {
     @Override
     protected void hit(NormalData effectData, Entity e, Entity target) {
         float damage = damageMapper.get(e).getDamage();
-        healthMapper.get(target).getHealth().decease((int) damage);
+        HealthComponent healthComponent = healthMapper.getSafe(target);
+        if (healthComponent != null) {
+            healthComponent.getHealth().decease((int) damage);
+        }
     }
 
 }

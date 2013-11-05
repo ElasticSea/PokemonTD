@@ -6,14 +6,20 @@ public class Health {
     private float currentHealth;
     private boolean stealLife;
     private boolean earnTreasure = true;
+    private boolean destructible;
 
     public Health(int maxHealth) {
-        this(maxHealth, maxHealth);
+        this(maxHealth, maxHealth, false);
     }
 
     public Health(int maxHealth, int currentHealth) {
+        this(maxHealth, currentHealth, true);
+    }
+
+    public Health(int maxHealth, int currentHealth, boolean destructible) {
         this.maxHealth = maxHealth;
         this.currentHealth = currentHealth;
+        this.destructible = destructible;
     }
 
     public float getRatio() {
@@ -57,5 +63,13 @@ public class Health {
 
     public boolean isEarnTreasure() {
         return earnTreasure;
+    }
+
+    public void setDestructible(boolean destructible) {
+        this.destructible = destructible;
+    }
+
+    public boolean isDestructible() {
+        return destructible;
     }
 }
