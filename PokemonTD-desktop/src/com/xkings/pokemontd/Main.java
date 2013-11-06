@@ -29,6 +29,7 @@ public class Main {
             cfg.fullscreen = true;
             cfg.width = 2560;
             cfg.height = 1440;
+            //cfg.fullscreen = true;
         }
 
         new LwjglApplication(new App(args), cfg);

@@ -14,7 +14,7 @@ public class AoeComponent extends EffectData {
     public float getRange() {
         return range;
     }
-    public String setText(){
+    public String getEffectDescription(float speed,float damage){
         return "asdasd";
     }
 }

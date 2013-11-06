@@ -60,7 +60,7 @@ public class App extends Game2D {
     public static int WORLD_WIDTH;
     public static int WORLD_HEIGHT;
     public static Rectangle WORLD_RECT;
-    public static final float WAVE_INTERVAL = 75f;
+    public static final float WAVE_INTERVAL = 9f;
     public static final int PATH_SIZE = 2;
     public static final int INVISIBLE_INTERVAL = 5;
     public static final int INTEREST_INTERVAL = 15;
@@ -159,7 +159,7 @@ public class App extends Game2D {
     }
 
     private void initializeContent() {
-        player = new Player(50, 15481, 10);
+        player = new Player(50, 15000, 10);
     }
 
     private void initializeManagers() {

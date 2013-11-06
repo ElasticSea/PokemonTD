@@ -20,7 +20,7 @@ public class LifeStealData extends EffectData {
     public float getDuration() {
         return duration;
     }
-    public String setText(){
+    public String getEffectDescription(float speed,float damage){
         return "asdasd";
     }
 }

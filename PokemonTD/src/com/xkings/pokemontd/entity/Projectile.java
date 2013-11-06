@@ -32,7 +32,7 @@ public class Projectile extends ConcreteEntity {
         addComponent(new TimeComponent());
         addComponent(new TargetComponent(target));
         addComponent(new TowerHolderComponent(tower));
-        for (AbilityComponent abilityComponent : projectileType.getAbility()) {
+        for (AbilityComponent abilityComponent : projectileType.getEffectData()) {
             addComponent(abilityComponent);
         }
     }

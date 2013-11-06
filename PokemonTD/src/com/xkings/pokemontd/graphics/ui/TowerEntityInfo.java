@@ -23,8 +23,8 @@ import com.xkings.pokemontd.component.attack.effects.buff.BuffableSpeedComponent
 public class TowerEntityInfo extends TowerInfo {
 
     public TowerEntityInfo(Ui ui, Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
-                           BitmapFont font) {
-        super(ui, rectangle, shapeRenderer, spriteBatch, font);
+                           BitmapFont font, AbilityInfo abilityInfo) {
+        super(ui, rectangle, shapeRenderer, spriteBatch, font, abilityInfo);
     }
 
     public void render(Entity entity) {
@@ -60,8 +60,8 @@ public class TowerEntityInfo extends TowerInfo {
             }           */
 
             render(spriteComponent.getSprite(), "Dmg: " + (int) damageComponent.getDamage(), damageColor, "Spd: " + (int) speedComponent.getSpeed(), speedColor,
-                    "Rng: " + (int) range, rangeColor, costComponent.getTreasure(), nameComponent.getName(), true,
-                    false, true);
+                    "Rng: " + (int) range, rangeColor, costComponent.getTreasure(), nameComponent.getName(), null, 1, 1,
+                    true, false);
         }
 
     }

@@ -53,14 +53,15 @@ public class Ui extends Gui {
                 new Rectangle(width - statusDimensions.x, height - statusBar.height - statusOffSet - statusDimensions.y,
                         statusDimensions.x, statusDimensions.y), waveManager, interest, font);
         abilityText = new AbilityInfo(this,
-                new Rectangle(0, height - statusBarDimensions.y, statusBarDimensions.x, statusBarDimensions.y),
+        abilityText = new AbilityInfo(this, new Rectangle(0, this.height - statusBarDimensions.y, statusBarDimensions.x, statusBarDimensions.y),squareHeight);
                 squareSize);
 
+        abilityText = new AbilityInfo(this, pickTableRectangle);
 
         nextWaveInfo = new WaveInfo(this, new Rectangle(0, 0, squareSize, squareSize), waveManager, font);
         entityInfo = new EntityInfo(this,
                 new Rectangle(squareSize - offset, 0, width - (squareSize - offset) * 2, stripHeight), offset,
-                shapeRenderer, spriteBatch, font, player);
+                shapeRenderer, spriteBatch, font, player, null);
 
         register(entityInfo);
         register(nextWaveInfo);

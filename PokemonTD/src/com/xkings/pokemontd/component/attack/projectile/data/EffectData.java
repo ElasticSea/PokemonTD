@@ -34,6 +34,6 @@ public abstract class EffectData extends AbilityComponent {
         this.chance = chance;
     }
 
-    public abstract String setText();
+    public abstract String getEffectDescription(float speed,float damage);
 
 }
