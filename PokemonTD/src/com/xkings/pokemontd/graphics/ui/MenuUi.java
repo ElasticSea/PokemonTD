@@ -12,13 +12,9 @@ import com.xkings.core.main.Assets;
  */
 public class MenuUi extends GuiBox {
 
-    private final Music theme;
-    private final Icon muteButton;
-    private final Button slower;
-    private final DisplayText speed;
-    private final Button faster;
+   // private final Icon muteButton;
     private final Clock clock;
-    private boolean mute;
+    private final SpeedControls speedControls;
 
     public MenuUi(Ui ui, float x, float y, float width, float height, BitmapFont font) {
         this(ui, new Rectangle(x, y, width, height), font);
@@ -27,54 +23,16 @@ public class MenuUi extends GuiBox {
     public MenuUi(final Ui ui, Rectangle rect, BitmapFont font) {
         super(ui, rect);
         clock = ui.getApp().getClock();
-        float size = offsetRectange.width / 4f;
-        muteButton = new Icon(ui, new Rectangle(offsetRectange.x, offsetRectange.y, size, size)) {
-
-            @Override
-            public void process(float x, float y) {
-                if (!mute) {
-                    mute = true;
-                    theme.setVolume(0);
-                } else {
-                    mute = false;
-                    theme.setVolume(1);
-                }
-            }
-        };
-        slower = new Button(ui, new Rectangle(offsetRectange.x + size, offsetRectange.y, size, size), font,
-                BitmapFont.HAlignment.CENTER) {
-            @Override
-            public void process(float x, float y) {
-                clock.setSpeedMultiplier(clock.getSpeedMultiplier()/2);
-
-            }
-        };
-        speed = new DisplayText(ui, new Rectangle(offsetRectange.x + size * 2, offsetRectange.y, size, size), font,
-                BitmapFont.HAlignment.CENTER);
-
-        faster = new Button(ui, new Rectangle(offsetRectange.x + size * 3, offsetRectange.y, size, size), font,
-                BitmapFont.HAlignment.CENTER) {
-            @Override
-            public void process(float x, float y) {
-                clock.setSpeedMultiplier(clock.getSpeedMultiplier()*2);
-            }
-        };
-        theme = Assets.getMusic("mainTheme.ogg");
-        theme.setLooping(true);
-        theme.play();
-        Ui.register(muteButton);
-        Ui.register(slower);
-        Ui.register(faster);
+        //muteButton = new MuteButton(ui, offsetRectange.x, offsetRectange.y, size, size) ;
+       speedControls = new SpeedControls(ui, offsetRectange.x, offsetRectange.y, offsetRectange.width, offsetRectange.height, clock);
+     //   ui.register(muteButton);
     }
 
 
     @Override
     public void render() {
-        super.render();
-        muteButton.render(Assets.getTexture(mute ? "unmute" : "mute"), "", height * 0.5f, true);
-        slower.render("<<");
-        double currentMultiplier = clock.getSpeedMultiplier();
-        speed.render("x" + (currentMultiplier >= 1 ? (int) currentMultiplier : "1/" + (int) (1 / currentMultiplier)));
-        faster.render(">>");
+      //  super.render();
+     //   muteButton.render(Assets.getTexture(mute ? "unmute" : "mute"), "", height * 0.5f, true);
+        speedControls.render();
     }
 }

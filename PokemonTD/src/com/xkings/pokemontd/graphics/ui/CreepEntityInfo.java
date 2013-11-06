@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.xkings.pokemontd.App;
 import com.xkings.pokemontd.component.CreepAbilityComponent;
 import com.xkings.pokemontd.component.CreepTypeComponent;
 import com.xkings.pokemontd.component.HealthComponent;
@@ -30,8 +29,10 @@ public class CreepEntityInfo extends CommonInfo {
 
         float offset = height / 5;
 
-        health = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset * 3, offset * 2, offset), font);
-        type = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset * 2, offset * 2, offset), font);
+        health = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset * 3, offset * 2, offset), font,
+                BitmapFont.HAlignment.LEFT);
+        type = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset * 2, offset * 2, offset), font,
+                BitmapFont.HAlignment.LEFT);
     }
 
     @Override

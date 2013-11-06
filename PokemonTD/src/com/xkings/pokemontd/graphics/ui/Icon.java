@@ -18,11 +18,11 @@ abstract class Icon extends InteractiveBlock {
     private Vector2 offset;
     private String text;
 
-    Icon(Ui ui, float x, float y, float width, float height) {
+    Icon(Gui ui, float x, float y, float width, float height) {
         this(ui, new Rectangle(x, y, width, height));
     }
 
-    Icon(Ui ui, Rectangle rectangle) {
+    Icon(Gui ui, Rectangle rectangle) {
         super(rectangle);
         this.spriteBatch = ui.getSpriteBatch();
         this.font = ui.getFont();

@@ -7,11 +7,11 @@ import com.badlogic.gdx.math.Rectangle;
  */
 public class DisplayPicture extends Icon {
 
-    DisplayPicture(Ui ui, float x, float y, float width, float height) {
+    DisplayPicture(Gui ui, float x, float y, float width, float height) {
         super(ui, x, y, width, height);
     }
 
-    DisplayPicture(Ui ui, Rectangle rectangle) {
+    DisplayPicture(Gui ui, Rectangle rectangle) {
         super(ui, rectangle);
     }
 

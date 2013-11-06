@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.graphics.Renderable;
+import com.xkings.core.graphics.Shader;
 import com.xkings.core.graphics.camera.BoundedCameraHandler;
 import com.xkings.core.graphics.camera.CameraHandler;
 import com.xkings.core.input.EnhancedGestureDetector;
@@ -26,6 +28,8 @@ import com.xkings.core.pathfinding.Blueprint;
 import com.xkings.core.tween.TweenManagerAdapter;
 import com.xkings.core.tween.Vector3Accessor;
 import com.xkings.pokemontd.graphics.TileMap;
+import com.xkings.pokemontd.graphics.ui.GuiBox;
+import com.xkings.pokemontd.graphics.ui.Menu;
 import com.xkings.pokemontd.graphics.ui.Ui;
 import com.xkings.pokemontd.input.InGameInputProcessor;
 import com.xkings.pokemontd.manager.*;
@@ -85,6 +89,9 @@ public class App extends Game2D {
     // Tweens
     private static TweenManagerAdapter tweenManager = initTweenManager();
     private Blueprint gameBlueprint;
+    private Menu menu;
+    private boolean freezed = false;
+    private boolean sessionStarted = false;
 
     public static TweenManagerAdapter getTweenManager() {
         return tweenManager;
@@ -104,7 +111,9 @@ public class App extends Game2D {
 
     @Override
     protected void renderInternal() {
-        clock.run();
+        if (sessionStarted && !freezed) {
+            clock.run();
+        }
         renderer.render();
     }
 
@@ -136,7 +145,8 @@ public class App extends Game2D {
         initializeManagers();
         initializeSystems();
         ui = new Ui(this);
-        renderer = new DefaultRenderer(ui, camera);
+        menu = new Menu(this);
+        renderer = new DefaultRenderer(camera);
         initializeInput();
         initializeTween();
     }
@@ -218,6 +228,7 @@ public class App extends Game2D {
 
     private void initializeInput() {
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(new GestureDetector(menu));
         inputMultiplexer.addProcessor(new GestureDetector(ui));
         inputMultiplexer.addProcessor(
                 new EnhancedGestureDetector(new InGameInputProcessor(towerManager, creepManager, cameraHandler)));
@@ -274,41 +285,78 @@ return new MapBuilder(3, 11, PATH_SIZE, MapBuilder.Direction.DOWN, 0.40f,
         return clock;
     }
 
+    public void triggerMenu(Menu.Type type) {
+        menu.triggerMenu(type);
+    }
+
+    public ShapeRenderer getShapeRenderer() {
+        return shapeRenderer;
+    }
+
+    public SpriteBatch getSpriteBatch() {
+        return spriteBatch;
+    }
+
+    public void setSpriteBatch(SpriteBatch spriteBatch) {
+        this.spriteBatch = spriteBatch;
+    }
+
+    public void freeze(boolean freezed) {
+        this.freezed = freezed;
+        spriteBatch.setShader(freezed ? Shader.getShader("grayscale") : null);
+    }
+
+    public boolean isFreezed() {
+        return freezed;
+    }
+
+    public boolean isSessionStarted() {
+        return sessionStarted;
+    }
+
+    public void setSessionStarted(boolean sessionStarted) {
+        this.sessionStarted = sessionStarted;
+    }
+
     private class DefaultRenderer implements Renderable {
 
-        private final Renderable renderer;
         private final Camera camera;
 
-        protected DefaultRenderer(Ui Ui, Camera camera) {
+        protected DefaultRenderer(Camera camera) {
             this.camera = camera;
-            renderer = Ui;
         }
 
         @Override
         public void render() {
-            spriteBatch.setProjectionMatrix(camera.combined);
-            spriteBatch.begin();
-            drawMap(0);
-            drawMap(1);
-            renderSpriteSystem.process();
-            renderTextSystem.process();
-            spriteBatch.end();
-            spriteBatch.setProjectionMatrix(camera.combined);
-            spriteBatch.begin();
-            drawMap(2);
-            drawMap(4);
-            drawMap(3);
-            spriteBatch.end();
+            Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+            Gdx.gl.glClearColor(GuiBox.lighterColor.r, GuiBox.lighterColor.g, GuiBox.lighterColor.b,
+                    GuiBox.lighterColor.a);
+            if (sessionStarted) {
+                spriteBatch.setProjectionMatrix(camera.combined);
+                spriteBatch.begin();
+                drawMap(0);
+                drawMap(1);
+                renderSpriteSystem.process();
+                renderTextSystem.process();
+                spriteBatch.end();
+                spriteBatch.setProjectionMatrix(camera.combined);
+                spriteBatch.begin();
+                drawMap(2);
+                drawMap(4);
+                drawMap(3);
+                spriteBatch.end();
 
-            shapeRenderer.setProjectionMatrix(camera.combined);
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-            renderRangeSystem.process();
-            renderDebugSystem.process();
-            drawPath();
-            drawGrid();
-            renderHealthSystem.process();
-            shapeRenderer.end();
-            renderer.render();
+                shapeRenderer.setProjectionMatrix(camera.combined);
+                shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+                renderRangeSystem.process();
+                renderDebugSystem.process();
+                drawPath();
+                drawGrid();
+                renderHealthSystem.process();
+                shapeRenderer.end();
+                ui.render();
+            }
+            menu.render();
         }
 
         private void drawGrid() {

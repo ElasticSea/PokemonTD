@@ -5,10 +5,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Tomas on 10/8/13.
  */
-class GuiBox extends InteractiveBlock {
+public class GuiBox extends InteractiveBlockParent {
 
     public static final float darker = 0.0f;
     public static final float lighter = 0.1f;
@@ -18,9 +21,9 @@ class GuiBox extends InteractiveBlock {
     protected final ShapeRenderer shapeRenderer;
     protected final Rectangle offsetRectange;
     protected final SpriteBatch spriteBatch;
-    protected final Ui ui;
+    protected final Gui ui;
 
-    GuiBox(Ui ui, Rectangle rectangle) {
+    GuiBox(Gui ui, Rectangle rectangle) {
         super(rectangle);
         this.ui = ui;
         this.offset = ui.getOffset();

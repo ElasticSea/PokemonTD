@@ -1,11 +1,12 @@
 package com.xkings.pokemontd.graphics.ui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 
 /**
  * Created by Tomas on 10/8/13.
  */
-abstract class InteractiveBlock extends DisplayBlock implements Clickable {
+abstract class InteractiveBlock extends InteractiveElement {
 
     private boolean enabled = true;
 
@@ -15,6 +16,7 @@ abstract class InteractiveBlock extends DisplayBlock implements Clickable {
 
     @Override
     public boolean hit(float x, float y) {
+        y = Gdx.graphics.getHeight() - y;
         if (isEnabled() && contains(x, y)) {
             process(x - width, y - height);
             return true;

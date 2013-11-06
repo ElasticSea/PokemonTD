@@ -21,7 +21,7 @@ class ElementIcon extends InteractiveBlock {
     private final SpriteBatch spriteBatch;
     private Treasure currentElements;
 
-    ElementIcon(Ui ui, Rectangle rectangle, SpriteBatch spriteBatch) {
+    ElementIcon(Gui ui, Rectangle rectangle, SpriteBatch spriteBatch) {
         super(rectangle);
         this.spriteBatch = spriteBatch;
         picture = new DisplayPicture(ui, rectangle);

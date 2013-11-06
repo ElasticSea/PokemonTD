@@ -1,12 +1,10 @@
 package com.xkings.pokemontd.graphics.ui;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.xkings.pokemontd.App;
 
 import java.util.ArrayList;
 
@@ -17,7 +15,7 @@ import java.util.ArrayList;
  */
 
 public class CommonInfo extends InteractiveBlock {
-    protected final Ui ui;
+    protected final Gui gui;
     protected final SpriteBatch spriteBatch;
   //  protected final DisplayText name;
     private DisplayPicture picture;
@@ -29,7 +27,7 @@ public class CommonInfo extends InteractiveBlock {
                       BitmapFont font) {
         super(rectangle);
         this.spriteBatch = spriteBatch;
-        this.ui = ui;
+        this.gui = ui;
         float offset = height / 5;
         picture = new DisplayPicture(ui,x + offset, y + offset, height - offset * 2, height - offset * 2);
       //  name = new DisplayText(ui,new Rectangle(x + offset, y + offset, height - offset * 2, offset), font, BitmapFont.HAlignment.CENTER);

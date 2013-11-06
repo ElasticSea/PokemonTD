@@ -8,12 +8,12 @@ import com.badlogic.gdx.math.Rectangle;
  */
 public class DisplayText extends Button {
 
-    public DisplayText(Ui ui, Rectangle rectangle, BitmapFont font) {
-        super(ui, rectangle, font);
+    public DisplayText(Gui gui, Rectangle rectangle, BitmapFont font) {
+        super(gui, rectangle, font);
     }
 
-    public DisplayText(Ui ui, Rectangle rectangle, BitmapFont font, BitmapFont.HAlignment alignment) {
-        super(ui, rectangle, font, alignment);
+    public DisplayText(Gui gui, Rectangle rectangle, BitmapFont font, BitmapFont.HAlignment alignment) {
+        super(gui, rectangle, font, alignment);
     }
 
     @Override

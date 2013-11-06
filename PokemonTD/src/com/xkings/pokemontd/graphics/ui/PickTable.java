@@ -13,7 +13,7 @@ public abstract class PickTable<E extends InteractiveBlock> extends GuiBox {
 
     protected final List<E> pickIcons;
 
-    PickTable(Ui ui, Rectangle rectangle) {
+    PickTable(Gui ui, Rectangle rectangle) {
         super(ui, rectangle);
         pickIcons = createPickIcons(3);
     }

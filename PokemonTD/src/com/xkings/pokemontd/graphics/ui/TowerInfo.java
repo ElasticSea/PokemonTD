@@ -19,7 +19,7 @@ public class TowerInfo extends CommonInfo {
     public static final Color SELL_COLOR = new Color(Color.RED).mul(0.6f);
     public static final Color BUY_COLOR = new Color(Color.GREEN).mul(0.6f);
     public static final Color ABILITY_COLOR = new Color(Color.GREEN).mul(0.6f);
-    protected final Ui ui;
+    protected final Gui gui;
     protected final SpriteBatch spriteBatch;
     protected final DisplayText damage;
     protected final DisplayText speed;
@@ -55,26 +55,31 @@ public class TowerInfo extends CommonInfo {
                      BitmapFont font) {
         super(ui, rectangle, shapeRenderer, spriteBatch, font);
         this.spriteBatch = spriteBatch;
-        this.ui = ui;
+        this.gui = ui;
         float offset = height / 5;
         float offsetBlocks = height / 2;
         float towerCostOffset = offset / 3f;
         cost = new TowerCost(new Rectangle(x + offset, y, width - offset * 2, offset), width - offsetBlocks,
                 shapeRenderer, spriteBatch, font);
-        damage = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset * 3, offset * 2, offset), font);
-        speed = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset * 2, offset * 2, offset), font);
-        range = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset, offset, offset), font);
+        damage = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset * 3, offset * 2, offset), font,
+                BitmapFont.HAlignment.LEFT);
+        speed = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset * 2, offset * 2, offset), font,
+                BitmapFont.HAlignment.LEFT);
+        range = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset, offset, offset), font,
+                BitmapFont.HAlignment.LEFT);
 
-        ability = new Button(ui, new Rectangle(x+offset*10f,y+offset*3,offsetBlocks*1.2f,offsetBlocks/2f),font,BitmapFont.HAlignment.CENTER){
-            @Override
-            public void process(float x, float y) {
+        ability =
+                new Button(ui, new Rectangle(x + offset * 10f, y + offset * 3, offsetBlocks * 1.2f, offsetBlocks / 2f),
+                        font, BitmapFont.HAlignment.CENTER) {
+                    @Override
+                    public void process(float x, float y) {
             /*   float offset = height / 5;
                 float offsetBlocks = height / 2;
                 new DisplayText(ui, new Rectangle(x+offset*10,y+offset*3,offsetBlocks,offsetBlocks/2),font);  */
-                //ui.abilityText();
-                ui.getRectangle();
-            }
-        };
+                        //ui.abilityText();
+                        // ui.getRectangle();
+                    }
+                };
         sell = new Button(ui, new Rectangle(x + width - offsetBlocks, y, offsetBlocks, offsetBlocks), font,
                 BitmapFont.HAlignment.CENTER) {
             @Override
@@ -116,7 +121,8 @@ public class TowerInfo extends CommonInfo {
         this.ability.render("ability", Color.WHITE, ABILITY_COLOR);
     }
 
-    public void render(TextureAtlas.AtlasRegion region, Treasure cost, String name, boolean sell, boolean buy, boolean ability) {
+    public void render(TextureAtlas.AtlasRegion region, Treasure cost, String name, boolean sell, boolean buy,
+                       boolean ability) {
         render(region, "", "", "", cost, name, sell, buy, ability);
     }
 

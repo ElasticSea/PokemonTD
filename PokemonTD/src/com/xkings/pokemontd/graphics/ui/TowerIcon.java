@@ -12,7 +12,7 @@ abstract class TowerIcon extends Icon {
     protected TowerType towerType;
     private TowerManager towerManager;
 
-    TowerIcon(Ui ui, Rectangle rectangle) {
+    TowerIcon(Gui ui, Rectangle rectangle) {
         super(ui, rectangle);
     }
 

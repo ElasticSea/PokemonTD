@@ -21,14 +21,18 @@ abstract class Button extends InteractiveBlock {
     private Color color = Color.CLEAR;
     private Color backgroundColor = Color.CLEAR;
 
-    protected Button(Ui ui, Rectangle rectangle, BitmapFont font) {
-        this(ui, rectangle, font, BitmapFont.HAlignment.LEFT);
+    protected Button(Gui gui, float x, float y, float width, float height, BitmapFont font) {
+        this(gui, new Rectangle(x, y, width, height), font, BitmapFont.HAlignment.CENTER);
     }
 
-    protected Button(Ui ui, Rectangle rectangle, BitmapFont font, BitmapFont.HAlignment alignment) {
+    protected Button(Gui gui, Rectangle rectangle, BitmapFont font) {
+        this(gui, rectangle, font, BitmapFont.HAlignment.CENTER);
+    }
+
+    protected Button(Gui gui, Rectangle rectangle, BitmapFont font, BitmapFont.HAlignment alignment) {
         super(rectangle);
-        this.shapeRenderer = ui.getShapeRenderer();
-        this.spriteBatch = ui.getSpriteBatch();
+        this.shapeRenderer = gui.getShapeRenderer();
+        this.spriteBatch = gui.getSpriteBatch();
         this.text = new String();
         this.font = font;
         this.alignment = alignment;

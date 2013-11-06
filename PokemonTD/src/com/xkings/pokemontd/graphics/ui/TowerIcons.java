@@ -16,7 +16,7 @@ public class TowerIcons extends PickTable<TowerIcon> {
     private final TowerManager towerManager;
     private List<TowerType> lastHierarchy;
 
-    TowerIcons(Ui ui, Rectangle rectangle, TowerManager towerManager) {
+    TowerIcons(Gui ui, Rectangle rectangle, TowerManager towerManager) {
         super(ui, rectangle);
         this.towerManager = towerManager;
         for (TowerIcon towerIcon : pickIcons) {
