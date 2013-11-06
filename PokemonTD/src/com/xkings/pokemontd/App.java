@@ -352,7 +352,9 @@ return new MapBuilder(3, 11, PATH_SIZE, MapBuilder.Direction.DOWN, 0.40f,
                 renderDebugSystem.process();
                 drawPath();
                 drawGrid();
-                renderHealthSystem.process();
+                if (!isFreezed()) {
+                    renderHealthSystem.process();
+                }
                 shapeRenderer.end();
                 ui.render();
             }
