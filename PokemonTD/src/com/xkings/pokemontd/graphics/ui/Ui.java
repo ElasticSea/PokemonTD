@@ -52,9 +52,6 @@ public class Ui extends Gui {
         status = new Status(this,
                 new Rectangle(width - statusDimensions.x, height - statusBar.height - statusOffSet - statusDimensions.y,
                         statusDimensions.x, statusDimensions.y), waveManager, interest, font);
-        abilityText = new AbilityInfo(this,
-        abilityText = new AbilityInfo(this, new Rectangle(0, this.height - statusBarDimensions.y, statusBarDimensions.x, statusBarDimensions.y),squareHeight);
-                squareSize);
 
         abilityText = new AbilityInfo(this, pickTableRectangle);
 

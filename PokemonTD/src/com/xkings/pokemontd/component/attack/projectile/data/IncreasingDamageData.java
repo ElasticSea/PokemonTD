@@ -30,4 +30,9 @@ public class IncreasingDamageData extends EffectData {
     public String setText() {
         return "asdasd";
     }
+
+    @Override
+    public String getEffectDescription(float speed, float damage) {
+        return null;
+    }
 }
