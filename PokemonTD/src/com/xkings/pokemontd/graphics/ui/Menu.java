@@ -51,6 +51,11 @@ public class Menu extends Gui {
         return cardBeforeClick != null;
     }
 
+    @Override
+    public boolean pan(float x, float y, float deltaX, float deltaY) {
+        return isVisible();
+    }
+
     public boolean isVisible() {
         return pickedCard != null;
     }

@@ -42,7 +42,6 @@ public class RenderHealthSystem extends EntityProcessingSystem {
         shapeRenderer.end();
     }
 
-
     @Override
     protected void process(Entity e) {
         Vector3 position = positionMapper.get(e).getPoint();

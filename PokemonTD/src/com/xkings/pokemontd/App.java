@@ -27,6 +27,9 @@ import com.xkings.core.main.Game2D;
 import com.xkings.core.pathfinding.Blueprint;
 import com.xkings.core.tween.TweenManagerAdapter;
 import com.xkings.core.tween.Vector3Accessor;
+import com.xkings.pokemontd.graphics.BoxBlurRenderer;
+import com.xkings.pokemontd.graphics.ConvolutionRenderer;
+import com.xkings.pokemontd.graphics.GaussianBlurRenderer;
 import com.xkings.pokemontd.graphics.TileMap;
 import com.xkings.pokemontd.graphics.ui.GuiBox;
 import com.xkings.pokemontd.graphics.ui.Menu;
@@ -54,18 +57,16 @@ public class App extends Game2D {
 
     public static final Random RANDOM = new Random();
     public static final Chance CHANCE = new Chance(RANDOM);
-    public static final float FONT_SCALE = 300f;
     public static final int WORLD_SCALE = 100;
-    public static final float FONT_SCALE2 = 270f;
     public static int WORLD_WIDTH;
     public static int WORLD_HEIGHT;
     public static Rectangle WORLD_RECT;
-    public static final float WAVE_INTERVAL = 9f;
+    public static final float WAVE_INTERVAL = 75f;
     public static final int PATH_SIZE = 2;
     public static final int INVISIBLE_INTERVAL = 5;
     public static final int INTEREST_INTERVAL = 15;
     public static Entity pathBlock;
-    private DefaultRenderer renderer;
+    private Renderable renderer;
     private ShapeRenderer shapeRenderer;
     private SpriteBatch spriteBatch;
     private TileMap<TextureAtlas.AtlasRegion> tileMap;
@@ -331,7 +332,6 @@ return new MapBuilder(3, 11, PATH_SIZE, MapBuilder.Direction.DOWN, 0.40f,
             Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
             Gdx.gl.glClearColor(GuiBox.lighterColor.r, GuiBox.lighterColor.g, GuiBox.lighterColor.b,
                     GuiBox.lighterColor.a);
-            if (sessionStarted) {
                 spriteBatch.setProjectionMatrix(camera.combined);
                 spriteBatch.begin();
                 drawMap(0);
@@ -356,6 +356,7 @@ return new MapBuilder(3, 11, PATH_SIZE, MapBuilder.Direction.DOWN, 0.40f,
                     renderHealthSystem.process();
                 }
                 shapeRenderer.end();
+            if (sessionStarted){
                 ui.render();
             }
             menu.render();
