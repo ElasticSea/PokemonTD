@@ -1,6 +1,7 @@
 package com.xkings.pokemontd.graphics.ui;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.xkings.pokemontd.App;
 
@@ -83,13 +84,13 @@ public class Menu extends Gui {
 
         InGameMenu(Gui ui, Rectangle rectangle) {
             super(ui, rectangle);
-            exit = new Button(ui, rects.get(rects.size() - 1), ui.getFont(), BitmapFont.HAlignment.CENTER) {
+            exit = new MenuButton(ui, rects.get(rects.size() - 1)) {
                 @Override
                 public void process(float x, float y) {
                     System.exit(0);
                 }
             };
-            pause = new Button(ui, rects.get(0), ui.getFont(), BitmapFont.HAlignment.CENTER) {
+            pause = new MenuButton(ui, rects.get(0)) {
                 @Override
                 public void process(float x, float y) {
                     app.freeze(!app.isFreezed());
@@ -114,13 +115,13 @@ public class Menu extends Gui {
 
         MenuBox(Gui ui, Rectangle rectangle) {
             super(ui, rectangle);
-            exit = new Button(ui, rects.get(rects.size() - 1), ui.getFont(), BitmapFont.HAlignment.CENTER) {
+            exit = new MenuButton(ui, rects.get(rects.size() - 1)) {
                 @Override
                 public void process(float x, float y) {
                     System.exit(0);
                 }
             };
-            startGame = new Button(ui, rects.get(0), ui.getFont(), BitmapFont.HAlignment.CENTER) {
+            startGame = new MenuButton(ui, rects.get(0)) {
                 @Override
                 public void process(float x, float y) {
                     app.setSessionStarted(true);
@@ -143,23 +144,39 @@ public class Menu extends Gui {
 
     private class MenuTab extends GuiBox {
 
+        private static final float LINE_HEIGHT = 2;
         protected final List<Rectangle> rects;
+        private final int count;
         private boolean closeTabWhenNotClicked = true;
 
         MenuTab(Gui ui, Rectangle rectangle) {
             super(ui, rectangle);
-            rects = getRects(offsetRectange, 5);
+            count = 5;
+            rects = getRects( count);
         }
 
-        private List<Rectangle> getRects(Rectangle rect, int count) {
-            int buttonHeight = (int) (rect.height / count);
+        private List<Rectangle> getRects( int count) {
+            int buttonHeight = (int) (height / count);
             List<Rectangle> rects = new ArrayList<Rectangle>();
             for (int i = 0; i < count; i++) {
                 int offset = buttonHeight * (i + 1);
-                rects.add(new Rectangle(offsetRectange.x, offsetRectange.y + offsetRectange.height - offset,
-                        offsetRectange.width, buttonHeight));
+                rects.add(new Rectangle(x, y + height - offset,
+                        width, buttonHeight));
             }
             return rects;
+        }
+
+        @Override
+        public void render() {
+            super.render();
+            float segment = width / 7;
+            shapeRenderer.setColor(GuiBox.darkerColor);
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            for (int i = 1; i < count ; i++) {
+                float offset = i*(height/count);
+                shapeRenderer.rect(x + segment, offset + y - LINE_HEIGHT / 2, width - segment * 2, LINE_HEIGHT);
+            }
+            shapeRenderer.end();
         }
 
         public boolean isCloseTabWhenNotClicked() {
@@ -168,6 +185,13 @@ public class Menu extends Gui {
 
         public void setCloseTabWhenNotClicked(boolean closeTabWhenNotClicked) {
             this.closeTabWhenNotClicked = closeTabWhenNotClicked;
+        }
+    }
+
+    private abstract class MenuButton extends Button {
+
+        protected MenuButton(Gui gui, Rectangle rect) {
+            super(gui, rect, font, BitmapFont.HAlignment.CENTER);
         }
     }
 
