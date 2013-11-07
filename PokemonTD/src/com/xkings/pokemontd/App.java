@@ -5,9 +5,7 @@ import com.artemis.Entity;
 import com.artemis.World;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -16,7 +14,6 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.graphics.Renderable;
-import com.xkings.core.graphics.Shader;
 import com.xkings.core.graphics.camera.BoundedCameraHandler;
 import com.xkings.core.graphics.camera.CameraHandler;
 import com.xkings.core.input.EnhancedGestureDetector;
@@ -27,18 +24,16 @@ import com.xkings.core.main.Game2D;
 import com.xkings.core.pathfinding.Blueprint;
 import com.xkings.core.tween.TweenManagerAdapter;
 import com.xkings.core.tween.Vector3Accessor;
-import com.xkings.pokemontd.graphics.BoxBlurRenderer;
-import com.xkings.pokemontd.graphics.ConvolutionRenderer;
-import com.xkings.pokemontd.graphics.GaussianBlurRenderer;
+import com.xkings.pokemontd.graphics.AggresiveGaussianBlurRenderer;
+import com.xkings.pokemontd.graphics.GameRenderer;
+import com.xkings.pokemontd.graphics.GrayscaleRenderer;
 import com.xkings.pokemontd.graphics.TileMap;
-import com.xkings.pokemontd.graphics.ui.GuiBox;
 import com.xkings.pokemontd.graphics.ui.Menu;
 import com.xkings.pokemontd.graphics.ui.Ui;
 import com.xkings.pokemontd.input.InGameInputProcessor;
 import com.xkings.pokemontd.manager.*;
 import com.xkings.pokemontd.map.MapBuilder;
 import com.xkings.pokemontd.map.MapData;
-import com.xkings.pokemontd.map.Path;
 import com.xkings.pokemontd.map.PathPack;
 import com.xkings.pokemontd.system.abilitySytems.damage.*;
 import com.xkings.pokemontd.system.abilitySytems.damage.hit.*;
@@ -66,7 +61,7 @@ public class App extends Game2D {
     public static final int INVISIBLE_INTERVAL = 5;
     public static final int INTEREST_INTERVAL = 15;
     public static Entity pathBlock;
-    private Renderable renderer;
+    private Renderable menuRenderer;
     private ShapeRenderer shapeRenderer;
     private SpriteBatch spriteBatch;
     private TileMap<TextureAtlas.AtlasRegion> tileMap;
@@ -93,6 +88,10 @@ public class App extends Game2D {
     private Menu menu;
     private boolean freezed = false;
     private boolean sessionStarted = false;
+    private Renderable gameRenderer;
+    private Renderable mainMenuGaimRenderer;
+    private Renderable currentGameRenderer;
+    private Renderable frozenGameRenderer;
 
     public static TweenManagerAdapter getTweenManager() {
         return tweenManager;
@@ -112,10 +111,13 @@ public class App extends Game2D {
 
     @Override
     protected void renderInternal() {
-        if (sessionStarted && !freezed) {
-            clock.run();
+        if (sessionStarted) {
+            if (!freezed) {
+                clock.run();
+            }
         }
-        renderer.render();
+        currentGameRenderer.render();
+        menuRenderer.render();
     }
 
     @Override
@@ -141,15 +143,19 @@ public class App extends Game2D {
         WORLD_HEIGHT = blueprint.getHeight();
         WORLD_RECT = new Rectangle(0, 0, WORLD_WIDTH * WORLD_SCALE, WORLD_HEIGHT * WORLD_SCALE);
         cameraHandler = new BoundedCameraHandler(camera, WORLD_RECT, 0.2f);
-
+        cameraHandler.move(0, Float.MAX_VALUE);
         initializeContent();
         initializeManagers();
         initializeSystems();
         ui = new Ui(this);
         menu = new Menu(this);
-        renderer = new DefaultRenderer(camera);
         initializeInput();
         initializeTween();
+        gameRenderer = new GameRenderer(this, ui, map, world, camera);
+        mainMenuGaimRenderer = new AggresiveGaussianBlurRenderer(gameRenderer, 12);
+        frozenGameRenderer = new GrayscaleRenderer(gameRenderer);
+        currentGameRenderer = mainMenuGaimRenderer;
+        menuRenderer = new MenuRenderer();
     }
 
     private void initializeWorld() {
@@ -257,6 +263,17 @@ return new MapBuilder(3, 11, PATH_SIZE, MapBuilder.Direction.DOWN, 0.40f,
  6).addLeft().addStraight().addRight().addStraight().build();
 }
      */
+    private class MenuRenderer implements Renderable {
+
+
+        @Override
+        public void render() {
+            menu.render();
+        }
+
+
+    }
+
     @Override
     public void dispose() {
 
@@ -304,7 +321,7 @@ return new MapBuilder(3, 11, PATH_SIZE, MapBuilder.Direction.DOWN, 0.40f,
 
     public void freeze(boolean freezed) {
         this.freezed = freezed;
-        spriteBatch.setShader(freezed ? Shader.getShader("grayscale") : null);
+        currentGameRenderer = freezed ? frozenGameRenderer : gameRenderer;
     }
 
     public boolean isFreezed() {
@@ -317,93 +334,9 @@ return new MapBuilder(3, 11, PATH_SIZE, MapBuilder.Direction.DOWN, 0.40f,
 
     public void setSessionStarted(boolean sessionStarted) {
         this.sessionStarted = sessionStarted;
+        currentGameRenderer = sessionStarted ? gameRenderer : mainMenuGaimRenderer;
     }
 
-    private class DefaultRenderer implements Renderable {
-
-        private final Camera camera;
-
-        protected DefaultRenderer(Camera camera) {
-            this.camera = camera;
-        }
-
-        @Override
-        public void render() {
-            Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-            Gdx.gl.glClearColor(GuiBox.lighterColor.r, GuiBox.lighterColor.g, GuiBox.lighterColor.b,
-                    GuiBox.lighterColor.a);
-                spriteBatch.setProjectionMatrix(camera.combined);
-                spriteBatch.begin();
-                drawMap(0);
-                drawMap(1);
-                renderSpriteSystem.process();
-                renderTextSystem.process();
-                spriteBatch.end();
-                spriteBatch.setProjectionMatrix(camera.combined);
-                spriteBatch.begin();
-                drawMap(2);
-                drawMap(4);
-                drawMap(3);
-                spriteBatch.end();
-
-                shapeRenderer.setProjectionMatrix(camera.combined);
-                shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-                renderRangeSystem.process();
-                renderDebugSystem.process();
-                drawPath();
-                drawGrid();
-                if (!isFreezed()) {
-                    renderHealthSystem.process();
-                }
-                shapeRenderer.end();
-            if (sessionStarted){
-                ui.render();
-            }
-            menu.render();
-        }
-
-        private void drawGrid() {
-            if (DEBUG != null) {
-                int height = tileMap.getHeight(0) * tileMap.getTileSize(0);
-                int width = tileMap.getWidth(0) * tileMap.getTileSize(0);
-                for (int i = 0; i < height; i++) {
-                    shapeRenderer.line(0, i * WORLD_SCALE, width * WORLD_SCALE, i * WORLD_SCALE);
-                }
-                for (int i = 0; i < width; i++) {
-                    shapeRenderer.line(i * WORLD_SCALE, 0, i * WORLD_SCALE, height * WORLD_SCALE);
-                }
-            }
-        }
-
-        private void drawMap(int level) {
-            for (int j = 0; j < tileMap.getWidth(level); j++) {
-                for (int k = 0; k < tileMap.getHeight(level); k++) {
-                    int size = tileMap.getTileSize(level) * WORLD_SCALE;
-                    TextureAtlas.AtlasRegion atlasRegion = tileMap.get(j, k, level);
-                    if (atlasRegion != null) {
-                        spriteBatch.draw(atlasRegion, j * size, k * size, size, size);
-                    }
-                }
-
-            }
-        }
-
-        private void drawPath() {
-            if (DEBUG != null) {
-                for (Path path : pathPack.getPaths()) {
-                    Vector3 lastPoint = null;
-                    for (Vector3 point : path.getPath()) {
-                        if (lastPoint != null) {
-                            shapeRenderer.line(lastPoint.x, lastPoint.y, point.x, point.y);
-                        }
-                        lastPoint = point;
-                    }
-                }
-            }
-        }
-
-
-    }
 
     public static Vector3 getTowerPosition(float worldX, float worldY) {
         Vector3 block = getBlockPosition(worldX, worldY);
@@ -422,4 +355,11 @@ return new MapBuilder(3, 11, PATH_SIZE, MapBuilder.Direction.DOWN, 0.40f,
         return new Vector3(blockX, blockY, 0);
     }
 
+    public Ui getUi() {
+        return ui;
+    }
+
+    public void setUi(Ui ui) {
+        this.ui = ui;
+    }
 }

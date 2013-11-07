@@ -1,5 +1,6 @@
 package com.xkings.pokemontd.map;
 
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.xkings.core.pathfinding.Blueprint;
 import com.xkings.pokemontd.graphics.TileMap;
 
@@ -17,9 +18,9 @@ public class MapData {
     private final Blueprint blueprint;
     private final Blueprint gameBlueprint;
     private final PathPack pathPack;
-    private final TileMap tileMap;
+    private final TileMap<TextureAtlas.AtlasRegion> tileMap;
 
-    public MapData(Blueprint blueprint, Blueprint gameBlueprint, PathPack pathPack, TileMap tileMap) {
+    public MapData(Blueprint blueprint, Blueprint gameBlueprint, PathPack pathPack, TileMap<TextureAtlas.AtlasRegion> tileMap) {
         this.blueprint = blueprint;
         this.gameBlueprint = gameBlueprint;
         this.pathPack = pathPack;
@@ -38,7 +39,7 @@ public class MapData {
         return gameBlueprint;
     }
 
-    public TileMap getTileMap() {
+    public TileMap<TextureAtlas.AtlasRegion> getTileMap() {
         return tileMap;
     }
 }

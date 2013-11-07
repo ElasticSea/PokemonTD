@@ -2,6 +2,7 @@ package com.xkings.pokemontd.graphics;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
@@ -11,8 +12,7 @@ import com.xkings.core.graphics.Shader;
 /**
  * Created by Tomas on 11/6/13.
  */
-public class GaussianBlurRenderer implements Renderable {
-    private final float FBO_SCALE;
+public class AggresiveGaussianBlurRenderer implements Renderable {
     private final Renderable wrappedRenderer;
     private final float blurRatio;
     private final SpriteBatch spriteBatch;
@@ -21,43 +21,62 @@ public class GaussianBlurRenderer implements Renderable {
     private final FrameBuffer fboB;
     private final int width;
     private final int height;
-    private final int fboWidth;
-    private final int fboHeight;
+    private Texture tex;
+    private float scale;
 
-    public GaussianBlurRenderer(Renderable wrappedRenderer, float blurRatio) {
+    public AggresiveGaussianBlurRenderer(Renderable wrappedRenderer, float blurRatio) {
         this.wrappedRenderer = wrappedRenderer;
         this.blurRatio = blurRatio;
         this.spriteBatch = new SpriteBatch();
-        FBO_SCALE = 1 ;
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
-        fboWidth = (int) (width * FBO_SCALE);
-        fboHeight = (int) (height * FBO_SCALE);
         blurShader = Shader.getShader("gaussianBlur");
-        fboA = new FrameBuffer(Pixmap.Format.RGBA8888, fboWidth, fboHeight, false);
-        fboB = new FrameBuffer(Pixmap.Format.RGBA8888, fboWidth, fboHeight, false);
+        fboA = new FrameBuffer(Pixmap.Format.RGBA8888, width, height, false);
+        fboB = new FrameBuffer(Pixmap.Format.RGBA8888, width, height, false);
+        scale = Math.min(width, height) / 1000f;
     }
 
     @Override
     public void render() {
+        Texture blurredTexture = getBlurredTexture();
+        spriteBatch.begin();
+        spriteBatch.setShader(null);
+        spriteBatch.draw(blurredTexture, 0, 0, width, height, 0, 0, width, height, false, true);
+        spriteBatch.end();
+    }
+
+    private Texture getBlurredTexture() {
         fboA.begin();
         wrappedRenderer.render();
         fboA.end();
-        fboB.begin();
+        int passes = (int) (blurRatio* scale);
+        Texture tex = fboA.getColorBufferTexture();
         spriteBatch.setShader(blurShader);
+        for (int i = 0; i < passes; i++) {
+            tex = blurTexture(tex, i);
+        }
+
+        return tex;
+    }
+
+    private Texture blurTexture(Texture texture, int i) {
+        fboB.begin();
         spriteBatch.begin();
-        blurShader.setUniformf("resolution", fboWidth);
-        blurShader.setUniformf("radius", blurRatio * FBO_SCALE);
+        blurShader.setUniformf("resolution", width);
+        blurShader.setUniformf("radius", i );
         blurShader.setUniformf("dir", 1, 0);
-        spriteBatch.draw(fboA.getColorBufferTexture(), 0, 0, width, height);
+        spriteBatch.draw(texture, 0, 0, width, height);
         spriteBatch.end();
         fboB.end();
-        spriteBatch.setShader(blurShader);
+        fboA.begin();
         spriteBatch.begin();
-        blurShader.setUniformf("resolution", fboHeight);
-        blurShader.setUniformf("radius", blurRatio * FBO_SCALE);
+        blurShader.setUniformf("resolution", height);
+        blurShader.setUniformf("radius", i );
         blurShader.setUniformf("dir", 0, 1);
         spriteBatch.draw(fboB.getColorBufferTexture(), 0, 0, width, height);
         spriteBatch.end();
+        fboA.end();
+        return fboA.getColorBufferTexture();
     }
 }
+

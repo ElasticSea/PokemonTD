@@ -42,6 +42,7 @@ public class MapBuilder {
     private final List<List<Vector3>> paths = createPats(PATHS);
     private int width;
     private int height;
+    private Blueprint gameBlueprint;
 
     private List<List<Vector3>> createPats(int pathsCount) {
         List<List<Vector3>> paths = new ArrayList<List<Vector3>>();
@@ -184,7 +185,7 @@ public class MapBuilder {
         createPoint(direction + PI, pathWidth);
 
         blueprint = new Blueprint(0, 0, width * pathWidth, height * pathWidth, true);
-        Blueprint gameBlueprint = new Blueprint((int) mapOffset.x * pathWidth, (int) mapOffset.y * pathWidth,
+         gameBlueprint = new Blueprint((int) mapOffset.x * pathWidth, (int) mapOffset.y * pathWidth,
                 (int) (dimensions.x+1) * pathWidth, (int) (dimensions.y+0) * pathWidth, true);
         textureMap = new TileMap<TextureAtlas.AtlasRegion>();
         textureMap.addLevel(width, height, pathWidth);
@@ -295,7 +296,7 @@ public class MapBuilder {
                     if (blueprint.isWalkable(i, j - 1)) {
                         setTextureSmallSafe(i, j, level, Assets.getTexture("treeSub"));
 
-                    } else if (!blueprint.isWalkable(i, j + 1)) {
+                    } else if (gameBlueprint.isWalkable(i, j+1)) {
                         setTextureSmallSafe(i, j, level, Assets.getTexture("treeTop"));
                     } else if (getTexture(i, j - 1, level - 1) != null || getTexture(i, j, level - 1) == null) {
                         setTextureSmallSafe(i, j, level, Assets.getTexture("tree"));
