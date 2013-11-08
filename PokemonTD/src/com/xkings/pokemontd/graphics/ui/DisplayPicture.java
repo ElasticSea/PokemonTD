@@ -19,5 +19,4 @@ public class DisplayPicture extends Icon {
     public void process(float x, float y) {
 
     }
-
 }

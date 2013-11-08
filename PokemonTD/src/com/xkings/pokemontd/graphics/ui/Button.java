@@ -83,5 +83,8 @@ abstract class Button extends InteractiveBlock {
         return new Vector2((width - fontBounds.width) / 2f, (height + fontBounds.height) / 2f);
     }
 
-
+    @Override
+    public void refresh() {
+        this.position = recalculatePosition(text);
+    }
 }

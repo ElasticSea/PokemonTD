@@ -37,10 +37,9 @@ public class TowerInfo extends CommonInfo {
     private Treasure costCache;
     private Color damageColorCache;
     private Color speedColorCache;
-    private Color rangeColorChache;
-    private boolean abilityCache;
-    private EffectData abilityCashe;
-    private float speedBuffCashe;
+    private Color rangeColorCache;
+    private EffectData abilityCache;
+    private float speedBuffCache;
 
     /**
      * public constuctor makes 3 text rectangles uses class DisplayText (damage,range,speed).
@@ -74,7 +73,7 @@ public class TowerInfo extends CommonInfo {
                         font, BitmapFont.HAlignment.CENTER) {
                     @Override
                     public void process(float x, float y) {
-                abilityInfo.update(abilityCashe, speedBuffCashe, damageBuffCashe);
+                abilityInfo.update(abilityCache, speedBuffCache, damageBuffCashe);
                         //ui.abilityText();
                         // ui.getRectangle();
                     }
@@ -110,12 +109,12 @@ public class TowerInfo extends CommonInfo {
     public void render() {
         this.sell.setEnabled(sellCache);
         this.buy.setEnabled(buyCache);
-        this.ability.setEnabled(abilityCache);
+        this.ability.setEnabled(abilityCache != null);
 
         super.render();
         this.damage.render(damageCache, damageColorCache);
         this.speed.render(speedCache, speedColorCache);
-        this.range.render(rangeCache, rangeColorChache);
+        this.range.render(rangeCache, rangeColorCache);
         this.cost.render(costCache);
         this.sell.render("sell", Color.WHITE, SELL_COLOR);
         this.buy.render("buy", Color.WHITE, BUY_COLOR);
@@ -139,10 +138,10 @@ public class TowerInfo extends CommonInfo {
         this.speedCache = speed;
         this.speedColorCache = speedColor;
         this.rangeCache = range;
-        this.rangeColorChache = rangeColor;
+        this.rangeColorCache = rangeColor;
         this.costCache = cost;
-        this.abilityCashe = ability;
-        this.speedBuffCashe = speedBuff;
+        this.abilityCache = ability;
+        this.speedBuffCache = speedBuff;
         this.damageBuffCashe = damageBuff;
         this.sellCache = sell;
         this.buyCache = buy;
@@ -152,5 +151,27 @@ public class TowerInfo extends CommonInfo {
     @Override
     public void process(float x, float y) {
         //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void refresh() {
+        super.refresh();
+        float offset = height / 5;
+        float offsetBlocks = height / 2;
+        cost.set(x + offset, y, width - offset * 2, offset);
+        damage.set(x + offset * 5, y + offset * 3, offset * 2, offset);
+        speed.set(x + offset * 5, y + offset * 2, offset * 2, offset);
+        range.set(x + offset * 5, y + offset, offset, offset);
+        ability.set(x + offset * 10f, y + offset * 3, offsetBlocks * 1.2f, offsetBlocks / 2f);
+        sell.set(x + width - offsetBlocks, y, offsetBlocks, offsetBlocks);
+        buy.set(x + width - offsetBlocks, y + offsetBlocks, offsetBlocks, offsetBlocks);
+
+        cost.refresh();
+        damage.refresh();
+        speed.refresh();
+        range.refresh();
+        ability.refresh();
+        sell.refresh();
+        buy.refresh();
     }
 }

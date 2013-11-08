@@ -29,7 +29,8 @@ public class Status extends GuiBox {
 
     private final Player player;
     private final BitmapFont font;
-    private final Vector2 textSize;
+    private final Vector2 textFieldCount;
+    private Vector2 textSize;
 
     Status(Ui ui, Rectangle rectangle, WaveManager waveManager, Interest interest, BitmapFont font) {
         super(ui, rectangle);
@@ -42,32 +43,38 @@ public class Status extends GuiBox {
         this.interest = interest;
         this.font = font;
 
-        Vector2 textFieldCount = new Vector2(2, 4);
-        textSize = new Vector2(offsetRectange.width / textFieldCount.x, offsetRectange.
-                height / textFieldCount.y);
+        textFieldCount = new Vector2(2, 4);
+        interestText = createDisplayBlock(BitmapFont.HAlignment.LEFT);
+        waveText = createDisplayBlock(BitmapFont.HAlignment.LEFT);
+        livesText = createDisplayBlock(BitmapFont.HAlignment.LEFT);
+        moneyText = createDisplayBlock(BitmapFont.HAlignment.LEFT);
 
-        interestText = createDisplayBlock(0, 0, textSize, BitmapFont.HAlignment.LEFT);
-        waveText = createDisplayBlock(0, 1, textSize, BitmapFont.HAlignment.LEFT);
-        livesText = createDisplayBlock(0, 2, textSize, BitmapFont.HAlignment.LEFT);
-        moneyText = createDisplayBlock(0, 3, textSize, BitmapFont.HAlignment.LEFT);
 
-        interestTimeText = createDisplayBlock(1, 0, textSize, BitmapFont.HAlignment.RIGHT);
-        waveTimeText = createDisplayBlock(1, 1, textSize, BitmapFont.HAlignment.RIGHT);
-        livesPicture = createDisplayPicture(1, 2, textSize, BitmapFont.HAlignment.RIGHT);
-        moneyPicture = createDisplayPicture(1, 3, textSize, BitmapFont.HAlignment.RIGHT);
+        interestTimeText = createDisplayBlock(BitmapFont.HAlignment.RIGHT);
+        waveTimeText = createDisplayBlock(BitmapFont.HAlignment.RIGHT);
+        livesPicture = createDisplayPicture();
+        moneyPicture = createDisplayPicture();
+        refresh();
     }
 
-    private DisplayText createDisplayBlock(float x, float y, Vector2 size, BitmapFont.HAlignment alignment) {
-        return new DisplayText(ui,
-                new Rectangle(offsetRectange.x + size.x * x, offsetRectange.y + size.y * y, size.x, size.y), font,
-                alignment);
+    private void refresh(DisplayText text, int x, int y, Vector2 size) {
+        text.set(offsetRectange.x + size.x * x, offsetRectange.y + size.y * y, size.x, size.y);
+        text.refresh();
     }
 
-    private DisplayPicture createDisplayPicture(float x, float y, Vector2 size, BitmapFont.HAlignment alignment) {
+    private void refresh(DisplayPicture picture, int x, int y, Vector2 size, BitmapFont.HAlignment alignment) {
         float shorterSize = Math.min(size.x, size.y);
         float xPosition = alignment.equals(BitmapFont.HAlignment.LEFT) ? size.x * x : size.x * (x + 1) - shorterSize;
-        return new DisplayPicture(ui, offsetRectange.x + xPosition, offsetRectange.y + size.y * y, shorterSize,
-                shorterSize);
+        picture.set(offsetRectange.x + xPosition, offsetRectange.y + size.y * y, shorterSize, shorterSize);
+        picture.refresh();
+    }
+
+    private DisplayText createDisplayBlock(BitmapFont.HAlignment alignment) {
+        return new DisplayText(ui, new Rectangle(), font, alignment);
+    }
+
+    private DisplayPicture createDisplayPicture() {
+        return new DisplayPicture(ui, new Rectangle());
     }
 
     @Override
@@ -78,8 +85,23 @@ public class Status extends GuiBox {
         waveText.render("Wave in");
         waveTimeText.render(String.valueOf(waveManager.getRemainingTime()));
         livesText.render(String.valueOf(player.getHealth().getCurrentHealth()));
-        livesPicture.render(Assets.getTexture("hearth"), "",textSize.y * 0.7f, true);
+        livesPicture.render(Assets.getTexture("hearth"), "", textSize.y * 0.7f, true);
         moneyText.render(String.valueOf(player.getTreasure().getGold()));
-        moneyPicture.render(Assets.getTexture("coin"),  "",textSize.y * 0.7f, true);
+        moneyPicture.render(Assets.getTexture("coin"), "", textSize.y * 0.7f, true);
+    }
+
+    @Override
+    public void refresh() {
+        super.refresh();
+        textSize = new Vector2(offsetRectange.width / textFieldCount.x, offsetRectange.
+                height / textFieldCount.y);
+        refresh(interestText, 0, 0, textSize);
+        refresh(waveText, 0, 1, textSize);
+        refresh(livesText, 0, 2, textSize);
+        refresh(moneyText, 0, 3, textSize);
+        refresh(interestTimeText, 1, 0, textSize);
+        refresh(waveTimeText, 1, 1, textSize);
+        refresh(livesPicture, 1, 2, textSize, BitmapFont.HAlignment.RIGHT);
+        refresh(moneyPicture, 1, 3, textSize, BitmapFont.HAlignment.RIGHT);
     }
 }

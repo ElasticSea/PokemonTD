@@ -11,30 +11,24 @@ import java.util.List;
  */
 public abstract class PickTable<E extends InteractiveBlock> extends GuiBox {
 
+    public static final int COLUMNS = 3;
     protected final List<E> pickIcons;
 
     PickTable(Gui ui, Rectangle rectangle) {
         super(ui, rectangle);
-        pickIcons = createPickIcons(3);
+        pickIcons = createPickIcons();
+        refresh();
     }
 
-    private List<E> createPickIcons(int count) {
+    private List<E> createPickIcons() {
         List<E> pickIcons = new ArrayList<E>();
         for (int i = 0; i < 9; i++) {
-            pickIcons.add(createPickIcon(i, count));
+            pickIcons.add(createPickIcon());
         }
         return pickIcons;
     }
 
-    private E createPickIcon(int position, int count) {
-        Vector2 size = new Vector2(offsetRectange.width / count, offsetRectange.height / count);
-        int x = (int) (position % count * size.x);
-        int y = (int) (position / count * size.y);
-        return createPickIconInstance(offsetRectange.x + x, offsetRectange.y + offsetRectange.height - y - size.y,
-                size.x, size.y);
-    }
-
-    protected abstract E createPickIconInstance(float x, float y, float w, float h);
+    protected abstract E createPickIcon();
 
     @Override
     public boolean hit(float x, float y) {
@@ -51,6 +45,18 @@ public abstract class PickTable<E extends InteractiveBlock> extends GuiBox {
         super.render();
         for (E e : pickIcons) {
             e.render();
+        }
+    }
+
+    @Override
+    public void refresh() {
+        super.refresh();
+        for (int i = 0; i < 9; i++) {
+            Vector2 size = new Vector2(offsetRectange.width / COLUMNS, offsetRectange.height / COLUMNS);
+            int x = (int) (i % COLUMNS * size.x);
+            int y = (int) (i / COLUMNS * size.y);
+            pickIcons.get(i).set(offsetRectange.x + x, offsetRectange.y +offsetRectange.height - ( y + size.y), size.x, size.y);
+            pickIcons.get(i).refresh();
         }
     }
 }

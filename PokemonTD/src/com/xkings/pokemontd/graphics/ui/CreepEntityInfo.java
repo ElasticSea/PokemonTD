@@ -58,4 +58,15 @@ public class CreepEntityInfo extends CommonInfo {
     public void process(float x, float y) {
         //To change body of implemented methods use File | Settings | File Templates.
     }
+
+    @Override
+    public void refresh() {
+        System.out.println("refresg");
+        super.refresh();
+        float offset = height / 5;
+        health.set(x + offset * 5, y + offset * 3, offset * 2, offset);
+        type.set(x + offset * 5, y + offset * 2, offset * 2, offset);
+        health.refresh();
+        type.refresh();
+    }
 }

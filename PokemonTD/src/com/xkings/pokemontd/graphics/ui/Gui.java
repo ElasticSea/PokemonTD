@@ -49,7 +49,7 @@ public abstract class Gui extends GestureDetector.GestureAdapter implements Rend
         this.spriteBatch = new SpriteBatch();
         height = Gdx.graphics.getHeight();
         width = Gdx.graphics.getWidth();
-        squareSize = (int) MathUtils.clamp(Gdx.graphics.getDensity() * 160 * 2, height / 4, height / 3.3f);
+        setSquareSize(Gdx.graphics.getDensity() * 160 * 2);
         offset = squareSize / 36;
         center = new Vector2(width/2f, height/2f);
         font.setScale(Math.round(squareSize / 90));
@@ -119,5 +119,9 @@ public abstract class Gui extends GestureDetector.GestureAdapter implements Rend
 
     public App getApp() {
         return app;
+    }
+
+    public void setSquareSize(float size) {
+        this.squareSize = (int) MathUtils.clamp(size, height / 4, height / 2f);
     }
 }

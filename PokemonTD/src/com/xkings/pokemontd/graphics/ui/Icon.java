@@ -77,6 +77,11 @@ abstract class Icon extends InteractiveBlock {
         render(texture, text, width, pixelPerfect);
     }
 
+    @Override
+    public void refresh() {
+        text = "";
+        texture = null;
+    }
     /*
         spriteBatch.begin();
         spriteBatch.draw(texture, x + offset.x, y + offset.y, size, size);

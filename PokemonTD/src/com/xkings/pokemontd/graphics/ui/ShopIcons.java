@@ -31,12 +31,7 @@ public class ShopIcons extends PickTable<ElementIcon> {
     }
 
     @Override
-    protected ElementIcon createPickIconInstance(float x, float y, float w, float h) {
-        return new ElementIcon(ui,new Rectangle(x, y, w, h), spriteBatch);
-    }
-
-    @Override
-    public void render() {
-        super.render();
+    protected ElementIcon createPickIcon() {
+        return new ElementIcon(ui,new Rectangle(), spriteBatch);
     }
 }

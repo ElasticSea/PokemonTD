@@ -81,6 +81,9 @@ public class Menu extends Gui {
 
         private final Button exit;
         private final Button pause;
+        private final MenuButton minus;
+        private final MenuButton plus;
+        private final MenuButton guiSize;
 
         InGameMenu(Gui ui, Rectangle rectangle) {
             super(ui, rectangle);
@@ -96,8 +99,28 @@ public class Menu extends Gui {
                     app.freeze(!app.isFreezed());
                 }
             };
+            Rectangle rect = rects.get(1);
+            minus = new MenuButton(ui, new Rectangle(rect.x,rect.y,rect.width/4,rect.height)) {
+                @Override
+                public void process(float x, float y) {
+                    app.makeGuiSmaller();
+                }
+            };
+            plus = new MenuButton(ui, new Rectangle(rect.x+rect.width*3/4,rect.y,rect.width/4,rect.height)) {
+                @Override
+                public void process(float x, float y) {
+                    app.makeGuiLarger();
+                }
+            };
+            guiSize = new MenuButton(ui, rect) {
+                @Override
+                public void process(float x, float y) {
+                }
+            };
             register(exit);
             register(pause);
+            register(minus);
+            register(plus);
         }
 
         @Override
@@ -105,6 +128,9 @@ public class Menu extends Gui {
             super.render();
             exit.render("EXIT");
             pause.render(app.isFreezed() ? "RESUME" : "PAUSE");
+            minus.render("-");
+            plus.render("+");
+            guiSize.render("GUI SIZE");
         }
     }
 
@@ -146,8 +172,9 @@ public class Menu extends Gui {
 
         private static final float LINE_HEIGHT = 2;
         protected final List<Rectangle> rects;
-        private final int count;
+        protected final int count;
         private boolean closeTabWhenNotClicked = true;
+        protected int buttonHeight;
 
         MenuTab(Gui ui, Rectangle rectangle) {
             super(ui, rectangle);
@@ -156,7 +183,7 @@ public class Menu extends Gui {
         }
 
         private List<Rectangle> getRects( int count) {
-            int buttonHeight = (int) (height / count);
+             buttonHeight = (int) (height / count);
             List<Rectangle> rects = new ArrayList<Rectangle>();
             for (int i = 0; i < count; i++) {
                 int offset = buttonHeight * (i + 1);
@@ -192,6 +219,11 @@ public class Menu extends Gui {
 
         protected MenuButton(Gui gui, Rectangle rect) {
             super(gui, rect, font, BitmapFont.HAlignment.CENTER);
+        }
+
+        @Override
+        public void refresh() {
+
         }
     }
 

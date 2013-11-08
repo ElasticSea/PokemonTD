@@ -254,6 +254,15 @@ public class App extends Game2D {
                 6).addLeft().addStraight(2).addRight().addStraight().build();
     }
 
+    public void makeGuiLarger() {
+        ui.makeLarger();
+    }
+
+    public void makeGuiSmaller() {
+        ui.makeSmaller();
+
+    }
+
     /*
 private MapData createMap() {
 return new MapBuilder(3, 11, PATH_SIZE, MapBuilder.Direction.DOWN, 0.40f,

@@ -41,8 +41,23 @@ public class WaveInfo extends GuiBox {
             waveText.render("Wave");
             waveNumberText.render(String.valueOf(nextWave.getId()));
             abilityText.render(nextWave.getAbilityType().toString());
-            creepTexture.render(nextWave.getTexture(),"");
+            creepTexture.render(nextWave.getTexture(), "");
         }
     }
 
+    @Override
+    public void refresh() {
+        super.refresh();
+        float textHeight = height / 7f;
+        Rectangle scaled = new Rectangle(x + offset * 2, y + offset, width - offset * 4, height - offset * 2);
+        float quarterSize = scaled.height / 4f;
+        Rectangle waveRectangle =
+                new Rectangle(scaled.x, scaled.y + scaled.height - textHeight, scaled.width, textHeight);
+        Rectangle abilityRectangle = new Rectangle(scaled.x, scaled.y, scaled.width, textHeight);
+        this.waveText.set(waveRectangle);
+        this.waveNumberText.set(waveRectangle);
+        this.abilityText.set(abilityRectangle);
+        this.creepTexture.set(scaled.x + quarterSize, scaled.y + quarterSize, quarterSize * 2, quarterSize * 2);
+        creepTexture.refresh();
+    }
 }

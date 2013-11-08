@@ -97,6 +97,11 @@ public class TowerCost extends InteractiveBlock {
 
     private float maximalHeight;
 
+    @Override
+    public void refresh() {
+
+    }
+
     private class costValueCache {
         private final String text;
         private final BitmapFont.TextBounds bounds;

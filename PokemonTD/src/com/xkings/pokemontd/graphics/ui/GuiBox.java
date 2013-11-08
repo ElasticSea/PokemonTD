@@ -17,7 +17,7 @@ public class GuiBox extends InteractiveBlockParent {
     public static final float lighter = 0.1f;
     public static final Color darkerColor = new Color(darker, darker, darker, 1f);
     public static final Color lighterColor = new Color(lighter, lighter, lighter, 1f);
-    protected final int offset;
+    protected  int offset;
     protected final ShapeRenderer shapeRenderer;
     protected final Rectangle offsetRectange;
     protected final SpriteBatch spriteBatch;
@@ -44,6 +44,15 @@ public class GuiBox extends InteractiveBlockParent {
         shapeRenderer.setColor(lighterColor);
         shapeRenderer.rect(offsetRectange.x, offsetRectange.y, offsetRectange.width, offsetRectange.height);
         shapeRenderer.end();
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
+    }
+
+    @Override
+    public void refresh(){
+        offsetRectange.set(x + offset, y + offset, width - offset * 2, height - offset * 2);
     }
 
     @Override

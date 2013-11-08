@@ -56,4 +56,11 @@ public class CommonInfo extends InteractiveBlock {
     public void process(float x, float y) {
         //To change body of implemented methods use File | Settings | File Templates.
     }
+
+    @Override
+    public void refresh() {
+        float offset = height / 5;
+        picture.set(x + offset, y + offset, height - offset * 2, height - offset * 2);
+        picture.refresh();
+    }
 }

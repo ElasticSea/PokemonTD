@@ -25,7 +25,7 @@ class EntityInfo extends GuiBox {
     private final Ui ui;
     private final TowerTypeInfo towerTypeInfo;
     private final TowerEntityInfo towerEntityInfo;
-    private final ArrayList<Clickable> clickables;
+    private final ArrayList<InteractiveElement> clickables;
     private final ShopEntityInfo shopEntityInfo;
     private final ShopTypeInfo shopTypeInfo;
     private CreepEntityInfo creepEntityInfo;
@@ -43,7 +43,7 @@ class EntityInfo extends GuiBox {
         shopTypeInfo = new ShopTypeInfo(ui, offsetRectange, shapeRenderer, spriteBatch, font);
         shopEntityInfo = new ShopEntityInfo(ui, offsetRectange, shapeRenderer, spriteBatch, font, player);
 
-        clickables = new ArrayList<Clickable>();
+        clickables = new ArrayList<InteractiveElement>();
         clickables.add(towerTypeInfo);
         clickables.add(towerEntityInfo);
         clickables.add(creepEntityInfo);
@@ -104,5 +104,12 @@ class EntityInfo extends GuiBox {
         }
     }
 
-
+    @Override
+    public void refresh() {
+        super.refresh();
+        for (InteractiveElement clickable : clickables) {
+            clickable.set(offsetRectange) ;
+            clickable.refresh();
+        }
+    }
 }

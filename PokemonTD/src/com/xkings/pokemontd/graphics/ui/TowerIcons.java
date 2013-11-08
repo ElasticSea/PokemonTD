@@ -25,8 +25,8 @@ public class TowerIcons extends PickTable<TowerIcon> {
     }
 
     @Override
-    protected TowerIcon createPickIconInstance(float x, float y, float w, float h) {
-        return new TowerIcon(ui, new Rectangle(x, y, w, h)) {
+    protected TowerIcon createPickIcon() {
+        return new TowerIcon(ui, new Rectangle()) {
             @Override
             public void process(float x, float y) {
                 towerManager.setPickedTower(towerType);

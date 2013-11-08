@@ -31,13 +31,10 @@ class ElementIcon extends InteractiveBlock {
     @Override
     public void render() {
         if (element != null) {
-
             int elementCount = currentElements.getElement(element) + 1;
-            String text = Treasure.LIMIT.getElement(element) < elementCount ? "max" :
-                    "lvl "+ elementCount;
+            String text = Treasure.LIMIT.getElement(element) < elementCount ? "max" : "lvl " + elementCount;
 
             picture.render(Assets.getTexture("gems/" + element.toString().toLowerCase()), text, true);
-            //spriteBatch.draw(Assets.getTexture("gems/" + element.toString().toLowerCase()), x, y, width, height);
             spriteBatch.begin();
             if (player.getFreeElements() == 0) {
                 spriteBatch.draw(Assets.getTexture("blocked"), x, y, width, height);
@@ -49,12 +46,10 @@ class ElementIcon extends InteractiveBlock {
     @Override
     public void process(float x, float y) {
         if (player.getFreeElements() != 0) {
-            int elements = currentElements.getElement(element)+1;
+            int elements = currentElements.getElement(element) + 1;
             if (Treasure.LIMIT.getElement(element) >= elements) {
-                System.out.println(element+" "+elements);
                 waveManager.fireNextWave(CreepType.getWave(element, elements));
-                currentElements.addElement(element,1);
-             //   player.getTreasure().addElement(element, 1);
+                currentElements.addElement(element, 1);
                 player.subtractFreeElement();
             }
         }
@@ -66,6 +61,7 @@ class ElementIcon extends InteractiveBlock {
 
     public void setElement(Element element) {
         this.element = element;
+        System.out.println(element);
     }
 
     public Element getElement() {
@@ -76,7 +72,9 @@ class ElementIcon extends InteractiveBlock {
         this.currentElements = currentElements;
     }
 
-    public Treasure getCurrentElements() {
-        return currentElements;
+    @Override
+    public void refresh() {
+        picture.set(this);
+        picture.refresh();
     }
 }
