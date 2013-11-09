@@ -21,10 +21,13 @@ public class WaveInfo extends GuiBox {
         this.waveManager = waveManager;
         this.pixelFont = font;
         float textHeight = height / 7f;
-        Rectangle scaled = new Rectangle(x + offset * 2, y + offset, width - offset * 4, height - offset * 2);
+        Rectangle scaled =
+                new Rectangle(offsetRectange.x + offset, offsetRectange.y + offset, offsetRectange.width - offset * 2,
+                        offsetRectange.height - offset * 2);
+        // Rectangle scaled = new Rectangle(offsetRectange.x, offsetRectange.height+offsetRectange.y-textHeight,offsetRectange.width,textHeight);
         float quarterSize = scaled.height / 4f;
         Rectangle waveRectangle =
-                new Rectangle(scaled.x, scaled.y + scaled.height - textHeight, scaled.width, textHeight);
+                new Rectangle(scaled.x, scaled.height + scaled.y - textHeight, scaled.width, textHeight);
         Rectangle abilityRectangle = new Rectangle(scaled.x, scaled.y, scaled.width, textHeight);
         this.waveText = new DisplayText(ui, waveRectangle, font, BitmapFont.HAlignment.LEFT);
         this.waveNumberText = new DisplayText(ui, waveRectangle, font, BitmapFont.HAlignment.RIGHT);
@@ -58,6 +61,9 @@ public class WaveInfo extends GuiBox {
         this.waveNumberText.set(waveRectangle);
         this.abilityText.set(abilityRectangle);
         this.creepTexture.set(scaled.x + quarterSize, scaled.y + quarterSize, quarterSize * 2, quarterSize * 2);
+        waveText.refresh();
+        waveNumberText.refresh();
+        abilityText.refresh();
         creepTexture.refresh();
     }
 }

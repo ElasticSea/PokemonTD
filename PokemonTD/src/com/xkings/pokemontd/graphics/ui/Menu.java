@@ -100,27 +100,29 @@ public class Menu extends Gui {
                 }
             };
             Rectangle rect = rects.get(1);
-            minus = new MenuButton(ui, new Rectangle(rect.x,rect.y,rect.width/4,rect.height)) {
+            minus = new MenuButton(ui, new Rectangle(rect.x, rect.y, rect.width / 4, rect.height)) {
                 @Override
                 public void process(float x, float y) {
                     app.makeGuiSmaller();
                 }
             };
-            plus = new MenuButton(ui, new Rectangle(rect.x+rect.width*3/4,rect.y,rect.width/4,rect.height)) {
+            plus = new MenuButton(ui, new Rectangle(rect.x + rect.width * 3 / 4, rect.y, rect.width / 4, rect.height)) {
                 @Override
                 public void process(float x, float y) {
                     app.makeGuiLarger();
                 }
             };
-            guiSize = new MenuButton(ui, rect) {
+            guiSize = new MenuButton(ui, new Rectangle(minus.x + minus.width, rect.y, rect.width / 2, rect.height)) {
                 @Override
                 public void process(float x, float y) {
+                    app.resetGuiSize();
                 }
             };
             register(exit);
             register(pause);
             register(minus);
             register(plus);
+            register(guiSize);
         }
 
         @Override
@@ -179,16 +181,15 @@ public class Menu extends Gui {
         MenuTab(Gui ui, Rectangle rectangle) {
             super(ui, rectangle);
             count = 5;
-            rects = getRects( count);
+            rects = getRects(count);
         }
 
-        private List<Rectangle> getRects( int count) {
-             buttonHeight = (int) (height / count);
+        private List<Rectangle> getRects(int count) {
+            buttonHeight = (int) (height / count);
             List<Rectangle> rects = new ArrayList<Rectangle>();
             for (int i = 0; i < count; i++) {
                 int offset = buttonHeight * (i + 1);
-                rects.add(new Rectangle(x, y + height - offset,
-                        width, buttonHeight));
+                rects.add(new Rectangle(x, y + height - offset, width, buttonHeight));
             }
             return rects;
         }
@@ -199,8 +200,8 @@ public class Menu extends Gui {
             float segment = width / 7;
             shapeRenderer.setColor(GuiBox.darkerColor);
             shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            for (int i = 1; i < count ; i++) {
-                float offset = i*(height/count);
+            for (int i = 1; i < count; i++) {
+                float offset = i * (height / count);
                 shapeRenderer.rect(x + segment, offset + y - LINE_HEIGHT / 2, width - segment * 2, LINE_HEIGHT);
             }
             shapeRenderer.end();

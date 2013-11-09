@@ -89,16 +89,20 @@ public class Ui extends Gui {
     }
 
     public void makeLarger() {
-        scale((squareSize + offset) / squareSize);
+        scale(squareSize + offset);
     }
 
     public void makeSmaller() {
-        scale((squareSize - offset) / squareSize);
+        scale(squareSize - offset);
+    }
+
+    public void resetSize() {
+        scale(defaultSize);
     }
 
     public void scale(float size) {
+        super.scale(size);
 
-        setSquareSize(squareSize * size);
         int statusBarHeight = squareSize / 5;
         int statusHeight = statusBarHeight * 4;
         int stripHeight = (int) (squareSize / 3f * 2f);
@@ -106,7 +110,7 @@ public class Ui extends Gui {
         float statusHeightBlock = statusHeight / 5;
         float statusOffSet = statusHeightBlock / 2;
         statusHeight = (int) (statusHeightBlock * 4);
-        squareSize = (squareSize / 3) * 3 + offset * 2;
+        // squareSize = (squareSize / 3) * 3 + offset * 2;
         Vector2 statusBarDimensions = new Vector2(width, statusBarHeight);
         Vector2 statusDimensions = new Vector2(squareSize, statusHeight);
 

@@ -19,9 +19,9 @@ abstract class TowerIcon extends Icon {
     @Override
     public void render() {
         if (towerType != null && towerManager != null) {
-            this.render(towerType.getTexture(), "",true);
+            this.render(towerType.getTexture(), "", true);
             if (!towerManager.canAfford(towerType)) {
-                this.render(towerType.getBlockedTexture(), "",true);
+                this.render(towerType.getBlockedTexture(), "", true);
             }
         }
     }

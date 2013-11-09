@@ -263,6 +263,10 @@ public class App extends Game2D {
 
     }
 
+    public void resetGuiSize() {
+        ui.resetSize();
+    }
+
     /*
 private MapData createMap() {
 return new MapBuilder(3, 11, PATH_SIZE, MapBuilder.Direction.DOWN, 0.40f,

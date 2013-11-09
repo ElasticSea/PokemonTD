@@ -14,6 +14,7 @@ public class StatusBar extends GuiBox {
     private final DisplayText scoreText;
     private final SpeedControls speedControls;
     private final Button menuButton;
+    private final GuiBox menuBackground;
     private Rectangle square;
 
     StatusBar(final Ui ui, Rectangle rectangle, Rectangle square, BitmapFont font) {
@@ -21,23 +22,19 @@ public class StatusBar extends GuiBox {
         ui.register(this);
         this.player = ui.getPlayer();
         this.square = square;
-        Rectangle scoreRect = new Rectangle(x + width - square.height, offsetRectange.y, square.height - 3 * offset,
-                offsetRectange.height);
-        menuButton =
-                new Button(ui, offsetRectange.x, offsetRectange.y, offsetRectange.height * 2, offsetRectange.height,
-                        ui.getFont()) {
-                    @Override
-                    public void process(float x, float y) {
-                        ui.getApp().triggerMenu(Menu.Type.INGAME);
-                    }
-                };
+        menuBackground = new GuiBox(ui, new Rectangle());
+        menuButton = new Button(ui, menuBackground, ui.getFont()) {
+            @Override
+            public void process(float x, float y) {
+                ui.getApp().triggerMenu(Menu.Type.INGAME);
+            }
+        };
         speedControls =
-                new SpeedControls(ui, offsetRectange.x + offsetRectange.height * 2, offsetRectange.y, height * 4.5f,
-                        offsetRectange.height, ui.getApp().getClock());
-        // menuUi = new MenuUi(ui, x, y , height*4.5f, height, font);
-        scoreTitleText = new DisplayText(ui, scoreRect, font, BitmapFont.HAlignment.LEFT);
-        scoreText = new DisplayText(ui, scoreRect, font, BitmapFont.HAlignment.RIGHT);
+                new SpeedControls(ui, x + menuBackground.width, y, height * 4.5f, height, ui.getApp().getClock());
+        scoreTitleText = new DisplayText(ui, new Rectangle(), font, BitmapFont.HAlignment.LEFT);
+        scoreText = new DisplayText(ui, new Rectangle(), font, BitmapFont.HAlignment.RIGHT);
         ui.register(menuButton);
+        refresh();
     }
 
     @Override
@@ -46,6 +43,7 @@ public class StatusBar extends GuiBox {
         scoreTitleText.render("Score");
         scoreText.render(player.getScore().toString());
         speedControls.render();
+        menuBackground.render();
         menuButton.render("MENU");
     }
 
@@ -56,10 +54,11 @@ public class StatusBar extends GuiBox {
                 offsetRectange.height);
         scoreTitleText.set(scoreRect);
         scoreText.set(scoreRect);
-        menuButton.set(offsetRectange.x, offsetRectange.y, offsetRectange.height * 2, offsetRectange.height);
+        menuBackground.set(x - ui.getOffset(), y - height, height * 2 + ui.getOffset(), height * 2 + ui.getOffset());
+        menuButton.set(menuBackground);
+        speedControls.set(x + menuButton.width, y, height * 4f, height);
+        menuBackground.refresh();
         menuButton.refresh();
-        speedControls.set(offsetRectange.x + offsetRectange.height * 2, offsetRectange.y, height * 4.5f,
-                offsetRectange.height);
         speedControls.refresh();
         scoreTitleText.refresh();
         scoreText.refresh();
