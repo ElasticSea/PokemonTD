@@ -1,5 +1,6 @@
 package com.xkings.pokemontd.graphics.ui;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
 import com.xkings.pokemontd.entity.creep.CreepType;
@@ -15,8 +16,10 @@ public class WaveInfo extends GuiBox {
     private final DisplayText waveNumberText;
     private final DisplayText abilityText;
     private final DisplayPicture creepTexture;
+    private final Button nextWave;
+    public static final Color NEXTWAVE_COLOR = new Color(Color.GREEN).mul(0.6f);
 
-    WaveInfo(Ui ui, Rectangle rectangle, WaveManager waveManager, BitmapFont font) {
+    WaveInfo(final Ui ui, Rectangle rectangle, WaveManager waveManager, BitmapFont font) {
         super(ui, rectangle);
         this.waveManager = waveManager;
         this.pixelFont = font;
@@ -34,10 +37,27 @@ public class WaveInfo extends GuiBox {
         this.abilityText = new DisplayText(ui, abilityRectangle, font, BitmapFont.HAlignment.CENTER);
         this.creepTexture = new DisplayPicture(ui, scaled.x + quarterSize, scaled.y + quarterSize, quarterSize * 2,
                 quarterSize * 2);
+
+        //float offset = height / 5;
+        float offsetBlocks = height / 8;
+
+        Rectangle nextWaveRectangle = new Rectangle(scaled.x, scaled.height + scaled.y - textHeight * 2, offsetBlocks*3.4f, offsetBlocks);
+        nextWave = new Button(ui, nextWaveRectangle, font, BitmapFont.HAlignment.CENTER) {
+            @Override
+            public void process(float x, float y) {
+                ui.getWaveManager().triggerNextWave();
+            }
+        };
+
+        ui.register(nextWave);
+        //clickables.add(nextWave);
+
     }
 
     @Override
     public void render() {
+        //this.nextWave.setEnabled();
+
         super.render();
         CreepType nextWave = waveManager.getNextWave();
         if (nextWave != null) {
@@ -46,6 +66,8 @@ public class WaveInfo extends GuiBox {
             abilityText.render(nextWave.getAbilityType().toString());
             creepTexture.render(nextWave.getTexture(), "");
         }
+        this.nextWave.render("next wave", Color.WHITE, NEXTWAVE_COLOR);
+
     }
 
     @Override
@@ -57,13 +79,18 @@ public class WaveInfo extends GuiBox {
         Rectangle waveRectangle =
                 new Rectangle(scaled.x, scaled.y + scaled.height - textHeight, scaled.width, textHeight);
         Rectangle abilityRectangle = new Rectangle(scaled.x, scaled.y, scaled.width, textHeight);
+
+        float offsetBlocks = height / 8;
+        Rectangle nextWaveRecntagle = new Rectangle(scaled.x, scaled.height + scaled.y - textHeight * 2, offsetBlocks*3.4f, offsetBlocks);
         this.waveText.set(waveRectangle);
         this.waveNumberText.set(waveRectangle);
         this.abilityText.set(abilityRectangle);
         this.creepTexture.set(scaled.x + quarterSize, scaled.y + quarterSize, quarterSize * 2, quarterSize * 2);
+        this.nextWave.set(nextWaveRecntagle);
         waveText.refresh();
         waveNumberText.refresh();
         abilityText.refresh();
         creepTexture.refresh();
+        nextWave.refresh();
     }
 }
