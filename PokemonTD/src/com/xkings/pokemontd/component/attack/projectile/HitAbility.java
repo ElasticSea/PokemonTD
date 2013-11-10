@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by Tomas on 10/13/13.
  */
-public class HitAbility extends AbilityComponent {
+public class HitAbility extends EffectData {
     public static final float SLOW_SPEED = 2.0f;
     public static final float NORMAL_SPEED = 4.0f;
     public static final float FAST_SPEED = 8.0f;
@@ -166,5 +166,9 @@ public class HitAbility extends AbilityComponent {
 
     public float getAoe() {
         return aoe;
+    }
+
+    public String getEffectDescription(float speed,float damage){
+        return "";
     }
 }

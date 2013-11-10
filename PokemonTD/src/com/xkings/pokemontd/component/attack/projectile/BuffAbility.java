@@ -1,11 +1,11 @@
 package com.xkings.pokemontd.component.attack.projectile;
 
-import com.xkings.pokemontd.component.attack.AbilityComponent;
+import com.xkings.pokemontd.component.attack.projectile.data.EffectData;
 
 /**
  * Created by Tomas on 10/25/13.
  */
-public class BuffAbility extends AbilityComponent {
+public class BuffAbility extends EffectData {
     private final Type type;
     private final float ratio;
     private final float duration;
@@ -38,5 +38,9 @@ public class BuffAbility extends AbilityComponent {
 
     public float getDuration() {
         return duration;
+    }
+
+    public String getEffectDescription(float speed,float damage){
+        return "";
     }
 }

@@ -31,17 +31,17 @@ public class WaveInfo extends GuiBox {
         float quarterSize = scaled.height / 4f;
         Rectangle waveRectangle =
                 new Rectangle(scaled.x, scaled.height + scaled.y - textHeight, scaled.width, textHeight);
-        Rectangle abilityRectangle = new Rectangle(scaled.x, scaled.y, scaled.width, textHeight);
+        Rectangle abilityRectangle = new Rectangle(scaled.x, scaled.y+ quarterSize, scaled.width, textHeight);
         this.waveText = new DisplayText(ui, waveRectangle, font, BitmapFont.HAlignment.LEFT);
         this.waveNumberText = new DisplayText(ui, waveRectangle, font, BitmapFont.HAlignment.RIGHT);
         this.abilityText = new DisplayText(ui, abilityRectangle, font, BitmapFont.HAlignment.CENTER);
-        this.creepTexture = new DisplayPicture(ui, scaled.x + quarterSize, scaled.y + quarterSize, quarterSize * 2,
+        this.creepTexture = new DisplayPicture(ui, scaled.x + quarterSize, scaled.y + quarterSize*1.5f, quarterSize * 2,
                 quarterSize * 2);
 
         //float offset = height / 5;
         float offsetBlocks = height / 8;
 
-        Rectangle nextWaveRectangle = new Rectangle(scaled.x, scaled.height + scaled.y - textHeight * 2, offsetBlocks*3.4f, offsetBlocks);
+        Rectangle nextWaveRectangle = new Rectangle(scaled.x-offset*2, scaled.y-offset*2, width, offsetBlocks*1.5f);
         nextWave = new Button(ui, nextWaveRectangle, font, BitmapFont.HAlignment.CENTER) {
             @Override
             public void process(float x, float y) {
@@ -77,16 +77,16 @@ public class WaveInfo extends GuiBox {
         Rectangle scaled = new Rectangle(x + offset * 2, y + offset, width - offset * 4, height - offset * 2);
         float quarterSize = scaled.height / 4f;
         Rectangle waveRectangle =
-                new Rectangle(scaled.x, scaled.y + scaled.height - textHeight, scaled.width, textHeight);
-        Rectangle abilityRectangle = new Rectangle(scaled.x, scaled.y, scaled.width, textHeight);
+                new Rectangle(scaled.x, scaled.height + scaled.y - textHeight, scaled.width, textHeight);
+        Rectangle abilityRectangle = new Rectangle(scaled.x, scaled.y + quarterSize, scaled.width, textHeight);
 
         float offsetBlocks = height / 8;
-        Rectangle nextWaveRecntagle = new Rectangle(scaled.x, scaled.height + scaled.y - textHeight * 2, offsetBlocks*3.4f, offsetBlocks);
+        Rectangle nextWaveRectangle =  new Rectangle(x, y, width, offsetBlocks*1.5f);
         this.waveText.set(waveRectangle);
         this.waveNumberText.set(waveRectangle);
         this.abilityText.set(abilityRectangle);
-        this.creepTexture.set(scaled.x + quarterSize, scaled.y + quarterSize, quarterSize * 2, quarterSize * 2);
-        this.nextWave.set(nextWaveRecntagle);
+        this.creepTexture.set(scaled.x + quarterSize, scaled.y + quarterSize*1.5f, quarterSize * 2, quarterSize * 2);
+        this.nextWave.set(nextWaveRectangle);
         waveText.refresh();
         waveNumberText.refresh();
         abilityText.refresh();
