@@ -85,6 +85,7 @@ public class Menu extends Gui {
         private final MenuButton plus;
         private final DisplayText guiSize;
         private final MenuButton defaultGuiSize;
+        private final MenuButton close;
 
         InGameMenu(Gui ui, Rectangle rectangle) {
             super(ui, rectangle);
@@ -114,8 +115,8 @@ public class Menu extends Gui {
                 }
             };
 
-            guiSize = new DisplayText(ui,  new Rectangle(minus.x + minus.width, rect.y, rect.width / 2, rect.height), font,
-                BitmapFont.HAlignment.CENTER);
+            guiSize = new DisplayText(ui, new Rectangle(minus.x + minus.width, rect.y, rect.width / 2, rect.height), font,
+                    BitmapFont.HAlignment.CENTER);
 
 
             defaultGuiSize = new MenuButton(ui, rects.get(2)) {
@@ -125,12 +126,20 @@ public class Menu extends Gui {
                 }
             };
 
+            close = new MenuButton(ui, rects.get(3)) {
+                @Override
+                public void process(float x, float y) {
+                    switchCard(null);
+                }
+            };
+
             register(exit);
             register(pause);
             register(minus);
             register(plus);
             register(guiSize);
             register(defaultGuiSize);
+            register(close);
         }
 
         @Override
@@ -142,6 +151,7 @@ public class Menu extends Gui {
             plus.render("+");
             guiSize.render("GUI SIZE");
             defaultGuiSize.render("DEFAULT GUI SIZE");
+            close.render("CLOSE");
         }
     }
 
