@@ -17,6 +17,6 @@ public class BonusAttack extends EffectData {
         return iterations;
     }
     public String getEffectDescription(float speed,float damage){
-        return "asdasd";
+        return "Increase attack of nearby towers";
     }
 }
