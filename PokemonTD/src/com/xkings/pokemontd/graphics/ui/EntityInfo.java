@@ -30,15 +30,16 @@ class EntityInfo extends GuiBox {
     private final ShopTypeInfo shopTypeInfo;
     private CreepEntityInfo creepEntityInfo;
     private Entity entity;
+    private Object lastObject;
 
-    EntityInfo(final Ui ui, Rectangle rectangle, int offset, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
-               BitmapFont font, Player player, AbilityInfo abilityInfo) {
-        super(ui,rectangle);
+    EntityInfo(final Ui ui, Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch, BitmapFont font,
+               Player player) {
+        super(ui, rectangle);
         this.ui = ui;
         this.spriteBatch = spriteBatch;
 
-        towerTypeInfo = new TowerTypeInfo(ui, offsetRectange, shapeRenderer, spriteBatch, font, abilityInfo);
-        towerEntityInfo = new TowerEntityInfo(ui, offsetRectange, shapeRenderer, spriteBatch, font,abilityInfo);
+        towerTypeInfo = new TowerTypeInfo(ui, offsetRectange, shapeRenderer, spriteBatch, font);
+        towerEntityInfo = new TowerEntityInfo(ui, offsetRectange, shapeRenderer, spriteBatch, font);
         creepEntityInfo = new CreepEntityInfo(ui, offsetRectange, shapeRenderer, spriteBatch, font);
         shopTypeInfo = new ShopTypeInfo(ui, offsetRectange, shapeRenderer, spriteBatch, font);
         shopEntityInfo = new ShopEntityInfo(ui, offsetRectange, shapeRenderer, spriteBatch, font, player);
@@ -57,6 +58,8 @@ class EntityInfo extends GuiBox {
         disableClickables();
         TowerType towerType = ui.getTowerManager().getSelectedTowerType();
         if (towerType != null) {
+            check(towerType);
+            lastObject = towerType;
 
             if (towerType.getName().equals(TowerName.Shop)) {
                 shopTypeInfo.render(towerType);
@@ -68,6 +71,8 @@ class EntityInfo extends GuiBox {
 
         entity = ui.getTowerManager().getClicked();
         if (entity != null) {
+            check(entity);
+            lastObject = entity;
 
             if (entity.getComponent(TowerTypeComponent.class).getTowerType().getName().equals(TowerName.Shop)) {
                 shopEntityInfo.render(entity);
@@ -79,11 +84,20 @@ class EntityInfo extends GuiBox {
 
         entity = ui.getCreepManager().getClicked();
         if (entity != null) {
+            check(entity);
+            lastObject = entity;
             creepEntityInfo.render(entity);
             return;
         }
 
+        check(null);
 
+    }
+
+    private void check(Object o) {
+        if (lastObject != o) {
+            ui.getAbilityInfo().reset();
+        }
     }
 
     private void disableClickables() {
@@ -108,7 +122,7 @@ class EntityInfo extends GuiBox {
     public void refresh() {
         super.refresh();
         for (InteractiveElement clickable : clickables) {
-            clickable.set(offsetRectange) ;
+            clickable.set(offsetRectange);
             clickable.refresh();
         }
     }

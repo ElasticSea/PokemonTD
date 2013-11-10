@@ -9,8 +9,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.xkings.core.component.RangeComponent;
 import com.xkings.pokemontd.component.NameComponent;
 import com.xkings.pokemontd.component.SpriteComponent;
+import com.xkings.pokemontd.component.TowerTypeComponent;
 import com.xkings.pokemontd.component.TreasureComponent;
-import com.xkings.pokemontd.component.attack.AbilityComponent;
 import com.xkings.pokemontd.component.attack.effects.buff.BuffableDamageComponent;
 import com.xkings.pokemontd.component.attack.effects.buff.BuffableSpeedComponent;
 
@@ -23,15 +23,15 @@ import com.xkings.pokemontd.component.attack.effects.buff.BuffableSpeedComponent
 public class TowerEntityInfo extends TowerInfo {
 
     public TowerEntityInfo(Ui ui, Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
-                           BitmapFont font, AbilityInfo abilityInfo) {
-        super(ui, rectangle, shapeRenderer, spriteBatch, font, abilityInfo);
+                           BitmapFont font) {
+        super(ui, rectangle, shapeRenderer, spriteBatch, font);
     }
 
     public void render(Entity entity) {
         SpriteComponent spriteComponent = entity.getComponent(SpriteComponent.class);
         NameComponent nameComponent = entity.getComponent(NameComponent.class);
         RangeComponent rangeComponent = entity.getComponent(RangeComponent.class);
-        AbilityComponent abilityComponent = entity.getComponent(AbilityComponent.class);
+        TowerTypeComponent towerTypeComponent = entity.getComponent(TowerTypeComponent.class);
         Color damageColor = Color.WHITE;
         BuffableDamageComponent damageComponent = entity.getComponent(BuffableDamageComponent.class);
         Color rangeColor = Color.WHITE;
@@ -40,7 +40,7 @@ public class TowerEntityInfo extends TowerInfo {
         TreasureComponent costComponent = entity.getComponent(TreasureComponent.class);
 
         if (spriteComponent != null && nameComponent != null && rangeComponent != null && damageComponent != null &&
-                speedComponent != null) {
+                speedComponent != null && towerTypeComponent != null) {
 
             float range = rangeComponent.getRange();
 
@@ -51,17 +51,10 @@ public class TowerEntityInfo extends TowerInfo {
             if (speedComponent.getBuff() != null) {
                 speedColor = Color.YELLOW;
             }
-            /*
 
-            DamageBuffEffect damage = entity.getComponent(DamageBuffEffect.class);
-            if(damage != null){
-                damage*= damage.getRatio();
-                damageColor = Color.GREEN;
-            }           */
-
-            render(spriteComponent.getSprite(), "Dmg: " + (int) damageComponent.getDamage(), damageColor, "Spd: " + (int) speedComponent.getSpeed(), speedColor,
-                    "Rng: " + (int) range, rangeColor, costComponent.getTreasure(), nameComponent.getName(), null, 1, 1,
-                    true, false);
+            render(spriteComponent.getSprite(), damageComponent.getDamage(), damageColor, speedComponent.getSpeed(),
+                    speedColor, range, rangeColor, costComponent.getTreasure(), nameComponent.getName(),
+                    getAbility(towerTypeComponent.getTowerType()), true, false);
         }
 
     }

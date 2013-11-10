@@ -23,7 +23,7 @@ public class HitLifeStealSystem extends HitEffectSystem<LifeStealData, LifeSteal
 
     @Override
     protected LifeStealEffect resetEffect(Entity e, Entity target, LifeStealEffect effect, LifeStealData effectData) {
-        effect.set( effectData.getDuration(), effectData.getLifeRatioToSteal());
+        effect.set( effectData.getDuration(), damageMapper.get(e).getDamage());
         return effect;
     }
 

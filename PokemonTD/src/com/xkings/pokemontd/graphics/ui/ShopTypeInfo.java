@@ -17,7 +17,7 @@ public class ShopTypeInfo extends TowerTypeInfo {
 
     ShopTypeInfo(final Ui ui, Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
                  BitmapFont font) {
-        super(ui, rectangle, shapeRenderer, spriteBatch, font,null);
+        super(ui, rectangle, shapeRenderer, spriteBatch, font);
     }
 
     public void render(TowerType tower) {

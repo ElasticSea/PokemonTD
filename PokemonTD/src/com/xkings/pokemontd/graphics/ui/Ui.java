@@ -21,7 +21,7 @@ public class Ui extends Gui {
     private final StatusBar statusBar;
     private final GuiBox nextWaveInfo;
     private final GuiBox status;
-    private final GuiBox abilityText;
+    private final AbilityInfo abilityInfo;
     private final List<GuiBox> boxes = new ArrayList<GuiBox>();
     private int offset;
 
@@ -54,12 +54,12 @@ public class Ui extends Gui {
                 new Rectangle(width - statusDimensions.x, height - statusBar.height - statusOffSet - statusDimensions.y,
                         statusDimensions.x, statusDimensions.y), waveManager, interest, font);
 
-        abilityText = new AbilityInfo(this, pickTableRectangle);
+        abilityInfo = new AbilityInfo(this, pickTableRectangle);
 
         nextWaveInfo = new WaveInfo(this, new Rectangle(0, 0, squareSize, squareSize), waveManager, font);
         entityInfo = new EntityInfo(this,
-                new Rectangle(squareSize - offset, 0, width - (squareSize - offset) * 2, stripHeight), offset,
-                shapeRenderer, spriteBatch, font, player, null);
+                new Rectangle(squareSize - offset, 0, width - (squareSize - offset) * 2, stripHeight), shapeRenderer,
+                spriteBatch, font, player);
 
         register(entityInfo);
         register(nextWaveInfo);
@@ -69,7 +69,7 @@ public class Ui extends Gui {
         boxes.add(shopIcons);
         boxes.add(statusBar);
         boxes.add(status);
-        boxes.add(abilityText);
+        boxes.add(abilityInfo);
         boxes.add(nextWaveInfo);
         boxes.add(entityInfo);
     }
@@ -85,6 +85,8 @@ public class Ui extends Gui {
             towerIcons.update(towerName);
             register(towerIcons);
         }
+        unregister(abilityInfo);
+        register(abilityInfo);
         super.render();
     }
 
@@ -126,5 +128,9 @@ public class Ui extends Gui {
             guiBox.setOffset(offset);
             guiBox.refresh();
         }
+    }
+
+    public AbilityInfo getAbilityInfo() {
+        return abilityInfo;
     }
 }

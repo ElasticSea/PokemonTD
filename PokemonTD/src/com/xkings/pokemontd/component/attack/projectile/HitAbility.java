@@ -35,9 +35,9 @@ public class HitAbility extends EffectData {
                 new NormalData());
     }
 
-    public static AbilityComponent getTemLifeSteal(float scale, float ratio, float duration) {
+    public static AbilityComponent getTemLifeSteal(float scale,float duration) {
         return new HitAbility("bullet", Type.FOLLOW_TARGET, DEFAULT_SIZE * scale, NORMAL_SPEED * scale,
-                new LifeStealData(ratio, duration));
+                new LifeStealData(duration));
     }
 
 

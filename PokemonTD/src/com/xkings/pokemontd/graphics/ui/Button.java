@@ -20,22 +20,29 @@ abstract class Button extends InteractiveBlock {
     private final ShapeRenderer shapeRenderer;
     private Color color = Color.CLEAR;
     private Color backgroundColor = Color.CLEAR;
+    private final boolean wrapped;
 
     protected Button(Gui gui, float x, float y, float width, float height, BitmapFont font) {
-        this(gui, new Rectangle(x, y, width, height), font, BitmapFont.HAlignment.CENTER);
+        this(gui, new Rectangle(x, y, width, height), font, BitmapFont.HAlignment.CENTER, false);
     }
 
     protected Button(Gui gui, Rectangle rectangle, BitmapFont font) {
-        this(gui, rectangle, font, BitmapFont.HAlignment.CENTER);
+        this(gui, rectangle, font, BitmapFont.HAlignment.CENTER, false);
     }
 
+
     protected Button(Gui gui, Rectangle rectangle, BitmapFont font, BitmapFont.HAlignment alignment) {
+        this(gui, rectangle, font, alignment, false);
+    }
+
+    protected Button(Gui gui, Rectangle rectangle, BitmapFont font, BitmapFont.HAlignment alignment, boolean wrapped) {
         super(rectangle);
         this.shapeRenderer = gui.getShapeRenderer();
         this.spriteBatch = gui.getSpriteBatch();
         this.text = new String();
         this.font = font;
         this.alignment = alignment;
+        this.wrapped = wrapped;
         this.position = recalculatePosition(text);
     }
 
@@ -55,7 +62,11 @@ abstract class Button extends InteractiveBlock {
         }
         spriteBatch.begin();
         font.setColor(isEnabled() ? color : Color.GRAY);
-        font.drawMultiLine(spriteBatch, text, x, y + position.y, width, alignment);
+        if (wrapped) {
+            font.drawWrapped(spriteBatch, text, x, y+height , width, alignment);
+        } else {
+            font.drawMultiLine(spriteBatch, text, x, y + position.y, width, alignment);
+        }
         spriteBatch.end();
     }
 
