@@ -27,12 +27,13 @@ public class IncreasingDamageData extends EffectData {
         return max;
     }
 
-    public String setText() {
-        return "asdasd";
+    @Override
+    public String getEffectName() {
+        return "Increasing damage";
     }
 
     @Override
     public String getEffectDescription(float speed, float damage) {
-        return null;
+        return super.getEffectDescription(speed, damage)+  "Increasing damage";
     }
 }

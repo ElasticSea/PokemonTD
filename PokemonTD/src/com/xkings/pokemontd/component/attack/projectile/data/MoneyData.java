@@ -11,10 +11,15 @@ public class MoneyData extends EffectData {
         this.earnRatio = earnRatio;
     }
 
+    @Override
+    public String getEffectName() {
+        return "Bonus Money";
+    }
+
     public float getEarnRatio() {
         return earnRatio;
     }
     public String getEffectDescription(float speed,float damage){
-        return "";
+        return super.getEffectDescription(speed, damage)+  "";
     }
 }

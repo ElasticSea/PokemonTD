@@ -20,7 +20,13 @@ public class SlowData extends EffectData {
     public float getDuration() {
         return duration;
     }
+
+    @Override
+    public String getEffectName() {
+        return "Slow";
+    }
+
     public String getEffectDescription(float speed,float damage){
-        return "asdasd";
+        return super.getEffectDescription(speed, damage);
     }
 }

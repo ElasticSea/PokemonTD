@@ -31,9 +31,13 @@ public class DotData extends EffectData {
         return damageMultiplier;
     }
 
+    @Override
+    public String getEffectName() {
+        return "Damage over time";
+    }
 
     @Override
     public String getEffectDescription(float speed, float damage) {
-        return " Damage over time ";
+        return super.getEffectDescription(speed, damage)+  "Deals " + iterations + "X " + (int) (damage) + " every " + interval + " ms.";
     }
 }

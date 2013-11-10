@@ -30,10 +30,16 @@ public abstract class EffectData extends AbilityComponent {
         return chance;
     }
 
-    public void setChance(double chance) {
-        this.chance = chance;
-    }
+    public abstract String getEffectName();
 
-    public abstract String getEffectDescription(float speed,float damage);
+    public String getEffectDescription(float speed, float damage) {
+        if (chance == 0) {
+            return "Zero chance to ";
+        } else if (chance < 1) {
+            return "Chance " + (int) (chance * 100) + "% to ";
+        } else {
+            return "";
+        }
+    }
 
 }

@@ -24,6 +24,11 @@ public class SunbeamAbility extends EffectData {
         return height;
     }
 
+    @Override
+    public String getEffectName() {
+        return "Sun Beam";
+    }
+
     public String getEffectDescription(float speed,float damage){
         return "asdasdasdasd";
     }

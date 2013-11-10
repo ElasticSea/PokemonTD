@@ -15,7 +15,12 @@ public class LifeStealData extends EffectData {
         return duration;
     }
 
+    @Override
+    public String getEffectName() {
+        return "LifeSteal";
+    }
+
     public String getEffectDescription(float speed, float damage) {
-        return "Temporary steals " + (int) (damage * 100) + "% of creeps health for " + duration + "s.";
+        return super.getEffectDescription(speed, damage)+ "temporary steal " + (int) (damage * 100) + "% of creeps health for " + duration + "s.";
     }
 }

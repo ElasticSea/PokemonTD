@@ -14,8 +14,14 @@ public class LifeData extends EffectData {
     public float getEarnRatio() {
         return earnRatio;
     }
-    public String getEffectDescription(float speed,float damage){
-        return "asdasd";
+
+    @Override
+    public String getEffectName() {
+        return "LifeSteal";
+    }
+
+    public String getEffectDescription(float speed, float damage) {
+        return super.getEffectDescription(speed, damage)+  "drop " + earnRatio + "X life instead of gold";
     }
 
 }
