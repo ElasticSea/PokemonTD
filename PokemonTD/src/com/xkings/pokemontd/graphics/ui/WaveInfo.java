@@ -18,6 +18,7 @@ public class WaveInfo extends GuiBox {
     private final DisplayPicture creepTexture;
     private final Button nextWave;
     public static final Color NEXTWAVE_COLOR = new Color(Color.GREEN).mul(0.6f);
+    public static final Color NEXTWAVE2_COLOR = new Color(Color.GRAY).mul(0.6f);
 
     WaveInfo(final Ui ui, Rectangle rectangle, WaveManager waveManager, BitmapFont font) {
         super(ui, rectangle);
@@ -65,8 +66,11 @@ public class WaveInfo extends GuiBox {
             waveNumberText.render(String.valueOf(nextWave.getId()));
             abilityText.render(nextWave.getAbilityType().toString());
             creepTexture.render(nextWave.getTexture(), "");
+            this.nextWave.render("next wave", Color.WHITE, NEXTWAVE_COLOR);
         }
-        this.nextWave.render("next wave", Color.WHITE, NEXTWAVE_COLOR);
+        if (nextWave == null){
+            this.nextWave.render("next wave", Color.WHITE, NEXTWAVE2_COLOR);
+        }
 
     }
 

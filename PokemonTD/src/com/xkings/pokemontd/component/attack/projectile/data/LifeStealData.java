@@ -16,11 +16,11 @@ public class LifeStealData extends EffectData {
     public float getLifeRatioToSteal() {
         return lifeRationToSteal;
     }
-
     public float getDuration() {
+
         return duration;
     }
     public String getEffectDescription(float speed,float damage){
-        return "asdasd";
+        return " ";
     }
 }

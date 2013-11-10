@@ -15,6 +15,6 @@ public class MoneyData extends EffectData {
         return earnRatio;
     }
     public String getEffectDescription(float speed,float damage){
-        return "asdasd";
+        return "";
     }
 }

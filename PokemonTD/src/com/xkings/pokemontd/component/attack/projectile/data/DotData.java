@@ -34,6 +34,6 @@ public class DotData extends EffectData {
 
     @Override
     public String getEffectDescription(float speed, float damage) {
-        return " Damage over time  ";
+        return " Damage over time ";
     }
 }
