@@ -83,7 +83,8 @@ public class Menu extends Gui {
         private final Button pause;
         private final MenuButton minus;
         private final MenuButton plus;
-        private final MenuButton guiSize;
+        private final DisplayText guiSize;
+        private final MenuButton defaultGuiSize;
 
         InGameMenu(Gui ui, Rectangle rectangle) {
             super(ui, rectangle);
@@ -112,17 +113,24 @@ public class Menu extends Gui {
                     app.makeGuiLarger();
                 }
             };
-            guiSize = new MenuButton(ui, new Rectangle(minus.x + minus.width, rect.y, rect.width / 2, rect.height)) {
+
+            guiSize = new DisplayText(ui,  new Rectangle(minus.x + minus.width, rect.y, rect.width / 2, rect.height), font,
+                BitmapFont.HAlignment.CENTER);
+
+
+            defaultGuiSize = new MenuButton(ui, rects.get(2)) {
                 @Override
                 public void process(float x, float y) {
                     app.resetGuiSize();
                 }
             };
+
             register(exit);
             register(pause);
             register(minus);
             register(plus);
             register(guiSize);
+            register(defaultGuiSize);
         }
 
         @Override
@@ -133,6 +141,7 @@ public class Menu extends Gui {
             minus.render("-");
             plus.render("+");
             guiSize.render("GUI SIZE");
+            defaultGuiSize.render("DEFAULT GUI SIZE");
         }
     }
 
