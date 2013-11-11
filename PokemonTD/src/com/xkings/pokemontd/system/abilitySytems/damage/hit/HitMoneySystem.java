@@ -34,10 +34,13 @@ public class HitMoneySystem extends HitSystem<MoneyData> {
     @Override
     protected void hit(MoneyData effectData, Entity e, Entity target) {
         float damage = damageMapper.get(e).getDamage();
-        Health health = healthMapper.get(target).getHealth();
-        health.decease((int) damage);
-        if (!health.isAlive()) {
-            treasureMapper.get(target).getTreasure().multiplyGold(effectData.getEarnRatio());
+        HealthComponent healthComponent = healthMapper.getSafe(target);
+        if (healthComponent != null) {
+            Health health = healthComponent.getHealth();
+            health.decease((int) damage);
+            if (!health.isAlive()) {
+                treasureMapper.get(target).getTreasure().multiplyGold(effectData.getEarnRatio());
+            }
         }
     }
 

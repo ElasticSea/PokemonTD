@@ -42,8 +42,9 @@ public class HitLifeSystem extends HitSystem<LifeData> {
     @Override
     protected void hit(LifeData effectData, Entity e, Entity target) {
         float damage = damageBuffMapper.get(e).getDamage();
-        Health health = healthMapper.getSafe(target).getHealth();
-        if (health != null) {
+        HealthComponent healthComponent = healthMapper.getSafe(target);
+        if (healthComponent != null) {
+            Health health = healthComponent.getHealth();
             health.decease((int) damage);
             if (!health.isAlive()) {
                 health.setStealLife(true);

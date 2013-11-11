@@ -25,9 +25,12 @@ public class HitBonusSystem extends HitSystem<BonusAttack> {
     @Override
     protected void hit(BonusAttack effectData, Entity e, Entity target) {
         float damage = damageMapper.get(e).getDamage();
-        Health health = healthMapper.get(target).getHealth();
-        for (int i = 0; i < effectData.getIterations(); i++) {
-            dealDamage(damage, health);
+        HealthComponent healthComponent = healthMapper.getSafe(target);
+        if (healthComponent != null) {
+        Health health = healthComponent.getHealth();
+            for (int i = 0; i < effectData.getIterations(); i++) {
+                dealDamage(damage, health);
+            }
         }
     }
 
