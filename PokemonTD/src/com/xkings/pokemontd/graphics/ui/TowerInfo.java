@@ -85,15 +85,16 @@ public class TowerInfo extends CommonInfo {
                 // ui.getRectangle();
             }
         };
-        sell = new Button(ui, new Rectangle(x + width - offsetBlocks, y, offsetBlocks, offsetBlocks), font,
+        int buttonWidth = (int) (offsetBlocks * 1.5f);
+        sell = new Button(ui, new Rectangle(x + width - buttonWidth, y, buttonWidth, offsetBlocks), font,
                 BitmapFont.HAlignment.CENTER) {
             @Override
             public void process(float x, float y) {
                 ui.getTowerManager().sellTower();
             }
         };
-        buy = new Button(ui, new Rectangle(x + width - offsetBlocks, y + offsetBlocks, offsetBlocks, offsetBlocks),
-                font, BitmapFont.HAlignment.CENTER) {
+        buy = new Button(ui, new Rectangle(x + width - buttonWidth, y + buttonWidth, offsetBlocks, offsetBlocks), font,
+                BitmapFont.HAlignment.CENTER) {
             @Override
             public void process(float x, float y) {
                 ui.getTowerManager().buyNewOrUpgrade();
@@ -216,8 +217,9 @@ public class TowerInfo extends CommonInfo {
         updateTextField();
         ability.set(damage.x + damage.width + offsetBlocks2, y + offsetBlocks2, height - offsetBlocks,
                 height - offsetBlocks);
-        sell.set(x + width - offsetBlocks, y, offsetBlocks, offsetBlocks);
-        buy.set(x + width - offsetBlocks, y + offsetBlocks, offsetBlocks, offsetBlocks);
+        int buttonWidth = (int) (offsetBlocks * 1.5f);
+        sell.set(x + width - buttonWidth, y, buttonWidth, offsetBlocks);
+        buy.set(x + width - buttonWidth, y + offsetBlocks, buttonWidth, offsetBlocks);
 
         cost.refresh();
         damage.refresh();
