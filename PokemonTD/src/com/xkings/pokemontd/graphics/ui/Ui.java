@@ -25,7 +25,7 @@ public class Ui extends Gui {
     private final List<GuiBox> boxes = new ArrayList<GuiBox>();
     private int offset;
 
-    public Ui(App app) {
+    public Ui(App app, Menu menu) {
         super(app);
         int statusBarHeight = squareSize / 5;
         int statusHeight = statusBarHeight * 4;
@@ -47,7 +47,7 @@ public class Ui extends Gui {
         Vector2 statusBarDimensions = new Vector2(width, statusBarHeight);
         Vector2 statusDimensions = new Vector2(squareSize, statusHeight);
 
-        statusBar = new StatusBar(this,
+        statusBar = new StatusBar(this, menu,
                 new Rectangle(0, height - statusBarDimensions.y, statusBarDimensions.x, statusBarDimensions.y),
                 shopIcons, font);
         status = new Status(this,

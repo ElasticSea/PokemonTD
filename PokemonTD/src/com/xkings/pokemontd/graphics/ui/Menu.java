@@ -13,6 +13,16 @@ import java.util.List;
  */
 public class Menu extends Gui {
 
+    private Button menu;
+
+    public void setMenu(Button menu) {
+        this.menu = menu;
+    }
+
+    public Button getMenu() {
+        return menu;
+    }
+
     public enum Type {
         BLANK, INGAME, MAIN;
     }
@@ -43,7 +53,12 @@ public class Menu extends Gui {
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
+        System.out.println("MENU");
         InteractiveBlockParent cardBeforeClick = pickedCard;
+        if (menu.hit(x, y)) {
+            return true;
+        }
+
         if (isVisible()) {
             if (!pickedCard.hit(x, y) && pickedCard.isCloseTabWhenNotClicked()) {
                 pickedCard = null;
@@ -64,6 +79,7 @@ public class Menu extends Gui {
     public void triggerMenu(Type type) {
         this.pickedCard = getPickedCardByType(type);
     }
+
 
     private MenuTab getPickedCardByType(Type type) {
         switch (type) {
@@ -115,8 +131,9 @@ public class Menu extends Gui {
                 }
             };
 
-            guiSize = new DisplayText(ui, new Rectangle(minus.x + minus.width, rect.y, rect.width / 2, rect.height), font,
-                    BitmapFont.HAlignment.CENTER);
+            guiSize =
+                    new DisplayText(ui, new Rectangle(minus.x + minus.width, rect.y, rect.width / 2, rect.height), font,
+                            BitmapFont.HAlignment.CENTER);
 
 
             defaultGuiSize = new MenuButton(ui, rects.get(2)) {

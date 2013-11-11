@@ -17,7 +17,7 @@ public class StatusBar extends GuiBox {
     private final GuiBox menuBackground;
     private Rectangle square;
 
-    StatusBar(final Ui ui, Rectangle rectangle, Rectangle square, BitmapFont font) {
+    StatusBar(final Ui ui, final Menu otherUi, Rectangle rectangle, Rectangle square, BitmapFont font) {
         super(ui, rectangle);
         ui.register(this);
         this.player = ui.getPlayer();
@@ -33,7 +33,7 @@ public class StatusBar extends GuiBox {
                 new SpeedControls(ui, x + menuBackground.width, y, height * 4.5f, height, ui.getApp().getClock());
         scoreTitleText = new DisplayText(ui, new Rectangle(), font, BitmapFont.HAlignment.LEFT);
         scoreText = new DisplayText(ui, new Rectangle(), font, BitmapFont.HAlignment.RIGHT);
-        ui.register(menuButton);
+        otherUi.setMenu(menuButton);
         refresh();
     }
 

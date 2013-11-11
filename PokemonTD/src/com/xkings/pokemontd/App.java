@@ -17,6 +17,7 @@ import com.xkings.core.graphics.Renderable;
 import com.xkings.core.graphics.camera.BoundedCameraHandler;
 import com.xkings.core.graphics.camera.CameraHandler;
 import com.xkings.core.input.EnhancedGestureDetector;
+import com.xkings.core.input.GestureProcessor;
 import com.xkings.core.logic.Clock;
 import com.xkings.core.logic.WorldUpdater;
 import com.xkings.core.main.Assets;
@@ -93,6 +94,11 @@ public class App extends Game2D {
     private Renderable currentGameRenderer;
     private Renderable frozenGameRenderer;
     private DeathSystem deathSystem;
+    private GestureDetector menuInputProcessor;
+    private GestureDetector uiInputProcessor;
+    private GestureDetector inGameInputProcessor;
+    private GestureDetector cameraMovementProcessor;
+    private InputMultiplexer inputMultiplexer;
 
     public static TweenManagerAdapter getTweenManager() {
         return tweenManager;
@@ -149,8 +155,8 @@ public class App extends Game2D {
         initializeContent();
         initializeManagers();
         initializeSystems();
-        ui = new Ui(this);
         menu = new Menu(this);
+        ui = new Ui(this, menu);
         initializeInput();
         initializeTween();
         gameRenderer = new GameRenderer(this, ui, map, world, camera);
@@ -237,11 +243,15 @@ public class App extends Game2D {
     }
 
     private void initializeInput() {
-        InputMultiplexer inputMultiplexer = new InputMultiplexer();
-        inputMultiplexer.addProcessor(new GestureDetector(menu));
-        inputMultiplexer.addProcessor(new GestureDetector(ui));
-        inputMultiplexer.addProcessor(
-                new EnhancedGestureDetector(new InGameInputProcessor(towerManager, creepManager, cameraHandler)));
+        menuInputProcessor = new GestureDetector(menu);
+        uiInputProcessor = new GestureDetector(ui);
+        inGameInputProcessor = new GestureDetector(new InGameInputProcessor(towerManager, creepManager, cameraHandler));
+        cameraMovementProcessor = new EnhancedGestureDetector(new GestureProcessor(cameraHandler));
+        inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(menuInputProcessor);
+        inputMultiplexer.addProcessor(uiInputProcessor);
+        inputMultiplexer.addProcessor(inGameInputProcessor);
+        inputMultiplexer.addProcessor(cameraMovementProcessor);
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
@@ -337,7 +347,18 @@ return new MapBuilder(3, 11, PATH_SIZE, MapBuilder.Direction.DOWN, 0.40f,
 
     public void freeze(boolean freezed) {
         this.freezed = freezed;
-        currentGameRenderer = freezed ? frozenGameRenderer : gameRenderer;
+        inputMultiplexer.clear();
+        if (freezed) {
+            currentGameRenderer = frozenGameRenderer;
+            inputMultiplexer.addProcessor(menuInputProcessor);
+            inputMultiplexer.addProcessor(cameraMovementProcessor);
+        } else {
+            currentGameRenderer = gameRenderer;
+            inputMultiplexer.addProcessor(menuInputProcessor);
+            inputMultiplexer.addProcessor(uiInputProcessor);
+            inputMultiplexer.addProcessor(inGameInputProcessor);
+            inputMultiplexer.addProcessor(cameraMovementProcessor);
+        }
     }
 
     public boolean isFreezed() {
