@@ -44,6 +44,10 @@ public class TowerInfo extends CommonInfo {
     private Color rangeColorCache;
     private EffectData abilityCache;
     private EffectName effectNameCache;
+    private BitmapFont.TextBounds largestBounds;
+    private float lastDamageCache;
+    private float lastSpeedCache;
+    private float lastRangeCache;
 
     /**
      * public constuctor makes 3 text rectangles uses class DisplayText (damage,range,speed).
@@ -117,14 +121,18 @@ public class TowerInfo extends CommonInfo {
         String damageText = "DMG: " + (int) (damageCache);
         String speedText = "SPD: " + (int) (speedCache);
         String rangeText = "RNG: " + (int) (rangeCache);
-        BitmapFont.TextBounds bounds = getLargestBounds(damageText, speedText, rangeText);
+        if (damageCache != lastDamageCache || speedCache != lastSpeedCache || rangeCache != lastRangeCache) {
+            System.out.println("update");
+            largestBounds = getLargestBounds(damageText, speedText, rangeText);
+            refresh();
+        }
+        lastDamageCache = damageCache;
+        lastSpeedCache = speedCache;
+        lastRangeCache = rangeCache;
+
         this.damage.render(damageText, damageColorCache);
         this.speed.render(speedText, speedColorCache);
         this.range.render(rangeText, rangeColorCache);
-
-        this.damage.width = bounds.width;
-        this.speed.width = bounds.width;
-        this.range.width = bounds.width;
         this.cost.render(costCache);
         this.sell.render("sell", Color.WHITE, SELL_COLOR);
         this.buy.render("buy", Color.WHITE, BUY_COLOR);
@@ -132,6 +140,20 @@ public class TowerInfo extends CommonInfo {
             this.ability.render(Assets.getTexture("abilities/" + effectNameCache.name().toLowerCase()),
                     abilityCache.getEffect());
         }
+    }
+
+    private void updateTextField() {
+        this.damage.width = largestBounds.width;
+        this.speed.width = largestBounds.width;
+        this.range.width = largestBounds.width;
+    }
+
+
+    private void updateLargestBounds() {
+        String damageText = "DMG: " + (int) (damageCache);
+        String speedText = "SPD: " + (int) (speedCache);
+        String rangeText = "RNG: " + (int) (rangeCache);
+        largestBounds = getLargestBounds(damageText, speedText, rangeText);
     }
 
     private BitmapFont.TextBounds getLargestBounds(String... texts) {
@@ -181,6 +203,7 @@ public class TowerInfo extends CommonInfo {
     @Override
     public void refresh() {
         super.refresh();
+
         float offset = height / 5;
         float offsetBlocks = height / 2;
         float offsetBlocks2 = offsetBlocks / 2f;
@@ -188,6 +211,9 @@ public class TowerInfo extends CommonInfo {
         damage.set(x + offset * 5, y + offset * 3, offset * 2, offset);
         speed.set(x + offset * 5, y + offset * 2, offset * 2, offset);
         range.set(x + offset * 5, y + offset, offset, offset);
+
+        updateLargestBounds();
+        updateTextField();
         ability.set(damage.x + damage.width + offsetBlocks2, y + offsetBlocks2, height - offsetBlocks,
                 height - offsetBlocks);
         sell.set(x + width - offsetBlocks, y, offsetBlocks, offsetBlocks);
