@@ -123,6 +123,7 @@ class EntityInfo extends GuiBox {
         super.refresh();
         for (InteractiveElement clickable : clickables) {
             clickable.set(offsetRectange);
+            System.out.println("Refreshing entity info ");
             clickable.refresh();
         }
     }

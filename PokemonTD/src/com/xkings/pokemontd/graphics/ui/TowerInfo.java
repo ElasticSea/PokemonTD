@@ -24,7 +24,6 @@ import com.xkings.pokemontd.entity.tower.TowerType;
 public class TowerInfo extends CommonInfo {
     public static final Color SELL_COLOR = new Color(Color.RED).mul(0.6f);
     public static final Color BUY_COLOR = new Color(Color.GREEN).mul(0.6f);
-    public static final Color ABILITY_COLOR = new Color(Color.GREEN).mul(0.6f);
     protected final DisplayText damage;
     protected final DisplayText speed;
     protected final DisplayText range;

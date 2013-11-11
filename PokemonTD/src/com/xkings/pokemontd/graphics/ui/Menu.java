@@ -53,7 +53,6 @@ public class Menu extends Gui {
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
-        System.out.println("MENU");
         InteractiveBlockParent cardBeforeClick = pickedCard;
         if (menu.hit(x, y)) {
             return true;

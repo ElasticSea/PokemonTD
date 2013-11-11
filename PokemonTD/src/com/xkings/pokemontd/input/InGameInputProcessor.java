@@ -25,7 +25,6 @@ public class InGameInputProcessor extends GestureDetector.GestureAdapter {
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
-        System.out.println(InGameInputProcessor.class);
         Vector2 world = camera.screenToWorld(x, y);
         for (Clickable clickable : clickables){
             if(clickable.hit(world.x, world.y)){
