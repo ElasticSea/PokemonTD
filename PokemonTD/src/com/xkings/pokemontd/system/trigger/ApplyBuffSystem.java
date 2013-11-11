@@ -56,7 +56,7 @@ public class ApplyBuffSystem extends ApplyAbilitySystem<BuffAbility> {
     }
 
     private void speedBuff(BuffAbility ability, Entity target) {
-        SpeedBuffEffect speedBuff = speedBuffMapper.get(target);
+        SpeedBuffEffect speedBuff = speedBuffMapper.getSafe(target);
         if (speedBuff == null) {
             target.addComponent(new SpeedBuffEffect().set(ability.getDuration(), ability.getRatio()));
             target.changedInWorld();
@@ -64,7 +64,7 @@ public class ApplyBuffSystem extends ApplyAbilitySystem<BuffAbility> {
     }
 
     private void damageBuff(BuffAbility ability, Entity target) {
-        DamageBuffEffect damageBuff = damageBuffMapper.get(target);
+        DamageBuffEffect damageBuff = damageBuffMapper.getSafe(target);
         if (damageBuff == null) {
             target.addComponent(new DamageBuffEffect().set(ability.getDuration(), ability.getRatio()));
             target.changedInWorld();
