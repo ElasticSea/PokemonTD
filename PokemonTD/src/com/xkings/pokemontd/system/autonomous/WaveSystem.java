@@ -6,11 +6,10 @@ import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
 import com.xkings.core.component.DamageComponent;
-import com.xkings.pokemontd.component.attack.effects.buff.BuffableDamageComponent;
 import com.xkings.core.component.PositionComponent;
+import com.xkings.pokemontd.Player;
 import com.xkings.pokemontd.component.PathComponent;
 import com.xkings.pokemontd.component.WaveComponent;
-import com.xkings.pokemontd.Player;
 import com.xkings.pokemontd.map.Path;
 
 /**
@@ -28,7 +27,7 @@ public class WaveSystem extends EntityProcessingSystem {
     private final Player player;
 
     public WaveSystem(Player player) {
-        super(Aspect.getAspectForAll(WaveComponent.class, DamageComponent.class));
+        super(Aspect.getAspectForAll(WaveComponent.class, DamageComponent.class, PathComponent.class));
         this.player = player;
     }
 
