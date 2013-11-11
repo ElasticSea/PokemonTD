@@ -14,6 +14,7 @@ import java.util.Map;
 
 import static java.lang.Math.PI;
 import static java.lang.Math.pow;
+import static com.xkings.pokemontd.component.attack.EffectName.*;
 
 /**
  * User: Seda
@@ -46,104 +47,104 @@ public class TowerTypeBuilder {
     private List<TowerType> getData(float scale) {
         List<Specs> specs = new ArrayList<Specs>();
         // Shop
-        specs.add(new Specs(TowerName.Shop, 0, 18, 0, 0, null, Treasure.fromNone()));
+        specs.add(new Specs(TowerName.Shop, null, 0, 18, 0, 0, null, Treasure.fromNone()));
         /// ######################  PURES
         // Basic
-        specs.add(new Specs(TowerName.Needle, 1, 18, N_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromNone()));
-        specs.add(new Specs(TowerName.Pinch, 2, 18, N_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromNone()));
-        specs.add(new Specs(TowerName.Sting, 3, 18, N_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromNone()));
-        specs.add(new Specs(TowerName.Scratch, 1, 18, S_SPEED, N_RANGE, HitAbility.getSplash("bullet", scale, 2), Treasure.fromNone()));
-        specs.add(new Specs(TowerName.Bite, 2, 18, S_SPEED, N_RANGE, HitAbility.getSplash("bullet", scale, 2), Treasure.fromNone()));
-        specs.add(new Specs(TowerName.Smash, 3, 18, S_SPEED, N_RANGE, HitAbility.getSplash("bullet", scale, 2), Treasure.fromNone()));
+        specs.add(new Specs(TowerName.Needle, null, 1, 18, N_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromNone()));
+        specs.add(new Specs(TowerName.Pinch, null, 2, 18, N_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromNone()));
+        specs.add(new Specs(TowerName.Sting, null, 3, 18, N_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromNone()));
+        specs.add(new Specs(TowerName.Scratch, null, 1, 18, S_SPEED, N_RANGE, HitAbility.getSplash("bullet", scale, 2), Treasure.fromNone()));
+        specs.add(new Specs(TowerName.Bite, null, 2, 18, S_SPEED, N_RANGE, HitAbility.getSplash("bullet", scale, 2), Treasure.fromNone()));
+        specs.add(new Specs(TowerName.Smash, null, 3, 18, S_SPEED, N_RANGE, HitAbility.getSplash("bullet", scale, 2), Treasure.fromNone()));
         // blue
-        specs.add(new Specs(TowerName.Splash, 4, 18, N_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromWater(1)));
-        specs.add(new Specs(TowerName.Wave, 5, 18, N_SPEED, N_RANGE, HitAbility.getBubble("bubble", scale), Treasure.fromWater(2)));
-        specs.add(new Specs(TowerName.Tsunami, 10, 18, N_SPEED, N_RANGE, HitAbility.getBubbleGrowing(scale), Treasure.fromWater(3)));
+        specs.add(new Specs(TowerName.Splash, null, 4, 18, N_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromWater(1)));
+        specs.add(new Specs(TowerName.Ripple, Wave, 5, 18, N_SPEED, N_RANGE, HitAbility.getBubble("bubble", scale), Treasure.fromWater(2)));
+        specs.add(new Specs(TowerName.Tsunami, Wave, 10, 18, N_SPEED, N_RANGE, HitAbility.getBubbleGrowing(scale), Treasure.fromWater(3)));
         //red
-        specs.add(new Specs(TowerName.Sparkle, 4, 18, N_SPEED, S_RANGE, HitAbility.getFire(scale), Treasure.fromFire(1)));
-        specs.add(new Specs(TowerName.Burning, 5, 18, L_SPEED, S_RANGE, HitAbility.getFire(scale), Treasure.fromFire(2)));
-        specs.add(new Specs(TowerName.Inferno, 10, 18, XL_SPEED, S_RANGE, HitAbility.getFireDot(scale), Treasure.fromFire(3)));
+        specs.add(new Specs(TowerName.Sparkle, Burn, 4, 18, N_SPEED, S_RANGE, HitAbility.getFire(scale), Treasure.fromFire(1)));
+        specs.add(new Specs(TowerName.Burning, Burn, 5, 18, L_SPEED, S_RANGE, HitAbility.getFire(scale), Treasure.fromFire(2)));
+        specs.add(new Specs(TowerName.Inferno, Burn, 10, 18, XL_SPEED, S_RANGE, HitAbility.getFireDot(scale), Treasure.fromFire(3)));
         //green
-        specs.add(new Specs(TowerName.Flower, 4, 18, XS_SPEED, S_RANGE, HitAbility.getNature(scale, 0.2f, 1, 0.2f), Treasure.fromNature(1)));
-        specs.add(new Specs(TowerName.Forest, 5, 18, XS_SPEED, S_RANGE, HitAbility.getNature(scale, 0.3f, 1.2f, 0.3f), Treasure.fromNature(2)));
-        specs.add(new Specs(TowerName.Nature, 10, 18, XS_SPEED, S_RANGE, HitAbility.getNature(scale, 0.7f, 2f, 0.5f), Treasure.fromNature(3)));
+        specs.add(new Specs(TowerName.Flower, Entangle, 4, 18, XS_SPEED, S_RANGE, HitAbility.getNature(scale, 0.2f, 1, 0.2f), Treasure.fromNature(1)));
+        specs.add(new Specs(TowerName.Forest, Entangle, 5, 18, XS_SPEED, S_RANGE, HitAbility.getNature(scale, 0.3f, 1.2f, 0.3f), Treasure.fromNature(2)));
+        specs.add(new Specs(TowerName.Nature, Entangle, 10, 18, XS_SPEED, S_RANGE, HitAbility.getNature(scale, 0.7f, 2f, 0.5f), Treasure.fromNature(3)));
         //yellow
-        specs.add(new Specs(TowerName.Chicken, 4, 18, L_SPEED, N_RANGE, HitAbility.getClaw(scale, 0f, 0), Treasure.fromLight(1)));
-        specs.add(new Specs(TowerName.Screech, 5, 18, L_SPEED, N_RANGE, HitAbility.getClaw(scale, 0.1f, 1), Treasure.fromLight(2)));
-        specs.add(new Specs(TowerName.Claw, 10, 18, L_SPEED, N_RANGE, HitAbility.getClaw(scale, 0.3f, 2), Treasure.fromLight(3)));
+        specs.add(new Specs(TowerName.Chicken, Peck, 4, 18, L_SPEED, N_RANGE, HitAbility.getClaw(scale, 0f, 0), Treasure.fromLight(1)));
+        specs.add(new Specs(TowerName.Screech, Peck, 5, 18, L_SPEED, N_RANGE, HitAbility.getClaw(scale, 0.1f, 1), Treasure.fromLight(2)));
+        specs.add(new Specs(TowerName.Claw, Peck, 10, 18, L_SPEED, N_RANGE, HitAbility.getClaw(scale, 0.3f, 2), Treasure.fromLight(3)));
         //purple
-        specs.add(new Specs(TowerName.Spooky, 4, 18, N_SPEED, XL_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromDarkness(1)));
-        specs.add(new Specs(TowerName.Haunted, 5, 18, N_SPEED, XL_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromDarkness(2)));
-        specs.add(new Specs(TowerName.Nightmare, 10, 0.3f, N_SPEED, XL_RANGE, HitAbility.getTemLifeSteal(scale, 5f), Treasure.fromDarkness(3)));
+        specs.add(new Specs(TowerName.Spooky, null, 4, 18, N_SPEED, XL_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromDarkness(1)));
+        specs.add(new Specs(TowerName.Haunted, null, 5, 18, N_SPEED, XL_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromDarkness(2)));
+        specs.add(new Specs(TowerName.Nightmare, Terrify, 10, 0.3f, N_SPEED, XL_RANGE, HitAbility.getTemLifeSteal(scale, 5f), Treasure.fromDarkness(3)));
         /// ######################  TWO ELEMENT
-        specs.add(new Specs(TowerName.Noble, 5, 18, 45, BUFF_RANGE, BuffAbility.getSpeed(1.25f, 45), Treasure.fromWater(1).addFire(1)));
-        specs.add(new Specs(TowerName.Majestic, 7, 18, 45, BUFF_RANGE, BuffAbility.getSpeed(1.5f, 45), Treasure.fromWater(2).addFire(2)));
-        specs.add(new Specs(TowerName.Magnificent, 9, 18, 45, BUFF_RANGE, BuffAbility.getSpeed(2f, 45), Treasure.fromWater(3).addFire(3)));
+        specs.add(new Specs(TowerName.Noble, Haste, 5, 18, 45, BUFF_RANGE, BuffAbility.getSpeed(1.25f, 45), Treasure.fromWater(1).addFire(1)));
+        specs.add(new Specs(TowerName.Majestic, Haste, 7, 18, 45, BUFF_RANGE, BuffAbility.getSpeed(1.5f, 45), Treasure.fromWater(2).addFire(2)));
+        specs.add(new Specs(TowerName.Magnificent, Haste, 9, 18, 45, BUFF_RANGE, BuffAbility.getSpeed(2f, 45), Treasure.fromWater(3).addFire(3)));
 
-        specs.add(new Specs(TowerName.Sunny, 5, 18, XS_SPEED, L_RANGE, new SunbeamAbility(0.2f, L_RANGE), Treasure.fromWater(1).addNature(1)));
-        specs.add(new Specs(TowerName.Solar, 7, 18, XS_SPEED, L_RANGE, new SunbeamAbility(0.7f, L_RANGE * 1.5f), Treasure.fromWater(2).addNature(2)));
-        specs.add(new Specs(TowerName.Photonic, 9, 18, XS_SPEED, L_RANGE, new SunbeamAbility(1.7f, L_RANGE * 2), Treasure.fromWater(3).addNature(3)));
+        specs.add(new Specs(TowerName.Sunny, Sunbeam, 5, 18, XS_SPEED, L_RANGE, new SunbeamAbility(0.2f, L_RANGE), Treasure.fromWater(1).addNature(1)));
+        specs.add(new Specs(TowerName.Solar, Sunbeam, 7, 18, XS_SPEED, L_RANGE, new SunbeamAbility(0.7f, L_RANGE * 1.5f), Treasure.fromWater(2).addNature(2)));
+        specs.add(new Specs(TowerName.Photonic, Sunbeam, 9, 18, XS_SPEED, L_RANGE, new SunbeamAbility(1.7f, L_RANGE * 2), Treasure.fromWater(3).addNature(3)));
 
-        specs.add(new Specs(TowerName.Poison, 5, 18, N_SPEED, N_RANGE, HitAbility.getPoison(scale, 0.2f, 1, 0.2f), Treasure.fromWater(1).addLight(1)));
-        specs.add(new Specs(TowerName.Toxic, 7, 18, N_SPEED, N_RANGE, HitAbility.getPoison(scale, 0.2f, 1, 0.2f), Treasure.fromWater(2).addLight(2)));
-        specs.add(new Specs(TowerName.Venom, 9, 18, N_SPEED, N_RANGE, HitAbility.getPoison(scale, 0.2f, 1, 0.2f), Treasure.fromWater(3).addLight(3)));
+        specs.add(new Specs(TowerName.Poison, Weaken, 5, 18, N_SPEED, N_RANGE, HitAbility.getPoison(scale, 0.2f, 1, 0.2f), Treasure.fromWater(1).addLight(1)));
+        specs.add(new Specs(TowerName.Toxic, Weaken, 7, 18, N_SPEED, N_RANGE, HitAbility.getPoison(scale, 0.2f, 1, 0.2f), Treasure.fromWater(2).addLight(2)));
+        specs.add(new Specs(TowerName.Venom, Weaken, 9, 18, N_SPEED, N_RANGE, HitAbility.getPoison(scale, 0.2f, 1, 0.2f), Treasure.fromWater(3).addLight(3)));
 
-        specs.add(new Specs(TowerName.Ice, 5, 18, N_SPEED, N_RANGE, HitAbility.getSlow("bullet", "ice", scale, 0f, 0.2f, 1, 1f), Treasure.fromWater(1).addDarkness(1)));
-        specs.add(new Specs(TowerName.Freezing, 7, 18, N_SPEED, N_RANGE, HitAbility.getSlow("bullet", "ice", scale, 1f, 0.3f, 1.5f, 1f), Treasure.fromWater(2).addDarkness(2)));
-        specs.add(new Specs(TowerName.Polar, 9, 18, N_SPEED, N_RANGE, HitAbility.getSlow("bullet", "ice", scale, 2f, 0.7f, 2, 1f), Treasure.fromWater(3).addDarkness(3)));
+        specs.add(new Specs(TowerName.Ice, Freeze, 5, 18, N_SPEED, N_RANGE, HitAbility.getSlow("bullet", "ice", scale, 0f, 0.2f, 1, 1f), Treasure.fromWater(1).addDarkness(1)));
+        specs.add(new Specs(TowerName.Freezing, Freeze, 7, 18, N_SPEED, N_RANGE, HitAbility.getSlow("bullet", "ice", scale, 1f, 0.3f, 1.5f, 1f), Treasure.fromWater(2).addDarkness(2)));
+        specs.add(new Specs(TowerName.Polar, Freeze, 9, 18, N_SPEED, N_RANGE, HitAbility.getSlow("bullet", "ice", scale, 2f, 0.7f, 2, 1f), Treasure.fromWater(3).addDarkness(3)));
 
-        specs.add(new Specs(TowerName.Burst, 5, 18, XXL_SPEED, N_RANGE, HitAbility.getIncreasingDamage(scale), Treasure.fromFire(1).addNature(1)));
-        specs.add(new Specs(TowerName.Pyro, 7, 18, XXL_SPEED, N_RANGE, HitAbility.getIncreasingDamage(scale), Treasure.fromFire(2).addNature(2)));
-        specs.add(new Specs(TowerName.Flamethrower, 9, 18, XXL_SPEED, N_RANGE, HitAbility.getIncreasingDamage(scale), Treasure.fromFire(3).addNature(3)));
+        specs.add(new Specs(TowerName.Burst, Incinerate, 5, 18, XXL_SPEED, N_RANGE, HitAbility.getIncreasingDamage(scale), Treasure.fromFire(1).addNature(1)));
+        specs.add(new Specs(TowerName.Pyro, Incinerate, 7, 18, XXL_SPEED, N_RANGE, HitAbility.getIncreasingDamage(scale), Treasure.fromFire(2).addNature(2)));
+        specs.add(new Specs(TowerName.Flamethrower, Incinerate, 9, 18, XXL_SPEED, N_RANGE, HitAbility.getIncreasingDamage(scale), Treasure.fromFire(3).addNature(3)));
 
-        specs.add(new Specs(TowerName.Punch, 5, 18, N_SPEED, N_RANGE, HitAbility.getSlow("rock", "rockEffect", scale, 2f, 0.1f, 1, 1f), Treasure.fromFire(1).addLight(1)));
-        specs.add(new Specs(TowerName.Takedown, 7, 18, N_SPEED, N_RANGE, HitAbility.getSlow("rock", "rockEffect", scale, 2f, 0.2f, 2, 1f), Treasure.fromFire(2).addLight(2)));
-        specs.add(new Specs(TowerName.Knockout, 9, 18, N_SPEED, N_RANGE, HitAbility.getSlow("rock", "rockEffect", scale, 2f, 0.3f, 3, 1f), Treasure.fromFire(3).addLight(3)));
+        specs.add(new Specs(TowerName.Punch, Stomp, 5, 18, N_SPEED, N_RANGE, HitAbility.getSlow("rock", "rockEffect", scale, 2f, 0.1f, 1, 1f), Treasure.fromFire(1).addLight(1)));
+        specs.add(new Specs(TowerName.Takedown, Stomp, 7, 18, N_SPEED, N_RANGE, HitAbility.getSlow("rock", "rockEffect", scale, 2f, 0.2f, 2, 1f), Treasure.fromFire(2).addLight(2)));
+        specs.add(new Specs(TowerName.Knockout, Stomp, 9, 18, N_SPEED, N_RANGE, HitAbility.getSlow("rock", "rockEffect", scale, 2f, 0.3f, 3, 1f), Treasure.fromFire(3).addLight(3)));
 
-        specs.add(new Specs(TowerName.Sneaky, 5, 18, N_SPEED, N_RANGE, HitAbility.getMoney(scale, 1.5f), Treasure.fromFire(1).addDarkness(1)));
-        specs.add(new Specs(TowerName.Stealth, 7, 18, N_SPEED, N_RANGE, HitAbility.getMoney(scale, 1.75f), Treasure.fromFire(2).addDarkness(2)));
-        specs.add(new Specs(TowerName.Thief, 9, 18, N_SPEED, N_RANGE, HitAbility.getMoney(scale, 2f), Treasure.fromFire(3).addDarkness(3)));
+        specs.add(new Specs(TowerName.Sneaky, Steal, 5, 18, N_SPEED, N_RANGE, HitAbility.getMoney(scale, 1.5f), Treasure.fromFire(1).addDarkness(1)));
+        specs.add(new Specs(TowerName.Stealth, Steal, 7, 18, N_SPEED, N_RANGE, HitAbility.getMoney(scale, 1.75f), Treasure.fromFire(2).addDarkness(2)));
+        specs.add(new Specs(TowerName.Thief, Steal, 9, 18, N_SPEED, N_RANGE, HitAbility.getMoney(scale, 2f), Treasure.fromFire(3).addDarkness(3)));
 
-        specs.add(new Specs(TowerName.Pebble, 5, 18, S_SPEED, N_RANGE, HitAbility.getSplash("rock", scale, 2), Treasure.fromNature(1).addLight(1)));
-        specs.add(new Specs(TowerName.Rocky, 7, 18, S_SPEED, S_RANGE, HitAbility.getSplash("rock", scale, 3), Treasure.fromNature(2).addLight(2)));
-        specs.add(new Specs(TowerName.Massive, 9, 18, XS_SPEED, XS_RANGE, HitAbility.getSplash("rock", scale, 5), Treasure.fromNature(3).addLight(3)));
+        specs.add(new Specs(TowerName.Pebble, Boulder, 5, 18, S_SPEED, N_RANGE, HitAbility.getSplash("rock", scale, 2), Treasure.fromNature(1).addLight(1)));
+        specs.add(new Specs(TowerName.Rocky, Boulder, 7, 18, S_SPEED, S_RANGE, HitAbility.getSplash("rock", scale, 3), Treasure.fromNature(2).addLight(2)));
+        specs.add(new Specs(TowerName.Massive, Boulder, 9, 18, XS_SPEED, XS_RANGE, HitAbility.getSplash("rock", scale, 5), Treasure.fromNature(3).addLight(3)));
 
-        specs.add(new Specs(TowerName.Dizzy, 5, 18, N_SPEED, N_RANGE, HitAbility.getSlow("bullet", "orb", scale, 0, 0.5f, 1, 0.5f), Treasure.fromNature(1).addDarkness(1)));
-        specs.add(new Specs(TowerName.Paralyze, 7, 18, N_SPEED, N_RANGE, HitAbility.getSlow("bullet", "orb", scale, 0, 0.7f, 2, 0.75f), Treasure.fromNature(2).addDarkness(2)));
-        specs.add(new Specs(TowerName.Crippling, 9, 18, N_SPEED, N_RANGE, HitAbility.getSlow("bullet", "orb", scale, 0, 0.9f, 4, 0.85f), Treasure.fromNature(3).addDarkness(3)));
+        specs.add(new Specs(TowerName.Dizzy, Impair, 5, 18, N_SPEED, N_RANGE, HitAbility.getSlow("bullet", "orb", scale, 0, 0.5f, 1, 0.5f), Treasure.fromNature(1).addDarkness(1)));
+        specs.add(new Specs(TowerName.Paralyze, Impair, 7, 18, N_SPEED, N_RANGE, HitAbility.getSlow("bullet", "orb", scale, 0, 0.7f, 2, 0.75f), Treasure.fromNature(2).addDarkness(2)));
+        specs.add(new Specs(TowerName.Crippling, Impair, 9, 18, N_SPEED, N_RANGE, HitAbility.getSlow("bullet", "orb", scale, 0, 0.9f, 4, 0.85f), Treasure.fromNature(3).addDarkness(3)));
 
-        specs.add(new Specs(TowerName.Spell, 5, 18, 45, BUFF_RANGE, BuffAbility.getDamage(1.25f, 45), Treasure.fromWater(1).addFire(1)));
-        specs.add(new Specs(TowerName.Enchanted, 7, 18, 45, BUFF_RANGE, BuffAbility.getDamage(1.5f, 45), Treasure.fromWater(2).addFire(2)));
-        specs.add(new Specs(TowerName.Magic, 9, 18, 45, BUFF_RANGE, BuffAbility.getDamage(2f, 45), Treasure.fromWater(3).addFire(3)));
+        specs.add(new Specs(TowerName.Spell, Charm, 5, 18, 45, BUFF_RANGE, BuffAbility.getDamage(1.25f, 45), Treasure.fromWater(1).addFire(1)));
+        specs.add(new Specs(TowerName.Enchanted, Charm, 7, 18, 45, BUFF_RANGE, BuffAbility.getDamage(1.5f, 45), Treasure.fromWater(2).addFire(2)));
+        specs.add(new Specs(TowerName.Magic, Charm, 9, 18, 45, BUFF_RANGE, BuffAbility.getDamage(2f, 45), Treasure.fromWater(3).addFire(3)));
 
 
         /// ######################  TREE ELEMENT
-        specs.add(new Specs(TowerName.Grind, 6, 18, XS_SPEED, N_RANGE, HitAbility.getSplash("rock",scale, 3f), Treasure.fromWater(1).addFire(1).addNature(1)));
-        specs.add(new Specs(TowerName.Pulverize, 9, 18, XXS_SPEED, S_RANGE, HitAbility.getSplash("rock",scale, 6f), Treasure.fromWater(1).addFire(1).addNature(1)));
+        specs.add(new Specs(TowerName.Grind, Shatter, 6, 18, XS_SPEED, N_RANGE, HitAbility.getSplash("rock", scale, 3f), Treasure.fromWater(1).addFire(1).addNature(1)));
+        specs.add(new Specs(TowerName.Pulverize, Shatter, 9, 18, XXS_SPEED, S_RANGE, HitAbility.getSplash("rock", scale, 6f), Treasure.fromWater(1).addFire(1).addNature(1)));
 
-        specs.add(new Specs(TowerName.Throttling, 6, 18, XXL_SPEED, S_RANGE, HitAbility.getBubble("fire", scale), Treasure.fromWater(1).addFire(1).addLight(1)));
-        specs.add(new Specs(TowerName.Galloping, 9, 18, XXL_SPEED, S_RANGE, HitAbility.getBubble("fire", scale), Treasure.fromWater(2).addFire(2).addLight(2)));
+        specs.add(new Specs(TowerName.Throttling, Blaze, 6, 18, XXL_SPEED, S_RANGE, HitAbility.getBubble("fire", scale), Treasure.fromWater(1).addFire(1).addLight(1)));
+        specs.add(new Specs(TowerName.Galloping, Blaze, 9, 18, XXL_SPEED, S_RANGE, HitAbility.getBubble("fire", scale), Treasure.fromWater(2).addFire(2).addLight(2)));
 
-        specs.add(new Specs(TowerName.Vampire, 6, 18, N_SPEED, N_RANGE, HitAbility.getLife(scale, 1f, 0.5f), Treasure.fromWater(1).addNature(1).addLight(1)));
-        specs.add(new Specs(TowerName.Dracula, 9, 18, N_SPEED, N_RANGE, HitAbility.getLife(scale, 1f, 1f), Treasure.fromWater(2).addNature(2).addLight(2)));
+        specs.add(new Specs(TowerName.Vampire, LifeSteal, 6, 18, N_SPEED, N_RANGE, HitAbility.getLife(scale, 1f, 0.5f), Treasure.fromWater(1).addNature(1).addLight(1)));
+        specs.add(new Specs(TowerName.Dracula, LifeSteal, 9, 18, N_SPEED, N_RANGE, HitAbility.getLife(scale, 1f, 1f), Treasure.fromWater(2).addNature(2).addLight(2)));
 
-        specs.add(new Specs(TowerName.Disease, 6, 18, XS_SPEED, N_RANGE, HitAbility.getAuraDmg(scale, N_RANGE), Treasure.fromWater(1).addLight(1).addDarkness(1)));
-        specs.add(new Specs(TowerName.Epidemic, 9, 18, XL_SPEED, L_RANGE, HitAbility.getAuraDmg(scale, L_RANGE), Treasure.fromWater(2).addLight(2).addDarkness(2)));
+        specs.add(new Specs(TowerName.Disease, Infect, 6, 18, XS_SPEED, N_RANGE, HitAbility.getAuraDmg(scale, N_RANGE), Treasure.fromWater(1).addLight(1).addDarkness(1)));
+        specs.add(new Specs(TowerName.Epidemic, Infect, 9, 18, XL_SPEED, L_RANGE, HitAbility.getAuraDmg(scale, L_RANGE), Treasure.fromWater(2).addLight(2).addDarkness(2)));
 
-        specs.add(new Specs(TowerName.Confused, 6, 18, L_SPEED, N_RANGE, HitAbility.getDumbClaw(scale, 0f, 0), Treasure.fromWater(1).addLight(1).addDarkness(1)));
-        specs.add(new Specs(TowerName.Supersonic, 9, 18, L_SPEED, N_RANGE, HitAbility.getBubble("bubble", scale), Treasure.fromWater(2).addLight(2).addDarkness(2)));
+        specs.add(new Specs(TowerName.Confused, SoundWave, 6, 18, L_SPEED, N_RANGE, HitAbility.getDumbClaw(scale, 0f, 0), Treasure.fromWater(1).addLight(1).addDarkness(1)));
+        specs.add(new Specs(TowerName.Supersonic, SoundWave, 9, 18, L_SPEED, N_RANGE, HitAbility.getBubble("bubble", scale), Treasure.fromWater(2).addLight(2).addDarkness(2)));
 
-        specs.add(new Specs(TowerName.Charged, 6, 18, S_SPEED, XL_RANGE, HitAbility.getCharge(scale), Treasure.fromFire(1).addNature(1).addLight(1)));
-        specs.add(new Specs(TowerName.Supercharged, 9, 18, XS_SPEED, XXXL_RANGE, HitAbility.getCharge(scale * 2), Treasure.fromFire(2).addNature(2).addLight(2)));
+        specs.add(new Specs(TowerName.Charged, Thunderbolt, 6, 18, S_SPEED, XL_RANGE, HitAbility.getCharge(scale), Treasure.fromFire(1).addNature(1).addLight(1)));
+        specs.add(new Specs(TowerName.Supercharged, Thunderbolt, 9, 18, XS_SPEED, XXXL_RANGE, HitAbility.getCharge(scale * 2), Treasure.fromFire(2).addNature(2).addLight(2)));
 
-        specs.add(new Specs(TowerName.Stomp, 6, 18, N_SPEED, N_RANGE, HitAbility.getSlow("rock", "", scale, 0, 1f, 0.5f, 0.8f), Treasure.fromFire(1).addNature(1).addDarkness(1)));
-        specs.add(new Specs(TowerName.Earthquake, 9, 18, S_SPEED, N_RANGE, HitAbility.getSlow("rock", "", scale, 0, 1f, 1.5f, 1), Treasure.fromFire(2).addNature(2).addDarkness(2)));
+        specs.add(new Specs(TowerName.Stomp, Quake, 6, 18, N_SPEED, N_RANGE, HitAbility.getSlow("rock", "", scale, 0, 1f, 0.5f, 0.8f), Treasure.fromFire(1).addNature(1).addDarkness(1)));
+        specs.add(new Specs(TowerName.Earthquake, Quake, 9, 18, S_SPEED, N_RANGE, HitAbility.getSlow("rock", "", scale, 0, 1f, 1.5f, 1), Treasure.fromFire(2).addNature(2).addDarkness(2)));
 
-        specs.add(new Specs(TowerName.Erruption, 6, 18, XS_SPEED, N_RANGE, HitAbility.getAuraDmg(scale, N_RANGE), Treasure.fromFire(1).addLight(1).addDarkness(1)));
-        specs.add(new Specs(TowerName.Volcanic, 9, 18, XXS_SPEED, S_RANGE, HitAbility.getVolcano(scale, S_RANGE), Treasure.fromFire(2).addLight(2).addDarkness(2)));
+        specs.add(new Specs(TowerName.Erruption, Magma, 6, 18, XS_SPEED, N_RANGE, HitAbility.getAuraDmg(scale, N_RANGE), Treasure.fromFire(1).addLight(1).addDarkness(1)));
+        specs.add(new Specs(TowerName.Volcanic, Magma, 9, 18, XXS_SPEED, S_RANGE, HitAbility.getVolcano(scale, S_RANGE), Treasure.fromFire(2).addLight(2).addDarkness(2)));
 
-        specs.add(new Specs(TowerName.Hypnotic, 6, 18, N_SPEED, N_RANGE, HitAbility.getChangeDirection(scale, 1,0.02f), Treasure.fromNature(1).addLight(1).addDarkness(1)));
-        specs.add(new Specs(TowerName.Illusion,9, 18, N_SPEED, N_RANGE, HitAbility.getChangeDirection(scale,5,0.03f), Treasure.fromNature(2).addLight(2).addDarkness(2)));
+        specs.add(new Specs(TowerName.Hypnotic, Puzzle, 6, 18, N_SPEED, N_RANGE, HitAbility.getChangeDirection(scale, 1, 0.02f), Treasure.fromNature(1).addLight(1).addDarkness(1)));
+        specs.add(new Specs(TowerName.Illusion, Puzzle, 9, 18, N_SPEED, N_RANGE, HitAbility.getChangeDirection(scale, 5, 0.03f), Treasure.fromNature(2).addLight(2).addDarkness(2)));
 
         List<TowerType> data = new ArrayList<TowerType>();
         for (Specs specification : specs) {
@@ -153,10 +154,10 @@ public class TowerTypeBuilder {
     }
 
     private TowerType createTowerType(float scale, Specs specs) {
-       // float damage = getDamage(getBaseDamage(INITIAL_BASE_DAMAGE, specs.level), specs.range, specs.speed);
+        // float damage = getDamage(getBaseDamage(INITIAL_BASE_DAMAGE, specs.level), specs.range, specs.speed);
         Treasure treasure = new Treasure(getGold(INITIAL_GOLD, specs.level));
         treasure.add(specs.treasure);
-        return new TowerType(specs.name, specs.effectName,SIZE * scale, specs.speed, specs.damage, specs.range * scale, specs.attackComponent, treasure);
+        return new TowerType(specs.name, specs.effectName, SIZE * scale, specs.speed, specs.damage, specs.range * scale, specs.attackComponent, treasure);
     }
   /*
     private float getDamage(float baseDamage, float range, float speed) {
