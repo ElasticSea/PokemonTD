@@ -136,13 +136,13 @@ public abstract class PickEntitySystem extends EntitySystem implements PickEntit
             //Vector3 size = sizeMapper.get(e).getPoint();
             if (!visibilityMapper.has(e) || visibilityMapper.get(e).isVisible()) {
                 if (!healthMapper.has(e) || healthMapper.get(e).getHealth().isDestructible()) {
-                    // FIXME: Collision should not be negated, there must be a mistake.
-                    if (!Collision.intersectpointInRect(position, entityPosition, entityRange, entityRange)) {
+                    // FIXME: Collision should not be negated, there must be a mistake. 67It does not work at all.
+                 //  if (Collision.intersectpointInRect(position, entityPosition, entityRange, entityRange)) {
                         float distance = calculateDistance(entityPosition, position);
                         if (this.entity != e && e.isEnabled() && distance <= entityRange) {
                             reachable.add(e);
                         }
-                    }
+                  //  }
                 }
             }
         }

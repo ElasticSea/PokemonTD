@@ -113,7 +113,7 @@ public class TowerTypeBuilder {
         specs.add(new Specs(TowerName.Paralyze, Impair, 7, 18, N_SPEED, N_RANGE, HitAbility.getSlow("bullet", "orb", scale, 0, 0.7f, 2, 0.75f), Treasure.fromNature(2).addDarkness(2)));
         specs.add(new Specs(TowerName.Crippling, Impair, 9, 18, N_SPEED, N_RANGE, HitAbility.getSlow("bullet", "orb", scale, 0, 0.9f, 4, 0.85f), Treasure.fromNature(3).addDarkness(3)));
 
-        specs.add(new Specs(TowerName.Spell, Charm, 5, 18, 45, BUFF_RANGE, BuffAbility.getDamage(1.25f, 45), Treasure.fromWater(1).addFire(1)));
+        specs.add(new Specs(TowerName.Spell, Charm, 5, 18, 1, BUFF_RANGE, BuffAbility.getDamage(1.25f, 45), Treasure.fromWater(1).addFire(1)));
         specs.add(new Specs(TowerName.Enchanted, Charm, 7, 18, 45, BUFF_RANGE, BuffAbility.getDamage(1.5f, 45), Treasure.fromWater(2).addFire(2)));
         specs.add(new Specs(TowerName.Magic, Charm, 9, 18, 45, BUFF_RANGE, BuffAbility.getDamage(2f, 45), Treasure.fromWater(3).addFire(3)));
 

@@ -46,4 +46,10 @@ public class ClosestSystem extends PickEntitySystem {
     public Entity getPickedEntity() {
         return closestEntity;
     }
+
+    @Override
+    public void start(Entity entity, Vector3 position, float range) {
+        closestDistance = Float.MAX_VALUE;
+        super.start(entity, position, range);
+    }
 }
