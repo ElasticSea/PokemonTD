@@ -38,11 +38,11 @@ class EntityInfo extends GuiBox {
         this.ui = ui;
         this.spriteBatch = spriteBatch;
 
-        towerTypeInfo = new TowerTypeInfo(ui, offsetRectange, shapeRenderer, spriteBatch, font);
-        towerEntityInfo = new TowerEntityInfo(ui, offsetRectange, shapeRenderer, spriteBatch, font);
-        creepEntityInfo = new CreepEntityInfo(ui, offsetRectange, shapeRenderer, spriteBatch, font);
-        shopTypeInfo = new ShopTypeInfo(ui, offsetRectange, shapeRenderer, spriteBatch, font);
-        shopEntityInfo = new ShopEntityInfo(ui, offsetRectange, shapeRenderer, spriteBatch, font, player);
+        towerTypeInfo = new TowerTypeInfo(ui, this, shapeRenderer, spriteBatch, font);
+        towerEntityInfo = new TowerEntityInfo(ui, this, shapeRenderer, spriteBatch, font);
+        creepEntityInfo = new CreepEntityInfo(ui, this, shapeRenderer, spriteBatch, font);
+        shopTypeInfo = new ShopTypeInfo(ui, this, shapeRenderer, spriteBatch, font);
+        shopEntityInfo = new ShopEntityInfo(ui, this, shapeRenderer, spriteBatch, font, player);
 
         clickables = new ArrayList<InteractiveElement>();
         clickables.add(towerTypeInfo);
