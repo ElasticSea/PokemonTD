@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.xkings.pokemontd.App;
 import com.xkings.pokemontd.Element;
 import com.xkings.pokemontd.Treasure;
 
@@ -20,6 +21,7 @@ public class TowerCost extends InteractiveBlock {
     private final BitmapFont font;
     private final float maxWidth;
     private Treasure cost;
+    private float fontScale;
 
     public TowerCost(Rectangle rectangle, float maxWidth, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
                      BitmapFont font) {
@@ -45,33 +47,46 @@ public class TowerCost extends InteractiveBlock {
     List<costValueCache> caches;
 
     public void render(Treasure cost) {
-        this.cost = cost;
-        String text = getText(cost);
+        if (!cost.equals(this.cost) || fontScale != font.getScaleX()) {
+            this.cost = cost;
+            String text = getText(cost);
 
-        float scale = maxWidth / (font.getBounds(text).width);
-        float fontScale = font.getScaleX();
-        if (scale <= 1) {
-            font.setScale(Math.max(Math.round(fontScale / 1.5f), 1));
-        }
-
-
-        caches = new ArrayList<costValueCache>();
-        if (cost.getGold() > 0) {
-            caches.add(new costValueCache(Color.WHITE, "Cost: "));
-            caches.add(new costValueCache(Color.YELLOW, cost.getGold() + " "));
-        }
-        for (Element element : Element.values()) {
-            int element1 = cost.getElement(element);
-            if (element1 > 0) {
-                caches.add(new costValueCache(Color.WHITE, element1 + "x "));
-                caches.add(new costValueCache(element.getColor(), element.toString() + " "));
+            float scale = maxWidth / (font.getBounds(text).width);
+             fontScale = font.getScaleX();
+            if (scale <= 1) {
+                font.setScale(Math.max(Math.round(fontScale / 1.5f), 1));
             }
-        }
-        render();
 
-        if (scale <= 1) {
-            font.setScale(fontScale);
+
+            caches = new ArrayList<costValueCache>();
+            if (cost.getGold() > 0) {
+                caches.add(new costValueCache(Color.WHITE, "Cost: "));
+                caches.add(new costValueCache(Color.YELLOW, cost.getGold() + " "));
+            }
+            for (Element element : Element.values()) {
+                int element1 = cost.getElement(element);
+                if (element1 > 0) {
+                    caches.add(new costValueCache(Color.WHITE, element1 + "x "));
+                    caches.add(new costValueCache(element.getColor(), element.toString() + " "));
+                }
+            }
+            render();
+
+            if (scale <= 1) {
+                font.setScale(fontScale);
+            }
+        } else {
+            render();
         }
+
+
+        if (App.DEBUG != null) {
+            shapeRenderer.setColor(Color.RED);
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            shapeRenderer.rect(x, y, width, height);
+            shapeRenderer.end();
+        }
+
     }
 
     private String getText(Treasure cost) {
@@ -126,6 +141,13 @@ public class TowerCost extends InteractiveBlock {
             font.setColor(color);
             font.draw(spriteBatch, text, fontX, fontY);
             spriteBatch.end();
+
+            if (App.DEBUG != null) {
+                shapeRenderer.setColor(Color.GREEN);
+                shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+                shapeRenderer.rect(fontX, fontY-bounds.height, bounds.width, bounds.height);
+                shapeRenderer.end();
+            }
         }
 
     }
