@@ -5,7 +5,7 @@ import com.xkings.pokemontd.component.attack.AbilityComponent;
 /**
  * Created by Tomas on 10/13/13.
  */
-public abstract class EffectData extends AbilityComponent {
+public class EffectData extends AbilityComponent {
     private final String effect;
     private double chance;
 
@@ -29,8 +29,6 @@ public abstract class EffectData extends AbilityComponent {
     public double getChance() {
         return chance;
     }
-
-    public abstract String getEffectName();
 
     public String getEffectDescription(float speed, float damage) {
         if (chance == 0) {
