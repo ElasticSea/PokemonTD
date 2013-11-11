@@ -72,6 +72,7 @@ public class Ui extends Gui {
         boxes.add(abilityInfo);
         boxes.add(nextWaveInfo);
         boxes.add(entityInfo);
+        resetSize();
     }
 
     @Override
