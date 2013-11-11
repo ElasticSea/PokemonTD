@@ -20,8 +20,6 @@ import java.util.ArrayList;
  */
 class EntityInfo extends GuiBox {
 
-    private final SpriteBatch spriteBatch;
-
     private final Ui ui;
     private final TowerTypeInfo towerTypeInfo;
     private final TowerEntityInfo towerEntityInfo;
@@ -36,8 +34,6 @@ class EntityInfo extends GuiBox {
                Player player) {
         super(ui, rectangle);
         this.ui = ui;
-        this.spriteBatch = spriteBatch;
-
         towerTypeInfo = new TowerTypeInfo(ui, this, shapeRenderer, spriteBatch, font);
         towerEntityInfo = new TowerEntityInfo(ui, this, shapeRenderer, spriteBatch, font);
         creepEntityInfo = new CreepEntityInfo(ui, this, shapeRenderer, spriteBatch, font);
@@ -122,8 +118,7 @@ class EntityInfo extends GuiBox {
     public void refresh() {
         super.refresh();
         for (InteractiveElement clickable : clickables) {
-            clickable.set(offsetRectange);
-            System.out.println("Refreshing entity info ");
+            clickable.set(this);
             clickable.refresh();
         }
     }
