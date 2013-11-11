@@ -11,11 +11,6 @@ public class MoneyData extends EffectData {
         this.earnRatio = earnRatio;
     }
 
-    @Override
-    public String getEffectName() {
-        return "Bonus Money";
-    }
-
     public float getEarnRatio() {
         return earnRatio;
     }

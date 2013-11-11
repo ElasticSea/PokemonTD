@@ -40,11 +40,6 @@ public class BuffAbility extends EffectData {
         return duration;
     }
 
-    @Override
-    public String getEffectName() {
-        return type.name();
-    }
-
     public String getEffectDescription(float speed,float damage){
         return "";
     }

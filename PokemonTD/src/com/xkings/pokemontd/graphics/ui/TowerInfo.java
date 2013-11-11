@@ -120,7 +120,7 @@ public class TowerInfo extends CommonInfo {
         this.sell.render("sell", Color.WHITE, SELL_COLOR);
         this.buy.render("buy", Color.WHITE, BUY_COLOR);
         if (abilityCache != null) {
-            this.ability.render(Assets.getTexture("ability/" + effectNameCache.name().toLowerCase()),
+            this.ability.render(Assets.getTexture("abilities/" + effectNameCache.name().toLowerCase()),
                     abilityCache.getEffect());
         }
     }

@@ -21,11 +21,6 @@ public class BubbleData extends EffectData {
     }
 
     @Override
-    public String getEffectName() {
-        return "Bubble";
-    }
-
-    @Override
     public String getEffectDescription(float speed, float damage) {
         return super.getEffectDescription(speed, damage)+  "Deals " + damage + " every " + speed + " ms on contact." +
                 (grow != 1 ? "Bubble grows by " + (int) ((grow - 1) * 100) + "% per second." : "");

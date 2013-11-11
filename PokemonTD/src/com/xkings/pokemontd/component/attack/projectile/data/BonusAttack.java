@@ -15,11 +15,6 @@ public class BonusAttack extends EffectData {
         return iterations;
     }
 
-    @Override
-    public String getEffectName() {
-        return "Bonus Damage";
-    }
-
     public String getEffectDescription(float speed, float damage) {
         return super.getEffectDescription(speed, damage) + iterations + "X additional damage";
     }
