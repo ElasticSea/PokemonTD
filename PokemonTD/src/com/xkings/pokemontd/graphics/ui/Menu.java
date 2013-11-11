@@ -105,12 +105,6 @@ public class Menu extends Gui {
 
         InGameMenu(Gui ui, Rectangle rectangle) {
             super(ui, rectangle);
-            exit = new MenuButton(ui, rects.get(rects.size() - 1)) {
-                @Override
-                public void process(float x, float y) {
-                    System.exit(0);
-                }
-            };
             pause = new MenuButton(ui, rects.get(0)) {
                 @Override
                 public void process(float x, float y) {
@@ -142,11 +136,17 @@ public class Menu extends Gui {
                     app.resetGuiSize();
                 }
             };
-
-            close = new MenuButton(ui, rects.get(3)) {
+            Rectangle rect2 = rects.get(4);
+            close = new MenuButton(ui, new Rectangle(rect2.x-offset, rect2.y, rect2.width / 2, rect2.height)) {
                 @Override
                 public void process(float x, float y) {
                     switchCard(null);
+                }
+            };
+            exit = new MenuButton(ui, new Rectangle(rect2.x+rect2.width/2+offset*3, rect2.y, rect2.width / 2, rect2.height)) {
+                @Override
+                public void process(float x, float y) {
+                    System.exit(0);
                 }
             };
 
