@@ -80,6 +80,11 @@ public class RenderSpriteSystem extends EntitySystem {
     }
 
     @Override
+    protected void end() {
+        spriteBatch.setColor(Color.WHITE);
+    }
+
+    @Override
     protected void processEntities(ImmutableBag<Entity> entities) {
         List<PositionComponent> positions = new ArrayList<PositionComponent>(entities.size());
         Map<PositionComponent, Entity> map = new HashMap<PositionComponent, Entity>();

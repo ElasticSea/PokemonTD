@@ -58,9 +58,6 @@ public class GameRenderer implements Renderable {
         drawMap(1);
         renderSpriteSystem.process();
         renderTextSystem.process();
-        spriteBatch.end();
-        spriteBatch.setProjectionMatrix(camera.combined);
-        spriteBatch.begin();
         drawMap(2);
         drawMap(4);
         drawMap(3);
