@@ -3,6 +3,7 @@ package com.xkings.pokemontd.system.autonomous;
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
+import com.artemis.World;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.math.Vector3;
@@ -18,6 +19,8 @@ import com.xkings.pokemontd.entity.creep.CreepType;
 import com.xkings.pokemontd.entity.datatypes.StaticObjectType;
 import com.xkings.pokemontd.map.Path;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -45,6 +48,8 @@ public class DeathSystem extends EntityProcessingSystem {
     @Mapper
     ComponentMapper<DamageComponent> damageMapper;
 
+    private final List<ResurrectTrigger> deathsToProcess = new ArrayList<ResurrectTrigger>();
+
     public DeathSystem(Player player) {
         super(Aspect.getAspectForAll(HealthComponent.class, TreasureComponent.class, CreepAbilityComponent.class,
                 DamageComponent.class));
@@ -69,6 +74,21 @@ public class DeathSystem extends EntityProcessingSystem {
         }
     }
 
+    public void reviveDeath() {
+        synchronized (this) {
+            for (ResurrectTrigger death : deathsToProcess) {
+                death.run();
+            }
+            deathsToProcess.clear();
+        }
+    }
+
+    private void addToDeaths(ResurrectTrigger resurrectTrigger) {
+        synchronized (this) {
+            deathsToProcess.add(resurrectTrigger);
+        }
+    }
+
     private static final ScheduledExecutorService worker = Executors.newSingleThreadScheduledExecutor();
 
     private void resurrect(final Entity e, int delayMs) {
@@ -81,13 +101,38 @@ public class DeathSystem extends EntityProcessingSystem {
 
         Runnable task = new Runnable() {
             public void run() {
-                waveComponent.removeCreep(e);
-                grave.deleteFromWorld();
-                Creep.registerCreep(world, path, waveComponent, creepType, CreepAbilityType.NORMAL,
-                        creepType.getSpeed(), creepType.getSize(), position.x, position.y);
+                addToDeaths(new ResurrectTrigger(world, e, position, path, waveComponent, creepType, grave));
             }
         };
         worker.schedule(task, delayMs, TimeUnit.MILLISECONDS);
+    }
+
+    private static class ResurrectTrigger {
+        private final World world;
+        private final Entity e;
+        private final Vector3 position;
+        private final Path path;
+        private final WaveComponent waveComponent;
+        private final CreepType creepType;
+        private final Entity grave;
+
+        private ResurrectTrigger(World world, Entity e, Vector3 position, Path path, WaveComponent waveComponent,
+                                 CreepType creepType, Entity grave) {
+            this.world = world;
+            this.e = e;
+            this.position = position;
+            this.path = path;
+            this.waveComponent = waveComponent;
+            this.creepType = creepType;
+            this.grave = grave;
+        }
+
+        public void run() {
+            grave.deleteFromWorld();
+            Creep.registerCreep(world, path, waveComponent, creepType, CreepAbilityType.NORMAL, creepType.getSpeed(),
+                    creepType.getSize(), position.x, position.y);
+            waveComponent.removeCreep(e);
+        }
     }
 
     private void spawn(Entity e, int creeps) {

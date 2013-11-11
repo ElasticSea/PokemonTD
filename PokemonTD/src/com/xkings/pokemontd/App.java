@@ -92,6 +92,7 @@ public class App extends Game2D {
     private Renderable mainMenuGaimRenderer;
     private Renderable currentGameRenderer;
     private Renderable frozenGameRenderer;
+    private DeathSystem deathSystem;
 
     public static TweenManagerAdapter getTweenManager() {
         return tweenManager;
@@ -114,6 +115,7 @@ public class App extends Game2D {
         if (sessionStarted) {
             if (!freezed) {
                 clock.run();
+                deathSystem.reviveDeath();
             }
         }
         currentGameRenderer.render();
@@ -178,6 +180,7 @@ public class App extends Game2D {
     }
 
     private void initializeSystems() {
+        deathSystem = new DeathSystem(player);
         renderSpriteSystem = new RenderSpriteSystem(cameraHandler.getCamera(), spriteBatch);
         renderTextSystem = new RenderTextSystem(spriteBatch);
         renderHealthSystem = new RenderHealthSystem(shapeRenderer);
@@ -206,7 +209,7 @@ public class App extends Game2D {
         world.setSystem(new WaveSystem(player));
         world.setSystem(new FireProjectilSystem());
         world.setSystem(new LifeStealSystem());
-        world.setSystem(new DeathSystem(player));
+        world.setSystem(deathSystem);
         world.setSystem(new HealingSystem());
         world.setSystem(new DotSystem());
         world.setSystem(new SlowSystem());
