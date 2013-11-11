@@ -16,7 +16,6 @@ public class ClosestSystem extends PickEntitySystem {
     ComponentMapper<SizeComponent> sizeMapper;
 
     private Entity closestEntity;
-    private float closestDistance;
 
     /**
      * Finds closest entity
@@ -45,11 +44,5 @@ public class ClosestSystem extends PickEntitySystem {
     @Override
     public Entity getPickedEntity() {
         return closestEntity;
-    }
-
-    @Override
-    public void start(Entity entity, Vector3 position, float range) {
-        closestDistance = Float.MAX_VALUE;
-        super.start(entity, position, range);
     }
 }
