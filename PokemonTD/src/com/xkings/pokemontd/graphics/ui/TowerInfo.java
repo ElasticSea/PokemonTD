@@ -121,8 +121,8 @@ public class TowerInfo extends CommonInfo {
         String damageText = "DMG: " + (int) (damageCache);
         String speedText = "SPD: " + (int) (speedCache);
         String rangeText = "RNG: " + (int) (rangeCache);
+
         if (damageCache != lastDamageCache || speedCache != lastSpeedCache || rangeCache != lastRangeCache) {
-            System.out.println("update");
             largestBounds = getLargestBounds(damageText, speedText, rangeText);
             refresh();
         }
@@ -130,9 +130,15 @@ public class TowerInfo extends CommonInfo {
         lastSpeedCache = speedCache;
         lastRangeCache = rangeCache;
 
-        this.damage.render(damageText, damageColorCache);
-        this.speed.render(speedText, speedColorCache);
-        this.range.render(rangeText, rangeColorCache);
+        if (damageCache > 0) {
+            this.damage.render(damageText, damageColorCache);
+        }
+        if (speedCache > 0) {
+            this.speed.render(speedText, speedColorCache);
+        }
+        if (rangeCache > 0) {
+            this.range.render(rangeText, rangeColorCache);
+        }
         this.cost.render(costCache);
         this.sell.render("sell", Color.WHITE, SELL_COLOR);
         this.buy.render("buy", Color.WHITE, BUY_COLOR);
