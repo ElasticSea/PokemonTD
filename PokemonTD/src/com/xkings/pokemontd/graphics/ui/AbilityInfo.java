@@ -38,4 +38,11 @@ public class AbilityInfo extends GuiBox {
     public void reset() {
         this.abilityCache = null;
     }
+
+    @Override
+    public void refresh() {
+        super.refresh();
+        text.set(offsetRectange);
+        text.refresh();
+    }
 }

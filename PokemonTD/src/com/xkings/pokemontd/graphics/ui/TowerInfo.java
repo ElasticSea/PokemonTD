@@ -169,7 +169,6 @@ public class TowerInfo extends CommonInfo {
         range.set(x + offset * 5, y + offset, offset, offset);
         ability.set(damage.x + damage.width + offsetBlocks2, y + offsetBlocks2, height - offsetBlocks,
                 height - offsetBlocks);
-        ability.set(x + offset * 10f, y + offset * 3, offsetBlocks * 1.2f, offsetBlocks / 2f);
         sell.set(x + width - offsetBlocks, y, offsetBlocks, offsetBlocks);
         buy.set(x + width - offsetBlocks, y + offsetBlocks, offsetBlocks, offsetBlocks);
 

@@ -118,6 +118,7 @@ public class Ui extends Gui {
 
         towerIcons.set(width - squareSize, 0, squareSize, squareSize);
         shopIcons.set(width - squareSize, 0, squareSize, squareSize);
+        abilityInfo.set(width - squareSize, 0, squareSize, squareSize);
         statusBar.set(0, height - statusBarDimensions.y, statusBarDimensions.x, statusBarDimensions.y);
         statusBar.setSquare(towerIcons);
         status.set(width - statusDimensions.x, height - statusBar.height - statusOffSet - statusDimensions.y,
