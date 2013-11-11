@@ -137,13 +137,13 @@ public class Menu extends Gui {
                 }
             };
             Rectangle rect2 = rects.get(4);
-            close = new MenuButton(ui, new Rectangle(rect2.x-offset, rect2.y, rect2.width / 2, rect2.height)) {
+            close = new MenuButton(ui, new Rectangle(rect2.x, rect2.y, rect2.width / 2-offset*3, rect2.height)) {
                 @Override
                 public void process(float x, float y) {
                     switchCard(null);
                 }
             };
-            exit = new MenuButton(ui, new Rectangle(rect2.x+rect2.width/2+offset*3, rect2.y, rect2.width / 2, rect2.height)) {
+            exit = new MenuButton(ui, new Rectangle(rect2.x+rect2.width/2+offset*3, rect2.y, rect2.width / 2 - offset*3, rect2.height)) {
                 @Override
                 public void process(float x, float y) {
                     System.exit(0);
