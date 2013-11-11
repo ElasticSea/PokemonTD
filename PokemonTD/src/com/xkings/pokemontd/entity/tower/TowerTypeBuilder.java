@@ -2,6 +2,7 @@ package com.xkings.pokemontd.entity.tower;
 
 import com.xkings.pokemontd.Treasure;
 import com.xkings.pokemontd.component.attack.AbilityComponent;
+import com.xkings.pokemontd.component.attack.EffectName;
 import com.xkings.pokemontd.component.attack.projectile.BuffAbility;
 import com.xkings.pokemontd.component.attack.projectile.HitAbility;
 import com.xkings.pokemontd.component.attack.projectile.SunbeamAbility;
@@ -155,7 +156,7 @@ public class TowerTypeBuilder {
        // float damage = getDamage(getBaseDamage(INITIAL_BASE_DAMAGE, specs.level), specs.range, specs.speed);
         Treasure treasure = new Treasure(getGold(INITIAL_GOLD, specs.level));
         treasure.add(specs.treasure);
-        return new TowerType(specs.name, SIZE * scale, specs.speed, specs.damage, specs.range * scale, specs.attackComponent, treasure);
+        return new TowerType(specs.name, specs.effectName,SIZE * scale, specs.speed, specs.damage, specs.range * scale, specs.attackComponent, treasure);
     }
   /*
     private float getDamage(float baseDamage, float range, float speed) {
@@ -183,9 +184,11 @@ public class TowerTypeBuilder {
         private final float range;
         private final AbilityComponent attackComponent;
         private final Treasure treasure;
+        private final EffectName effectName;
 
-        private Specs(TowerName name, int level, float damage, float speed, float range, AbilityComponent attackComponent, Treasure treasure) {
+        private Specs(TowerName name, EffectName effectName, int level, float damage, float speed, float range, AbilityComponent attackComponent, Treasure treasure) {
             this.name = name;
+            this.effectName = effectName;
             this.level = level;
             this.damage = damage;
             this.speed = speed;
