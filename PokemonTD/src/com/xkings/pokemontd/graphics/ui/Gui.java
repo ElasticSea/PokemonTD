@@ -50,7 +50,7 @@ public abstract class Gui extends GestureDetector.GestureAdapter implements Rend
         this.spriteBatch = new SpriteBatch();
         height = Gdx.graphics.getHeight();
         width = Gdx.graphics.getWidth();
-        defaultSize = Gdx.graphics.getDensity() * 160 * 1.1f;
+        defaultSize = Gdx.graphics.getDensity() * 160 * 0.8f;
         setSquareSize(defaultSize);
         offset = squareSize / 36;
         center = new Vector2(width / 2f, height / 2f);
