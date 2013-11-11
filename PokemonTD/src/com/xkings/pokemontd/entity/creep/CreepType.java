@@ -36,10 +36,15 @@ public class CreepType implements CommonDataType {
         Map<CreepName, CreepType> waves = creepTypeBuilder.build(App.WORLD_SCALE, CreepTypeBuilder.element);
         Table<Element, Integer, CreepType> table = HashBasedTable.create();
         for (Map.Entry<CreepName, CreepType> creep : waves.entrySet()) {
-            Treasure treasure = creep.getValue().getTreasure();
+            CreepType creepValue = creep.getValue();
+            Treasure treasure = creepValue.getTreasure();
             for (Element element : Element.values()) {
                 if (treasure.hasElement(element, 1)) {
-                    table.put(element, treasure.getElement(element), creep.getValue());
+                    int maxElement = 0;
+                    for (Map.Entry<Integer, CreepType> entry : table.row(element).entrySet()) {
+                        maxElement = Math.max(entry.getKey(), maxElement);
+                    }
+                    table.put(element, maxElement + 1, creepValue);
                     break;
                 }
             }

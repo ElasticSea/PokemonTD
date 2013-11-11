@@ -99,8 +99,8 @@ public class CreepTypeBuilder {
         list.add(new Specs(CreepName.Skiploom, 10000, Treasure.fromLight(1), CreepAbilityType.BOSS));
 
         list.add(new Specs(CreepName.Marill, 100, Treasure.fromWater(1), CreepAbilityType.BOSS));
-        list.add(new Specs(CreepName.Azumarill, 800, Treasure.fromWater(2), CreepAbilityType.BOSS));
-        list.add(new Specs(CreepName.Wooper, 10000, Treasure.fromWater(3), CreepAbilityType.BOSS));
+        list.add(new Specs(CreepName.Azumarill, 800, Treasure.fromWater(1), CreepAbilityType.BOSS));
+        list.add(new Specs(CreepName.Wooper, 10000, Treasure.fromWater(1), CreepAbilityType.BOSS));
 
         list.add(new Specs(CreepName.Sudowoodo, 100, Treasure.fromNature(1), CreepAbilityType.BOSS));
         list.add(new Specs(CreepName.Sunkern, 800, Treasure.fromNature(1), CreepAbilityType.BOSS));
