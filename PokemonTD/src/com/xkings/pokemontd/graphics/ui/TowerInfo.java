@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.xkings.core.main.Assets;
 import com.xkings.pokemontd.Treasure;
 import com.xkings.pokemontd.component.attack.AbilityComponent;
+import com.xkings.pokemontd.component.attack.EffectName;
 import com.xkings.pokemontd.component.attack.projectile.HitAbility;
 import com.xkings.pokemontd.component.attack.projectile.data.EffectData;
 import com.xkings.pokemontd.component.attack.projectile.data.NormalData;
@@ -42,6 +43,7 @@ public class TowerInfo extends CommonInfo {
     private Color speedColorCache;
     private Color rangeColorCache;
     private EffectData abilityCache;
+    private EffectName effectNameCache;
 
     /**
      * public constuctor makes 3 text rectangles uses class DisplayText (damage,range,speed).
@@ -111,29 +113,31 @@ public class TowerInfo extends CommonInfo {
         this.ability.setEnabled(abilityCache != null);
 
         super.render();
-        this.damage.render("DMG: "+(int)(damageCache), damageColorCache);
-        this.speed.render("SPD: "+(int)(speedCache ), speedColorCache);
-        this.range.render("RNG: "+(int)(rangeCache ), rangeColorCache);
+        this.damage.render("DMG: " + (int) (damageCache), damageColorCache);
+        this.speed.render("SPD: " + (int) (speedCache), speedColorCache);
+        this.range.render("RNG: " + (int) (rangeCache), rangeColorCache);
         this.cost.render(costCache);
         this.sell.render("sell", Color.WHITE, SELL_COLOR);
         this.buy.render("buy", Color.WHITE, BUY_COLOR);
         if (abilityCache != null) {
-            this.ability.render(Assets.getTexture("defaultAbility"), abilityCache.getEffect());
+            this.ability.render(Assets.getTexture("ability/" + effectNameCache.name().toLowerCase()),
+                    abilityCache.getEffect());
         }
     }
 
     public void render(TextureAtlas.AtlasRegion region, Treasure cost, String name, boolean sell, boolean buy) {
-        render(region, 0f, 0f, 0f, cost, name, null, sell, buy);
+        render(region, 0f, 0f, 0f, cost, name, null, null, sell, buy);
     }
 
     public void render(TextureAtlas.AtlasRegion region, float damage, float speed, float range, Treasure cost,
-                       String name, EffectData ability, boolean sell, boolean buy) {
-        render(region, damage, Color.WHITE, speed, Color.WHITE, range, Color.WHITE, cost, name, ability, sell, buy);
+                       String name, EffectName effectName, EffectData ability, boolean sell, boolean buy) {
+        render(region, damage, Color.WHITE, speed, Color.WHITE, range, Color.WHITE, cost, name, effectName, ability,
+                sell, buy);
     }
 
     public void render(TextureAtlas.AtlasRegion region, float damage, Color damageColor, float speed, Color speedColor,
-                       float range, Color rangeColor, Treasure cost, String name, EffectData ability, boolean sell,
-                       boolean buy) {
+                       float range, Color rangeColor, Treasure cost, String name, EffectName effectName,
+                       EffectData ability, boolean sell, boolean buy) {
         this.damageCache = damage;
         this.damageColorCache = damageColor;
         this.speedCache = speed;
@@ -141,6 +145,7 @@ public class TowerInfo extends CommonInfo {
         this.rangeCache = range;
         this.rangeColorCache = rangeColor;
         this.costCache = cost;
+        this.effectNameCache = effectName;
         this.abilityCache = ability;
         this.sellCache = sell;
         this.buyCache = buy;

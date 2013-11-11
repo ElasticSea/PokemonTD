@@ -42,7 +42,6 @@ public class HitAbility extends EffectData {
                 NORMAL_SPEED * scale, new LifeStealData(duration));
     }
 
-
     public static AbilityComponent getFire(float scale) {
         return new HitAbility(EffectName.Default, "fire", Type.FOLLOW_TARGET, BIG_SIZE * scale, FAST_SPEED * scale,
                 new NormalData());

@@ -22,7 +22,7 @@ public class TowerTypeInfo extends TowerInfo {
     public void render(TowerType tower) {
         boolean canbuy = gui.getTowerManager().canAfford(tower);
         render(tower.getTexture(), tower.getDamage(), tower.getSpeed(), tower.getRange(), tower.getCost(),
-                (tower.getName().toString()), getAbility(tower), false, canbuy);
+                (tower.getName().toString()), tower.getEffectName(), getAbility(tower), false, canbuy);
     }
 
 

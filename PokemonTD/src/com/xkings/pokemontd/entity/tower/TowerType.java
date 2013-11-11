@@ -4,6 +4,7 @@ import com.xkings.core.main.Assets;
 import com.xkings.pokemontd.App;
 import com.xkings.pokemontd.Treasure;
 import com.xkings.pokemontd.component.attack.AbilityComponent;
+import com.xkings.pokemontd.component.attack.EffectName;
 import com.xkings.pokemontd.entity.datatypes.CommonDataType;
 
 import java.util.*;
@@ -27,10 +28,12 @@ public class TowerType implements CommonDataType {
     private final float range;
     private final AbilityComponent attack;
     private final Treasure cost;
+    private final EffectName effectName;
 
-    public TowerType(TowerName name, float size, float speed, float damage, float range, AbilityComponent attack,
-                     Treasure cost) {
+    public TowerType(TowerName name, EffectName effectName, float size, float speed, float damage, float range,
+                     AbilityComponent attack, Treasure cost) {
         this.name = name;
+        this.effectName = effectName;
         this.texture = Assets.getTexture("towers/" + name.toString().toLowerCase());
         this.blockedTexture = Assets.getTexture("blocked");
         this.size = size;
@@ -76,6 +79,10 @@ public class TowerType implements CommonDataType {
 
     public float getDamage() {
         return damage;
+    }
+
+    public EffectName getEffectName() {
+        return effectName;
     }
 
     public static List<TowerType> getHierarchy(TowerName towerName) {

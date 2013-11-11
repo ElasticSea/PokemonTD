@@ -27,6 +27,7 @@ public class Tower extends ConcreteEntity {
         addComponent(new TowerTypeComponent(towerType));
         addComponent(new UpgradeComponent());
         addComponent(new BuffableDamageComponent(towerType.getDamage()));
+        addComponent(new EffectComponent(towerType.getEffectName()));
         if (towerType.getAttack() != null) {
             addComponent(towerType.getAttack());
         }
