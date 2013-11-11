@@ -68,7 +68,7 @@ public class TowerInfo extends CommonInfo {
                 BitmapFont.HAlignment.LEFT);
         speed = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset * 2, offset * 2, offset), font,
                 BitmapFont.HAlignment.LEFT);
-        range = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset, offset, offset), font,
+        range = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset, offset * 2, offset), font,
                 BitmapFont.HAlignment.LEFT);
 
         ability = new Icon(ui, damage.x + damage.width + offsetBlocks2, y + offsetBlocks2, height - offsetBlocks,
@@ -113,9 +113,18 @@ public class TowerInfo extends CommonInfo {
         this.ability.setEnabled(abilityCache != null);
 
         super.render();
-        this.damage.render("DMG: " + (int) (damageCache), damageColorCache);
-        this.speed.render("SPD: " + (int) (speedCache), speedColorCache);
-        this.range.render("RNG: " + (int) (rangeCache), rangeColorCache);
+
+        String damageText = "DMG: " + (int) (damageCache);
+        String speedText = "SPD: " + (int) (speedCache);
+        String rangeText = "RNG: " + (int) (rangeCache);
+        BitmapFont.TextBounds bounds = getLargestBounds(damageText, speedText, rangeText);
+        this.damage.render(damageText, damageColorCache);
+        this.speed.render(speedText, speedColorCache);
+        this.range.render(rangeText, rangeColorCache);
+
+        this.damage.width = bounds.width;
+        this.speed.width = bounds.width;
+        this.range.width = bounds.width;
         this.cost.render(costCache);
         this.sell.render("sell", Color.WHITE, SELL_COLOR);
         this.buy.render("buy", Color.WHITE, BUY_COLOR);
@@ -123,6 +132,18 @@ public class TowerInfo extends CommonInfo {
             this.ability.render(Assets.getTexture("abilities/" + effectNameCache.name().toLowerCase()),
                     abilityCache.getEffect());
         }
+    }
+
+    private BitmapFont.TextBounds getLargestBounds(String... texts) {
+        BitmapFont.TextBounds largestBounds = new BitmapFont.TextBounds();
+        for (String text : texts) {
+            BitmapFont.TextBounds bounds = gui.getFont().getBounds(text);
+
+            largestBounds.width = Math.max(bounds.width, largestBounds.width);
+            largestBounds.height = Math.max(bounds.height, largestBounds.height);
+
+        }
+        return largestBounds;
     }
 
     public void render(TextureAtlas.AtlasRegion region, Treasure cost, String name, boolean sell, boolean buy) {
