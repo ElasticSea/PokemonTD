@@ -146,8 +146,8 @@ public class DeathSystem extends EntityProcessingSystem {
         for (int i = 0; i < creeps; i++) {
             float x = position.x + (float) (Math.cos(circleSegment * i) * radius);
             float y = position.y + (float) (Math.sin(circleSegment * i) * radius);
-            Creep.registerCreep(world, path, waveComponent, creepType, CreepAbilityType.NORMAL, creepType.getSpeed(),
-                    creepType.getSize() / 4f, x, y);
+            Creep.registerCreep(world, new Path(path), waveComponent, creepType, CreepAbilityType.NORMAL,
+                    creepType.getSpeed(), creepType.getSize() / 4f, x, y);
         }
         die(e);
     }
