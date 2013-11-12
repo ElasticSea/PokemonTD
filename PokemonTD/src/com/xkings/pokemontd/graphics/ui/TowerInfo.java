@@ -214,7 +214,7 @@ public class TowerInfo extends CommonInfo {
         float offsetBlocks = height / 2;
         float offsetBlocks2 = offsetBlocks / 2f;
         float textOffset = x + offset * 5;
-        if (lastDamageCache == 0 && lastRangeCache == 0 && lastSpeedCache == 0) {
+        if (this instanceof ShopEntityInfo) {
             cost.set(textOffset, y + offset, width-textOffset, offset*3);
         } else {
             cost.set(x + offset, y, width - offset * 2, offset);
