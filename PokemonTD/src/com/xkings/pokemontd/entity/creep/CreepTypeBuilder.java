@@ -110,7 +110,7 @@ public class CreepTypeBuilder {
         list.add(new Specs(CreepName.Aipom, 800, Treasure.fromDarkness(1), CreepAbilityType.BOSS));
         list.add(new Specs(CreepName.Hoppip, 10000, Treasure.fromDarkness(1), CreepAbilityType.BOSS));
 
-        list.add(new Specs(CreepName.Flaaffy, 295578, Treasure.fromSoul(1), CreepAbilityType.BOSS));
+        list.add(new Specs(CreepName.Electivire, 295578, Treasure.fromSoul(1), CreepAbilityType.BOSS));
         return list;
     }
 

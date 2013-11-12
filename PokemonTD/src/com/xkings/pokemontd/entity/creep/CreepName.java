@@ -11,5 +11,5 @@ public enum CreepName {
     Wormadam, Bronzong, Yanmega, Glaceon, Mamoswine, Palkia, Regigigas, Giratina, Manaphy, Darkrai, Snivy, Tepig,
     Emboar, Watchog, Herdier, Liepard, Panpour, Tirtouga, Zorua, Klinklang, Lampent, Hydreigon, Druddigon, Xatu, Mareep,
     Jumpluff, Flaaffy, Ampharos, Yanma, Bellossom, Politoed, Skiploom, Marill, Azumarill, Wooper, Sudowoodo, Sunkern,
-    Sunflora, Umbreon, Aipom, Hoppip,;
+    Sunflora, Umbreon, Aipom, Hoppip,Electivire;
 }
