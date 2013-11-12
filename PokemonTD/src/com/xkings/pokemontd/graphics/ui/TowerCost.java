@@ -22,6 +22,7 @@ public class TowerCost extends InteractiveBlock {
     private final float maxWidth;
     private Treasure cost;
     private float fontScale;
+    private Rectangle bounds;
 
     public TowerCost(Rectangle rectangle, float maxWidth, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
                      BitmapFont font) {
@@ -47,16 +48,11 @@ public class TowerCost extends InteractiveBlock {
     List<costValueCache> caches;
 
     public void render(Treasure cost) {
-        if (!cost.equals(this.cost) || fontScale != font.getScaleX()) {
+        fontScale = font.getScaleX();
+        font.setScale(Math.max(Math.round(fontScale / 1.5f), 1));
+        if (!cost.equals(this.cost) || !this.equals(bounds)) {
+            this.bounds = new Rectangle(this);
             this.cost = cost;
-            String text = getText(cost);
-
-            float scale = maxWidth / (font.getBounds(text).width);
-             fontScale = font.getScaleX();
-            if (scale <= 1) {
-                font.setScale(Math.max(Math.round(fontScale / 1.5f), 1));
-            }
-
 
             caches = new ArrayList<costValueCache>();
             if (cost.getGold() > 0) {
@@ -72,13 +68,11 @@ public class TowerCost extends InteractiveBlock {
             }
             render();
 
-            if (scale <= 1) {
-                font.setScale(fontScale);
-            }
         } else {
             render();
         }
 
+        font.setScale(fontScale);
 
         if (App.DEBUG != null) {
             shapeRenderer.setColor(Color.RED);
@@ -121,22 +115,39 @@ public class TowerCost extends InteractiveBlock {
         private final String text;
         private final BitmapFont.TextBounds bounds;
         private final Color color;
+        private final costValueCache previousCashe;
         private float xPosition;
+        private float yPosition;
 
         private costValueCache(Color color, String text) {
             this.text = text;
             this.bounds = new BitmapFont.TextBounds(font.getBounds(this.text));
             this.color = color;
 
-            for (costValueCache cashe : caches) {
-                this.xPosition += cashe.bounds.width;
+            previousCashe = getPreviousCache();
+            if (previousCashe != null) {
+                this.xPosition = previousCashe.xPosition + previousCashe.bounds.width;
+                this.yPosition = previousCashe.yPosition;
+                int offset = (int) ((xPosition + bounds.width) / TowerCost.this.bounds.width);
+                System.out.println(offset);
+                xPosition = Math.max(0, xPosition - offset * TowerCost.this.bounds.width);
+                yPosition = Math.min(0, yPosition - offset * previousCashe.bounds.height);
+                System.out.println(previousCashe.bounds.height);
             }
             maximalHeight = Math.max(bounds.height, maximalHeight);
         }
 
+        private costValueCache getPreviousCache() {
+            if (caches.size() > 0) {
+                return caches.get(caches.size() - 1);
+            } else {
+                return null;
+            }
+        }
+
         public void render() {
             float fontX = x + xPosition;
-            float fontY = y + (height + maximalHeight) / 2f;
+            float fontY = y + yPosition + (height + maximalHeight) / 2f;
             spriteBatch.begin();
             font.setColor(color);
             font.draw(spriteBatch, text, fontX, fontY);
@@ -145,7 +156,7 @@ public class TowerCost extends InteractiveBlock {
             if (App.DEBUG != null) {
                 shapeRenderer.setColor(Color.GREEN);
                 shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-                shapeRenderer.rect(fontX, fontY-bounds.height, bounds.width, bounds.height);
+                shapeRenderer.rect(fontX, fontY - bounds.height, bounds.width, bounds.height);
                 shapeRenderer.end();
             }
         }

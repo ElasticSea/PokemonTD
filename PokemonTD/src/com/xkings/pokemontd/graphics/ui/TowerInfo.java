@@ -213,11 +213,15 @@ public class TowerInfo extends CommonInfo {
         float offset = height / 5;
         float offsetBlocks = height / 2;
         float offsetBlocks2 = offsetBlocks / 2f;
-        cost.set(x + offset, y, width - offset * 2, offset);
-        damage.set(x + offset * 5, y + offset * 3, offset * 2, offset);
-        speed.set(x + offset * 5, y + offset * 2, offset * 2, offset);
-        range.set(x + offset * 5, y + offset, offset, offset);
-
+        float textOffset = x + offset * 5;
+        if (lastDamageCache == 0 && lastRangeCache == 0 && lastSpeedCache == 0) {
+            cost.set(textOffset, y + offset, width-textOffset, offset*3);
+        } else {
+            cost.set(x + offset, y, width - offset * 2, offset);
+        }
+        damage.set(textOffset, y + offset * 3, offset * 2, offset);
+        speed.set(textOffset, y + offset * 2, offset * 2, offset);
+        range.set(textOffset, y + offset, offset, offset);
         updateLargestBounds();
         updateTextField();
         ability.set(damage.x + damage.width + offsetBlocks2, y + offsetBlocks2, height - offsetBlocks,
@@ -225,7 +229,6 @@ public class TowerInfo extends CommonInfo {
         int buttonWidth = (int) (offsetBlocks * 1.5f);
         sell.set(x + width - buttonWidth, y, buttonWidth, offsetBlocks);
         buy.set(x + width - buttonWidth, y + offsetBlocks, buttonWidth, offsetBlocks);
-
         cost.refresh();
         damage.refresh();
         speed.refresh();

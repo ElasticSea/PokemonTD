@@ -32,5 +32,22 @@ abstract class InteractiveBlock extends InteractiveElement {
         this.enabled = enabled;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Rectangle)) return false;
+
+        Rectangle that = (Rectangle) o;
+
+        if (x != that.x || y != that.y || height != that.height || width != that.width) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return (enabled ? 1 : 0);
+    }
+
     public abstract void process(float x, float y);
 }
