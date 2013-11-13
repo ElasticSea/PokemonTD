@@ -50,12 +50,12 @@ public class TowerTypeBuilder {
         specs.add(new Specs(TowerName.Shop, null, 0, 18, 0, 0, null, Treasure.fromNone()));
         /// ######################  PURES
         // Basic
-        specs.add(new Specs(TowerName.Needle, null, 1, 12, N_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromNone()));
-        specs.add(new Specs(TowerName.Pinch, null, 2, 60, N_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromNone()));
-        specs.add(new Specs(TowerName.Sting, null, 3, 300, N_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromNone()));
-        specs.add(new Specs(TowerName.Scratch, null, 1, 5, S_SPEED, N_RANGE, HitAbility.getSplash("bullet", scale, 2), Treasure.fromNone()));
-        specs.add(new Specs(TowerName.Bite, null, 2, 30, S_SPEED, N_RANGE, HitAbility.getSplash("bullet", scale, 2), Treasure.fromNone()));
-        specs.add(new Specs(TowerName.Smash, null, 3, 140, S_SPEED, N_RANGE, HitAbility.getSplash("bullet", scale, 2), Treasure.fromNone()));
+        specs.add(new Specs(TowerName.Needle, null, 1, 18, N_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromNone()));
+        specs.add(new Specs(TowerName.Pinch, null, 2, 54, N_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromNone()));
+        specs.add(new Specs(TowerName.Sting, null, 3, 162, N_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromNone()));
+        specs.add(new Specs(TowerName.Scratch, null, 1, 9, S_SPEED, N_RANGE, HitAbility.getSplash("bullet", scale, 2), Treasure.fromNone()));
+        specs.add(new Specs(TowerName.Bite, null, 2, 27, S_SPEED, N_RANGE, HitAbility.getSplash("bullet", scale, 2), Treasure.fromNone()));
+        specs.add(new Specs(TowerName.Smash, null, 3, 81, S_SPEED, N_RANGE, HitAbility.getSplash("bullet", scale, 2), Treasure.fromNone()));
         // blue
         specs.add(new Specs(TowerName.Splash, null, 4, 280, N_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromWater(1)));
         specs.add(new Specs(TowerName.Ripple, null, 5, 2124, N_SPEED, N_RANGE, HitAbility.getNormal("bubble", scale), Treasure.fromWater(2)));
