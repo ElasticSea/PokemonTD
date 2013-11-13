@@ -77,9 +77,9 @@ public class TowerTypeBuilder {
         specs.add(new Specs(TowerName.Haunted, null, 5, 1744, N_SPEED, XL_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromDarkness(2)));
         specs.add(new Specs(TowerName.Nightmare, Terrify, 10, 0.3f, N_SPEED, XL_RANGE, HitAbility.getTemLifeSteal(scale, 5f), Treasure.fromDarkness(3)));
         /// ######################  TWO ELEMENT
-        specs.add(new Specs(TowerName.Noble, Haste, 5, 18, 45, BUFF_RANGE, BuffAbility.getSpeed(1.25f, 20), Treasure.fromWater(1).addFire(1)));
-        specs.add(new Specs(TowerName.Majestic, Haste, 7, 18, 45, BUFF_RANGE, BuffAbility.getSpeed(1.5f, 20), Treasure.fromWater(2).addFire(2)));
-        specs.add(new Specs(TowerName.Magnificent, Haste, 9, 18, 45, BUFF_RANGE, BuffAbility.getSpeed(2f, 20), Treasure.fromWater(3).addFire(3)));
+        specs.add(new Specs(TowerName.Noble, Haste, 5, 1.25f, 45, BUFF_RANGE, BuffAbility.getSpeed(20), Treasure.fromWater(1).addFire(1)));
+        specs.add(new Specs(TowerName.Majestic, Haste, 7, 1.5f, 45, BUFF_RANGE, BuffAbility.getSpeed( 20), Treasure.fromWater(2).addFire(2)));
+        specs.add(new Specs(TowerName.Magnificent, Haste, 9, 2f, 45, BUFF_RANGE, BuffAbility.getSpeed( 20), Treasure.fromWater(3).addFire(3)));
 
         specs.add(new Specs(TowerName.Sunny, Sunbeam, 5, 574, XS_SPEED, L_RANGE, new SunbeamAbility(0.2f, L_RANGE), Treasure.fromWater(1).addNature(1)));
         specs.add(new Specs(TowerName.Solar, Sunbeam, 7, 2817, XS_SPEED, L_RANGE, new SunbeamAbility(0.7f, L_RANGE * 1.5f), Treasure.fromWater(2).addNature(2)));
@@ -113,9 +113,9 @@ public class TowerTypeBuilder {
         specs.add(new Specs(TowerName.Paralyze, Impair, 7, 2044, N_SPEED, N_RANGE, HitAbility.getSlow("bullet", "orb", scale, 0, 0.7f, 2, 0.75f), Treasure.fromNature(2).addDarkness(2)));
         specs.add(new Specs(TowerName.Crippling, Impair, 9, 26781, N_SPEED, N_RANGE, HitAbility.getSlow("bullet", "orb", scale, 0, 0.9f, 4, 0.85f), Treasure.fromNature(3).addDarkness(3)));
 
-        specs.add(new Specs(TowerName.Spell, Charm, 5, 0.3f, 20, BUFF_RANGE, BuffAbility.getDamage(1.25f, 20), Treasure.fromWater(1).addFire(1)));
-        specs.add(new Specs(TowerName.Enchanted, Charm, 7, 0.3f, 20, BUFF_RANGE, BuffAbility.getDamage(1.5f, 20), Treasure.fromWater(2).addFire(2)));
-        specs.add(new Specs(TowerName.Magic, Charm, 9, 0.3f, 20, BUFF_RANGE, BuffAbility.getDamage(2f, 20), Treasure.fromWater(3).addFire(3)));
+        specs.add(new Specs(TowerName.Spell, Charm, 5, 1.25f, 20, BUFF_RANGE, BuffAbility.getDamage( 20), Treasure.fromWater(1).addFire(1)));
+        specs.add(new Specs(TowerName.Enchanted, Charm, 7, 1.5f, 20, BUFF_RANGE, BuffAbility.getDamage( 20), Treasure.fromWater(2).addFire(2)));
+        specs.add(new Specs(TowerName.Magic, Charm, 9, 2f, 20, BUFF_RANGE, BuffAbility.getDamage( 20), Treasure.fromWater(3).addFire(3)));
 
 
         /// ######################  TREE ELEMENT

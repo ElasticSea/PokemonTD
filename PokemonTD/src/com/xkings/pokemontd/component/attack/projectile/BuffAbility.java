@@ -1,5 +1,6 @@
 package com.xkings.pokemontd.component.attack.projectile;
 
+import com.xkings.pokemontd.component.attack.EffectName;
 import com.xkings.pokemontd.component.attack.projectile.data.EffectData;
 
 /**
@@ -7,12 +8,10 @@ import com.xkings.pokemontd.component.attack.projectile.data.EffectData;
  */
 public class BuffAbility extends EffectData {
     private final Type type;
-    private final float ratio;
     private final float duration;
 
-    public BuffAbility(Type type, float ratio, float duration) {
+    public BuffAbility(Type type,  float duration) {
         this.type = type;
-        this.ratio = ratio;
         this.duration = duration;
     }
 
@@ -20,27 +19,23 @@ public class BuffAbility extends EffectData {
         SPEED, DAMAGE, RANGE;
     }
 
-    public static BuffAbility getSpeed(float ratio, float duration) {
-        return new BuffAbility(Type.SPEED, ratio, duration);
+    public static BuffAbility getSpeed(  float duration) {
+        return new BuffAbility(Type.SPEED, duration);
     }
 
-    public static BuffAbility getDamage(float ratio, float duration) {
-        return new BuffAbility(Type.DAMAGE, ratio, duration);
+    public static BuffAbility getDamage(  float duration) {
+        return new BuffAbility(Type.DAMAGE,  duration);
     }
 
     public Type getType() {
         return type;
     }
 
-    public float getRatio() {
-        return ratio;
-    }
-
     public float getDuration() {
         return duration;
     }
 
-    public String getEffectDescription(float speed,float damage){
+    public String getEffectDescription(EffectName effectName, float speed, float damage){
         return "";
     }
 }

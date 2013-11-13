@@ -1,5 +1,7 @@
 package com.xkings.pokemontd.component.attack.projectile.data;
 
+import com.xkings.pokemontd.component.attack.EffectName;
+
 /**
  * Created by Tomas on 10/13/13.
  */
@@ -17,7 +19,7 @@ public class ChangeDirectionData extends EffectData {
     }
 
     @Override
-    public String getEffectDescription(float speed, float damage) {
-        return super.getEffectDescription(speed, damage)+  "asd";
+    public String getEffectDescription(EffectName effectName, float speed, float damage) {
+        return super.getEffectDescription(effectName, speed, damage)+  "asd";
     }
 }

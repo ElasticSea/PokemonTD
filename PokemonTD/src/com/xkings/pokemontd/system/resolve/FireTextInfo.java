@@ -32,7 +32,6 @@ public class FireTextInfo extends EntityProcessingSystem {
     protected void process(Entity e) {
         Vector3 position = positionMapper.get(e).getPoint();
         TextInfo.registerTextInfo(world, text, color, position.x, position.y);
-        System.out.println("FIRE");
     }
 
     public void fireText(String text, Color info) {

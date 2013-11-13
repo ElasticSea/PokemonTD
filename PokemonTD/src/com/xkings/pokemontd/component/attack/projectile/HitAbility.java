@@ -3,6 +3,7 @@ package com.xkings.pokemontd.component.attack.projectile;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.xkings.core.main.Assets;
 import com.xkings.pokemontd.component.attack.AbilityComponent;
+import com.xkings.pokemontd.component.attack.EffectName;
 import com.xkings.pokemontd.component.attack.projectile.data.*;
 
 import java.util.Arrays;
@@ -169,7 +170,7 @@ public class HitAbility extends EffectData {
         return aoe;
     }
 
-    public String getEffectDescription(float speed, float damage) {
+    public String getEffectDescription(EffectName effectName, float speed, float damage) {
         throw new IllegalStateException("This method should not be invoked in this class.");
     }
 }
