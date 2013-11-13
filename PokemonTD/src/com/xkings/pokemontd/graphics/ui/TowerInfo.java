@@ -79,7 +79,7 @@ public class TowerInfo extends CommonInfo {
 
             @Override
             public void process(float x, float y) {
-                ui.getAbilityInfo().update(abilityCache, speedCache, damageCache);
+                ui.getAbilityInfo().update(abilityCache, effectNameCache.name(),speedCache, damageCache);
                 //ui.abilityText();
                 // ui.getRectangle();
             }
@@ -142,9 +142,9 @@ public class TowerInfo extends CommonInfo {
         this.cost.render(costCache);
         this.sell.render("sell", Color.WHITE, SELL_COLOR);
         this.buy.render("buy", Color.WHITE, BUY_COLOR);
-        if (abilityCache != null) {
+        if (effectNameCache != null) {
             this.ability.render(Assets.getTexture("abilities/" + effectNameCache.name().toLowerCase()),
-                    abilityCache.getEffect());
+                    effectNameCache.name());
         }
     }
 
