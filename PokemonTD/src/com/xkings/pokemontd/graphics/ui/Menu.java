@@ -1,8 +1,10 @@
 package com.xkings.pokemontd.graphics.ui;
 
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.xkings.core.main.Assets;
 import com.xkings.pokemontd.App;
 
 import java.util.ArrayList;
@@ -92,25 +94,62 @@ public class Menu extends Gui {
     }
 
 
-    private class InGameMenu extends MenuTab {
+    private class Options extends ChildTab {
 
-        private final Button exit;
-        private final Button pause;
+        private final Button guiButton;
+        private final Button musicButton;
+        private final GUI gui;
+        private final Music theme;
+
+        Options(MenuTab parent, Gui ui, Rectangle rectangle) {
+            super(parent, ui, rectangle);
+
+            theme = Assets.getMusic("theme.ogg");
+            theme.setLooping(true);
+            theme.setVolume(0.2f);
+            theme.play();
+
+            gui = new GUI(this, ui, rectangle);
+            guiButton = new MenuButton(ui, rects.get(0)) {
+                @Override
+                public void process(float x, float y) {
+                    switchCard(gui);
+                }
+            };
+
+            musicButton = new MenuButton(ui, rects.get(1)) {
+                @Override
+                public void process(float x, float y) {
+                    if (theme.isPlaying()) {
+                        theme.stop();
+                    } else {
+                        theme.play();
+                    }
+                }
+            };
+
+            register(guiButton);
+            register(musicButton);
+        }
+
+        @Override
+        public void render() {
+            super.render();
+            guiButton.render("GRAPHICAL USER INTERFACE");
+            musicButton.render(theme.isPlaying() ? "MUTE MUSIC" : "PLAY MUSIC");
+        }
+    }
+
+    private class GUI extends ChildTab {
+
         private final MenuButton minus;
         private final MenuButton plus;
         private final DisplayText guiSize;
         private final MenuButton defaultGuiSize;
-        private final MenuButton close;
 
-        InGameMenu(Gui ui, Rectangle rectangle) {
-            super(ui, rectangle);
-            pause = new MenuButton(ui, rects.get(0)) {
-                @Override
-                public void process(float x, float y) {
-                    app.freeze(!app.isFreezed());
-                }
-            };
-            Rectangle rect = rects.get(1);
+        GUI(MenuTab parent, Gui ui, Rectangle rectangle) {
+            super(parent, ui, rectangle);
+            Rectangle rect = rects.get(0);
             minus = new MenuButton(ui, new Rectangle(rect.x, rect.y, rect.width / 4, rect.height)) {
                 @Override
                 public void process(float x, float y) {
@@ -128,80 +167,96 @@ public class Menu extends Gui {
                     new DisplayText(ui, new Rectangle(minus.x + minus.width, rect.y, rect.width / 2, rect.height), font,
                             BitmapFont.HAlignment.CENTER);
 
-
-            defaultGuiSize = new MenuButton(ui, rects.get(2)) {
+            defaultGuiSize = new MenuButton(ui, rects.get(1)) {
                 @Override
                 public void process(float x, float y) {
                     app.resetGuiSize();
                 }
             };
-            Rectangle rect2 = rects.get(4);
-            close = new MenuButton(ui, new Rectangle(rect2.x-offset, rect2.y, rect2.width / 2, rect2.height)) {
-                @Override
-                public void process(float x, float y) {
-                    switchCard(null);
-                }
-            };
-            exit = new MenuButton(ui, new Rectangle(rect2.x+rect2.width/2+offset*3, rect2.y, rect2.width / 2, rect2.height)) {
-                @Override
-                public void process(float x, float y) {
-                    System.exit(0);
-                }
-            };
 
-            register(exit);
-            register(pause);
             register(minus);
             register(plus);
             register(guiSize);
             register(defaultGuiSize);
-            register(close);
         }
 
         @Override
         public void render() {
             super.render();
-            exit.render("EXIT");
-            pause.render(app.isFreezed() ? "RESUME" : "PAUSE");
             minus.render("-");
             plus.render("+");
             guiSize.render("GUI SIZE");
-            defaultGuiSize.render("DEFAULT GUI SIZE");
-            close.render("CLOSE");
+            defaultGuiSize.render("RESET");
         }
     }
 
-    private class MenuBox extends MenuTab {
+    private class InGameMenu extends ExitTab {
 
-        private final Button exit;
-        private final Button startGame;
+        private final Button pause;
+        private final Options options;
+        private final MenuButton optionsButton;
 
-        MenuBox(Gui ui, Rectangle rectangle) {
-            super(ui, rectangle);
-            exit = new MenuButton(ui, rects.get(rects.size() - 1)) {
+        InGameMenu(Gui ui, Rectangle rectangle) {
+            super(ui, rectangle, true);
+            options = new Options(this, ui, rectangle);
+            pause = new MenuButton(ui, rects.get(0)) {
                 @Override
                 public void process(float x, float y) {
-                    System.exit(0);
+                    app.freeze(!app.isFreezed());
                 }
             };
+            optionsButton = new MenuButton(ui, rects.get(1)) {
+                @Override
+                public void process(float x, float y) {
+                    switchCard(options);
+                }
+            };
+
+            register(pause);
+            register(optionsButton);
+        }
+
+        @Override
+        public void render() {
+            super.render();
+            pause.render(app.isFreezed() ? "RESUME" : "PAUSE");
+            optionsButton.render("OPTIONS");
+        }
+    }
+
+    private class MenuBox extends ExitTab {
+
+        private final Button startGame;
+        private final MenuButton optionsButton;
+        private final Options options;
+
+        MenuBox(Gui ui, Rectangle rectangle) {
+            super(ui, rectangle, false);
+            options = new Options(this, ui, rectangle);
             startGame = new MenuButton(ui, rects.get(0)) {
                 @Override
                 public void process(float x, float y) {
                     app.setSessionStarted(true);
                     app.freeze(false);
-                    switchCard(null);
+                    close();
                 }
             };
-            register(exit);
+            optionsButton = new MenuButton(ui, rects.get(1)) {
+                @Override
+                public void process(float x, float y) {
+                    switchCard(options);
+                }
+            };
             register(startGame);
+            register(optionsButton);
             this.setCloseTabWhenNotClicked(false);
         }
 
         @Override
         public void render() {
             super.render();
-            exit.render("EXIT");
             startGame.render("PLAY GAME");
+            optionsButton.render("OPTIONS");
         }
     }
 
@@ -210,11 +265,13 @@ public class Menu extends Gui {
         private static final float LINE_HEIGHT = 2;
         protected final List<Rectangle> rects;
         protected final int count;
+        private final MenuTab parent;
         private boolean closeTabWhenNotClicked = true;
         protected int buttonHeight;
 
-        MenuTab(Gui ui, Rectangle rectangle) {
+        MenuTab(MenuTab parent, Gui ui, Rectangle rectangle) {
             super(ui, rectangle);
+            this.parent = parent;
             count = 5;
             rects = getRects(count);
         }
@@ -243,11 +300,88 @@ public class Menu extends Gui {
         }
 
         public boolean isCloseTabWhenNotClicked() {
-            return closeTabWhenNotClicked;
+            if (parent == null) {
+                return closeTabWhenNotClicked;
+            } else {
+                return parent.isCloseTabWhenNotClicked();
+            }
         }
 
         public void setCloseTabWhenNotClicked(boolean closeTabWhenNotClicked) {
-            this.closeTabWhenNotClicked = closeTabWhenNotClicked;
+            if (parent == null) {
+                this.closeTabWhenNotClicked = closeTabWhenNotClicked;
+            } else {
+                parent.setCloseTabWhenNotClicked(closeTabWhenNotClicked);
+            }
+        }
+
+        public void close() {
+            switchCard(parent);
+        }
+    }
+
+    private class ChildTab extends MenuTab {
+
+        private final MenuButton close;
+
+        ChildTab(MenuTab parent, Gui ui, Rectangle rectangle) {
+            super(parent, ui, rectangle);
+            Rectangle rect2 = rects.get(rects.size() - 1);
+            close = new MenuButton(ui, rect2) {
+                @Override
+                public void process(float x, float y) {
+                    close();
+                }
+            };
+            register(close);
+        }
+
+        @Override
+        public void render() {
+            super.render();
+            close.render("CLOSE");
+        }
+    }
+
+    private class ExitTab extends MenuTab {
+
+        private MenuButton close;
+        private final MenuButton exit;
+
+        ExitTab(Gui ui, Rectangle rectangle, boolean closeButton) {
+            super(null, ui, rectangle);
+            Rectangle rect2 = rects.get(rects.size() - 1);
+            Rectangle closeRect = new Rectangle(rect2.x, rect2.y, rect2.width / 2, rect2.height);
+            Rectangle exitRect = new Rectangle(rect2.x + rect2.width / 2, rect2.y, rect2.width / 2, rect2.height);
+
+            if (closeButton) {
+                close = new MenuButton(ui, closeRect) {
+                    @Override
+                    public void process(float x, float y) {
+                        close();
+                    }
+                };
+                register(close);
+            } else {
+                exitRect = rect2;
+            }
+
+            exit = new MenuButton(ui, exitRect) {
+                @Override
+                public void process(float x, float y) {
+                    System.exit(0);
+                }
+            };
+            register(exit);
+        }
+
+        @Override
+        public void render() {
+            super.render();
+            if (close != null) {
+                close.render("CLOSE");
+            }
+            exit.render("EXIT");
         }
     }
 
@@ -255,11 +389,6 @@ public class Menu extends Gui {
 
         protected MenuButton(Gui gui, Rectangle rect) {
             super(gui, rect, font, BitmapFont.HAlignment.CENTER);
-        }
-
-        @Override
-        public void refresh() {
-
         }
     }
 
