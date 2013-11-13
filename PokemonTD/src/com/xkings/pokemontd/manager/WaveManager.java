@@ -1,11 +1,13 @@
 package com.xkings.pokemontd.manager;
 
 import com.artemis.World;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.logic.Clock;
 import com.xkings.core.logic.UpdateFilter;
 import com.xkings.core.logic.Updateable;
 import com.xkings.pokemontd.App;
+import com.xkings.pokemontd.Player;
 import com.xkings.pokemontd.component.WaveComponent;
 import com.xkings.pokemontd.entity.creep.Creep;
 import com.xkings.pokemontd.entity.creep.CreepAbilityType;
@@ -13,6 +15,7 @@ import com.xkings.pokemontd.entity.creep.CreepName;
 import com.xkings.pokemontd.entity.creep.CreepType;
 import com.xkings.pokemontd.map.Path;
 import com.xkings.pokemontd.map.PathPack;
+import com.xkings.pokemontd.system.resolve.FireTextInfo;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -28,16 +31,17 @@ public class WaveManager implements Updateable {
 
     private final Iterator<CreepName> creeps;
     private final UpdateFilter filter;
+    private final Player player;
     private boolean active;
     private CreepType nextWave;
-    private CreepType currentWave;
     private final List<WaveComponent> waves = new LinkedList<WaveComponent>();
 
     /**
      * @param clock internal update timer
      */
-    public WaveManager(World world, Clock clock, PathPack pathPack, float interval) {
+    public WaveManager(World world, Clock clock, Player player, PathPack pathPack, float interval) {
         this.world = world;
+        this.player = player;
         this.pathPack = pathPack;
         this.creeps = Arrays.asList(CreepName.values()).iterator();
         this.active = true;
@@ -65,7 +69,6 @@ public class WaveManager implements Updateable {
             Creep.registerCreep(world, new Path(path), wave, next, startPoint.x + xOffset, startPoint.y + yOffset);
         }
         registerWave(wave);
-
         updateWave();
     }
 
@@ -74,6 +77,10 @@ public class WaveManager implements Updateable {
     }
 
     private void unregisterWave(WaveComponent wave) {
+        if ((wave.getId() + 1) % 5 == 0) {
+            player.addFreeElement();
+            world.getSystem(FireTextInfo.class).fireText("FREE ELEMENT", Color.GREEN);
+        }
         waves.remove(wave);
     }
 
@@ -86,7 +93,6 @@ public class WaveManager implements Updateable {
     }
 
     private void updateWave() {
-        currentWave = nextWave;
         nextWave = creeps.hasNext() ? CreepType.getWave(creeps.next()) : null;
     }
 

@@ -25,6 +25,7 @@ import com.xkings.core.main.Game2D;
 import com.xkings.core.pathfinding.Blueprint;
 import com.xkings.core.tween.TweenManagerAdapter;
 import com.xkings.core.tween.Vector3Accessor;
+import com.xkings.pokemontd.component.ShopComponent;
 import com.xkings.pokemontd.graphics.AggresiveGaussianBlurRenderer;
 import com.xkings.pokemontd.graphics.GameRenderer;
 import com.xkings.pokemontd.graphics.GrayscaleRenderer;
@@ -174,11 +175,11 @@ public class App extends Game2D {
     }
 
     private void initializeContent() {
-        player = new Player(50, 15000, 10);
+        player = new Player(50, 70, 0);
     }
 
     private void initializeManagers() {
-        this.waveManager = new WaveManager(world, clock, pathPack, STRESS_TEST != null ? 0.01f : WAVE_INTERVAL);
+        this.waveManager = new WaveManager(world, clock, player, pathPack, STRESS_TEST != null ? 0.01f : WAVE_INTERVAL);
         this.towerManager = new TowerManager(world, blueprint, player);
         this.creepManager = new CreepManager(world);
         this.invisibleManager = new InvisibleManager(world, clock, INVISIBLE_INTERVAL);
@@ -208,7 +209,7 @@ public class App extends Game2D {
         world.setSystem(new InvisibleSystem(), true);
         world.setSystem(new GetTower(), true);
         world.setSystem(new GetCreep(), true);
-        world.setSystem(new FindShop(), true);
+        world.setSystem(new FireTextInfo(ShopComponent.class), true);
 
         world.setSystem(new DamageOverPolySystem(), true);
         world.setSystem(new TargetingSystem());

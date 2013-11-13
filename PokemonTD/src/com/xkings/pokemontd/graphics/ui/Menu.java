@@ -107,7 +107,7 @@ public class Menu extends Gui {
             theme = Assets.getMusic("theme.ogg");
             theme.setLooping(true);
             theme.setVolume(0.2f);
-           // theme.play();
+            // theme.play();
 
             gui = new GUI(this, ui, rectangle);
             guiButton = new MenuButton(ui, rects.get(0)) {
@@ -139,6 +139,47 @@ public class Menu extends Gui {
             musicButton.render(theme.isPlaying() ? "MUTE MUSIC" : "PLAY MUSIC");
         }
     }
+
+  /*  private class GameOptions extends ChildTab {
+
+        private final Button guiButton;
+        private final Button musicButton;
+        private final GUI gui;
+        private final Music theme;
+
+        GameOptions(MenuTab parent, Gui ui, Rectangle rectangle) {
+            super(parent, ui, rectangle);
+
+            gui = new GUI(this, ui, rectangle);
+            guiButton = new MenuButton(ui, rects.get(0)) {
+                @Override
+                public void process(float x, float y) {
+                    switchCard(gui);
+                }
+            };
+
+            musicButton = new MenuButton(ui, rects.get(1)) {
+                @Override
+                public void process(float x, float y) {
+                    if (theme.isPlaying()) {
+                        theme.stop();
+                    } else {
+                        theme.play();
+                    }
+                }
+            };
+
+            register(guiButton);
+            register(musicButton);
+        }
+
+        @Override
+        public void render() {
+            super.render();
+            guiButton.render("GRAPHICAL USER INTERFACE");
+            musicButton.render(theme.isPlaying() ? "MUTE MUSIC" : "PLAY MUSIC");
+        }
+    }      */
 
     private class GUI extends ChildTab {
 

@@ -22,7 +22,6 @@ import com.xkings.pokemontd.entity.tower.Tower;
 import com.xkings.pokemontd.entity.tower.TowerName;
 import com.xkings.pokemontd.entity.tower.TowerType;
 import com.xkings.pokemontd.graphics.ui.Clickable;
-import com.xkings.pokemontd.system.resolve.FindShop;
 import com.xkings.pokemontd.system.resolve.ui.GetTower;
 
 /**
@@ -135,12 +134,6 @@ public class TowerManager implements Clickable {
         removePlaceholderTower();
     }
 
-    public Entity getShop() {
-        FindShop findShop = world.getSystem(FindShop.class);
-        findShop.process();
-        return findShop.getShop();
-    }
-
     public Entity getPlaceholderTower() {
         return placeholderTower;
     }
@@ -151,14 +144,14 @@ public class TowerManager implements Clickable {
             int size = App.WORLD_SCALE;
             int offset = size / 20;
             shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            shapeRenderer.setColor(new Color(Color.GREEN).sub(0, 0, 0, 0.8f));
-            drawFreeSlots(shapeRenderer, size, offset);
-            shapeRenderer.end();
-
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
             shapeRenderer.setColor(new Color(Color.BLACK).sub(0, 0, 0, 0.8f));
             drawFreeSlots(shapeRenderer, size, offset);
             shapeRenderer.end();
+
+            /*shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            shapeRenderer.setColor(new Color(Color.BLACK).sub(0, 0, 0, 0.8f));
+            drawFreeSlots(shapeRenderer, size, offset);
+            shapeRenderer.end();               */
             Gdx.gl.glDisable(GL20.GL_BLEND);
         }
     }

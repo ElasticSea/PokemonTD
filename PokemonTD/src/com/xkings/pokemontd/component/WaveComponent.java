@@ -16,14 +16,13 @@ public class WaveComponent extends Component {
         this.waveManager = waveManager;
     }
 
-
     public boolean addCreep(Entity creep) {
         return wave.add(creep);
     }
 
     public boolean removeCreep(Entity creep) {
         boolean remove = wave.remove(creep);
-        if(remove && isEmpty()){
+        if (remove && isEmpty()) {
             waveManager.removeWave(this);
         }
         return remove;
@@ -31,6 +30,10 @@ public class WaveComponent extends Component {
 
     public boolean isEmpty() {
         return wave.size() == 0;
+    }
+
+    public int getId() {
+        return !isEmpty() ? wave.get(0).getId() : -1;
     }
 
 }
