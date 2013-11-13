@@ -5,6 +5,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.xkings.pokemontd.component.attack.EffectName;
 import com.xkings.pokemontd.component.attack.projectile.data.BonusAttack;
 import com.xkings.pokemontd.component.attack.projectile.data.EffectData;
+import com.xkings.pokemontd.component.attack.projectile.data.LifeStealData;
+import com.xkings.pokemontd.component.attack.projectile.data.MoneyData;
 
 /**
  * User: Seda
@@ -51,7 +53,7 @@ public class AbilityInfo extends GuiBox {
     private String getDescription(EffectName effectName, EffectData abilityCache, float damage) {
         switch (effectName) {
             case Normal:
-                break;
+                return "Deals " + (int) (damage) + " damage.";
             case Splash:
                 break;
             case Wave:
@@ -61,8 +63,8 @@ public class AbilityInfo extends GuiBox {
             case Entangle:
                 break;
             case Peck:
-                BonusAttack ability = (BonusAttack) abilityCache;
-                return (int) (ability.getChance() * 100) + "% chance to deal " + ability.getIterations() +
+                BonusAttack bonusAttack = (BonusAttack) abilityCache;
+                return (int) (bonusAttack.getChance() * 100) + "% chance to deal " + bonusAttack.getIterations() +
                         "X aditional " + (int) damage + " damage";
             case Terrify:
                 break;
@@ -79,7 +81,8 @@ public class AbilityInfo extends GuiBox {
             case Stomp:
                 break;
             case Steal:
-                break;
+                MoneyData money = (MoneyData) abilityCache;
+                return "Killed creeps earn " + (int) ((money.getEarnRatio() - 1) * 100) + "% more money.";
             case Boulder:
                 break;
             case Impair:
@@ -93,7 +96,8 @@ public class AbilityInfo extends GuiBox {
             case Corrode:
                 break;
             case LifeSteal:
-                break;
+                LifeStealData lifeSteal = (LifeStealData) abilityCache;
+                return (int) (lifeSteal.getChance() * 100) + "% chance to earn life from killed creep, instead of money.";
             case Infect:
                 break;
             case SoundWave:
@@ -112,6 +116,7 @@ public class AbilityInfo extends GuiBox {
 
     public void reset() {
         this.abilityCache = null;
+        this.effectName = null;
     }
 
     @Override
