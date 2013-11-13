@@ -50,6 +50,10 @@ public class AbilityInfo extends GuiBox {
 
     private String getDescription(EffectName effectName, EffectData abilityCache, float damage) {
         switch (effectName) {
+            case Normal:
+                break;
+            case Splash:
+                break;
             case Wave:
                 break;
             case Burn:

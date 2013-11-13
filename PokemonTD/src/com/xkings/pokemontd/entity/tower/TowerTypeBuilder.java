@@ -50,31 +50,31 @@ public class TowerTypeBuilder {
         specs.add(new Specs(TowerName.Shop, null, 0, 18, 0, 0, null, Treasure.fromNone()));
         /// ######################  PURES
         // Basic
-        specs.add(new Specs(TowerName.Needle, null, 1, 18, N_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromNone()));
-        specs.add(new Specs(TowerName.Pinch, null, 2, 54, N_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromNone()));
-        specs.add(new Specs(TowerName.Sting, null, 3, 162, N_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromNone()));
-        specs.add(new Specs(TowerName.Scratch, null, 1, 9, S_SPEED, N_RANGE, HitAbility.getSplash("bullet", scale, 2), Treasure.fromNone()));
-        specs.add(new Specs(TowerName.Bite, null, 2, 27, S_SPEED, N_RANGE, HitAbility.getSplash("bullet", scale, 2), Treasure.fromNone()));
-        specs.add(new Specs(TowerName.Smash, null, 3, 81, S_SPEED, N_RANGE, HitAbility.getSplash("bullet", scale, 2), Treasure.fromNone()));
+        specs.add(new Specs(TowerName.Needle, Normal, 1, 18, N_SPEED, N_RANGE, HitAbility.getNormal("bullet",scale), Treasure.fromNone()));
+        specs.add(new Specs(TowerName.Pinch, Normal, 2, 54, N_SPEED, N_RANGE, HitAbility.getNormal("bullet",scale), Treasure.fromNone()));
+        specs.add(new Specs(TowerName.Sting, Normal, 3, 162, N_SPEED, N_RANGE, HitAbility.getNormal("bullet",scale), Treasure.fromNone()));
+        specs.add(new Specs(TowerName.Scratch, Splash, 1, 9, S_SPEED, N_RANGE, HitAbility.getSplash("bullet", scale, 2), Treasure.fromNone()));
+        specs.add(new Specs(TowerName.Bite, Splash, 2, 27, S_SPEED, N_RANGE, HitAbility.getSplash("bullet", scale, 2), Treasure.fromNone()));
+        specs.add(new Specs(TowerName.Smash, Splash, 3, 81, S_SPEED, N_RANGE, HitAbility.getSplash("bullet", scale, 2), Treasure.fromNone()));
         // blue
-        specs.add(new Specs(TowerName.Splash, null, 4, 280, N_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromWater(1)));
-        specs.add(new Specs(TowerName.Ripple, null, 5, 2124, N_SPEED, N_RANGE, HitAbility.getNormal("bubble", scale), Treasure.fromWater(2)));
+        specs.add(new Specs(TowerName.Splash, Normal, 4, 280, N_SPEED, N_RANGE, HitAbility.getNormal("bullet",scale), Treasure.fromWater(1)));
+        specs.add(new Specs(TowerName.Ripple, Normal, 5, 2124, N_SPEED, N_RANGE, HitAbility.getNormal("bullet",scale), Treasure.fromWater(2)));
         specs.add(new Specs(TowerName.Tsunami, Wave, 10, 106614, N_SPEED, N_RANGE, HitAbility.getBubbleGrowing(scale), Treasure.fromWater(3)));
         //red
-        specs.add(new Specs(TowerName.Sparkle, null, 4, 252, N_SPEED, S_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromFire(1)));
-        specs.add(new Specs(TowerName.Burning, null, 5, 1153, L_SPEED, S_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromFire(2)));
+        specs.add(new Specs(TowerName.Sparkle, Normal, 4, 252, N_SPEED, S_RANGE, HitAbility.getNormal("bullet",scale), Treasure.fromFire(1)));
+        specs.add(new Specs(TowerName.Burning, Normal, 5, 1153, L_SPEED, S_RANGE, HitAbility.getNormal("bullet",scale), Treasure.fromFire(2)));
         specs.add(new Specs(TowerName.Inferno, Burn, 10, 78346, XL_SPEED, S_RANGE, HitAbility.getFireDot(scale), Treasure.fromFire(3)));
         //green
-        specs.add(new Specs(TowerName.Flower, null, 4, 514, XS_SPEED, S_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromNature(1)));
-        specs.add(new Specs(TowerName.Forest, null, 5, 7890, XS_SPEED, S_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromNature(2)));
+        specs.add(new Specs(TowerName.Flower, Normal, 4, 514, XS_SPEED, S_RANGE, HitAbility.getNormal("bullet",scale), Treasure.fromNature(1)));
+        specs.add(new Specs(TowerName.Forest, Normal, 5, 7890, XS_SPEED, S_RANGE, HitAbility.getNormal("bullet",scale), Treasure.fromNature(2)));
         specs.add(new Specs(TowerName.Nature, Entangle, 10, 181472, XS_SPEED, S_RANGE, HitAbility.getNature(scale, 0.7f, 2f, 0.5f), Treasure.fromNature(3)));
         //yellow
-        specs.add(new Specs(TowerName.Chicken, null, 4, 220, L_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromLight(1)));
-        specs.add(new Specs(TowerName.Screech, null, 5, 1914, L_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromLight(2)));
+        specs.add(new Specs(TowerName.Chicken, Normal, 4, 220, L_SPEED, N_RANGE, HitAbility.getNormal("bullet",scale), Treasure.fromLight(1)));
+        specs.add(new Specs(TowerName.Screech, Normal, 5, 1914, L_SPEED, N_RANGE, HitAbility.getNormal("bullet",scale), Treasure.fromLight(2)));
         specs.add(new Specs(TowerName.Claw, Peck, 10, 84148, L_SPEED, N_RANGE, HitAbility.getClaw(scale, 0.3f, 2), Treasure.fromLight(3)));
         //purple
-        specs.add(new Specs(TowerName.Spooky, null, 4, 239, N_SPEED, XL_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromDarkness(1)));
-        specs.add(new Specs(TowerName.Haunted, null, 5, 1744, N_SPEED, XL_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromDarkness(2)));
+        specs.add(new Specs(TowerName.Spooky, Normal, 4, 239, N_SPEED, XL_RANGE, HitAbility.getNormal("bullet",scale), Treasure.fromDarkness(1)));
+        specs.add(new Specs(TowerName.Haunted, Normal, 5, 1744, N_SPEED, XL_RANGE, HitAbility.getNormal("bullet",scale), Treasure.fromDarkness(2)));
         specs.add(new Specs(TowerName.Nightmare, Terrify, 10, 0.3f, N_SPEED, XL_RANGE, HitAbility.getTemLifeSteal(scale, 5f), Treasure.fromDarkness(3)));
         /// ######################  TWO ELEMENT
         specs.add(new Specs(TowerName.Noble, Haste, 5, 1.25f, 45, BUFF_RANGE, BuffAbility.getSpeed(20), Treasure.fromWater(1).addFire(1)));
