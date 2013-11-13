@@ -107,7 +107,7 @@ public class Menu extends Gui {
             theme = Assets.getMusic("theme.ogg");
             theme.setLooping(true);
             theme.setVolume(0.2f);
-            theme.play();
+           // theme.play();
 
             gui = new GUI(this, ui, rectangle);
             guiButton = new MenuButton(ui, rects.get(0)) {

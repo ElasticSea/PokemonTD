@@ -125,7 +125,7 @@ public class CreepTypeBuilder {
         List<CreepType> list = new ArrayList<CreepType>();
         for (int id = 0; id < data.size(); id++) {
             Specs specification = data.get(id);
-            CreepAbilityType ability = specification.getAbilityType();
+            CreepAbilityType ability =  CreepAbilityType.SPAWN;
             int health = specification.getHealth();
             float speed = scale;
             float size = scale;

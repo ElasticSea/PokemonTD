@@ -4,7 +4,10 @@ import com.artemis.Component;
 import com.artemis.Entity;
 import com.artemis.World;
 import com.artemis.utils.Bag;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.xkings.core.component.PositionComponent;
 import com.xkings.core.pathfinding.Blueprint;
@@ -142,6 +145,25 @@ public class TowerManager implements Clickable {
         return placeholderTower;
     }
 
+    public void render(ShapeRenderer shapeRenderer) {
+        if (placeholderTower != null) {
+            Gdx.gl.glEnable(GL20.GL_BLEND);
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            shapeRenderer.setColor(new Color(Color.GREEN).sub(0, 0, 0, 0.8f));
+            int size = App.WORLD_SCALE;
+            int offset = size / 20;
+            for (int i = 0; i < blueprint.getWidth(); i++) {
+                for (int j = 0; j < blueprint.getHeight(); j++) {
+                    if (blueprint.isWalkable(i, j)) {
+                        shapeRenderer.rect(i * size + offset, j * size + offset, size - offset * 2, size - offset * 2);
+                    }
+                }
+            }
+            shapeRenderer.end();
+            Gdx.gl.glDisable(GL20.GL_BLEND);
+        }
+    }
+
     public enum Status {
         NONE, PLACING_TOWER, MOVE_PLACEHOLDER;
     }
@@ -180,13 +202,16 @@ public class TowerManager implements Clickable {
             if (canAfford(selectedTower) && blueprint.isWalkable((int) block.x, (int) block.y)) {
                 status = Status.MOVE_PLACEHOLDER;
                 Vector3 towerPosition = App.getTowerPosition(x, y);
-                this.placeholderTower =
-                        StaticObject.registerFakeTower(this.world, selectedTower, towerPosition.x, towerPosition.y,
-                                TINT);
+                createPlaceholder(towerPosition);
                 return true;
             }
         }
         return false;
+    }
+
+    private void createPlaceholder(Vector3 towerPosition) {
+        this.placeholderTower =
+                StaticObject.registerFakeTower(this.world, selectedTower, towerPosition.x, towerPosition.y, TINT);
     }
 
     private void movePlaceholder(int x, int y) {
@@ -240,6 +265,7 @@ public class TowerManager implements Clickable {
     private void setStatus(Status status) {
         this.status = status;
     }
+
 
 }
 

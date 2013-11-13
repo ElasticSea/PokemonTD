@@ -115,7 +115,7 @@ public class WaveManager implements Updateable {
         }
     }
 
-    public void triggerNextWave(){
+    public void triggerNextWave() {
         filter.triggerUpdate();
     }
 

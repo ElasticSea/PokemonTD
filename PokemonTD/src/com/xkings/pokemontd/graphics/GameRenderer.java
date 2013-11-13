@@ -12,6 +12,7 @@ import com.xkings.core.graphics.Renderable;
 import com.xkings.pokemontd.App;
 import com.xkings.pokemontd.graphics.ui.GuiBox;
 import com.xkings.pokemontd.graphics.ui.Ui;
+import com.xkings.pokemontd.manager.TowerManager;
 import com.xkings.pokemontd.map.MapData;
 import com.xkings.pokemontd.map.Path;
 import com.xkings.pokemontd.map.PathPack;
@@ -34,11 +35,13 @@ public class GameRenderer implements Renderable {
     private final RenderHealthSystem renderHealthSystem;
     private final TileMap<TextureAtlas.AtlasRegion> tileMap;
     private final PathPack pathPack;
+    private final TowerManager towerManager;
 
     public GameRenderer(App app, Ui ui, MapData mapData, World world, Camera camera) {
         this.app = app;
         this.ui = ui;
         this.camera = camera;
+        this.towerManager = ui.getTowerManager();
         this.spriteBatch = app.getSpriteBatch();
         this.shapeRenderer = app.getShapeRenderer();
         this.renderSpriteSystem = world.getSystem(RenderSpriteSystem.class);
@@ -56,6 +59,10 @@ public class GameRenderer implements Renderable {
         spriteBatch.begin();
         drawMap(0);
         drawMap(1);
+        spriteBatch.end();
+        shapeRenderer.setProjectionMatrix(camera.combined);
+        towerManager.render(shapeRenderer);
+        spriteBatch.begin();
         renderSpriteSystem.process();
         renderTextSystem.process();
         drawMap(2);
@@ -63,7 +70,6 @@ public class GameRenderer implements Renderable {
         drawMap(3);
         spriteBatch.end();
 
-        shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         renderRangeSystem.process();
         if (App.DEBUG != null) {
