@@ -3,6 +3,7 @@ package com.xkings.pokemontd.system.trigger;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
+import com.xkings.pokemontd.component.attack.effects.buff.BuffableDamageComponent;
 import com.xkings.pokemontd.component.attack.effects.buff.DamageBuffEffect;
 import com.xkings.pokemontd.component.attack.effects.buff.SpeedBuffEffect;
 import com.xkings.pokemontd.component.attack.projectile.BuffAbility;
@@ -21,6 +22,8 @@ public class ApplyBuffSystem extends ApplyAbilitySystem<BuffAbility> {
     ComponentMapper<SpeedBuffEffect> speedBuffMapper;
     @Mapper
     ComponentMapper<DamageBuffEffect> damageBuffMapper;
+    @Mapper
+    ComponentMapper<BuffableDamageComponent> damageMapper;
 
     public ApplyBuffSystem() {
         super(BuffAbility.class, ClosestSystemTower.class);
@@ -46,27 +49,28 @@ public class ApplyBuffSystem extends ApplyAbilitySystem<BuffAbility> {
     protected void processTarget(BuffAbility ability, Entity entity, Entity target) {
         switch (ability.getType()) {
             case SPEED:
-               speedBuff(ability, target);
+                speedBuff(ability, entity, target);
                 break;
             case DAMAGE:
-                damageBuff(ability, target);
+                damageBuff(ability, entity, target);
                 break;
         }
 
     }
 
-    private void speedBuff(BuffAbility ability, Entity target) {
+    private void speedBuff(BuffAbility ability, Entity entity, Entity target) {
         SpeedBuffEffect speedBuff = speedBuffMapper.getSafe(target);
         if (speedBuff == null) {
-            target.addComponent(new SpeedBuffEffect().set(ability.getDuration(), ability.getRatio()));
+            target.addComponent(new SpeedBuffEffect().set(ability.getDuration(), damageMapper.get(entity).getDamage()));
             target.changedInWorld();
         }
     }
 
-    private void damageBuff(BuffAbility ability, Entity target) {
+    private void damageBuff(BuffAbility ability, Entity entity, Entity target) {
         DamageBuffEffect damageBuff = damageBuffMapper.getSafe(target);
         if (damageBuff == null) {
-            target.addComponent(new DamageBuffEffect().set(ability.getDuration(), ability.getRatio()));
+            target.addComponent(
+                    new DamageBuffEffect().set(ability.getDuration(), damageMapper.get(entity).getDamage()));
             target.changedInWorld();
         }
     }

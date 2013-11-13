@@ -79,9 +79,7 @@ public class TowerInfo extends CommonInfo {
 
             @Override
             public void process(float x, float y) {
-                ui.getAbilityInfo().update(abilityCache, effectNameCache.name(),speedCache, damageCache);
-                //ui.abilityText();
-                // ui.getRectangle();
+                ui.getAbilityInfo().update(abilityCache, effectNameCache, speedCache, damageCache);
             }
         };
         int buttonWidth = (int) (offsetBlocks * 1.5f);
@@ -114,8 +112,7 @@ public class TowerInfo extends CommonInfo {
     public void render() {
         this.sell.setEnabled(sellCache);
         this.buy.setEnabled(buyCache);
-        this.ability.setEnabled(abilityCache != null);
-
+        this.ability.setEnabled(effectNameCache!=null);
         super.render();
 
         String damageText = "DMG: " + (int) (damageCache);
@@ -215,7 +212,7 @@ public class TowerInfo extends CommonInfo {
         float offsetBlocks2 = offsetBlocks / 2f;
         float textOffset = x + offset * 5;
         if (this instanceof ShopEntityInfo) {
-            cost.set(textOffset, y + offset, width-textOffset, offset*3);
+            cost.set(textOffset, y + offset, width - textOffset, offset * 3);
         } else {
             cost.set(x + offset, y, width - offset * 2, offset);
         }

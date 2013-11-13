@@ -1,6 +1,7 @@
 package com.xkings.pokemontd.component.attack.projectile.data;
 
 import com.xkings.pokemontd.component.attack.AbilityComponent;
+import com.xkings.pokemontd.component.attack.EffectName;
 
 /**
  * Created by Tomas on 10/13/13.
@@ -30,7 +31,7 @@ public class EffectData extends AbilityComponent {
         return chance;
     }
 
-    public String getEffectDescription(float speed, float damage) {
+    public String getEffectDescription(EffectName effectName, float speed, float damage) {
         if (chance == 0) {
             return "Zero chance to ";
         } else if (chance < 1) {

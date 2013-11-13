@@ -1,6 +1,7 @@
 package com.xkings.pokemontd.component.attack.projectile;
 
 import com.xkings.pokemontd.App;
+import com.xkings.pokemontd.component.attack.EffectName;
 import com.xkings.pokemontd.component.attack.projectile.data.EffectData;
 
 /**
@@ -24,7 +25,7 @@ public class SunbeamAbility extends EffectData {
         return height;
     }
 
-    public String getEffectDescription(float speed,float damage){
+    public String getEffectDescription(EffectName effectName, float speed, float damage){
         return "asdasdasdasd";
     }
 
