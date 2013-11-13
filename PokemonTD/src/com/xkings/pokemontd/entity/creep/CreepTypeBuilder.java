@@ -156,7 +156,7 @@ public class CreepTypeBuilder {
                     break;
                 case BOSS:
                     health *= creepsInWay;
-                    size *= 4f;
+                    size *= 3f;
                     creepsInWay = 1;
                     break;
             }
