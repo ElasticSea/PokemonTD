@@ -148,19 +148,28 @@ public class TowerManager implements Clickable {
     public void render(ShapeRenderer shapeRenderer) {
         if (placeholderTower != null) {
             Gdx.gl.glEnable(GL20.GL_BLEND);
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            shapeRenderer.setColor(new Color(Color.GREEN).sub(0, 0, 0, 0.8f));
             int size = App.WORLD_SCALE;
             int offset = size / 20;
-            for (int i = 0; i < blueprint.getWidth(); i++) {
-                for (int j = 0; j < blueprint.getHeight(); j++) {
-                    if (blueprint.isWalkable(i, j)) {
-                        shapeRenderer.rect(i * size + offset, j * size + offset, size - offset * 2, size - offset * 2);
-                    }
-                }
-            }
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            shapeRenderer.setColor(new Color(Color.GREEN).sub(0, 0, 0, 0.8f));
+            drawFreeSlots(shapeRenderer, size, offset);
+            shapeRenderer.end();
+
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            shapeRenderer.setColor(new Color(Color.BLACK).sub(0, 0, 0, 0.8f));
+            drawFreeSlots(shapeRenderer, size, offset);
             shapeRenderer.end();
             Gdx.gl.glDisable(GL20.GL_BLEND);
+        }
+    }
+
+    private void drawFreeSlots(ShapeRenderer shapeRenderer, int size, int offset) {
+        for (int i = 0; i < blueprint.getWidth(); i++) {
+            for (int j = 0; j < blueprint.getHeight(); j++) {
+                if (blueprint.isWalkable(i, j)) {
+                    shapeRenderer.rect(i * size + offset, j * size + offset, size - offset * 2, size - offset * 2);
+                }
+            }
         }
     }
 

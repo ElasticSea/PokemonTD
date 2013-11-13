@@ -80,7 +80,7 @@ public class CreepTypeBuilder {
         list.add(new Specs(CreepName.Klinklang, 821050, Treasure.fromGold(252), CreepAbilityType.NORMAL));
         list.add(new Specs(CreepName.Lampent, 985261, Treasure.fromGold(277), CreepAbilityType.FAST));
         list.add(new Specs(CreepName.Druddigon, 1182313, Treasure.fromGold(304), CreepAbilityType.NORMAL));
-        list.add(new Specs(CreepName.Hydreigon, 295578, Treasure.fromGold(0), CreepAbilityType.BOSS));
+        list.add(new Specs(CreepName.Hydreigon, 2955780, Treasure.fromGold(0), CreepAbilityType.BOSS));
         return list;
     }
 
@@ -110,7 +110,7 @@ public class CreepTypeBuilder {
         list.add(new Specs(CreepName.Aipom, 800, Treasure.fromDarkness(1), CreepAbilityType.BOSS));
         list.add(new Specs(CreepName.Hoppip, 10000, Treasure.fromDarkness(1), CreepAbilityType.BOSS));
 
-        list.add(new Specs(CreepName.Electivire, 295578, Treasure.fromSoul(1), CreepAbilityType.BOSS));
+        list.add(new Specs(CreepName.Electivire, 2955780, Treasure.fromSoul(1), CreepAbilityType.BOSS));
         return list;
     }
 
@@ -125,7 +125,7 @@ public class CreepTypeBuilder {
         List<CreepType> list = new ArrayList<CreepType>();
         for (int id = 0; id < data.size(); id++) {
             Specs specification = data.get(id);
-            CreepAbilityType ability =  CreepAbilityType.SPAWN;
+            CreepAbilityType ability = specification.getAbilityType();
             int health = specification.getHealth();
             float speed = scale;
             float size = scale;
