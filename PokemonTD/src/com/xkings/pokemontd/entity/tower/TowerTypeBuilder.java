@@ -85,9 +85,9 @@ public class TowerTypeBuilder {
         specs.add(new Specs(TowerName.Solar, Sunbeam, 7, 2817, XS_SPEED, L_RANGE, new SunbeamAbility(0.7f, L_RANGE * 1.5f), Treasure.fromWater(2).addNature(2)));
         specs.add(new Specs(TowerName.Photonic, Sunbeam, 27478, 18, XS_SPEED, L_RANGE, new SunbeamAbility(1.7f, L_RANGE * 2), Treasure.fromWater(3).addNature(3)));
 
-        specs.add(new Specs(TowerName.Poison, Weaken, 5, 411, N_SPEED, N_RANGE, HitAbility.getSplash("bullet", scale, 2), Treasure.fromWater(1).addLight(1)));
-        specs.add(new Specs(TowerName.Toxic, Weaken, 7, 2414, N_SPEED, N_RANGE, HitAbility.getSplash("bullet", scale, 2), Treasure.fromWater(2).addLight(2)));
-        specs.add(new Specs(TowerName.Venom, Weaken, 9, 24917, N_SPEED, N_RANGE, HitAbility.getPoison(scale, 0.2f, 1, 0.2f), Treasure.fromWater(3).addLight(3)));
+        specs.add(new Specs(TowerName.Poison, Weaken, 5, 411, N_SPEED, N_RANGE, HitAbility.getPoison(scale, 0.2f, 1, 0.1f), Treasure.fromWater(1).addLight(1)));
+        specs.add(new Specs(TowerName.Toxic, Weaken, 7, 2414, N_SPEED, N_RANGE, HitAbility.getPoison(scale, 0.5f, 1, 0.15f), Treasure.fromWater(2).addLight(2)));
+        specs.add(new Specs(TowerName.Venom, Weaken, 9, 24917, N_SPEED, N_RANGE, HitAbility.getPoison(scale, 0.8f, 1, 0.2f), Treasure.fromWater(3).addLight(3)));
 
         specs.add(new Specs(TowerName.Ice, Freeze, 5, 378, N_SPEED, N_RANGE, HitAbility.getSlow("bullet", "ice", scale, 0f, 0.2f, 1, 1f), Treasure.fromWater(1).addDarkness(1)));
         specs.add(new Specs(TowerName.Freezing, Freeze, 7, 1978, N_SPEED, N_RANGE, HitAbility.getSlow("bullet", "ice", scale, 1f, 0.3f, 1.5f, 1f), Treasure.fromWater(2).addDarkness(2)));
