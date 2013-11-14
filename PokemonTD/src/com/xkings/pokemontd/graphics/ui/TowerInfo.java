@@ -79,7 +79,7 @@ public class TowerInfo extends CommonInfo {
 
             @Override
             public void process(float x, float y) {
-                ui.getAbilityInfo().update(abilityCache, effectNameCache, splashCache,speedCache, damageCache);
+                ui.getAbilityInfo().update(abilityCache, effectNameCache, splashCache, speedCache, damageCache);
             }
         };
         int buttonWidth = (int) (offsetBlocks * 1.5f);
@@ -192,8 +192,10 @@ public class TowerInfo extends CommonInfo {
         this.rangeColorCache = rangeColor;
         this.costCache = cost;
         this.effectNameCache = effectName;
-        this.abilityCache = getAbility(type);
-        this.splashCache = getSpash(type);
+        if (type != null) {
+            this.abilityCache = getAbility(type);
+            this.splashCache = getSpash(type);
+        }
         this.sellCache = sell;
         this.buyCache = buy;
         render(region, name);
