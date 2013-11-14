@@ -3,10 +3,7 @@ package com.xkings.pokemontd.graphics.ui;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
 import com.xkings.pokemontd.component.attack.EffectName;
-import com.xkings.pokemontd.component.attack.projectile.data.BonusAttack;
-import com.xkings.pokemontd.component.attack.projectile.data.EffectData;
-import com.xkings.pokemontd.component.attack.projectile.data.LifeStealData;
-import com.xkings.pokemontd.component.attack.projectile.data.MoneyData;
+import com.xkings.pokemontd.component.attack.projectile.data.*;
 
 /**
  * User: Seda
@@ -17,10 +14,11 @@ import com.xkings.pokemontd.component.attack.projectile.data.MoneyData;
 public class AbilityInfo extends GuiBox {
     private final DisplayText header;
     private final DisplayText text;
-    private EffectData abilityCache;
+    private EffectData effect;
     private float speed;
     private float damage;
     private EffectName effectName;
+    private float splash;
 
     public AbilityInfo(Ui ui, Rectangle rectangle) {
         super(ui, rectangle);
@@ -34,9 +32,10 @@ public class AbilityInfo extends GuiBox {
         refresh();
     }
 
-    public void update(EffectData abilityCache, EffectName effectName, float speed, float damage) {
-        this.abilityCache = abilityCache;
+    public void update(EffectData effect, EffectName effectName, float splash, float speed, float damage) {
+        this.effect = effect;
         this.effectName = effectName;
+        this.splash = splash;
         this.speed = speed;
         this.damage = damage;
     }
@@ -46,11 +45,11 @@ public class AbilityInfo extends GuiBox {
         if (effectName != null) {
             super.render();
             header.render(effectName.name());
-            text.render(getDescription(effectName, abilityCache, damage));
+            text.render(getDescription(effectName, splash, effect, damage));
         }
     }
 
-    private String getDescription(EffectName effectName, EffectData abilityCache, float damage) {
+    private String getDescription(EffectName effectName, float splash, EffectData abilityCache, float damage) {
         switch (effectName) {
             case Normal:
                 return "Deals " + (int) (damage) + " damage.";
@@ -97,7 +96,8 @@ public class AbilityInfo extends GuiBox {
                 break;
             case LifeSteal:
                 LifeStealData lifeSteal = (LifeStealData) abilityCache;
-                return (int) (lifeSteal.getChance() * 100) + "% chance to earn life from killed creep, instead of money.";
+                return (int) (lifeSteal.getChance() * 100) +
+                        "% chance to earn life from killed creep, instead of money.";
             case Infect:
                 break;
             case SoundWave:
@@ -109,13 +109,14 @@ public class AbilityInfo extends GuiBox {
             case Magma:
                 break;
             case Puzzle:
-                break;
+                ChangeDirectionData changeDirectionData = (ChangeDirectionData) abilityCache;
+                return (int) (changeDirectionData.getChance() * 100) + "% chance to that hit creep changes direction.";
         }
         return "";
     }
 
     public void reset() {
-        this.abilityCache = null;
+        this.effect = null;
         this.effectName = null;
     }
 

@@ -31,7 +31,6 @@ public class TowerInfo extends CommonInfo {
     protected final Button buy;
     private final TowerCost cost;
     private final Icon ability;
-    protected TowerType tower;
     private float damageCache;
     private float speedCache;
     private float rangeCache;
@@ -47,6 +46,7 @@ public class TowerInfo extends CommonInfo {
     private float lastDamageCache;
     private float lastSpeedCache;
     private float lastRangeCache;
+    private float splashCache;
 
     /**
      * public constuctor makes 3 text rectangles uses class DisplayText (damage,range,speed).
@@ -79,7 +79,7 @@ public class TowerInfo extends CommonInfo {
 
             @Override
             public void process(float x, float y) {
-                ui.getAbilityInfo().update(abilityCache, effectNameCache, speedCache, damageCache);
+                ui.getAbilityInfo().update(abilityCache, effectNameCache, splashCache,speedCache, damageCache);
             }
         };
         int buttonWidth = (int) (offsetBlocks * 1.5f);
@@ -112,7 +112,7 @@ public class TowerInfo extends CommonInfo {
     public void render() {
         this.sell.setEnabled(sellCache);
         this.buy.setEnabled(buyCache);
-        this.ability.setEnabled(effectNameCache!=null);
+        this.ability.setEnabled(effectNameCache != null);
         super.render();
 
         String damageText = "DMG: " + (int) (damageCache);
@@ -176,14 +176,14 @@ public class TowerInfo extends CommonInfo {
     }
 
     public void render(TextureAtlas.AtlasRegion region, float damage, float speed, float range, Treasure cost,
-                       String name, EffectName effectName, EffectData ability, boolean sell, boolean buy) {
-        render(region, damage, Color.WHITE, speed, Color.WHITE, range, Color.WHITE, cost, name, effectName, ability,
-                sell, buy);
+                       String name, EffectName effectName, TowerType type, boolean sell, boolean buy) {
+        render(region, damage, Color.WHITE, speed, Color.WHITE, range, Color.WHITE, cost, name, effectName, type, sell,
+                buy);
     }
 
     public void render(TextureAtlas.AtlasRegion region, float damage, Color damageColor, float speed, Color speedColor,
-                       float range, Color rangeColor, Treasure cost, String name, EffectName effectName,
-                       EffectData ability, boolean sell, boolean buy) {
+                       float range, Color rangeColor, Treasure cost, String name, EffectName effectName, TowerType type,
+                       boolean sell, boolean buy) {
         this.damageCache = damage;
         this.damageColorCache = damageColor;
         this.speedCache = speed;
@@ -192,7 +192,8 @@ public class TowerInfo extends CommonInfo {
         this.rangeColorCache = rangeColor;
         this.costCache = cost;
         this.effectNameCache = effectName;
-        this.abilityCache = ability;
+        this.abilityCache = getAbility(type);
+        this.splashCache = getSpash(type);
         this.sellCache = sell;
         this.buyCache = buy;
         render(region, name);
@@ -253,4 +254,10 @@ public class TowerInfo extends CommonInfo {
         }
         return null;
     }
+
+    private float getSpash(TowerType tower) {
+        AbilityComponent attack = tower.getAttack();
+        return attack instanceof HitAbility ? ((HitAbility) attack).getAoe() : 0;
+    }
+
 }

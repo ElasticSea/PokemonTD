@@ -10,6 +10,7 @@ import com.xkings.core.component.RangeComponent;
 import com.xkings.pokemontd.component.*;
 import com.xkings.pokemontd.component.attack.effects.buff.BuffableDamageComponent;
 import com.xkings.pokemontd.component.attack.effects.buff.BuffableSpeedComponent;
+import com.xkings.pokemontd.entity.tower.TowerType;
 
 /**
  * User: Seda
@@ -52,9 +53,8 @@ public class TowerEntityInfo extends TowerInfo {
 
             render(spriteComponent.getSprite(), damageComponent.getDamage(), damageColor, speedComponent.getSpeed(),
                     speedColor, range, rangeColor, costComponent.getTreasure(), nameComponent.getName(),
-                    effectComponent.getName(), getAbility(towerTypeComponent.getTowerType()), true, false);
+                    effectComponent.getName(), towerTypeComponent.getTowerType(),true, false);
         }
 
     }
-
 }
