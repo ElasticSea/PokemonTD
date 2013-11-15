@@ -89,4 +89,8 @@ public abstract class AbstractEffect<T> extends Component implements Effect, Upd
     public void setReattach(boolean reattach) {
         this.reattach = reattach;
     }
+
+    public abstract String getName();
+
+    public abstract String getDescription();
 }

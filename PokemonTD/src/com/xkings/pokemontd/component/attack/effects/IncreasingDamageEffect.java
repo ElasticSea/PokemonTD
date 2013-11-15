@@ -40,5 +40,13 @@ public class IncreasingDamageEffect extends AbstractEffect<IncreasingDamageEffec
             return 0;
         }
     }
+
+    public String getName(){
+        return  "  ";
+    }
+
+    public String getDescription(){
+        return "  ";
+    }
 }
 
