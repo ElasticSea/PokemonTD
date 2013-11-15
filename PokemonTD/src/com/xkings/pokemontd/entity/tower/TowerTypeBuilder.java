@@ -85,8 +85,10 @@ public class TowerTypeBuilder {
         specs.add(new Specs(TowerName.Solar, Sunbeam, 7, 2817, XS_SPEED, L_RANGE, new SunbeamAbility(0.7f, L_RANGE * 1.5f), Treasure.fromWater(2).addNature(2)));
         specs.add(new Specs(TowerName.Photonic, Sunbeam, 27478, 18, XS_SPEED, L_RANGE, new SunbeamAbility(1.7f, L_RANGE * 2), Treasure.fromWater(3).addNature(3)));
 
-        specs.add(new Specs(TowerName.Poison, Weaken, 5, 411, N_SPEED, N_RANGE, HitAbility.getPoison(scale, 0.2f, 1, 0.1f), Treasure.fromWater(1).addLight(1)));
-        specs.add(new Specs(TowerName.Toxic, Weaken, 7, 2414, N_SPEED, N_RANGE, HitAbility.getPoison(scale, 0.5f, 1, 0.15f), Treasure.fromWater(2).addLight(2)));
+        specs.add(new Specs(TowerName.Poison, Weaken, 5, 411, N_SPEED, N_RANGE, HitAbility.getPoison(scale, 0.2f, 1,
+                0.1f), Treasure.fromWater(1).addLight(1)));
+        specs.add(new Specs(TowerName.Toxic, Weaken, 7, 2414, N_SPEED, N_RANGE, HitAbility.getPoison(scale, 0.5f, 1,
+                0.15f), Treasure.fromWater(2).addLight(2)));
         specs.add(new Specs(TowerName.Venom, Weaken, 9, 24917, N_SPEED, N_RANGE, HitAbility.getPoison(scale, 0.8f, 1, 0.2f), Treasure.fromWater(3).addLight(3)));
 
         specs.add(new Specs(TowerName.Ice, Freeze, 5, 378, N_SPEED, N_RANGE, HitAbility.getSlow("bullet", "ice", scale, 0f, 0.2f, 1, 1f), Treasure.fromWater(1).addDarkness(1)));
@@ -131,7 +133,7 @@ public class TowerTypeBuilder {
         specs.add(new Specs(TowerName.Disease, Infect, 6, 2141, XS_SPEED, N_RANGE, HitAbility.getAuraDmg(scale, N_RANGE), Treasure.fromWater(1).addLight(1).addDarkness(1)));
         specs.add(new Specs(TowerName.Epidemic, Infect, 9, 7145, XL_SPEED, L_RANGE, HitAbility.getAuraDmg(scale, L_RANGE), Treasure.fromWater(2).addLight(2).addDarkness(2)));
 
-        specs.add(new Specs(TowerName.Confused, SoundWave, 6, 1887, L_SPEED, N_RANGE, HitAbility.getDumbClaw(scale, 0f, 0), Treasure.fromWater(1).addLight(1).addDarkness(1)));
+        specs.add(new Specs(TowerName.Confused, Normal, 6, 1887, L_SPEED, N_RANGE, HitAbility.getDumbClaw(scale, 0f, 0), Treasure.fromWater(1).addLight(1).addDarkness(1)));
         specs.add(new Specs(TowerName.Supersonic, SoundWave, 9, 7332, L_SPEED, N_RANGE, HitAbility.getBubble("bubble", scale), Treasure.fromWater(2).addLight(2).addDarkness(2)));
 
         specs.add(new Specs(TowerName.Charged, Thunderbolt, 6, 2487, S_SPEED, XL_RANGE, HitAbility.getCharge(scale), Treasure.fromFire(1).addNature(1).addLight(1)));
@@ -140,8 +142,10 @@ public class TowerTypeBuilder {
         specs.add(new Specs(TowerName.Stomp, Quake, 6, 2017, N_SPEED, N_RANGE, HitAbility.getSlow("rock", "", scale, 0, 1f, 0.5f, 0.8f), Treasure.fromFire(1).addNature(1).addDarkness(1)));
         specs.add(new Specs(TowerName.Earthquake, Quake, 9, 8744, S_SPEED, N_RANGE, HitAbility.getSlow("rock", "", scale, 0, 1f, 1.5f, 1), Treasure.fromFire(2).addNature(2).addDarkness(2)));
 
-        specs.add(new Specs(TowerName.Erruption, Magma, 6, 3046, XS_SPEED, N_RANGE, HitAbility.getAuraDmg(scale, N_RANGE), Treasure.fromFire(1).addLight(1).addDarkness(1)));
-        specs.add(new Specs(TowerName.Volcanic, Magma, 9, 7143, XXS_SPEED, S_RANGE, HitAbility.getVolcano(scale, S_RANGE), Treasure.fromFire(2).addLight(2).addDarkness(2)));
+        specs.add(new Specs(TowerName.Erruption, Magma, 6, 3046, XS_SPEED, N_RANGE, HitAbility.getVolcano(scale,
+                N_RANGE, 4, 0.25f), Treasure.fromFire(1).addLight(1).addDarkness(1)));
+        specs.add(new Specs(TowerName.Volcanic, Magma, 9, 7143, XXS_SPEED, S_RANGE, HitAbility.getVolcano(scale, S_RANGE,
+                16, 0.25f), Treasure.fromFire(2).addLight(2).addDarkness(2)));
 
         specs.add(new Specs(TowerName.Hypnotic, Puzzle, 6, 1987, N_SPEED, N_RANGE, HitAbility.getChangeDirection(scale, 1, 0.02f), Treasure.fromNature(1).addLight(1).addDarkness(1)));
         specs.add(new Specs(TowerName.Illusion, Puzzle, 9, 26281, N_SPEED, N_RANGE, HitAbility.getChangeDirection(scale, 5, 0.03f), Treasure.fromNature(2).addLight(2).addDarkness(2)));

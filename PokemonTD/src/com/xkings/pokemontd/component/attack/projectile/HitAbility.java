@@ -92,9 +92,9 @@ public class HitAbility extends EffectData {
                 NORMAL_SPEED * scale, range * scale, new NormalData());
     }
 
-    public static AbilityComponent getVolcano(float scale, float range) {
+    public static AbilityComponent getVolcano(float scale, float range, int iterations, float interval) {
         return new HitAbility( "bullet", Type.IMMEDIATE_NOCONTACT_DAMAGE, BIG_SIZE * scale,
-                NORMAL_SPEED * scale, range * scale, new NormalData(), new DotData("fire", 16, 0.25f));
+                NORMAL_SPEED * scale, range * scale, new NormalData(), new DotData("fire", iterations, interval));
     }
 
     public static AbilityComponent getCharge(float scale) {
