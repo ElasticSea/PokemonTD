@@ -65,11 +65,15 @@ public class RenderSpriteSystem extends EntitySystem {
                     RotationComponent rotationComponent = rotationMapper.get(e);
                     Vector3 rotation = rotationComponent.getPoint();
                     Vector3 origin = rotationComponent.getOrigin();
-                    float originX = size.x * origin.x;
-                    float originY = size.y * origin.y;
-                    // FIXME this I have no idea how this works.
-                    spriteBatch.draw(sprite, x + size.x * origin.y, y + size.y * origin.x, originX, originY, size.x,
-                            size.y, 1f, 1f, rotation.x);
+                    if (origin.equals(Vector3.Zero)) {
+                        spriteBatch.draw(sprite, x, y, size.x / 2f, size.y / 2f, size.x, size.y, 1f, 1f, rotation.x);
+                    } else {
+                        float originX = size.x * origin.x;
+                        float originY = size.y * origin.y;
+                        // FIXME this I have no idea how this works.
+                        spriteBatch.draw(sprite, x + size.x * origin.y, y + size.y * origin.x, originX, originY, size.x,
+                                size.y, 1f, 1f, rotation.x);
+                    }
                     // spriteBatch.draw(sprite, x, y, size.x / 2f, size.y / 2f, size.x, size.y, 1f, 1f, rotation.x);
                 } else {
                     spriteBatch.draw(sprite, x, y, size.x, size.y);
