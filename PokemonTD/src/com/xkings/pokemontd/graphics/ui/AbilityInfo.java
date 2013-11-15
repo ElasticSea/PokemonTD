@@ -56,11 +56,11 @@ public class AbilityInfo extends GuiBox {
             case Splash:
             case Shatter:
             case Boulder:
-                return "Deals " + (int) (damage) + " damage in " + splash + " radius.";
+                return "Deals " + (int) (damage) + " damage in " + (int) splash + " radius.";
             case Wave:
             case SoundWave:
                 BubbleData bubble = (BubbleData) abilityCache;
-                return "Deals " + damage + " every " + speed + " ms on contact." +
+                return "Deals " + (int) damage + " every " + speed + " ms on contact." +
                         (bubble.getGrow() != 1 ?
                                 "Bubble grows by " + (int) ((bubble.getGrow() - 1) * 100) + "% per second." : "");
 
@@ -77,7 +77,7 @@ public class AbilityInfo extends GuiBox {
 
             case Peck:
                 BonusAttack bonusAttack = (BonusAttack) abilityCache;
-                return (int) (bonusAttack.getChance() * 100) + "% chance to deal " + bonusAttack.getIterations() +
+                return (int) (bonusAttack.getChance() * 100) + "% chance to deal " +  bonusAttack.getIterations() +
                         "x additional " + (int) damage + " damage";
 
             case Terrify:
@@ -89,11 +89,11 @@ public class AbilityInfo extends GuiBox {
                 return "Increases speed of nearby towers by " + (int) ((damage - 1) * 100) + "%.";
 
             case Sunbeam:
-                return "Deals " + damage + " every " + speed + " ms on contact with the light beam.";
+                return "Deals " + (int) damage + " every " + speed + " ms on contact with the light beam.";
 
             case Weaken:
                 data = (DotData) abilityCache;
-                return "Deals " + data.getIterations() + "X " + (int) (damage) + " every " + data.getInterval() +
+                return "Deals " + data.getIterations() + "X " + (int) (damage) + " every " + (int) data.getInterval() +
                         " ms.";
 
             case Freeze:
@@ -148,7 +148,7 @@ public class AbilityInfo extends GuiBox {
 
             case Magma:
                 data = (DotData) abilityCache;
-                return "Deals " + data.getIterations() + "X " + (int) (damage) + " every " + data.getInterval() +
+                return "Deals " + data.getIterations() + "X " + (int) (damage) + " every " + (int)data.getInterval() +
                         " ms in " + splash + " radius around tower.";
 
             case Puzzle:
