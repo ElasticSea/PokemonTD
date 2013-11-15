@@ -92,14 +92,20 @@ public class AbilityInfo extends GuiBox {
                 return "Deals " + (int) damage + " every " + speed + " ms on contact with the light beam.";
 
             case Weaken:
-                data = (DotData) abilityCache;
-                return "Deals " + data.getIterations() + "X " + (int) (damage) + " every " + (int) data.getInterval() +
+                DotData data1 = (DotData) abilityCache;
+                return "Deals " + data1.getIterations() + "X " + (int) (damage) + " every " + (int) data1.getInterval() +
                         " ms.";
 
             case Freeze:
+<<<<<<< HEAD
                 slow = (SlowData) abilityCache;
                 return "Has " + (int) (slow.getChance() * 100) + "% chance to slow creep by " +
                         (int) (((1 - slow.getSlowRatio()) * 100)) + "% for " + (int) slow.getDuration() + " seconds.";
+=======
+                SlowData slow1 = (SlowData) abilityCache;
+                return "Has " + (int) (slow1.getChance() * 100) + "% chance to slow creep by " +
+                        (int) ((slow1.getSlowRatio() - 1) * 100) + "% for " + (int) slow1.getDuration() + " seconds.";
+>>>>>>> bf0a2c2ad231223bac183b0a1b71376ec91eb834
 
             case Incinerate:
                 IncreasingDamageData increaseDamage = (IncreasingDamageData) abilityCache;
@@ -108,40 +114,58 @@ public class AbilityInfo extends GuiBox {
                         (int) ((increaseDamage.getDuration() * 1000)) + " ms.";
 
             case Stomp:
+<<<<<<< HEAD
                 slow = (SlowData) abilityCache;
                 return "Has " + (int) (slow.getChance() * 100) + "% chance to slow creep by " +
                         (int) (((1 - slow.getSlowRatio()) * 100)) + "% for " + (int) slow.getDuration() + " seconds.";
+=======
+                SlowData slow4 = (SlowData) abilityCache;
+                return "Has " + (int) (slow4.getChance() * 100) + "% chance to slow creep by " +
+                        (int) ((slow4.getSlowRatio() - 1) * 100) + "% for " + (int) slow4.getDuration() + " seconds.";
+>>>>>>> bf0a2c2ad231223bac183b0a1b71376ec91eb834
 
             case Steal:
                 MoneyData money = (MoneyData) abilityCache;
                 return "Killed creeps earn " + (int) ((money.getEarnRatio() - 1) * 100) + "% more money.";
 
             case Impair:
+<<<<<<< HEAD
                 slow = (SlowData) abilityCache;
                 return "Has " + (int) (slow.getChance() * 100) + "% chance to slow creep by " +
                         (int) (((1 - slow.getSlowRatio()) * 100)) + "% for " + (int) slow.getDuration() + " seconds.";
+=======
+                SlowData slow3 = (SlowData) abilityCache;
+                return "Has " + (int) (slow3.getChance() * 100) + "% chance to slow creep by " +
+                        (int) (((slow3.getSlowRatio()) - 1) * 100) + "% for " + (int) slow3.getDuration() + " seconds.";
+>>>>>>> bf0a2c2ad231223bac183b0a1b71376ec91eb834
 
             case Charm:
                 return "Increases damage of nearby towers by " + (int) ((damage - 1) * 100) + "%.";
 
             case Blaze:
-                bubble = (BubbleData) abilityCache;
+                BubbleData bubble2 = (BubbleData) abilityCache;
                 return "Deals " + damage + " every " + speed + " ms on contact." +
-                        (bubble.getGrow() != 1 ?
-                                "Bubble grows by " + (int) ((bubble.getGrow() - 1) * 100) + "% per second." : "");
+                        (bubble2.getGrow() != 1 ?
+                                "Bubble grows by " + (int) ((bubble2.getGrow() - 1) * 100) + "% per second." : "");
 
             case Corrode:
                 return "Tower not yet implemented.";
 
             case LifeSteal:
+<<<<<<< HEAD
                 LifeData lifeData = (LifeData) abilityCache;
                 return (int) (lifeData.getChance() * 100) +
+=======
+                LifeStealData lifeSteal2 = (LifeStealData) abilityCache;
+                return (int) (lifeSteal2.getChance() * 100) +
+>>>>>>> bf0a2c2ad231223bac183b0a1b71376ec91eb834
                         "% chance to earn life from killed creep, instead of money.";
 
             case Infect:
                 return "Deals " + damage + " damage in " + splash + " radius around tower.";
 
             case Quake:
+<<<<<<< HEAD
                 slow = (SlowData) abilityCache;
                 return "Has " + (int) (slow.getChance() * 100) + "% chance to slow creep by " +
                         (int) (((1 - slow.getSlowRatio()) * 100)) + "% for " + (int) slow.getDuration() + " seconds.";
@@ -149,6 +173,15 @@ public class AbilityInfo extends GuiBox {
             case Magma:
                 data = (DotData) abilityCache;
                 return "Deals " + data.getIterations() + "X " + (int) (damage) + " every " + (int) data.getInterval() +
+=======
+                SlowData slow2 = (SlowData) abilityCache;
+                return "Has " + (int) (slow2.getChance() * 100) + "% chance to slow creep by " +
+                        (int) (((slow2.getSlowRatio()) - 1) * 100) + "% for " + (int) slow2.getDuration() + " seconds.";
+
+            case Magma:
+                DotData data2 = (DotData) abilityCache;
+                return "Deals " + data2.getIterations() + "X " + (int) (damage) + " every " + (int)data2.getInterval() +
+>>>>>>> bf0a2c2ad231223bac183b0a1b71376ec91eb834
                         " ms in " + splash + " radius around tower.";
 
             case Puzzle:
