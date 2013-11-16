@@ -140,7 +140,7 @@ public class TowerManager implements Clickable {
 
     public void render(ShapeRenderer shapeRenderer) {
         if (placeholderTower != null) {
-            Gdx.gl.glEnable(GL20.GL_BLEND);
+         /*   Gdx.gl.glEnable(GL20.GL_BLEND);
             int size = App.WORLD_SCALE;
             int offset = size / 20;
             shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
@@ -152,7 +152,7 @@ public class TowerManager implements Clickable {
             shapeRenderer.setColor(new Color(Color.BLACK).sub(0, 0, 0, 0.8f));
             drawFreeSlots(shapeRenderer, size, offset);
             shapeRenderer.end();               */
-            Gdx.gl.glDisable(GL20.GL_BLEND);
+          /*  Gdx.gl.glDisable(GL20.GL_BLEND);    */
         }
     }
 
