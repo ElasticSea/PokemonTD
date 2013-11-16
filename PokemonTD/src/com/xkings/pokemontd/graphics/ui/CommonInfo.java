@@ -18,7 +18,7 @@ public class CommonInfo extends InteractiveBlock {
     protected final Gui gui;
     protected final SpriteBatch spriteBatch;
   //  protected final DisplayText name;
-    private DisplayPicture picture;
+    protected DisplayPicture picture;
     private TextureAtlas.AtlasRegion regionCache;
     private String nameCache;
     protected final ArrayList<Clickable> clickables = new ArrayList<Clickable>();

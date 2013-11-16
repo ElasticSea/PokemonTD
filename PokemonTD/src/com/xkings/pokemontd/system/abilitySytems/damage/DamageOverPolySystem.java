@@ -27,9 +27,12 @@ public class DamageOverPolySystem extends EntityProcessingSystem {
         super(Aspect.getAspectForAll(HealthComponent.class, PositionComponent.class));
     }
 
+
+   // float point
     @Override
     protected void process(Entity entity) {
         Vector3 point = positionMapper.get(entity).getPoint();
+      //  points
         if (Collision.pointInsidePolygon(poly, point.x, point.y)) {
             healthMapper.get(entity).getHealth().decease((int) damage);
         }

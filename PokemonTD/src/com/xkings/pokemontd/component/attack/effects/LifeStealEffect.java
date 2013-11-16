@@ -37,10 +37,10 @@ public class LifeStealEffect extends AbstractEffect<LifeStealEffect> {
     }
 
     public String getName(){
-        return  " Life steal ";
+        return  "Life steal";
     }
 
     public String getDescription(){
-        return " Temporarily decreases creep health ";
+        return "Temporarily decreases creep health";
     }
 }

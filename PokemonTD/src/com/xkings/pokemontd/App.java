@@ -26,6 +26,7 @@ import com.xkings.core.pathfinding.Blueprint;
 import com.xkings.core.tween.TweenManagerAdapter;
 import com.xkings.core.tween.Vector3Accessor;
 import com.xkings.pokemontd.component.ShopComponent;
+import com.xkings.pokemontd.entity.tower.TowerName;
 import com.xkings.pokemontd.graphics.AggresiveGaussianBlurRenderer;
 import com.xkings.pokemontd.graphics.GameRenderer;
 import com.xkings.pokemontd.graphics.GrayscaleRenderer;
@@ -137,6 +138,7 @@ public class App extends Game2D {
 
     @Override
     protected void init(OrthographicCamera camera) {
+        System.out.println(TowerName.values().length);
         this.clock = Clock.createInstance("Logic", true, true);
         new Assets().addAtlas(new TextureAtlas("data/textures/packed.atlas"));
         initializeWorld();

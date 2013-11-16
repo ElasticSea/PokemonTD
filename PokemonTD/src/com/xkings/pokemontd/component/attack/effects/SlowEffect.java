@@ -36,12 +36,12 @@ public class SlowEffect extends AbstractEffect<SlowEffect> {
         }
     }
 
-    public String getName(){
-        return  " Slow ";
+    public String getName() {
+        return "Slow";
     }
 
-    public String getDescription(){
-        return " Decreases creep movement speed  ";
+    public String getDescription() {
+        return "Decreases creep movement speed.";
     }
 }
 

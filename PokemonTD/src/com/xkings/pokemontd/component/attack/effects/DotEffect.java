@@ -30,10 +30,10 @@ public class DotEffect extends AbstractEffect<DotEffect> {
     }
 
     public String getName(){
-        return  " Damage over time ";
+        return  "Damage over time";
     }
 
     public String getDescription(){
-        return " Decreases creeps health over time ";
+        return "Decreases creeps health over time";
     }
 }

@@ -30,11 +30,11 @@ public abstract class BuffEffect extends AbstractEffect<BuffEffect> {
         }
     }
 
-    public String getName(){
-        return  "  ";
+    public String getName() {
+        return "";
     }
 
-    public String getDescription(){
-        return "  ";
+    public String getDescription() {
+        return "";
     }
 }

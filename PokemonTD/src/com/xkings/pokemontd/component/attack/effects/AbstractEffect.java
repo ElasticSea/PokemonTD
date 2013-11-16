@@ -1,7 +1,9 @@
 package com.xkings.pokemontd.component.attack.effects;
 
 import com.artemis.Component;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.xkings.core.logic.Updateable;
+import com.xkings.core.main.Assets;
 
 /**
  * Created by Tomas on 10/21/13.
@@ -14,12 +16,14 @@ public abstract class AbstractEffect<T> extends Component implements Effect, Upd
     private int iterations;
     private boolean reset;
     private boolean reattach;
+    private TextureAtlas.AtlasRegion texture;
 
     protected void set(String effect, float interval, int iterations) {
         this.effect = effect;
         this.interval = interval;
         this.iterations = iterations;
         this.currentIterations = iterations;
+        this.texture = Assets.getTexture("effects/"+this.getName().toLowerCase().replaceAll(" ", ""));
     }
 
     @Override
@@ -88,6 +92,10 @@ public abstract class AbstractEffect<T> extends Component implements Effect, Upd
 
     public void setReattach(boolean reattach) {
         this.reattach = reattach;
+    }
+
+    public TextureAtlas.AtlasRegion getTexture() {
+        return texture;
     }
 
     public abstract String getName();

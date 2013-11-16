@@ -3,6 +3,7 @@ package com.xkings.pokemontd.graphics.ui;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
 import com.xkings.pokemontd.component.attack.EffectName;
+import com.xkings.pokemontd.component.attack.effects.AbstractEffect;
 import com.xkings.pokemontd.component.attack.projectile.data.*;
 
 /**
@@ -14,11 +15,12 @@ import com.xkings.pokemontd.component.attack.projectile.data.*;
 public class AbilityInfo extends GuiBox {
     private final DisplayText header;
     private final DisplayText text;
-    private EffectData effect;
+    private EffectData ability;
     private float speed;
     private float damage;
-    private EffectName effectName;
+    private EffectName abilityName;
     private float splash;
+    private AbstractEffect effect;
 
     public AbilityInfo(Ui ui, Rectangle rectangle) {
         super(ui, rectangle);
@@ -32,8 +34,8 @@ public class AbilityInfo extends GuiBox {
     }
 
     public void update(EffectData effect, EffectName effectName, float splash, float speed, float damage) {
-        this.effect = effect;
-        this.effectName = effectName;
+        this.ability = effect;
+        this.abilityName = effectName;
         this.splash = splash;
         this.speed = speed;
         this.damage = damage;
@@ -41,10 +43,15 @@ public class AbilityInfo extends GuiBox {
 
     @Override
     public void render() {
-        if (effectName != null) {
+        if (abilityName != null || effect != null) {
             super.render();
-            header.render(effectName.name());
-            text.render(getDescription(effectName, splash, effect, damage));
+            if (abilityName != null) {
+                header.render(abilityName.name());
+                text.render(getDescription(abilityName, splash, ability, damage));
+            } else {
+                header.render(effect.getName());
+                text.render(effect.getDescription());
+            }
         }
     }
 
@@ -159,8 +166,9 @@ public class AbilityInfo extends GuiBox {
     }
 
     public void reset() {
+        this.ability = null;
+        this.abilityName = null;
         this.effect = null;
-        this.effectName = null;
     }
 
     @Override
@@ -174,5 +182,9 @@ public class AbilityInfo extends GuiBox {
         header.set(innerRectangle.x, innerRectangle.y + textBlockSize, innerRectangle.width, headerSize);
         text.refresh();
         header.refresh();
+    }
+
+    public void update(AbstractEffect effect) {
+        this.effect = effect;
     }
 }
