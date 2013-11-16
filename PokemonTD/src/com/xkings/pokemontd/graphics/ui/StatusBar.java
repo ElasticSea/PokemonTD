@@ -40,8 +40,8 @@ public class StatusBar extends GuiBox {
     @Override
     public void render() {
         super.render();
-        scoreTitleText.render("Score");
-        scoreText.render(player.getScore().toString());
+        scoreTitleText.render("Kills");
+        scoreText.render(player.getKills() + "");
         speedControls.render();
         menuBackground.render();
         menuButton.render("MENU");

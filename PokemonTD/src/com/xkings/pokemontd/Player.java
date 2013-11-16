@@ -8,9 +8,10 @@ public class Player {
     private final Health health;
     private final Score score;
     private int freeElements;
+    private int kills;
 
     public Player(int health, int gold, int freeElements) {
-        this.treasure = new Treasure(gold,3,3,3,3,3,3,1);
+        this.treasure = new Treasure(gold, 3, 3, 3, 3, 3, 3, 1);
         this.health = new Health(Integer.MAX_VALUE, health);
         this.score = new Score(0);
         this.freeElements = freeElements;
@@ -38,5 +39,13 @@ public class Player {
 
     public void subtractFreeElement() {
         this.freeElements--;
+    }
+
+    public void addKill(int add) {
+        kills += add;
+    }
+
+    public int getKills() {
+        return kills;
     }
 }

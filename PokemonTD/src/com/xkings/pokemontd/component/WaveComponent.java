@@ -11,9 +11,11 @@ public class WaveComponent extends Component {
 
     private final List<Entity> wave = new LinkedList<Entity>();
     private final WaveManager waveManager;
+    private int id;
 
-    public WaveComponent(WaveManager waveManager) {
+    public WaveComponent(WaveManager waveManager, int id) {
         this.waveManager = waveManager;
+        this.id = id;
     }
 
     public boolean addCreep(Entity creep) {
@@ -33,7 +35,7 @@ public class WaveComponent extends Component {
     }
 
     public int getId() {
-        return !isEmpty() ? wave.get(0).getId() : -1;
+        return id;
     }
 
 }

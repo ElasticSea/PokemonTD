@@ -161,7 +161,7 @@ public class DeathSystem extends EntityProcessingSystem {
         if (healthMapper.get(e).getHealth().isStealLife()) {
             stealLife(e, position);
         }
-        player.getScore().increase((int) damageMapper.get(e).getDamage());
+        player.addKill((int) damageMapper.get(e).getDamage());
     }
 
     private void earnTreasure(Entity e, Vector3 position) {

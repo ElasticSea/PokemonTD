@@ -58,7 +58,7 @@ public class WaveManager implements Updateable {
     }
 
     public void fireNextWave(CreepType next) {
-        WaveComponent wave = new WaveComponent(this);
+        WaveComponent wave = new WaveComponent(this,next.getId());
         for (int i = 0; i < next.getCreepsInWave(); i++) {
             Path path = getAppropriatePath(pathPack, next);
             Vector3 startPoint = path.getPath().get(0);
