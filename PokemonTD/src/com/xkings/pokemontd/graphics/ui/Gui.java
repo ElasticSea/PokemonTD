@@ -54,7 +54,11 @@ public abstract class Gui extends GestureDetector.GestureAdapter implements Rend
         setSquareSize(defaultSize);
         offset = squareSize / 36;
         center = new Vector2(width / 2f, height / 2f);
-        font.setScale(Math.max(1, Math.round(squareSize / 90)));
+        scaleFont(Math.round(squareSize / 90));
+    }
+
+    private void scaleFont(int scale) {
+        font.setScale(Math.max(1, scale));
     }
 
     @Override
@@ -129,6 +133,6 @@ public abstract class Gui extends GestureDetector.GestureAdapter implements Rend
 
     public void scale(float size) {
         setSquareSize(size);
-        font.setScale(Math.round(squareSize / 90));
+        scaleFont(Math.round(squareSize / 90));
     }
 }
