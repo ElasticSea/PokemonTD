@@ -5,27 +5,27 @@ import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.xkings.pokemontd.Health;
 import com.xkings.pokemontd.component.HealthComponent;
-import com.xkings.pokemontd.component.attack.effects.LifeStealEffect;
+import com.xkings.pokemontd.component.attack.effects.TempLifeEffect;
 
 /**
  * Created by Tomas on 10/4/13.
  */
-public class LifeStealSystem extends EffectSystem<LifeStealEffect> {
+public class LifeStealSystem extends EffectSystem<TempLifeEffect> {
 
     @Mapper
     ComponentMapper<HealthComponent> healthMapper;
 
     public LifeStealSystem() {
-        super(LifeStealEffect.class);
+        super(TempLifeEffect.class);
     }
 
     @Override
-    protected void finished(LifeStealEffect effect, Entity e) {
+    protected void finished(TempLifeEffect effect, Entity e) {
 
     }
 
     @Override
-    protected void started(LifeStealEffect effect, Entity e) {
+    protected void started(TempLifeEffect effect, Entity e) {
         Health health = healthMapper.get(e).getHealth();
         float lifeStole = health.getMaxHealth() * effect.getRatio();
         effect.setStoleLife(lifeStole);
@@ -33,7 +33,7 @@ public class LifeStealSystem extends EffectSystem<LifeStealEffect> {
     }
 
     @Override
-    protected void processEffect(LifeStealEffect effect, Entity e) {
+    protected void processEffect(TempLifeEffect effect, Entity e) {
         Health health = healthMapper.get(e).getHealth();
         if (health.isAlive()) {
             health.increase(effect.getStoleLife());
@@ -44,13 +44,13 @@ public class LifeStealSystem extends EffectSystem<LifeStealEffect> {
     }
 
     @Override
-    protected void resetEffect(LifeStealEffect effect, Entity e) {
+    protected void resetEffect(TempLifeEffect effect, Entity e) {
         processEffect(effect, e);
         started(effect, e);
     }
 
     @Override
-    protected void reattachEffect(LifeStealEffect effect, Entity e) {
+    protected void reattachEffect(TempLifeEffect effect, Entity e) {
 
     }
 

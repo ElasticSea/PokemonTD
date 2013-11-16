@@ -5,10 +5,10 @@ import com.xkings.pokemontd.component.attack.EffectName;
 /**
  * Created by Tomas on 10/13/13.
  */
-public class LifeStealData extends EffectData {
+public class TempLifeData extends EffectData {
     private final float duration;
 
-    public LifeStealData(float duration) {
+    public TempLifeData(float duration) {
         super();
         this.duration = duration;
     }

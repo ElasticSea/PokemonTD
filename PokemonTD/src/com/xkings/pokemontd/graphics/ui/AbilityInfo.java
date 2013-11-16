@@ -88,7 +88,7 @@ public class AbilityInfo extends GuiBox {
                         "x additional " + (int) damage + " damage";
 
             case Terrify:
-                LifeStealData lifeSteal = (LifeStealData) abilityCache;
+                TempLifeData lifeSteal = (TempLifeData) abilityCache;
                 return "Temporary steal " + (int) (damage * 100) + "% of creeps health for " +
                         (int) lifeSteal.getDuration() + "s.";
 

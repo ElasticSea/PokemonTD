@@ -3,11 +3,11 @@ package com.xkings.pokemontd.component.attack.effects;
 /**
  * Created by Tomas on 10/21/13.
  */
-public class LifeStealEffect extends AbstractEffect<LifeStealEffect> {
+public class TempLifeEffect extends AbstractEffect<TempLifeEffect> {
     private float ratio;
     private float stoleLife;
 
-    public LifeStealEffect set(float interval, float ratio) {
+    public TempLifeEffect set(float interval, float ratio) {
         super.set("lifesteal", interval, 1);
         this.ratio = ratio;
         return this;
@@ -26,7 +26,7 @@ public class LifeStealEffect extends AbstractEffect<LifeStealEffect> {
     }
 
     @Override
-    public int compareTo(LifeStealEffect o) {
+    public int compareTo(TempLifeEffect o) {
         if (this.ratio > o.ratio) {
             return 1;
         } else if (this.ratio < o.ratio) {

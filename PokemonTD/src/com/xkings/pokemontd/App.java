@@ -229,13 +229,13 @@ public class App extends Game2D {
         world.setSystem(new MovementSystem());
         world.setSystem(new IndestructibilitySystem(gameBlueprint));
 
-        world.setSystem(new HitLifeStealSystem());
+        world.setSystem(new TempLifeSystem());
         world.setSystem(new HitDotSystem());
         world.setSystem(new HitSlowSystem());
         world.setSystem(new HitChangeDirection());
         world.setSystem(new HitNormalSystem());
         world.setSystem(new HitMoneySystem());
-        world.setSystem(new HitLifeSystem(player.getHealth()));
+        world.setSystem(new HitLifeStealSystem());
         world.setSystem(new HitIncreasingDamageSystem());
         world.setSystem(new HitBonusSystem());
         world.setSystem(new ApplyBuffSystem());

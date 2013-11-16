@@ -1,16 +1,27 @@
 package com.xkings.pokemontd.system.abilitySytems.damage.hit;
 
+import com.artemis.ComponentMapper;
 import com.artemis.Entity;
-import com.xkings.pokemontd.component.attack.effects.LifeStealEffect;
-import com.xkings.pokemontd.component.attack.projectile.data.LifeStealData;
+import com.artemis.annotations.Mapper;
+import com.xkings.core.component.DamageComponent;
+import com.xkings.core.component.PositionComponent;
+import com.xkings.pokemontd.Health;
+import com.xkings.pokemontd.component.HealthComponent;
+import com.xkings.pokemontd.component.attack.effects.buff.BuffableDamageComponent;
+import com.xkings.pokemontd.component.attack.projectile.data.LifeData;
 
 /**
  * Created by Tomas on 10/4/13.
  */
-public class HitLifeStealSystem extends HitEffectSystem<LifeStealData, LifeStealEffect> {
+public class HitLifeStealSystem extends HitSystem<LifeData> {
+
+    @Mapper
+    ComponentMapper<HealthComponent> healthMapper;
+    @Mapper
+    ComponentMapper<BuffableDamageComponent> damageBuffMapper;
 
     public HitLifeStealSystem() {
-        super(LifeStealData.class, LifeStealEffect.class);
+        super(LifeData.class);
     }
 
     @Override
@@ -19,16 +30,21 @@ public class HitLifeStealSystem extends HitEffectSystem<LifeStealData, LifeSteal
         // DISCUS this on stackoverflow !
         setAoe(new AoeSystem() {
         });
+
     }
 
     @Override
-    protected LifeStealEffect resetEffect(Entity e, Entity target, LifeStealEffect effect, LifeStealData effectData) {
-        effect.set( effectData.getDuration(), damageMapper.get(e).getDamage());
-        return effect;
+    protected void hit(LifeData effectData, Entity e, Entity target) {
+        float damage = damageBuffMapper.get(e).getDamage();
+        HealthComponent healthComponent = healthMapper.getSafe(target);
+        if (healthComponent != null) {
+            Health health = healthComponent.getHealth();
+            health.decease((int) damage);
+            if (!health.isAlive()) {
+                health.setStealLife(true);
+                health.setEarnTreasure(false);
+            }
+        }
     }
 
-    @Override
-    protected LifeStealEffect createEffect(Entity e, Entity target, LifeStealData effectData) {
-        return resetEffect(e, target, new LifeStealEffect(), effectData);
-    }
 }
