@@ -21,6 +21,7 @@ abstract class Button extends InteractiveBlock {
     private Color color = Color.CLEAR;
     private Color backgroundColor = Color.CLEAR;
     private final boolean wrapped;
+    private BitmapFont.TextBounds fontBounds;
 
     protected Button(Gui gui, float x, float y, float width, float height, BitmapFont font) {
         this(gui, new Rectangle(x, y, width, height), font, BitmapFont.HAlignment.CENTER, false);
@@ -63,7 +64,7 @@ abstract class Button extends InteractiveBlock {
         spriteBatch.begin();
         font.setColor(isEnabled() ? color : Color.GRAY);
         if (wrapped) {
-            font.drawWrapped(spriteBatch, text, x, y+height , width, alignment);
+            font.drawWrapped(spriteBatch, text, x, y + height, width, alignment);
         } else {
             font.drawMultiLine(spriteBatch, text, x, y + position.y, width, alignment);
         }
@@ -90,12 +91,20 @@ abstract class Button extends InteractiveBlock {
     }
 
     private Vector2 recalculatePosition(String text) {
-        BitmapFont.TextBounds fontBounds = font.getBounds(text);
+        fontBounds = font.getBounds(text);
         return new Vector2((width - fontBounds.width) / 2f, (height + fontBounds.height) / 2f);
     }
 
     @Override
     public void refresh() {
         this.position = recalculatePosition(text);
+    }
+
+    public float getTextHeight() {
+        return fontBounds.height;
+    }
+
+    public float getTextWidth() {
+        return fontBounds.width;
     }
 }

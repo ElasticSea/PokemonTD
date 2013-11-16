@@ -1,8 +1,10 @@
 package com.xkings.pokemontd.graphics.ui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.xkings.core.main.Assets;
 import com.xkings.pokemontd.App;
@@ -34,6 +36,7 @@ public class Menu extends Gui {
     private final MenuTab defaultCard;
     private MenuTab pickedCard;
     private final MenuTab menuBox;
+    private final List<MenuTab> guiDialogRoots = new ArrayList<MenuTab>();
 
     public Menu(App app) {
         super(app);
@@ -43,6 +46,8 @@ public class Menu extends Gui {
         inGameMenu = new InGameMenu(this, rectangle);
         menuBox = new MenuBox(this, rectangle);
 
+        guiDialogRoots.add(inGameMenu);
+        guiDialogRoots.add(menuBox);
         defaultCard = menuBox;
         pickedCard = defaultCard;
     }
@@ -72,6 +77,9 @@ public class Menu extends Gui {
 
     @Override
     public boolean pan(float x, float y, float deltaX, float deltaY) {
+        for (MenuTab menu : guiDialogRoots) {
+            menu.pan(x, y, deltaX, deltaY);
+        }
         return isVisible();
     }
 
@@ -137,13 +145,15 @@ public class Menu extends Gui {
         @Override
         public void render() {
             super.render();
-            guiButton.render("GRAPHICAL USER INTERFACE");
+            guiButton.render("GRAPHICAL INTERFACE");
             musicButton.render(theme.isPlaying() ? "MUTE MUSIC" : "PLAY MUSIC");
         }
     }
 
     private class Tutorial extends ChildTab {
 
+        private final float textBlockHeight;
+        private final float textBlockY;
         private String tutorialText =
                 "In Pokemon tower defense the goal is to prevents the creeps from reaching the end of the path by building towers and surviving all creep waves. Every time a creep gets through the whole way, you loose life.\n\n" +
                         "Information about current live count, your gold, what the next wave will be and interest can be seen in the upper right box.\n\n" +
@@ -156,9 +166,11 @@ public class Menu extends Gui {
         Tutorial(MenuTab parent, Gui ui, Rectangle rectangle) {
             super(parent, ui, rectangle);
 
-            text = new DisplayText(ui, new Rectangle(rectangle.x + segment, rectangle.y + buttonHeight + buttonHeight,
-                    rectangle.width - segment * 2, rectangle.height - buttonHeight - buttonHeight * 2), ui.getFont(),
-                    BitmapFont.HAlignment.LEFT, true);
+            textBlockHeight = rectangle.height - buttonHeight - buttonHeight * 2;
+            textBlockY = rectangle.y + buttonHeight + buttonHeight;
+            text = new DisplayText(ui,
+                    new Rectangle(rectangle.x + segment, textBlockY, rectangle.width - segment * 2, textBlockHeight),
+                    ui.getFont(), BitmapFont.HAlignment.LEFT, true);
 
             register(text);
             this.setRenderLines(false);
@@ -168,6 +180,15 @@ public class Menu extends Gui {
         public void render() {
             super.render();
             text.render(tutorialText);
+        }
+
+        @Override
+        public void pan(float x, float y, float deltaX, float deltaY) {
+            float overlap = text.getTextHeight() - textBlockHeight;
+            if (overlap > 0) {
+                text.y = MathUtils.clamp(text.y - deltaY, textBlockY, textBlockY + overlap);
+            }
+            super.pan(x, y, deltaX, deltaY);
         }
     }
 
@@ -232,11 +253,7 @@ public class Menu extends Gui {
         InGameMenu(Gui ui, Rectangle rectangle) {
             super(ui, rectangle, true);
             options = new Options(this, ui, rectangle);
-            float halfWidth = rectangle.width * 1.5f;
-            float halfHeight = rectangle.height * 1.5f;
-            tutorial = new Tutorial(this, ui,
-                    new Rectangle(center.x - halfWidth, center.y - halfHeight, halfWidth * 2,
-                            halfHeight * 2));
+            tutorial = new Tutorial(this, ui, new Rectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
             pause = new MenuButton(ui, rects.get(0)) {
                 @Override
                 public void process(float x, float y) {
@@ -259,6 +276,8 @@ public class Menu extends Gui {
             register(pause);
             register(tutorialButton);
             register(optionsButton);
+            cards.add(options);
+            cards.add(tutorial);
         }
 
         @Override
@@ -280,11 +299,7 @@ public class Menu extends Gui {
 
         MenuBox(Gui ui, Rectangle rectangle) {
             super(ui, rectangle, false);
-            float halfWidth = rectangle.width * 1.5f;
-            float halfHeight = rectangle.height * 1.5f;
-            tutorial = new Tutorial(this, ui,
-                    new Rectangle(center.x - halfWidth, center.y - halfHeight, halfWidth * 2,
-                            halfHeight * 2));
+            tutorial = new Tutorial(this, ui, new Rectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
             options = new Options(this, ui, rectangle);
             startGame = new MenuButton(ui, rects.get(0)) {
                 @Override
@@ -309,6 +324,8 @@ public class Menu extends Gui {
             register(startGame);
             register(optionsButton);
             register(tutorialButton);
+            cards.add(options);
+            cards.add(tutorial);
             this.setCloseTabWhenNotClicked(false);
         }
 
@@ -330,6 +347,7 @@ public class Menu extends Gui {
         protected final float segment;
         private boolean closeTabWhenNotClicked = true;
         private boolean renderLines = true;
+        protected List<MenuTab> cards = new ArrayList<MenuTab>();
 
         MenuTab(MenuTab parent, Gui ui, Rectangle rectangle) {
             super(ui, rectangle);
@@ -388,6 +406,12 @@ public class Menu extends Gui {
 
         public void close() {
             switchCard(parent);
+        }
+
+        public void pan(float x, float y, float deltaX, float deltaY) {
+            for (MenuTab card : cards) {
+                card.pan(x, y, deltaX, deltaY);
+            }
         }
     }
 
