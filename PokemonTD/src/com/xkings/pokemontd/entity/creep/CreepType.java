@@ -1,13 +1,14 @@
 package com.xkings.pokemontd.entity.creep;
 
-import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.Table;
 import com.xkings.core.main.Assets;
 import com.xkings.pokemontd.App;
 import com.xkings.pokemontd.Element;
 import com.xkings.pokemontd.Treasure;
 import com.xkings.pokemontd.entity.datatypes.CommonDataType;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
@@ -26,30 +27,31 @@ public class CreepType implements CommonDataType {
         return waveStore.get(next);
     }
 
-    public static CreepType getWave(Element element, Integer count) {
-        return elementWaves.get(element, count);
+    public static CreepType getWave(Element element, int count) {
+        return elementWaves.get(element).get(count);
     }
 
-    private static Table<Element, Integer, CreepType> elementWaves = getElementWave();
+    private static Map<Element, List<CreepType>> elementWaves = getElementWave();
 
-    public static Table<Element, Integer, CreepType> getElementWave() {
+    public static Map<Element, List<CreepType>> getElementWave() {
         Map<CreepName, CreepType> waves = creepTypeBuilder.build(App.WORLD_SCALE, CreepTypeBuilder.element);
-        Table<Element, Integer, CreepType> table = HashBasedTable.create();
+        Map<Element, List<CreepType>> map = new HashMap<Element, List<CreepType>>();
         for (Map.Entry<CreepName, CreepType> creep : waves.entrySet()) {
             CreepType creepValue = creep.getValue();
             Treasure treasure = creepValue.getTreasure();
             for (Element element : Element.values()) {
                 if (treasure.hasElement(element, 1)) {
-                    int maxElement = 0;
-                    for (Map.Entry<Integer, CreepType> entry : table.row(element).entrySet()) {
-                        maxElement = Math.max(entry.getKey(), maxElement);
+                    List<CreepType> list = map.get(element);
+                    if (list == null) {
+                        list = new ArrayList<CreepType>();
+                        map.put(element, list);
                     }
-                    table.put(element, maxElement + 1, creepValue);
+                    list.add(creepValue);
                     break;
                 }
             }
         }
-        return table;
+        return map;
     }
 
     private final CreepName name;

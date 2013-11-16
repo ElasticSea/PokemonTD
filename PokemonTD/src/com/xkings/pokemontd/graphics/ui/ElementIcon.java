@@ -46,7 +46,7 @@ class ElementIcon extends InteractiveBlock {
     @Override
     public void process(float x, float y) {
         if (player.getFreeElements() != 0) {
-            int elements = currentElements.getElement(element) + 1;
+            int elements = currentElements.getElement(element);
             if (Treasure.LIMIT.getElement(element) >= elements) {
                 waveManager.fireNextWave(CreepType.getWave(element, elements));
                 currentElements.addElement(element, 1);

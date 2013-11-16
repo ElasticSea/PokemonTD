@@ -2,10 +2,7 @@ package com.xkings.pokemontd.entity.creep;
 
 import com.xkings.pokemontd.Treasure;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * User: Seda
@@ -165,7 +162,7 @@ public class CreepTypeBuilder {
                     creepsInWay, distanceBetweenCreeps, ability));
         }
 
-        Map<CreepName, CreepType> map = new HashMap<CreepName, CreepType>();
+        Map<CreepName, CreepType> map = new LinkedHashMap<CreepName, CreepType>();
         for (CreepType creepType : list) {
             map.put(creepType.getName(), creepType);
         }
