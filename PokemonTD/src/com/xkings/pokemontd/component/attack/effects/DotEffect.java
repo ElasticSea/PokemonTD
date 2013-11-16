@@ -34,6 +34,6 @@ public class DotEffect extends AbstractEffect<DotEffect> {
     }
 
     public String getDescription(){
-        return "  ";
+        return " Decreases creeps health over time ";
     }
 }
