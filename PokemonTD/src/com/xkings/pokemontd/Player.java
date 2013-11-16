@@ -6,14 +6,14 @@ package com.xkings.pokemontd;
 public class Player {
     private final Treasure treasure;
     private final Health health;
-    private final Score score;
+    private final App app;
     private int freeElements;
     private int kills;
 
-    public Player(int health, int gold, int freeElements) {
+    public Player(App app, int health, int gold, int freeElements) {
+        this.app = app;
         this.treasure = new Treasure(gold, 3, 3, 3, 3, 3, 3, 1);
         this.health = new Health(Integer.MAX_VALUE, health);
-        this.score = new Score(0);
         this.freeElements = freeElements;
     }
 
@@ -21,12 +21,23 @@ public class Player {
         return treasure;
     }
 
-    public Health getHealth() {
-        return health;
+    public void increaseHealth(int add) {
+        health.increase(add);
+    }
+
+    public void decreaseHealth(int sub) {
+        health.decease(sub);
+        if (!health.isAlive()) {
+            app.endGame();
+        }
+    }
+
+    public int getHealth() {
+        return health.getCurrentHealth();
     }
 
     public Score getScore() {
-        return score;
+        return new Score(kills * 100 + treasure.getGold());
     }
 
     public int getFreeElements() {

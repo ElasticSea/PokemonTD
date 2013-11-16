@@ -180,7 +180,7 @@ public class DeathSystem extends EntityProcessingSystem {
     private void stealLife(Entity e, Vector3 position) {
         int lifeToSteal = (int) damageMapper.get(e).getDamage();
         TextInfo.registerLifeStealInfo(world, lifeToSteal, position.x, position.y);
-        player.getHealth().increase(lifeToSteal);
+        player.increaseHealth(lifeToSteal);
     }
 
     private void die(Entity e) {

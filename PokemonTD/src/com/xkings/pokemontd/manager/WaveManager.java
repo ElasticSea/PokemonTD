@@ -32,28 +32,29 @@ public class WaveManager implements Updateable {
     private final Iterator<CreepName> creeps;
     private final UpdateFilter filter;
     private final Player player;
+    private final App app;
     private boolean active;
     private CreepType nextWave;
     private final List<WaveComponent> waves = new LinkedList<WaveComponent>();
 
-    /**
-     * @param clock internal update timer
-     */
-    public WaveManager(World world, Clock clock, Player player, PathPack pathPack, float interval) {
-        this.world = world;
-        this.player = player;
+    public WaveManager(App app, PathPack pathPack, float interval) {
+        this.app = app;
+        this.world = app.getWorld();
+        this.player = app.getPlayer();
         this.pathPack = pathPack;
         this.creeps = Arrays.asList(CreepName.values()).iterator();
         this.active = true;
         this.filter = new UpdateFilter(this, interval);
         updateWave();
-        clock.addService(filter);
+        app.getClock().addService(filter);
     }
 
     @Override
     public void update(float delta) {
         if (nextWave != null) {
             fireNextWave(nextWave);
+        } else{
+            app.endGame();
         }
     }
 

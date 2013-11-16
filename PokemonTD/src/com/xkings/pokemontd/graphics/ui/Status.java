@@ -84,7 +84,7 @@ public class Status extends GuiBox {
         interestTimeText.render(String.valueOf(interest.getRemainingTime()));
         waveText.render("Wave in");
         waveTimeText.render(String.valueOf(waveManager.getRemainingTime()));
-        livesText.render(String.valueOf(player.getHealth().getCurrentHealth()));
+        livesText.render(String.valueOf(player.getHealth()));
         livesPicture.render(Assets.getTexture("hearth"), "", textSize.y * 0.7f, true);
         moneyText.render(String.valueOf(player.getTreasure().getGold()));
         moneyPicture.render(Assets.getTexture("coin"), "", textSize.y * 0.7f, true);

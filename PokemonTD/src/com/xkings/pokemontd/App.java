@@ -177,11 +177,11 @@ public class App extends Game2D {
     }
 
     private void initializeContent() {
-        player = new Player(50, 15050, 0);
+        player = new Player(this,50, 15050, 0);
     }
 
     private void initializeManagers() {
-        this.waveManager = new WaveManager(world, clock, player, pathPack, STRESS_TEST != null ? 0.01f : WAVE_INTERVAL);
+        this.waveManager = new WaveManager(this, pathPack, STRESS_TEST != null ? 0.01f : WAVE_INTERVAL);
         this.towerManager = new TowerManager(world, blueprint, player);
         this.creepManager = new CreepManager(world);
         this.invisibleManager = new InvisibleManager(world, clock, INVISIBLE_INTERVAL);
@@ -281,6 +281,15 @@ public class App extends Game2D {
 
     public void resetGuiSize() {
         ui.resetSize();
+    }
+
+    public World getWorld() {
+        return world;
+    }
+
+    public void endGame() {
+        freeze(true);
+        menu.triggerMenu(Menu.Type.END);
     }
 
     /*

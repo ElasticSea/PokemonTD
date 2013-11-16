@@ -24,18 +24,15 @@ public class Menu extends Gui {
         this.menu = menu;
     }
 
-    public Button getMenu() {
-        return menu;
-    }
-
     public enum Type {
-        BLANK, INGAME, MAIN;
+        BLANK, INGAME, MAIN, END;
     }
 
     private final MenuTab inGameMenu;
     private final MenuTab defaultCard;
     private MenuTab pickedCard;
     private final MenuTab menuBox;
+    private final MenuTab endGame;
     private final List<MenuTab> guiDialogRoots = new ArrayList<MenuTab>();
 
     public Menu(App app) {
@@ -45,9 +42,11 @@ public class Menu extends Gui {
         Rectangle rectangle = new Rectangle(center.x - menuWidth / 2, center.y - squareSize / 2, menuWidth, squareSize);
         inGameMenu = new InGameMenu(this, rectangle);
         menuBox = new MenuBox(this, rectangle);
+        endGame = new EndGame(this, rectangle);
 
         guiDialogRoots.add(inGameMenu);
         guiDialogRoots.add(menuBox);
+        guiDialogRoots.add(endGame);
         defaultCard = menuBox;
         pickedCard = defaultCard;
     }
@@ -98,6 +97,8 @@ public class Menu extends Gui {
                 return inGameMenu;
             case MAIN:
                 return menuBox;
+            case END:
+                return endGame;
             default:
                 return null;
         }
@@ -335,6 +336,27 @@ public class Menu extends Gui {
             startGame.render("PLAY GAME");
             optionsButton.render("OPTIONS");
             tutorialButton.render("TUTORIAL");
+        }
+    }
+
+    private class EndGame extends ExitTab {
+
+        private final DisplayText score;
+        private final DisplayText congratulations;
+
+        EndGame(Gui ui, Rectangle rectangle) {
+            super(ui, rectangle, false);
+            congratulations = new DisplayText(ui, rects.get(0), ui.getFont(), BitmapFont.HAlignment.CENTER);
+            score = new DisplayText(ui, rects.get(1), ui.getFont(), BitmapFont.HAlignment.CENTER);
+            this.setCloseTabWhenNotClicked(false);
+            this.setRenderLines(false);
+        }
+
+        @Override
+        public void render() {
+            super.render();
+            congratulations.render("CONGRATULATIONS");
+            score.render(app.getPlayer().getScore() + "");
         }
     }
 
