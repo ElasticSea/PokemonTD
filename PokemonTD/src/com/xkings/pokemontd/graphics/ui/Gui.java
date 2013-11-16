@@ -54,7 +54,7 @@ public abstract class Gui extends GestureDetector.GestureAdapter implements Rend
         setSquareSize(defaultSize);
         offset = squareSize / 36;
         center = new Vector2(width / 2f, height / 2f);
-        font.setScale(Math.round(squareSize / 90));
+        font.setScale(Math.max(1, Math.round(squareSize / 90)));
     }
 
     @Override
