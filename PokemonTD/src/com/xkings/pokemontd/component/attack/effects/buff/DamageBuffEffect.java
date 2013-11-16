@@ -11,4 +11,12 @@ public class DamageBuffEffect extends BuffEffect {
         super.set(BuffAbility.Type.DAMAGE, duration, ratio);
         return this;
     }
+
+    public String getName(){
+        return  "  ";
+    }
+
+    public String getDescription(){
+        return "  ";
+    }
 }

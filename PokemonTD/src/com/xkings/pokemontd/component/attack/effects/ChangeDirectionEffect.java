@@ -15,5 +15,13 @@ public class ChangeDirectionEffect extends AbstractEffect<ChangeDirectionEffect>
     public int compareTo(ChangeDirectionEffect o) {
         return 0;
     }
+
+    public String getName(){
+        return  " Change direction ";
+    }
+
+    public String getDescription(){
+        return " Changes creeps movement direction ";
+    }
 }
 

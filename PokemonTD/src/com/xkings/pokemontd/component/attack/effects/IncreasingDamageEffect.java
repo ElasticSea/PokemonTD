@@ -40,5 +40,13 @@ public class IncreasingDamageEffect extends AbstractEffect<IncreasingDamageEffec
             return 0;
         }
     }
+
+    public String getName(){
+        return  " Increasing damage ";
+    }
+
+    public String getDescription(){
+        return " Increases creep damage ";
+    }
 }
 

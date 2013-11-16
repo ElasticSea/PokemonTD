@@ -29,4 +29,12 @@ public abstract class BuffEffect extends AbstractEffect<BuffEffect> {
             return 0;
         }
     }
+
+    public String getName(){
+        return  "  ";
+    }
+
+    public String getDescription(){
+        return "  ";
+    }
 }

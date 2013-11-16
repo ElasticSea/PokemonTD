@@ -24,4 +24,12 @@ public class BuffableSpeedComponent extends SpeedComponent {
     public float getSpeed() {
         return super.getSpeed() / (buff != null ? buff.getRatio() : 1);
     }
+
+    public String getName(){
+        return  "  ";
+    }
+
+    public String getDescription(){
+        return "  ";
+    }
 }
