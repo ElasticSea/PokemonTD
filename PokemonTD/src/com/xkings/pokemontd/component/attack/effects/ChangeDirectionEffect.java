@@ -17,11 +17,11 @@ public class ChangeDirectionEffect extends AbstractEffect<ChangeDirectionEffect>
     }
 
     public String getName(){
-        return  "  ";
+        return  " Change direction ";
     }
 
     public String getDescription(){
-        return "  ";
+        return " Changes creeps movement direction ";
     }
 }
 

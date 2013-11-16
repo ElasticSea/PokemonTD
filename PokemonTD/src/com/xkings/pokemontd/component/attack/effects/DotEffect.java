@@ -30,7 +30,7 @@ public class DotEffect extends AbstractEffect<DotEffect> {
     }
 
     public String getName(){
-        return  "  ";
+        return  " Damage over time ";
     }
 
     public String getDescription(){
