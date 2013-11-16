@@ -26,7 +26,7 @@ public abstract class HitEffectSystem<T extends EffectData, V extends AbstractEf
 
     protected void hit(T effectData, Entity e, Entity target) {
         V effect = effectMapper.getSafe(target);
-        V newEffect = createEffect(e, target,effectData);
+        V newEffect = createEffect(e, target, effectData);
         if (effect == null) {
             target.addComponent(newEffect);
             world.changedEntity(target);

@@ -217,7 +217,7 @@ public class App extends Game2D {
         world.setSystem(new TargetingSystem());
         world.setSystem(new WaveSystem(player));
         world.setSystem(new FireProjectilSystem());
-        world.setSystem(new LifeStealSystem());
+        world.setSystem(new TempLifeSystem());
         world.setSystem(deathSystem);
         world.setSystem(new HealingSystem());
         world.setSystem(new DotSystem());
@@ -229,7 +229,7 @@ public class App extends Game2D {
         world.setSystem(new MovementSystem());
         world.setSystem(new IndestructibilitySystem(gameBlueprint));
 
-        world.setSystem(new TempLifeSystem());
+        world.setSystem(new HitTempLifeSystem());
         world.setSystem(new HitDotSystem());
         world.setSystem(new HitSlowSystem());
         world.setSystem(new HitChangeDirection());

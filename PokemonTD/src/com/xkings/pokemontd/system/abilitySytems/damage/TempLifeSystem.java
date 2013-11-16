@@ -10,12 +10,12 @@ import com.xkings.pokemontd.component.attack.effects.TempLifeEffect;
 /**
  * Created by Tomas on 10/4/13.
  */
-public class LifeStealSystem extends EffectSystem<TempLifeEffect> {
+public class TempLifeSystem extends EffectSystem<TempLifeEffect> {
 
     @Mapper
     ComponentMapper<HealthComponent> healthMapper;
 
-    public LifeStealSystem() {
+    public TempLifeSystem() {
         super(TempLifeEffect.class);
     }
 
@@ -39,8 +39,6 @@ public class LifeStealSystem extends EffectSystem<TempLifeEffect> {
             health.increase(effect.getStoleLife());
             effect.setStoleLife(0);
         }
-        e.removeComponent(effect);
-        world.changedEntity(e);
     }
 
     @Override

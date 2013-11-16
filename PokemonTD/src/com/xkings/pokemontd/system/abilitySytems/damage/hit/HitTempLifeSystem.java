@@ -7,9 +7,9 @@ import com.xkings.pokemontd.component.attack.projectile.data.TempLifeData;
 /**
  * Created by Tomas on 10/4/13.
  */
-public class TempLifeSystem extends HitEffectSystem<TempLifeData, TempLifeEffect> {
+public class HitTempLifeSystem extends HitEffectSystem<TempLifeData, TempLifeEffect> {
 
-    public TempLifeSystem() {
+    public HitTempLifeSystem() {
         super(TempLifeData.class, TempLifeEffect.class);
     }
 
@@ -23,7 +23,7 @@ public class TempLifeSystem extends HitEffectSystem<TempLifeData, TempLifeEffect
 
     @Override
     protected TempLifeEffect resetEffect(Entity e, Entity target, TempLifeEffect effect, TempLifeData effectData) {
-        effect.set( effectData.getDuration(), damageMapper.get(e).getDamage());
+        effect.set(effectData.getDuration(), damageMapper.get(e).getDamage());
         return effect;
     }
 
