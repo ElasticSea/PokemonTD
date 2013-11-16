@@ -23,13 +23,12 @@ public class Main {
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "PokemonTD";
         cfg.useGL20 = true;
-        cfg.width = 300;
-        cfg.height = 250;
+        cfg.width = 800;
+        cfg.height = 640;
         if (new ParamHolder(args).getParam("-fullscreen") != null) {
             cfg.fullscreen = true;
             cfg.width = 2560;
             cfg.height = 1440;
-            //cfg.fullscreen = true;
         }
 
         new LwjglApplication(new App(args), cfg);
