@@ -15,6 +15,7 @@ import java.util.List;
  */
 public class Menu extends Gui {
 
+    private final int buttonHeight;
     private Button menu;
 
     public void setMenu(Button menu) {
@@ -36,6 +37,7 @@ public class Menu extends Gui {
 
     public Menu(App app) {
         super(app);
+        buttonHeight = squareSize / 5;
         int menuWidth = squareSize / 3 * 4;
         Rectangle rectangle = new Rectangle(center.x - menuWidth / 2, center.y - squareSize / 2, menuWidth, squareSize);
         inGameMenu = new InGameMenu(this, rectangle);
@@ -140,46 +142,34 @@ public class Menu extends Gui {
         }
     }
 
-  /*  private class GameOptions extends ChildTab {
+    private class Tutorial extends ChildTab {
 
-        private final Button guiButton;
-        private final Button musicButton;
-        private final GUI gui;
-        private final Music theme;
+        private String tutorialText =
+                "In Pokemon tower defense the goal is to prevents the creeps from reaching the end of the path by building towers and surviving all creep waves. Every time a creep gets through the whole way, you loose life.\n\n" +
+                        "Information about current live count, your gold, what the next wave will be and interest can be seen in the upper right box.\n\n" +
+                        "To build a tower pick one of the towers in the lower right box, place it where you want it on the map, and conform it by pressing BUY button.\n\n" +
+                        "You can also upgrade the towers by clicking at already built towers and then choosing an upgrade in the lower right box.\n\n" +
+                        "To build some towers you need more than just gold - elements {WATER, FIRE, NATURE, LIGHT, DARKNESS, PURE, SOUL}. To get the elements you need, build a shop tower, which can be also found in lower right corner along with other basic tower types. When you choose particular element a creep carrying the element will spawn. To claim element you need to kill this creep.\n\n" +
+                        "It´s generally good idea to save your money, because each 15 seconds you got interest.";
+        private final DisplayText text;
 
-        GameOptions(MenuTab parent, Gui ui, Rectangle rectangle) {
+        Tutorial(MenuTab parent, Gui ui, Rectangle rectangle) {
             super(parent, ui, rectangle);
 
-            gui = new GUI(this, ui, rectangle);
-            guiButton = new MenuButton(ui, rects.get(0)) {
-                @Override
-                public void process(float x, float y) {
-                    switchCard(gui);
-                }
-            };
+            text = new DisplayText(ui, new Rectangle(rectangle.x + segment, rectangle.y + buttonHeight + buttonHeight,
+                    rectangle.width - segment * 2, rectangle.height - buttonHeight - buttonHeight * 2), ui.getFont(),
+                    BitmapFont.HAlignment.LEFT, true);
 
-            musicButton = new MenuButton(ui, rects.get(1)) {
-                @Override
-                public void process(float x, float y) {
-                    if (theme.isPlaying()) {
-                        theme.stop();
-                    } else {
-                        theme.play();
-                    }
-                }
-            };
-
-            register(guiButton);
-            register(musicButton);
+            register(text);
+            this.setRenderLines(false);
         }
 
         @Override
         public void render() {
             super.render();
-            guiButton.render("GRAPHICAL USER INTERFACE");
-            musicButton.render(theme.isPlaying() ? "MUTE MUSIC" : "PLAY MUSIC");
+            text.render(tutorialText);
         }
-    }      */
+    }
 
     private class GUI extends ChildTab {
 
@@ -235,18 +225,31 @@ public class Menu extends Gui {
 
         private final Button pause;
         private final Options options;
+        private final Tutorial tutorial;
+        private final MenuButton tutorialButton;
         private final MenuButton optionsButton;
 
         InGameMenu(Gui ui, Rectangle rectangle) {
             super(ui, rectangle, true);
             options = new Options(this, ui, rectangle);
+            float halfWidth = rectangle.width * 1.5f;
+            float halfHeight = rectangle.height * 1.5f;
+            tutorial = new Tutorial(this, ui,
+                    new Rectangle(center.x - halfWidth, center.y - halfHeight, halfWidth * 2,
+                            halfHeight * 2));
             pause = new MenuButton(ui, rects.get(0)) {
                 @Override
                 public void process(float x, float y) {
                     app.freeze(!app.isFreezed());
                 }
             };
-            optionsButton = new MenuButton(ui, rects.get(1)) {
+            tutorialButton = new MenuButton(ui, rects.get(1)) {
+                @Override
+                public void process(float x, float y) {
+                    switchCard(tutorial);
+                }
+            };
+            optionsButton = new MenuButton(ui, rects.get(2)) {
                 @Override
                 public void process(float x, float y) {
                     switchCard(options);
@@ -254,6 +257,7 @@ public class Menu extends Gui {
             };
 
             register(pause);
+            register(tutorialButton);
             register(optionsButton);
         }
 
@@ -261,6 +265,7 @@ public class Menu extends Gui {
         public void render() {
             super.render();
             pause.render(app.isFreezed() ? "RESUME" : "PAUSE");
+            tutorialButton.render("TUTORIAL");
             optionsButton.render("OPTIONS");
         }
     }
@@ -268,11 +273,18 @@ public class Menu extends Gui {
     private class MenuBox extends ExitTab {
 
         private final Button startGame;
-        private final MenuButton optionsButton;
         private final Options options;
+        private final Tutorial tutorial;
+        private final MenuButton optionsButton;
+        private final MenuButton tutorialButton;
 
         MenuBox(Gui ui, Rectangle rectangle) {
             super(ui, rectangle, false);
+            float halfWidth = rectangle.width * 1.5f;
+            float halfHeight = rectangle.height * 1.5f;
+            tutorial = new Tutorial(this, ui,
+                    new Rectangle(center.x - halfWidth, center.y - halfHeight, halfWidth * 2,
+                            halfHeight * 2));
             options = new Options(this, ui, rectangle);
             startGame = new MenuButton(ui, rects.get(0)) {
                 @Override
@@ -282,7 +294,13 @@ public class Menu extends Gui {
                     close();
                 }
             };
-            optionsButton = new MenuButton(ui, rects.get(1)) {
+            tutorialButton = new MenuButton(ui, rects.get(1)) {
+                @Override
+                public void process(float x, float y) {
+                    switchCard(tutorial);
+                }
+            };
+            optionsButton = new MenuButton(ui, rects.get(2)) {
                 @Override
                 public void process(float x, float y) {
                     switchCard(options);
@@ -290,6 +308,7 @@ public class Menu extends Gui {
             };
             register(startGame);
             register(optionsButton);
+            register(tutorialButton);
             this.setCloseTabWhenNotClicked(false);
         }
 
@@ -298,6 +317,7 @@ public class Menu extends Gui {
             super.render();
             startGame.render("PLAY GAME");
             optionsButton.render("OPTIONS");
+            tutorialButton.render("TUTORIAL");
         }
     }
 
@@ -307,18 +327,19 @@ public class Menu extends Gui {
         protected final List<Rectangle> rects;
         protected final int count;
         private final MenuTab parent;
+        protected final float segment;
         private boolean closeTabWhenNotClicked = true;
-        protected int buttonHeight;
+        private boolean renderLines = true;
 
         MenuTab(MenuTab parent, Gui ui, Rectangle rectangle) {
             super(ui, rectangle);
             this.parent = parent;
-            count = 5;
+            count = (int) (rectangle.height / buttonHeight);
+            segment = width / count;
             rects = getRects(count);
         }
 
         private List<Rectangle> getRects(int count) {
-            buttonHeight = (int) (height / count);
             List<Rectangle> rects = new ArrayList<Rectangle>();
             for (int i = 0; i < count; i++) {
                 int offset = buttonHeight * (i + 1);
@@ -330,14 +351,15 @@ public class Menu extends Gui {
         @Override
         public void render() {
             super.render();
-            float segment = width / 7;
-            shapeRenderer.setColor(GuiBox.darkerColor);
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            for (int i = 1; i < count; i++) {
-                float offset = i * (height / count);
-                shapeRenderer.rect(x + segment, offset + y - LINE_HEIGHT / 2, width - segment * 2, LINE_HEIGHT);
+            if (isRenderLines()) {
+                shapeRenderer.setColor(GuiBox.darkerColor);
+                shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+                for (int i = 1; i < count; i++) {
+                    float offset = i * (height / count);
+                    shapeRenderer.rect(x + segment, offset + y - LINE_HEIGHT / 2, width - segment * 2, LINE_HEIGHT);
+                }
+                shapeRenderer.end();
             }
-            shapeRenderer.end();
         }
 
         public boolean isCloseTabWhenNotClicked() {
@@ -354,6 +376,14 @@ public class Menu extends Gui {
             } else {
                 parent.setCloseTabWhenNotClicked(closeTabWhenNotClicked);
             }
+        }
+
+        public boolean isRenderLines() {
+            return renderLines;
+        }
+
+        public void setRenderLines(boolean renderLines) {
+            this.renderLines = renderLines;
         }
 
         public void close() {
