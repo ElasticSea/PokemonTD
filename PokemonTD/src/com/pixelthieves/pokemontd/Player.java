@@ -12,7 +12,7 @@ public class Player {
 
     public Player(App app, int health, int gold, int freeElements) {
         this.app = app;
-        this.treasure = new Treasure(gold, 3, 3, 3, 3, 3, 3, 1);
+        this.treasure = new Treasure(gold);
         this.health = new Health(Integer.MAX_VALUE, health);
         this.freeElements = freeElements;
     }
