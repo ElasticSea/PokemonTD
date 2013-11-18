@@ -27,10 +27,7 @@ import com.pixelthieves.core.tween.TweenManagerAdapter;
 import com.pixelthieves.core.tween.Vector3Accessor;
 import com.pixelthieves.pokemontd.component.ShopComponent;
 import com.pixelthieves.pokemontd.entity.tower.TowerName;
-import com.pixelthieves.pokemontd.graphics.AggresiveGaussianBlurRenderer;
-import com.pixelthieves.pokemontd.graphics.GameRenderer;
-import com.pixelthieves.pokemontd.graphics.GrayscaleRenderer;
-import com.pixelthieves.pokemontd.graphics.TileMap;
+import com.pixelthieves.pokemontd.graphics.*;
 import com.pixelthieves.pokemontd.graphics.ui.Menu;
 import com.pixelthieves.pokemontd.graphics.ui.Ui;
 import com.pixelthieves.pokemontd.input.InGameInputProcessor;
@@ -63,7 +60,7 @@ public class App extends Game2D {
     public static final int PATH_SIZE = 2;
     public static final int INVISIBLE_INTERVAL = 5;
     public static final int INTEREST_INTERVAL = 15;
-    public static Entity pathBlock;
+    private final GameService gameService;
     private Renderable menuRenderer;
     private ShapeRenderer shapeRenderer;
     private SpriteBatch spriteBatch;
@@ -113,9 +110,9 @@ public class App extends Game2D {
         return manager;
     }
 
-    public App(String... args) {
+    public App(GameService gameService, String... args) {
         super(args);
-
+        this.gameService = gameService;
     }
 
     @Override
@@ -138,7 +135,6 @@ public class App extends Game2D {
 
     @Override
     protected void init(OrthographicCamera camera) {
-        System.out.println(TowerName.values().length);
         this.clock = Clock.createInstance("Logic", true, true);
         new Assets().addAtlas(new TextureAtlas("data/textures/packed.atlas"));
         initializeWorld();
@@ -163,21 +159,19 @@ public class App extends Game2D {
         initializeInput();
         initializeTween();
         gameRenderer = new GameRenderer(this, ui, map, world, camera);
-        mainMenuGaimRenderer = new AggresiveGaussianBlurRenderer(gameRenderer, 12);
+        mainMenuGaimRenderer = new CachedGaussianBlurRenderer(gameRenderer, 3);
         frozenGameRenderer = new GrayscaleRenderer(gameRenderer);
-        currentGameRenderer = mainMenuGaimRenderer;
         menuRenderer = new MenuRenderer();
+        currentGameRenderer = mainMenuGaimRenderer;
     }
 
     private void initializeWorld() {
         this.world = new World();
-        // FIXME nasty hack
-        this.pathBlock = world.createEntity();
         this.clock.addService(new WorldUpdater(world));
     }
 
     private void initializeContent() {
-        player = new Player(this,50, 70, 0);
+        player = new Player(this, 50, 70, 0);
     }
 
     private void initializeManagers() {
@@ -292,23 +286,16 @@ public class App extends Game2D {
         menu.triggerMenu(Menu.Type.END);
     }
 
-    /*
-private MapData createMap() {
-return new MapBuilder(3, 11, PATH_SIZE, MapBuilder.Direction.DOWN, 0.40f,
- new Rectangle(1, 2, 1, 2)).addStraight().addRight().addStraight().addLeft().addStraight(
- 2).addLeft().addStraight().addLeft().addRight().addStraight().addRight().addStraight(
- 2).addRight().addStraight(3).addLeft().addStraight().addLeft().addStraight(5).addLeft().addStraight(
- 6).addLeft().addStraight().addRight().addStraight().build();
-}
-     */
-    private class MenuRenderer implements Renderable {
+    public GameService getGameSevice() {
+        return gameService;
+    }
 
+    private class MenuRenderer implements Renderable {
 
         @Override
         public void render() {
             menu.render();
         }
-
 
     }
 

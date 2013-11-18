@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.pixelthieves.core.main.Assets;
 import com.pixelthieves.pokemontd.App;
+import com.pixelthieves.pokemontd.GameService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,11 +29,12 @@ public class Menu extends Gui {
         BLANK, INGAME, MAIN, END;
     }
 
+    private final MenuTab signInBox;
+    private final MenuTab menuBox;
     private final MenuTab inGameMenu;
+    private final MenuTab endGame;
     private final MenuTab defaultCard;
     private MenuTab pickedCard;
-    private final MenuTab menuBox;
-    private final MenuTab endGame;
     private final List<MenuTab> guiDialogRoots = new ArrayList<MenuTab>();
 
     public Menu(App app) {
@@ -40,14 +42,17 @@ public class Menu extends Gui {
         buttonHeight = squareSize / 5;
         int menuWidth = squareSize / 3 * 4;
         Rectangle rectangle = new Rectangle(center.x - menuWidth / 2, center.y - squareSize / 2, menuWidth, squareSize);
+        signInBox = new SignInBox(this, rectangle);
         inGameMenu = new InGameMenu(this, rectangle);
         menuBox = new MenuBox(this, rectangle);
         endGame = new EndGame(this, rectangle);
 
+        guiDialogRoots.add(signInBox);
         guiDialogRoots.add(inGameMenu);
         guiDialogRoots.add(menuBox);
         guiDialogRoots.add(endGame);
-        defaultCard = menuBox;
+
+        defaultCard = signInBox;
         pickedCard = defaultCard;
     }
 
@@ -243,65 +248,73 @@ public class Menu extends Gui {
         }
     }
 
-    private class InGameMenu extends ExitTab {
+    private class InGameMenu extends CommonMenu {
 
         private final Button pause;
-        private final Options options;
-        private final Tutorial tutorial;
-        private final MenuButton tutorialButton;
-        private final MenuButton optionsButton;
 
         InGameMenu(Gui ui, Rectangle rectangle) {
             super(ui, rectangle, true);
-            options = new Options(this, ui, rectangle);
-            tutorial = new Tutorial(this, ui, new Rectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
             pause = new MenuButton(ui, rects.get(0)) {
                 @Override
                 public void process(float x, float y) {
                     app.freeze(!app.isFreezed());
                 }
             };
-            tutorialButton = new MenuButton(ui, rects.get(1)) {
-                @Override
-                public void process(float x, float y) {
-                    switchCard(tutorial);
-                }
-            };
-            optionsButton = new MenuButton(ui, rects.get(2)) {
-                @Override
-                public void process(float x, float y) {
-                    switchCard(options);
-                }
-            };
 
             register(pause);
-            register(tutorialButton);
-            register(optionsButton);
-            cards.add(options);
-            cards.add(tutorial);
         }
 
         @Override
         public void render() {
             super.render();
             pause.render(app.isFreezed() ? "RESUME" : "PAUSE");
-            tutorialButton.render("TUTORIAL");
-            optionsButton.render("OPTIONS");
         }
     }
 
-    private class MenuBox extends ExitTab {
+    private class SignInBox extends MenuTab {
+
+        private final MenuButton signInButton;
+        private final MenuButton skipButton;
+
+        SignInBox(Gui ui, Rectangle rectangle) {
+            super(null, ui, rectangle);
+            signInButton = new MenuButton(ui, rects.get(0)) {
+                @Override
+                public void process(float x, float y) {
+                    app.getGameSevice().signIn();
+                }
+            };
+            skipButton = new MenuButton(ui, rects.get(rects.size() - 1)) {
+                @Override
+                public void process(float x, float y) {
+                    switchCard(menuBox);
+                    app.getGameSevice().skipSignIn();
+                }
+            };
+            register(signInButton);
+            register(skipButton);
+            this.setCloseTabWhenNotClicked(false);
+        }
+
+        @Override
+        public void render() {
+            if (app.getGameSevice().isSignedIn()) {
+                switchCard(menuBox);
+                return;
+            }
+
+            super.render();
+            signInButton.render("SING IN");
+            skipButton.render("SKIP");
+        }
+    }
+
+    private class MenuBox extends CommonMenu {
 
         private final Button startGame;
-        private final Options options;
-        private final Tutorial tutorial;
-        private final MenuButton optionsButton;
-        private final MenuButton tutorialButton;
 
         MenuBox(Gui ui, Rectangle rectangle) {
             super(ui, rectangle, false);
-            tutorial = new Tutorial(this, ui, new Rectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
-            options = new Options(this, ui, rectangle);
             startGame = new MenuButton(ui, rects.get(0)) {
                 @Override
                 public void process(float x, float y) {
@@ -310,6 +323,29 @@ public class Menu extends Gui {
                     close();
                 }
             };
+            register(startGame);
+            this.setCloseTabWhenNotClicked(false);
+        }
+
+        @Override
+        public void render() {
+            super.render();
+            startGame.render("PLAY GAME");
+        }
+    }
+
+    private class CommonMenu extends ExitTab {
+
+        private final Options options;
+        private final Tutorial tutorial;
+        private final MenuButton optionsButton;
+        private final MenuButton tutorialButton;
+        private final MenuButton signInButton;
+
+        CommonMenu(Gui ui, Rectangle rectangle, boolean closeButton) {
+            super(ui, rectangle, closeButton);
+            tutorial = new Tutorial(this, ui, new Rectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+            options = new Options(this, ui, rectangle);
             tutorialButton = new MenuButton(ui, rects.get(1)) {
                 @Override
                 public void process(float x, float y) {
@@ -322,20 +358,31 @@ public class Menu extends Gui {
                     switchCard(options);
                 }
             };
-            register(startGame);
+
+            signInButton = new MenuButton(ui, rects.get(3)) {
+                @Override
+                public void process(float x, float y) {
+                    GameService gameSevice = app.getGameSevice();
+                    if (gameSevice.isSignedIn()) {
+                        gameSevice.signOut();
+                    } else {
+                        gameSevice.signIn();
+                    }
+                }
+            };
             register(optionsButton);
             register(tutorialButton);
+            register(signInButton);
             cards.add(options);
             cards.add(tutorial);
-            this.setCloseTabWhenNotClicked(false);
         }
 
         @Override
         public void render() {
             super.render();
-            startGame.render("PLAY GAME");
             optionsButton.render("OPTIONS");
             tutorialButton.render("TUTORIAL");
+            signInButton.render(app.getGameSevice().isSignedIn() ? "SIGN OUT" : "SIGN IN");
         }
     }
 
@@ -343,11 +390,20 @@ public class Menu extends Gui {
 
         private final DisplayText score;
         private final DisplayText congratulations;
+        private final MenuButton publishScoreButton;
 
         EndGame(Gui ui, Rectangle rectangle) {
             super(ui, rectangle, false);
             congratulations = new DisplayText(ui, rects.get(0), ui.getFont(), BitmapFont.HAlignment.CENTER);
             score = new DisplayText(ui, rects.get(1), ui.getFont(), BitmapFont.HAlignment.CENTER);
+
+            publishScoreButton = new MenuButton(ui, rects.get(rects.size()-2)) {
+                @Override
+                public void process(float x, float y) {
+                    app.getGameSevice().submitScore(app.getPlayer().getScore().getScore());
+                }
+            };
+            register(publishScoreButton);
             this.setCloseTabWhenNotClicked(false);
             this.setRenderLines(false);
         }
@@ -357,6 +413,7 @@ public class Menu extends Gui {
             super.render();
             congratulations.render("CONGRATULATIONS");
             score.render(app.getPlayer().getScore() + "");
+            publishScoreButton.render("PUBLISH SCORE");
         }
     }
 

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Google Play game services IDs.
+-->
+<resources>
+    <string name="app_id">354216262148</string>
+    <string name="achievement_ethernal">CgkIhPS8x6cKEAIQAQ</string>
+    <string name="achievement_immortal">CgkIhPS8x6cKEAIQAg</string>
+    <string name="achievement_keeper">CgkIhPS8x6cKEAIQAw</string>
+    <string name="achievement_trifty">CgkIhPS8x6cKEAIQBA</string>
+    <string name="achievement_heathy">CgkIhPS8x6cKEAIQBQ</string>
+    <string name="leaderboard_alpha">CgkIhPS8x6cKEAIQBg</string>
+</resources>
