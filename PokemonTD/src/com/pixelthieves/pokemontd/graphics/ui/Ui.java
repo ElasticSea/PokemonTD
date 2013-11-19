@@ -1,6 +1,7 @@
 package com.pixelthieves.pokemontd.graphics.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.pixelthieves.pokemontd.App;
@@ -15,6 +16,7 @@ import java.util.List;
  */
 public class Ui extends Gui {
 
+    public static final Preferences PREFERENCES = Gdx.app.getPreferences("my-preferences");
     private final int width;
     private final TowerIcons towerIcons;
     private final ShopIcons shopIcons;
@@ -24,6 +26,7 @@ public class Ui extends Gui {
     private final GuiBox status;
     private final AbilityInfo abilityInfo;
     private final List<GuiBox> boxes = new ArrayList<GuiBox>();
+    private float defaultSize;
     private int offset;
 
     public Ui(App app, Menu menu) {
@@ -73,6 +76,8 @@ public class Ui extends Gui {
         boxes.add(abilityInfo);
         boxes.add(nextWaveInfo);
         boxes.add(entityInfo);
+
+        defaultSize = Gdx.app.getPreferences("my-preferences").getFloat("gui_scale");
         resetSize();
     }
 
@@ -101,11 +106,17 @@ public class Ui extends Gui {
     }
 
     public void resetSize() {
-        scale(defaultSize);
+        scale(defaultSize != 0 ? defaultSize : recommendedSize);
     }
 
-    public void scale(float size) {
-        super.scale(size);
+    private void saveScale(float scale) {
+        PREFERENCES.putFloat("gui_scale", scale);
+        PREFERENCES.flush();
+    }
+
+    public void scale(float scale) {
+        super.scale(scale);
+        saveScale(scale);
 
         int statusBarHeight = squareSize / 5;
         int statusHeight = statusBarHeight * 4;

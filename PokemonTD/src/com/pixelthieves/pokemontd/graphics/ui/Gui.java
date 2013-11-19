@@ -34,7 +34,7 @@ public abstract class Gui extends GestureDetector.GestureAdapter implements Rend
     protected final int height;
     protected final int width;
     protected final Vector2 center;
-    protected final float defaultSize;
+    protected final float recommendedSize;
     protected int squareSize;
     private int offset;
     protected Player player;
@@ -50,8 +50,8 @@ public abstract class Gui extends GestureDetector.GestureAdapter implements Rend
         this.spriteBatch = new SpriteBatch();
         height = Gdx.graphics.getHeight();
         width = Gdx.graphics.getWidth();
-        defaultSize = Gdx.graphics.getDensity() * 160 * 0.8f;
-        setSquareSize(defaultSize);
+        recommendedSize = Gdx.graphics.getDensity() * 160 * 0.8f;
+        setSquareSize(recommendedSize);
         offset = squareSize / 36;
         center = new Vector2(width / 2f, height / 2f);
         scaleFont(Math.round(squareSize / 90));
