@@ -52,7 +52,7 @@ class LeaderboardTab extends ExitTab {
         @Override
         public void render() {
             super.render();
-            if (refresh) {
+            if (menu.getGameSevice().isSignedIn() && refresh) {
                 Map<String, String> data = menu.getGameSevice().getLeaderboard();
                 if (data != null) {
                     Iterator<Map.Entry<String, String>> iterator = data.entrySet().iterator();
