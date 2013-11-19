@@ -23,7 +23,7 @@ abstract class Icon extends InteractiveBlock {
     }
 
     Icon(Gui ui, Rectangle rectangle) {
-        super(rectangle);
+        super(ui,rectangle);
         this.spriteBatch = ui.getSpriteBatch();
         this.font = ui.getFont();
     }

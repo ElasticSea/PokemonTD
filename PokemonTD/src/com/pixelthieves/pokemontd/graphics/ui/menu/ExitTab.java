@@ -7,8 +7,8 @@ import com.badlogic.gdx.math.Rectangle;
  */
 class ExitTab extends MenuTab {
 
-    private MenuButton close;
-    private final MenuButton exit;
+    protected MenuButton close;
+    protected final MenuButton exit;
 
     ExitTab(Menu menu, Rectangle rectangle, boolean closeButton) {
         super(menu, null, rectangle);

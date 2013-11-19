@@ -10,8 +10,8 @@ abstract class InteractiveBlock extends InteractiveElement {
 
     private boolean enabled = true;
 
-    InteractiveBlock(Rectangle rectangle) {
-        super(rectangle);
+    InteractiveBlock(Gui gui,Rectangle rectangle) {
+        super(gui,rectangle);
     }
 
     @Override

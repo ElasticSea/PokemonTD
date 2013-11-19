@@ -21,7 +21,7 @@ public class GuiBox extends InteractiveBlockParent {
     protected final Gui ui;
 
     public GuiBox(Gui ui, Rectangle rectangle) {
-        super(rectangle);
+        super(ui,rectangle);
         this.ui = ui;
         this.offset = ui.getOffset();
         this.shapeRenderer = ui.getShapeRenderer();
@@ -31,6 +31,7 @@ public class GuiBox extends InteractiveBlockParent {
 
     @Override
     public void render() {
+        super.render();
         drawRect();
     }
 

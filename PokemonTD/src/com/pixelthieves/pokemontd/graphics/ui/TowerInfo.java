@@ -65,8 +65,7 @@ public class TowerInfo extends CommonInfo {
         float offset = height / 5;
         float offsetBlocks = height / 2;
         float offsetBlocks2 = offsetBlocks / 2f;
-        cost = new TowerCost(new Rectangle(x + offset, y, width - offset * 2, offset), width - offsetBlocks,
-                shapeRenderer, spriteBatch, font);
+        cost = new TowerCost(ui, new Rectangle(x + offset, y, width - offset * 2, offset), width - offsetBlocks);
         damage = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset * 3, offset * 2, offset), font,
                 BitmapFont.HAlignment.LEFT);
         speed = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset * 2, offset * 2, offset), font,

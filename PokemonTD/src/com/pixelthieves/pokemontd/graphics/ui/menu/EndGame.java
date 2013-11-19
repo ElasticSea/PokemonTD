@@ -24,6 +24,7 @@ class EndGame extends ExitTab {
             @Override
             public void process(float x, float y) {
                 menu.getGameSevice().submitScore(menu.getPlayer().getScore().getScore());
+                menu.switchCard(Menu.Type.LEADERBOARD);
             }
         };
         register(publishScoreButton);

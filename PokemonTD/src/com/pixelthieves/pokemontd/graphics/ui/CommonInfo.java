@@ -25,7 +25,7 @@ public class CommonInfo extends InteractiveBlock {
 
     public CommonInfo(final Ui ui, Rectangle rectangle, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
                       BitmapFont font) {
-        super(rectangle);
+        super(ui,rectangle);
         this.spriteBatch = spriteBatch;
         this.gui = ui;
         float offset = height / 5;

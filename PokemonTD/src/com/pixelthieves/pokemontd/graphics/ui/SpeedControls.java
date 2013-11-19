@@ -14,7 +14,7 @@ public class SpeedControls extends DisplayBlock {
     private final Clock clock;
 
     public SpeedControls(Gui ui, float x, float y, float width, float height, final Clock clock) {
-        super(new Rectangle(x, y, width, height));
+        super(ui, new Rectangle(x, y, width, height));
         this.clock = clock;
         int buttonWidth = (int) (width / 3);
         slower = new Button(ui, new Rectangle(x, y, buttonWidth, height), ui.getFont(), BitmapFont.HAlignment.CENTER) {

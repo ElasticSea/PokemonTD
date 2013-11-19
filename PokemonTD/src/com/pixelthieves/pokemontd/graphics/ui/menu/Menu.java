@@ -16,6 +16,7 @@ import java.util.List;
 public class Menu extends Gui {
 
     public static int BUTTON_HEIGHT;
+    private final LeaderboardTab leaderboard;
     private Button menu;
 
     public void setMenu(Button menu) {
@@ -27,7 +28,7 @@ public class Menu extends Gui {
     }
 
     public enum Type {
-        BLANK, INGAME, MAIN, END;
+        BLANK, INGAME, MAIN, END, LEADERBOARD;
     }
 
     private final MenuTab signInBox;
@@ -42,11 +43,12 @@ public class Menu extends Gui {
         super(app);
         BUTTON_HEIGHT = squareSize / 5;
         int menuWidth = squareSize / 3 * 4;
-        Rectangle rectangle = new Rectangle(center.x - menuWidth / 2, center.y - squareSize / 2, menuWidth, squareSize);
+        Rectangle rectangle = getRectangle(menuWidth, squareSize);
         signInBox = new SignInBox(this, rectangle);
         inGameMenu = new InGameMenu(this, rectangle);
         menuBox = new MenuBox(this, rectangle);
         endGame = new EndGame(this, rectangle);
+        leaderboard = new LeaderboardTab(this, getRectangle((int) (menuWidth * 1.5f), BUTTON_HEIGHT * 12));
 
         guiDialogRoots.add(signInBox);
         guiDialogRoots.add(inGameMenu);
@@ -55,6 +57,10 @@ public class Menu extends Gui {
 
         defaultCard = signInBox;
         pickedCard = defaultCard;
+    }
+
+    private Rectangle getRectangle(int width, int height) {
+        return new Rectangle(center.x - width / 2, center.y - height / 2, width, height);
     }
 
     @Override
@@ -105,6 +111,8 @@ public class Menu extends Gui {
                 return menuBox;
             case END:
                 return endGame;
+            case LEADERBOARD:
+                return leaderboard;
             default:
                 return null;
         }

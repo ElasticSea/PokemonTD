@@ -24,13 +24,12 @@ public class TowerCost extends InteractiveBlock {
     private float fontScale;
     private Rectangle bounds;
 
-    public TowerCost(Rectangle rectangle, float maxWidth, ShapeRenderer shapeRenderer, SpriteBatch spriteBatch,
-                     BitmapFont font) {
-        super(rectangle);
+    public TowerCost(Gui gui, Rectangle rectangle, float maxWidth) {
+        super(gui, rectangle);
         this.maxWidth = maxWidth;
-        this.shapeRenderer = shapeRenderer;
-        this.spriteBatch = spriteBatch;
-        this.font = font;
+        this.shapeRenderer = gui.getShapeRenderer();
+        this.spriteBatch = gui.getSpriteBatch();
+        this.font = gui.getFont();
     }
 
     @Override

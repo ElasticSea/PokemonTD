@@ -22,7 +22,7 @@ class ElementIcon extends InteractiveBlock {
     private Treasure currentElements;
 
     ElementIcon(Gui ui, Rectangle rectangle, SpriteBatch spriteBatch) {
-        super(rectangle);
+        super(ui,rectangle);
         this.spriteBatch = spriteBatch;
         picture = new DisplayPicture(ui, rectangle);
         waveManager = ui.getWaveManager();

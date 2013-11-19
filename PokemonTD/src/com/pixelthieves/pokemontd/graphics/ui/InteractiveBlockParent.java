@@ -13,8 +13,8 @@ public abstract class InteractiveBlockParent extends InteractiveElement {
     private final List<InteractiveBlock> interactiveBlocks = new ArrayList<InteractiveBlock>();
     private boolean enabled = true;
 
-    public InteractiveBlockParent(Rectangle rectangle) {
-        super(rectangle);
+    public InteractiveBlockParent(Gui gui,Rectangle rectangle) {
+        super(gui,rectangle);
     }
 
     @Override
