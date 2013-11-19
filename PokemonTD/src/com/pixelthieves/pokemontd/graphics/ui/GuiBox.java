@@ -20,7 +20,7 @@ public class GuiBox extends InteractiveBlockParent {
     protected final SpriteBatch spriteBatch;
     protected final Gui ui;
 
-    GuiBox(Gui ui, Rectangle rectangle) {
+    public GuiBox(Gui ui, Rectangle rectangle) {
         super(rectangle);
         this.ui = ui;
         this.offset = ui.getOffset();

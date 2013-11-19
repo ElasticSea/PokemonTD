@@ -11,7 +11,7 @@ import com.pixelthieves.pokemontd.App;
 /**
  * Created by Tomas on 10/8/13.
  */
-abstract class Button extends InteractiveBlock {
+public abstract class Button extends InteractiveBlock {
     private final SpriteBatch spriteBatch;
     private final BitmapFont.HAlignment alignment;
     private String text;

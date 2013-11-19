@@ -3,6 +3,7 @@ package com.pixelthieves.pokemontd.graphics.ui;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
 import com.pixelthieves.pokemontd.Player;
+import com.pixelthieves.pokemontd.graphics.ui.menu.Menu;
 
 
 /**
