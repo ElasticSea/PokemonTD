@@ -159,7 +159,7 @@ public class App extends Game2D {
         initializeInput();
         initializeTween();
         gameRenderer = new GameRenderer(this, ui, map, world, camera);
-        mainMenuGaimRenderer = new CachedGaussianBlurRenderer(gameRenderer, 3);
+        mainMenuGaimRenderer = new CachedGaussianBlurRenderer(gameRenderer, 20);
         frozenGameRenderer = new GrayscaleRenderer(gameRenderer);
         menuRenderer = new MenuRenderer();
         currentGameRenderer = mainMenuGaimRenderer;
