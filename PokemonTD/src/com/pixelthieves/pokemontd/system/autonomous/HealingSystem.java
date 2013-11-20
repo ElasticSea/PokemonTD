@@ -28,7 +28,7 @@ public class HealingSystem extends EntityProcessingSystem {
         if (creepAbilityMapper.get(e).getCreepAbilityType().equals(CreepAbilityType.HEALING)) {
             Health health = healthMapper.get(e).getHealth();
             if (health.isAlive()) {
-                health.increase(health.getMaxHealth() / 1000f);
+                health.increase(health.getMaxHealth() / 2000f);
             }
         }
     }
