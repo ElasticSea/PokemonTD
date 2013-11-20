@@ -8,7 +8,7 @@ import com.pixelthieves.pokemontd.system.resolve.ui.GetCreep;
 /**
  * Created by Tomas on 10/7/13.
  */
-public class CreepManager implements Clickable{
+public class CreepManager implements Clickable {
 
     private final World world;
     private Entity clickedCreep;

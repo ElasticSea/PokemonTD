@@ -3,8 +3,8 @@ package com.pixelthieves.pokemontd.system.abilitySytems.damage;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
-import com.pixelthieves.pokemontd.component.attack.effects.buff.BuffableSpeedComponent;
 import com.pixelthieves.pokemontd.component.attack.effects.SlowEffect;
+import com.pixelthieves.pokemontd.component.attack.effects.buff.BuffableSpeedComponent;
 
 /**
  * Created by Tomas on 10/4/13.

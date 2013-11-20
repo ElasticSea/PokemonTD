@@ -27,7 +27,7 @@ public class HitBonusSystem extends HitSystem<BonusAttack> {
         float damage = damageMapper.get(e).getDamage();
         HealthComponent healthComponent = healthMapper.getSafe(target);
         if (healthComponent != null) {
-        Health health = healthComponent.getHealth();
+            Health health = healthComponent.getHealth();
             for (int i = 0; i < effectData.getIterations(); i++) {
                 dealDamage(damage, health);
             }

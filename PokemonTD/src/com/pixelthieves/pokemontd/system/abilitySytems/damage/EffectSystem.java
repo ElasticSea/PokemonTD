@@ -19,7 +19,7 @@ public abstract class EffectSystem<T extends AbstractEffect> extends EntityProce
     ComponentMapper<SpriteComponent> spriteMapper;
 
     public EffectSystem(Class<T> effect) {
-        super(Aspect.getAspectForAll(effect,SpriteComponent.class));
+        super(Aspect.getAspectForAll(effect, SpriteComponent.class));
         this.effect = effect;
     }
 

@@ -16,7 +16,8 @@ public class DisplayText extends Button {
         super(gui, rectangle, font, alignment, false);
     }
 
-    public DisplayText(Gui gui, Rectangle rectangle, BitmapFont font, BitmapFont.HAlignment alignment, boolean wrapped) {
+    public DisplayText(Gui gui, Rectangle rectangle, BitmapFont font, BitmapFont.HAlignment alignment,
+                       boolean wrapped) {
         super(gui, rectangle, font, alignment, wrapped);
     }
 

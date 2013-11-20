@@ -10,7 +10,7 @@ import static com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
  */
 public class StaticObjectType implements CommonDataType {
 
-    public static final StaticObjectType GRAVE = new StaticObjectType("grave", App.WORLD_SCALE/2f);
+    public static final StaticObjectType GRAVE = new StaticObjectType("grave", App.WORLD_SCALE / 2f);
     private final AtlasRegion texture;
     private final float size;
 

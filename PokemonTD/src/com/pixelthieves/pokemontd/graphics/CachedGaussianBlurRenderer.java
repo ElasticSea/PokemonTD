@@ -48,7 +48,7 @@ public class CachedGaussianBlurRenderer implements Renderable {
         fboA.begin();
         wrappedRenderer.render();
         fboA.end();
-        int passes = (int) (blurRatio* scale);
+        int passes = (int) (blurRatio * scale);
         Texture tex = fboA.getColorBufferTexture();
         for (int i = 0; i < passes; i++) {
             tex = blurTexture(tex, i);
@@ -63,7 +63,7 @@ public class CachedGaussianBlurRenderer implements Renderable {
         spriteBatch.setShader(blurShader);
         spriteBatch.begin();
         blurShader.setUniformf("resolution", width);
-        blurShader.setUniformf("radius", i );
+        blurShader.setUniformf("radius", i);
         blurShader.setUniformf("dir", 1, 0);
         texture.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
         spriteBatch.draw(texture, 0, 0, width, height);
@@ -73,7 +73,7 @@ public class CachedGaussianBlurRenderer implements Renderable {
         spriteBatch.setShader(blurShader);
         spriteBatch.begin();
         blurShader.setUniformf("resolution", height);
-        blurShader.setUniformf("radius", i );
+        blurShader.setUniformf("radius", i);
         blurShader.setUniformf("dir", 0, 1);
         fboB.getColorBufferTexture().setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
         spriteBatch.draw(fboB.getColorBufferTexture(), 0, 0, width, height);

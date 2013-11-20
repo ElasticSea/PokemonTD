@@ -13,7 +13,7 @@ public class ShopIcons extends PickTable<ElementIcon> {
     private final Player player;
     private final Treasure currentElements;
 
-    ShopIcons(Gui ui,Rectangle rectangle) {
+    ShopIcons(Gui ui, Rectangle rectangle) {
         super(ui, rectangle);
         this.player = ui.getPlayer();
         this.currentElements = new Treasure(0);
@@ -27,6 +27,6 @@ public class ShopIcons extends PickTable<ElementIcon> {
 
     @Override
     protected ElementIcon createPickIcon() {
-        return new ElementIcon(ui,new Rectangle(), spriteBatch);
+        return new ElementIcon(ui, new Rectangle(), spriteBatch);
     }
 }

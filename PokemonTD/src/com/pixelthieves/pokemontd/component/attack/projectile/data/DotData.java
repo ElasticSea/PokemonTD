@@ -35,6 +35,7 @@ public class DotData extends EffectData {
 
     @Override
     public String getEffectDescription(EffectName effectName, float speed, float damage) {
-        return super.getEffectDescription(effectName, speed, damage)+  "Deals " + iterations + "X " + (int) (damage) + " every " + interval + " ms.";
+        return super.getEffectDescription(effectName, speed, damage) + "Deals " + iterations + "X " + (int) (damage) +
+                " every " + interval + " ms.";
     }
 }

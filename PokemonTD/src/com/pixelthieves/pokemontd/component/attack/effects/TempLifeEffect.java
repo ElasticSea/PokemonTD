@@ -36,11 +36,11 @@ public class TempLifeEffect extends AbstractEffect<TempLifeEffect> {
         }
     }
 
-    public String getName(){
-        return  "Life steal";
+    public String getName() {
+        return "Life steal";
     }
 
-    public String getDescription(){
+    public String getDescription() {
         return "Temporarily decreases creep health";
     }
 }

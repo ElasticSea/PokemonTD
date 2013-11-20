@@ -14,14 +14,14 @@ public class GuiBox extends InteractiveBlockParent {
     public static final float lighter = 0.1f;
     public static final Color darkerColor = new Color(darker, darker, darker, 1f);
     public static final Color lighterColor = new Color(lighter, lighter, lighter, 1f);
-    protected  int offset;
+    protected int offset;
     protected final ShapeRenderer shapeRenderer;
     protected final Rectangle offsetRectange;
     protected final SpriteBatch spriteBatch;
     protected final Gui ui;
 
     public GuiBox(Gui ui, Rectangle rectangle) {
-        super(ui,rectangle);
+        super(ui, rectangle);
         this.ui = ui;
         this.offset = ui.getOffset();
         this.shapeRenderer = ui.getShapeRenderer();
@@ -49,7 +49,7 @@ public class GuiBox extends InteractiveBlockParent {
     }
 
     @Override
-    public void refresh(){
+    public void refresh() {
         offsetRectange.set(x + offset, y + offset, width - offset * 2, height - offset * 2);
     }
 

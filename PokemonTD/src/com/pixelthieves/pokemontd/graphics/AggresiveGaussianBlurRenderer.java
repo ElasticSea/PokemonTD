@@ -49,7 +49,7 @@ public class AggresiveGaussianBlurRenderer implements Renderable {
         fboA.begin();
         wrappedRenderer.render();
         fboA.end();
-        int passes = (int) (blurRatio* scale);
+        int passes = (int) (blurRatio * scale);
         Texture tex = fboA.getColorBufferTexture();
         spriteBatch.setShader(blurShader);
         for (int i = 0; i < passes; i++) {
@@ -63,7 +63,7 @@ public class AggresiveGaussianBlurRenderer implements Renderable {
         fboB.begin();
         spriteBatch.begin();
         blurShader.setUniformf("resolution", width);
-        blurShader.setUniformf("radius", i );
+        blurShader.setUniformf("radius", i);
         blurShader.setUniformf("dir", 1, 0);
         spriteBatch.draw(texture, 0, 0, width, height);
         spriteBatch.end();
@@ -71,7 +71,7 @@ public class AggresiveGaussianBlurRenderer implements Renderable {
         fboA.begin();
         spriteBatch.begin();
         blurShader.setUniformf("resolution", height);
-        blurShader.setUniformf("radius", i );
+        blurShader.setUniformf("radius", i);
         blurShader.setUniformf("dir", 0, 1);
         spriteBatch.draw(fboB.getColorBufferTexture(), 0, 0, width, height);
         spriteBatch.end();

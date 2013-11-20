@@ -27,7 +27,7 @@ public class IncreasingDamageEffect extends AbstractEffect<IncreasingDamageEffec
     }
 
     public float getCurrentDamage() {
-        return currentDamage*damage;
+        return currentDamage * damage;
     }
 
     @Override
@@ -41,11 +41,11 @@ public class IncreasingDamageEffect extends AbstractEffect<IncreasingDamageEffec
         }
     }
 
-    public String getName(){
-        return  "Increasing damage";
+    public String getName() {
+        return "Increasing damage";
     }
 
-    public String getDescription(){
+    public String getDescription() {
         return "Increases creep damage";
     }
 }

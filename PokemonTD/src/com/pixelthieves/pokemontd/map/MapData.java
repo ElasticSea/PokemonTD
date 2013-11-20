@@ -20,7 +20,8 @@ public class MapData {
     private final PathPack pathPack;
     private final TileMap<TextureAtlas.AtlasRegion> tileMap;
 
-    public MapData(Blueprint blueprint, Blueprint gameBlueprint, PathPack pathPack, TileMap<TextureAtlas.AtlasRegion> tileMap) {
+    public MapData(Blueprint blueprint, Blueprint gameBlueprint, PathPack pathPack,
+                   TileMap<TextureAtlas.AtlasRegion> tileMap) {
         this.blueprint = blueprint;
         this.gameBlueprint = gameBlueprint;
         this.pathPack = pathPack;

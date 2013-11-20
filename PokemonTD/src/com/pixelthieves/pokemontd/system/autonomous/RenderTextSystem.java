@@ -14,8 +14,6 @@ import com.pixelthieves.core.main.Assets;
 import com.pixelthieves.pokemontd.component.TextComponent;
 import com.pixelthieves.pokemontd.component.TintComponent;
 
-import static com.pixelthieves.core.main.Assets.getTexture;
-
 /**
  * Created by Tomas on 10/4/13.
  */

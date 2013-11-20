@@ -17,8 +17,8 @@ class CommonMenu extends ExitTab {
 
     CommonMenu(final Menu menu, Rectangle rectangle, boolean closeButton, int count) {
         super(menu, rectangle, closeButton, count);
-        tutorial = new Tutorial(menu, this, new Rectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()),
-                count);
+        tutorial =
+                new Tutorial(menu, this, new Rectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()), count);
         options = new Options(menu, this, rectangle, count);
         tutorialButton = new MenuButton(menu, rects.get(1)) {
             @Override

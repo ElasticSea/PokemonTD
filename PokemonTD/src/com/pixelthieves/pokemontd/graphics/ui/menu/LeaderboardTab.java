@@ -77,6 +77,7 @@ class LeaderboardTab extends ExitTab {
                 entry.render();
             }
         }
+
         private static final float LINE_HEIGHT = 2;
 
         @Override

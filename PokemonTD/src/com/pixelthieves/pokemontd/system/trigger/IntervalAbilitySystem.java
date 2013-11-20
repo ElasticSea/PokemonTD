@@ -5,10 +5,10 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
-import com.pixelthieves.pokemontd.component.attack.AbilityComponent;
-import com.pixelthieves.pokemontd.component.attack.effects.buff.BuffableSpeedComponent;
 import com.pixelthieves.core.component.Time;
 import com.pixelthieves.core.component.TimeComponent;
+import com.pixelthieves.pokemontd.component.attack.AbilityComponent;
+import com.pixelthieves.pokemontd.component.attack.effects.buff.BuffableSpeedComponent;
 
 /**
  * Created by Tomas on 10/4/13.

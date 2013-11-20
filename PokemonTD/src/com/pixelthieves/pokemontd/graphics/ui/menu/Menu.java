@@ -44,10 +44,10 @@ public class Menu extends Gui {
         int menuWidth = height / 3 * 4;
         Rectangle rectangle = getRectangle(menuWidth, height);
         signInBox = new SignInBox(this, rectangle, 5);
-        inGameMenu = new InGameMenu(this, rectangle,5);
-        menuBox = new MenuBox(this, rectangle,5);
-        endGame = new EndGame(this, rectangle,5);
-        leaderboard = new LeaderboardTab(this,  getRectangle(menuWidth, (int) (height*1.5f)),7);
+        inGameMenu = new InGameMenu(this, rectangle, 5);
+        menuBox = new MenuBox(this, rectangle, 5);
+        endGame = new EndGame(this, rectangle, 5);
+        leaderboard = new LeaderboardTab(this, getRectangle(menuWidth, (int) (height * 1.5f)), 7);
 
         guiDialogRoots.add(signInBox);
         guiDialogRoots.add(inGameMenu);

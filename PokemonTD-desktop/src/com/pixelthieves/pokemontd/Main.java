@@ -81,7 +81,7 @@ public class Main {
                 if (leaderboard == null) {
                     leaderboard = new HashMap<String, String>();
                     for (int i = 0; i < 8; i++) {
-                        leaderboard.put("Tomas Cupal "+i, "879543");
+                        leaderboard.put("Tomas Cupal " + i, "879543");
                     }
                 }
                 return leaderboard;

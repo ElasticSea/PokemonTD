@@ -18,7 +18,7 @@ public class LifeData extends EffectData {
     }
 
     public String getEffectDescription(EffectName effectName, float speed, float damage) {
-        return super.getEffectDescription(effectName, speed, damage)+  "drop " + earnRatio + "X life instead of gold";
+        return super.getEffectDescription(effectName, speed, damage) + "drop " + earnRatio + "X life instead of gold";
     }
 
 }

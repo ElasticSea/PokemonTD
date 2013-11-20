@@ -23,7 +23,7 @@ abstract class Icon extends InteractiveBlock {
     }
 
     Icon(Gui ui, Rectangle rectangle) {
-        super(ui,rectangle);
+        super(ui, rectangle);
         this.spriteBatch = ui.getSpriteBatch();
         this.font = ui.getFont();
     }
@@ -52,7 +52,7 @@ abstract class Icon extends InteractiveBlock {
 
             float x = this.x + (width - fontBounds.width) / 2f;
             font.draw(spriteBatch, text, x, y + fontBounds.height);
-          //  font.setScale(oldScale);
+            //  font.setScale(oldScale);
         }
         spriteBatch.end();
     }

@@ -32,7 +32,7 @@ public abstract class HitEffectSystem<T extends EffectData, V extends AbstractEf
             world.changedEntity(target);
         } else if (newEffect.compareTo(effect) >= 0) {
             effect.reset();
-            resetEffect(e,target, effect, effectData);
+            resetEffect(e, target, effect, effectData);
         }
     }
 

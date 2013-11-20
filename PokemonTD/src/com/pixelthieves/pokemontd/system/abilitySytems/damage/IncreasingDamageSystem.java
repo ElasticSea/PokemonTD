@@ -21,7 +21,7 @@ public class IncreasingDamageSystem extends EffectSystem<IncreasingDamageEffect>
     @Override
     protected void process(Entity e) {
         super.process(e);
-       // System.out.println("processing");
+        // System.out.println("processing");
     }
 
     @Override

@@ -23,7 +23,7 @@ public class SlowData extends EffectData {
         return duration;
     }
 
-    public String getEffectDescription(EffectName effectName, float speed, float damage){
+    public String getEffectDescription(EffectName effectName, float speed, float damage) {
         return super.getEffectDescription(effectName, speed, damage);
     }
 }

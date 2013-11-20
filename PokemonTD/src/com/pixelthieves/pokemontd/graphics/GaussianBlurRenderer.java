@@ -28,7 +28,7 @@ public class GaussianBlurRenderer implements Renderable {
         this.wrappedRenderer = wrappedRenderer;
         this.blurRatio = blurRatio;
         this.spriteBatch = new SpriteBatch();
-        FBO_SCALE = 1 ;
+        FBO_SCALE = 1;
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
         fboWidth = (int) (width * FBO_SCALE);

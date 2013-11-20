@@ -62,7 +62,7 @@ public class BubbleSystem extends EntityProcessingSystem {
 
         Time time = timeMapper.get(e).getTime(this.getClass());
         time.increase(world.getDelta());
-        sizeMapper.get(e).getPoint().scl(1+bubble.getGrow()*world.getDelta());
+        sizeMapper.get(e).getPoint().scl(1 + bubble.getGrow() * world.getDelta());
 
         if (time.getAvailableTime() >= bubble.getInterval()) {
             time.decrease(bubble.getInterval());

@@ -2,7 +2,10 @@ package com.pixelthieves.pokemontd.entity.tower;
 
 import com.artemis.Entity;
 import com.artemis.World;
-import com.pixelthieves.core.component.*;
+import com.pixelthieves.core.component.PositionComponent;
+import com.pixelthieves.core.component.RangeComponent;
+import com.pixelthieves.core.component.SizeComponent;
+import com.pixelthieves.core.component.TimeComponent;
 import com.pixelthieves.core.entity.ConcreteEntity;
 import com.pixelthieves.pokemontd.Treasure;
 import com.pixelthieves.pokemontd.component.*;
@@ -35,7 +38,7 @@ public class Tower extends ConcreteEntity {
 
     public static Entity registerTower(World world, TowerType towerType, float x, float y) {
         Tower tower = new Tower(towerType, world, x, y);
-        if(towerType.getName().equals(TowerName.Shop)) {
+        if (towerType.getName().equals(TowerName.Shop)) {
             // FIXME shop component probably wont hold treasure
             tower.addComponent(new ShopComponent(new Treasure(0)));
         }

@@ -19,14 +19,14 @@ public class InGameInputProcessor extends GestureDetector.GestureAdapter {
 
     public InGameInputProcessor(TowerManager towerManager, CreepManager creepManager, CameraHandler camera) {
         this.camera = camera;
-        clickables = Arrays.asList(towerManager,creepManager);
+        clickables = Arrays.asList(towerManager, creepManager);
     }
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
         Vector2 world = camera.screenToWorld(x, y);
-        for (Clickable clickable : clickables){
-            if(clickable.hit(world.x, world.y)){
+        for (Clickable clickable : clickables) {
+            if (clickable.hit(world.x, world.y)) {
                 return true;
             }
         }

@@ -10,7 +10,7 @@ public class BuffAbility extends EffectData {
     private final Type type;
     private final float duration;
 
-    public BuffAbility(Type type,  float duration) {
+    public BuffAbility(Type type, float duration) {
         this.type = type;
         this.duration = duration;
     }
@@ -19,12 +19,12 @@ public class BuffAbility extends EffectData {
         SPEED, DAMAGE, RANGE;
     }
 
-    public static BuffAbility getSpeed(  float duration) {
+    public static BuffAbility getSpeed(float duration) {
         return new BuffAbility(Type.SPEED, duration);
     }
 
-    public static BuffAbility getDamage(  float duration) {
-        return new BuffAbility(Type.DAMAGE,  duration);
+    public static BuffAbility getDamage(float duration) {
+        return new BuffAbility(Type.DAMAGE, duration);
     }
 
     public Type getType() {
@@ -35,7 +35,7 @@ public class BuffAbility extends EffectData {
         return duration;
     }
 
-    public String getEffectDescription(EffectName effectName, float speed, float damage){
+    public String getEffectDescription(EffectName effectName, float speed, float damage) {
         return "";
     }
 }

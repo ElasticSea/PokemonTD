@@ -41,7 +41,7 @@ public class CreepEntityInfo extends CommonInfo {
         type = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset * 2, offset * 2, offset), font,
                 BitmapFont.HAlignment.LEFT);
         float effectButtonSize = height / 2;
-        effects = getEffectButtons(5, picture.x + picture.width*3, picture.y, effectButtonSize, effectButtonSize);
+        effects = getEffectButtons(5, picture.x + picture.width * 3, picture.y, effectButtonSize, effectButtonSize);
 
     }
 
@@ -85,7 +85,7 @@ public class CreepEntityInfo extends CommonInfo {
         for (int i = 0; i < effects.length; i++) {
             EffectIcon icon = effects[i];
             AbstractEffect effect = icon.getEffect();
-            if(effect != null){
+            if (effect != null) {
                 icon.render(effect.getTexture(), effect.getName());
             }
         }

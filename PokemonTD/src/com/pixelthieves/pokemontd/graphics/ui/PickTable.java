@@ -55,7 +55,8 @@ public abstract class PickTable<E extends InteractiveBlock> extends GuiBox {
             Vector2 size = new Vector2(offsetRectange.width / COLUMNS, offsetRectange.height / COLUMNS);
             int x = (int) (i % COLUMNS * size.x);
             int y = (int) (i / COLUMNS * size.y);
-            pickIcons.get(i).set(offsetRectange.x + x, offsetRectange.y +offsetRectange.height - ( y + size.y), size.x, size.y);
+            pickIcons.get(i).set(offsetRectange.x + x, offsetRectange.y + offsetRectange.height - (y + size.y), size.x,
+                    size.y);
             pickIcons.get(i).refresh();
         }
     }

@@ -29,11 +29,11 @@ public class BuffableDamageComponent extends DamageComponent {
         return super.getDamage() * (buff != null ? buff.getRatio() : 1);
     }
 
-    public String getName(){
-        return  "  ";
+    public String getName() {
+        return "  ";
     }
 
-    public String getDescription(){
+    public String getDescription() {
         return "  ";
     }
 }

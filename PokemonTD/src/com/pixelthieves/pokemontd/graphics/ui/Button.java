@@ -37,7 +37,7 @@ public abstract class Button extends InteractiveBlock {
     }
 
     protected Button(Gui gui, Rectangle rectangle, BitmapFont font, BitmapFont.HAlignment alignment, boolean wrapped) {
-        super(gui,rectangle);
+        super(gui, rectangle);
         this.shapeRenderer = gui.getShapeRenderer();
         this.spriteBatch = gui.getSpriteBatch();
         this.text = new String();

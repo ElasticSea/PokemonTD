@@ -12,9 +12,10 @@ import com.pixelthieves.core.graphics.Shader;
  * Created by Tomas on 11/6/13.
  */
 public class ConvolutionRenderer implements Renderable {
-    public enum Type{
+    public enum Type {
         BLUR;
     }
+
     public static final float FBO_SCALE = 1f;
     private final Renderable wrappedRenderer;
     private final SpriteBatch spriteBatch;
@@ -51,14 +52,15 @@ public class ConvolutionRenderer implements Renderable {
 
     private void fillShaderData(ShaderProgram shader) {
         switch (type) {
-            case BLUR: fillBlurData(shader);
+            case BLUR:
+                fillBlurData(shader);
                 break;
         }
     }
 
     private void fillBlurData(ShaderProgram shader) {
         shader.setUniformf("conPixel", 1f / width, 1f / height);
-        float[] conMatrix = new float[]{1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,  1.0f, 1.0f, 1.0f};
+        float[] conMatrix = new float[]{1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f};
         for (int i = 0; i < conMatrix.length; i++) {
             shader.setUniformf("conMatrix[" + i + "]", conMatrix[i]);
         }

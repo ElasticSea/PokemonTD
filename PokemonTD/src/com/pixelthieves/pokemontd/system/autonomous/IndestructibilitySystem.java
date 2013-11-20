@@ -9,7 +9,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.pixelthieves.core.component.PositionComponent;
 import com.pixelthieves.core.pathfinding.Blueprint;
 import com.pixelthieves.pokemontd.App;
-import com.pixelthieves.pokemontd.component.*;
+import com.pixelthieves.pokemontd.component.HealthComponent;
+import com.pixelthieves.pokemontd.component.WaveComponent;
 
 /**
  * Created by Tomas on 10/4/13.
@@ -31,6 +32,6 @@ public class IndestructibilitySystem extends EntityProcessingSystem {
     protected void process(Entity e) {
         Vector3 position = positionMapper.get(e).getPoint();
         Vector3 block = App.getBlockPosition(position.x, position.y);
-        healthMapper.get(e).getHealth().setDestructible(blueprint.isWalkable((int)block.x,(int)block.y));
+        healthMapper.get(e).getHealth().setDestructible(blueprint.isWalkable((int) block.x, (int) block.y));
     }
 }

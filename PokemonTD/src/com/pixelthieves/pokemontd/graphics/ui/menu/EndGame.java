@@ -23,10 +23,10 @@ class EndGame extends ExitTab {
         publishScoreButton = new MenuButton(menu, rects.get(rects.size() - 2)) {
             @Override
             public void process(float x, float y) {
-                if(!menu.getGameSevice().isSignedIn()){
+                if (!menu.getGameSevice().isSignedIn()) {
                     menu.getGameSevice().signIn();
                 }
-                if(menu.getGameSevice().isSignedIn()){
+                if (menu.getGameSevice().isSignedIn()) {
                     menu.getGameSevice().submitScore(menu.getPlayer().getScore().getScore());
                     menu.switchCard(Menu.Type.LEADERBOARD);
                 }
@@ -42,6 +42,6 @@ class EndGame extends ExitTab {
         super.render();
         congratulations.render("CONGRATULATIONS");
         score.render(menu.getPlayer().getScore() + "");
-        publishScoreButton.render(menu.getGameSevice().isSignedIn() ?"SUBMIT SCORE": "SIGN IN TO SUBMIT");
+        publishScoreButton.render(menu.getGameSevice().isSignedIn() ? "SUBMIT SCORE" : "SIGN IN TO SUBMIT");
     }
 }

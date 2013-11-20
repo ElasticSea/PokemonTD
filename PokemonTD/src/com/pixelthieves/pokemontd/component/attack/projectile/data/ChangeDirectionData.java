@@ -20,6 +20,6 @@ public class ChangeDirectionData extends EffectData {
 
     @Override
     public String getEffectDescription(EffectName effectName, float speed, float damage) {
-        return super.getEffectDescription(effectName, speed, damage)+  "asd";
+        return super.getEffectDescription(effectName, speed, damage) + "asd";
     }
 }

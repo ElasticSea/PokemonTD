@@ -18,6 +18,7 @@ public class TempLifeData extends EffectData {
     }
 
     public String getEffectDescription(EffectName effectName, float speed, float damage) {
-        return super.getEffectDescription(effectName, speed, damage)+ "temporary steal " + (int) (damage * 100) + "% of creeps health for " + duration + "s.";
+        return super.getEffectDescription(effectName, speed, damage) + "temporary steal " + (int) (damage * 100) +
+                "% of creeps health for " + duration + "s.";
     }
 }

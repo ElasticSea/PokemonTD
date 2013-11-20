@@ -1,12 +1,14 @@
 package com.pixelthieves.pokemontd.entity.creep;
 
 import com.artemis.World;
-import com.pixelthieves.core.component.*;
+import com.pixelthieves.core.component.DamageComponent;
+import com.pixelthieves.core.component.PositionComponent;
+import com.pixelthieves.core.component.SizeComponent;
+import com.pixelthieves.core.component.TimeComponent;
 import com.pixelthieves.core.entity.ConcreteEntity;
 import com.pixelthieves.pokemontd.Health;
 import com.pixelthieves.pokemontd.Treasure;
 import com.pixelthieves.pokemontd.component.*;
-import com.pixelthieves.pokemontd.component.VisibleComponent;
 import com.pixelthieves.pokemontd.component.attack.effects.buff.BuffableSpeedComponent;
 import com.pixelthieves.pokemontd.map.Path;
 

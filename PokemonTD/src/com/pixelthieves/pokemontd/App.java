@@ -178,7 +178,7 @@ public class App extends Game2D {
         if (STRESS_TEST != null) {
             this.waveManager = new WaveManager(this, pathPack, 0.01f, 0.01f);
         } else {
-            this.waveManager = new WaveManager(this, pathPack,  75, 30);
+            this.waveManager = new WaveManager(this, pathPack, 75, 30);
         }
         this.towerManager = new TowerManager(world, blueprint, player);
         this.creepManager = new CreepManager(world);
