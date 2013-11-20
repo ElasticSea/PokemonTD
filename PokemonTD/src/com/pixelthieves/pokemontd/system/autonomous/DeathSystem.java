@@ -9,6 +9,7 @@ import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.math.Vector3;
 import com.pixelthieves.core.component.DamageComponent;
 import com.pixelthieves.core.component.PositionComponent;
+import com.pixelthieves.core.main.Assets;
 import com.pixelthieves.pokemontd.*;
 import com.pixelthieves.pokemontd.component.*;
 import com.pixelthieves.pokemontd.entity.StaticObject;
@@ -17,6 +18,7 @@ import com.pixelthieves.pokemontd.entity.creep.Creep;
 import com.pixelthieves.pokemontd.entity.creep.CreepAbilityType;
 import com.pixelthieves.pokemontd.entity.creep.CreepType;
 import com.pixelthieves.pokemontd.entity.datatypes.StaticObjectType;
+import com.pixelthieves.pokemontd.graphics.ui.menu.Options;
 import com.pixelthieves.pokemontd.map.Path;
 
 import java.util.ArrayList;
@@ -185,6 +187,9 @@ public class DeathSystem extends EntityProcessingSystem {
 
     private void die(Entity e) {
         // FIXME tested so far on resurrect and does not work.
+        if (!Options.MUTE) {
+            Assets.getSound("pickup").play(0.25f);
+        }
         waveMapper.get(e).removeCreep(e);
         e.deleteFromWorld();
     }

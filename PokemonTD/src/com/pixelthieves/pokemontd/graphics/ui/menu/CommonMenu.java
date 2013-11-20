@@ -15,10 +15,11 @@ class CommonMenu extends ExitTab {
     private final MenuButton tutorialButton;
     private final MenuButton signInButton;
 
-    CommonMenu(final Menu menu, Rectangle rectangle, boolean closeButton) {
-        super(menu, rectangle, closeButton);
-        tutorial = new Tutorial(menu, this, new Rectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
-        options = new Options(menu, this, rectangle);
+    CommonMenu(final Menu menu, Rectangle rectangle, boolean closeButton, int count) {
+        super(menu, rectangle, closeButton, count);
+        tutorial = new Tutorial(menu, this, new Rectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()),
+                count);
+        options = new Options(menu, this, rectangle, count);
         tutorialButton = new MenuButton(menu, rects.get(1)) {
             @Override
             public void process(float x, float y) {

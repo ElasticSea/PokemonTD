@@ -10,8 +10,8 @@ class SignInBox extends MenuTab {
     private final MenuButton signInButton;
     private final MenuButton skipButton;
 
-    SignInBox(final Menu menu, Rectangle rectangle) {
-        super(menu, null, rectangle);
+    SignInBox(final Menu menu, Rectangle rectangle, int count) {
+        super(menu, null, rectangle, count);
         signInButton = new MenuButton(menu, rects.get(0)) {
             @Override
             public void process(float x, float y) {

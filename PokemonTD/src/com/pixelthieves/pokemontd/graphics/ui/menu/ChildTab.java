@@ -9,8 +9,8 @@ class ChildTab extends MenuTab {
 
     private final MenuButton close;
 
-    ChildTab(Menu menu, MenuTab parent, Rectangle rectangle) {
-        super(menu, parent, rectangle);
+    ChildTab(Menu menu, MenuTab parent, Rectangle rectangle, int count) {
+        super(menu, parent, rectangle, count);
         Rectangle rect2 = rects.get(rects.size() - 1);
         close = new MenuButton(menu, rect2) {
             @Override

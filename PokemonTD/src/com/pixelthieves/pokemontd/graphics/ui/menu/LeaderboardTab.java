@@ -1,11 +1,13 @@
 package com.pixelthieves.pokemontd.graphics.ui.menu;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.pixelthieves.core.graphics.Renderable;
 import com.pixelthieves.pokemontd.graphics.ui.DisplayBlock;
 import com.pixelthieves.pokemontd.graphics.ui.DisplayText;
 import com.pixelthieves.pokemontd.graphics.ui.Gui;
+import com.pixelthieves.pokemontd.graphics.ui.GuiBox;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -18,12 +20,13 @@ class LeaderboardTab extends ExitTab {
     private final DisplayText leaderboardHeader;
     private final Leaderboard leaderboard;
 
-    LeaderboardTab(final Menu menu, Rectangle rectangle) {
-        super(menu, rectangle, false);
+    LeaderboardTab(final Menu menu, Rectangle rectangle, int count) {
+        super(menu, rectangle, false, count);
         leaderboardHeader = new DisplayText(menu, rects.get(0), menu.getFont());
         float leaderboardHeight = rectangle.height - (leaderboardHeader.height + exit.height);
         leaderboard = new Leaderboard(menu, new Rectangle(x, y + exit.height, width, leaderboardHeight), 10);
         this.setCloseTabWhenNotClicked(false);
+        this.setRenderLines(false);
     }
 
     @Override
@@ -42,16 +45,15 @@ class LeaderboardTab extends ExitTab {
             this.entries = new Entry[entriesCount];
             float entryHeight = rectangle.height / entriesCount;
             for (int i = 0; i < entries.length; i++) {
-                float offset = width / 10;
+                float offset = width / 20;
                 entries[i] = new Entry(menu,
                         new Rectangle(x + offset, y + height - (i + 1) * entryHeight, width - offset * 2, entryHeight),
-                        i);
+                        i + 1);
             }
         }
 
         @Override
         public void render() {
-            super.render();
             if (menu.getGameSevice().isSignedIn() && refresh) {
                 Map<String, String> data = menu.getGameSevice().getLeaderboard();
                 if (data != null) {
@@ -62,10 +64,20 @@ class LeaderboardTab extends ExitTab {
                     refresh = false;
                 }
             }
+
+            super.render();
+            shapeRenderer.setColor(GuiBox.darkerColor);
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            for (int i = 0; i <= entries.length; i++) {
+                float offset = i * (height / entries.length);
+                shapeRenderer.rect(x + segment, offset + y - LINE_HEIGHT / 2, width - segment * 2, LINE_HEIGHT);
+            }
+            shapeRenderer.end();
             for (Entry entry : entries) {
                 entry.render();
             }
         }
+        private static final float LINE_HEIGHT = 2;
 
         @Override
         public void refresh() {

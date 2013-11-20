@@ -7,6 +7,7 @@ import com.pixelthieves.pokemontd.Element;
 import com.pixelthieves.pokemontd.Player;
 import com.pixelthieves.pokemontd.Treasure;
 import com.pixelthieves.pokemontd.entity.creep.CreepType;
+import com.pixelthieves.pokemontd.graphics.ui.menu.Options;
 import com.pixelthieves.pokemontd.manager.WaveManager;
 
 /**
@@ -22,7 +23,7 @@ class ElementIcon extends InteractiveBlock {
     private Treasure currentElements;
 
     ElementIcon(Gui ui, Rectangle rectangle, SpriteBatch spriteBatch) {
-        super(ui,rectangle);
+        super(ui, rectangle);
         this.spriteBatch = spriteBatch;
         picture = new DisplayPicture(ui, rectangle);
         waveManager = ui.getWaveManager();
@@ -51,6 +52,9 @@ class ElementIcon extends InteractiveBlock {
                 waveManager.fireNextWave(CreepType.getWave(element, elements));
                 currentElements.addElement(element, 1);
                 player.subtractFreeElement();
+                if (!Options.MUTE) {
+                    Assets.getSound("roar").play();
+                }
             }
         }
     }

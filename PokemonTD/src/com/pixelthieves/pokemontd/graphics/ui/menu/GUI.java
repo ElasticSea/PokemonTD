@@ -15,8 +15,8 @@ class GUI extends ChildTab {
     private final DisplayText guiSize;
     private final MenuButton defaultGuiSize;
 
-    GUI(final Menu menu, MenuTab parent, Rectangle rectangle) {
-        super(menu, parent, rectangle);
+    GUI(final Menu menu, MenuTab parent, Rectangle rectangle, int count) {
+        super(menu, parent, rectangle, count);
         this.menu = menu;
         Rectangle rect = rects.get(0);
         minus = new MenuButton(menu, new Rectangle(rect.x, rect.y, rect.width / 4, rect.height)) {

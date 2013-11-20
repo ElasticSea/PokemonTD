@@ -21,11 +21,11 @@ class Tutorial extends ChildTab {
                     "It´s generally good idea to save your money, because each 15 seconds you got interest.";
     private final DisplayText text;
 
-    Tutorial(Menu menu, MenuTab parent, Rectangle rectangle) {
-        super(menu, parent, rectangle);
+    Tutorial(Menu menu, MenuTab parent, Rectangle rectangle, int count) {
+        super(menu, parent, rectangle, count);
 
-        textBlockHeight = rectangle.height - Menu.BUTTON_HEIGHT - Menu.BUTTON_HEIGHT * 2;
-        textBlockY = rectangle.y + Menu.BUTTON_HEIGHT + Menu.BUTTON_HEIGHT;
+        textBlockHeight = rectangle.height - buttonHeight - buttonHeight * 2;
+        textBlockY = rectangle.y + buttonHeight + buttonHeight;
         text = new DisplayText(ui,
                 new Rectangle(rectangle.x + segment, textBlockY, rectangle.width - segment * 2, textBlockHeight),
                 ui.getFont(), BitmapFont.HAlignment.LEFT, true);

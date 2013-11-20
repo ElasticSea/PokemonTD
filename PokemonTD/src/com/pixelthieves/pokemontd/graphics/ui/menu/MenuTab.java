@@ -16,26 +16,28 @@ class MenuTab extends GuiBox {
     protected final List<Rectangle> rects;
     protected final int count;
     private final MenuTab parent;
-    protected final float segment;
+    protected float segment;
     protected final Menu menu;
+    protected final float buttonHeight;
     private boolean closeTabWhenNotClicked = true;
     private boolean renderLines = true;
     protected List<MenuTab> cards = new ArrayList<MenuTab>();
 
-    MenuTab(Menu menu, MenuTab parent, Rectangle rectangle) {
+    MenuTab(Menu menu, MenuTab parent, Rectangle rectangle, int count) {
         super(menu, rectangle);
         this.menu = menu;
         this.parent = parent;
-        count = (int) (rectangle.height / Menu.BUTTON_HEIGHT);
-        segment = width / count;
+        this.count = count;
+        this.buttonHeight = height / count;
+        segment = width / 20;
         rects = getRects(count);
     }
 
     private List<Rectangle> getRects(int count) {
         List<Rectangle> rects = new ArrayList<Rectangle>();
         for (int i = 0; i < count; i++) {
-            int offset = Menu.BUTTON_HEIGHT * (i + 1);
-            rects.add(new Rectangle(x, y + height - offset, width, Menu.BUTTON_HEIGHT));
+            int offset = (int) (buttonHeight * (i + 1));
+            rects.add(new Rectangle(x, y + height - offset, width, buttonHeight));
         }
         return rects;
     }

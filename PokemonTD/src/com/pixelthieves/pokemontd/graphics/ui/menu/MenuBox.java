@@ -10,8 +10,8 @@ class MenuBox extends CommonMenu {
 
     private final Button startGame;
 
-    MenuBox(final Menu menu, Rectangle rectangle) {
-        super(menu, rectangle, false);
+    MenuBox(final Menu menu, Rectangle rectangle, int count) {
+        super(menu, rectangle, false, count);
         startGame = new MenuButton(menu, rects.get(0)) {
             @Override
             public void process(float x, float y) {

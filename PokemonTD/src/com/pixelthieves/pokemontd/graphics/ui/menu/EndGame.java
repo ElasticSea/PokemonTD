@@ -14,8 +14,8 @@ class EndGame extends ExitTab {
     private final DisplayText congratulations;
     private final MenuButton publishScoreButton;
 
-    EndGame(final Menu menu, Rectangle rectangle) {
-        super(menu, rectangle, false);
+    EndGame(final Menu menu, Rectangle rectangle, int count) {
+        super(menu, rectangle, false, count);
         this.menu = menu;
         congratulations = new DisplayText(ui, rects.get(0), ui.getFont(), BitmapFont.HAlignment.CENTER);
         score = new DisplayText(ui, rects.get(1), ui.getFont(), BitmapFont.HAlignment.CENTER);

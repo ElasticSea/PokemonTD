@@ -15,7 +15,6 @@ import java.util.List;
  */
 public class Menu extends Gui {
 
-    public static int BUTTON_HEIGHT;
     private final LeaderboardTab leaderboard;
     private Button menu;
 
@@ -41,14 +40,14 @@ public class Menu extends Gui {
 
     public Menu(App app) {
         super(app);
-        BUTTON_HEIGHT = squareSize / 5;
-        int menuWidth = squareSize / 3 * 4;
-        Rectangle rectangle = getRectangle(menuWidth, squareSize);
-        signInBox = new SignInBox(this, rectangle);
-        inGameMenu = new InGameMenu(this, rectangle);
-        menuBox = new MenuBox(this, rectangle);
-        endGame = new EndGame(this, rectangle);
-        leaderboard = new LeaderboardTab(this, getRectangle((int) (menuWidth * 1.5f), BUTTON_HEIGHT * 12));
+        int height = (int) (squareSize * 1.5f);
+        int menuWidth = height / 3 * 4;
+        Rectangle rectangle = getRectangle(menuWidth, height);
+        signInBox = new SignInBox(this, rectangle, 5);
+        inGameMenu = new InGameMenu(this, rectangle,5);
+        menuBox = new MenuBox(this, rectangle,5);
+        endGame = new EndGame(this, rectangle,5);
+        leaderboard = new LeaderboardTab(this,  getRectangle(menuWidth, (int) (height*1.5f)),7);
 
         guiDialogRoots.add(signInBox);
         guiDialogRoots.add(inGameMenu);

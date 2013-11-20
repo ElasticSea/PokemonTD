@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.pixelthieves.core.component.PositionComponent;
 import com.pixelthieves.core.component.SizeComponent;
 import com.pixelthieves.core.component.TargetComponent;
+import com.pixelthieves.core.main.Assets;
 import com.pixelthieves.core.utils.Collision;
 import com.pixelthieves.pokemontd.App;
 import com.pixelthieves.pokemontd.component.HealthComponent;
@@ -17,6 +18,7 @@ import com.pixelthieves.pokemontd.component.attack.effects.buff.BuffableDamageCo
 import com.pixelthieves.pokemontd.component.attack.projectile.HitAbility;
 import com.pixelthieves.pokemontd.component.attack.projectile.data.EffectData;
 import com.pixelthieves.pokemontd.entity.TextInfo;
+import com.pixelthieves.pokemontd.graphics.ui.menu.Options;
 
 /**
  * Created by Tomas on 10/4/13.
@@ -96,9 +98,16 @@ public abstract class HitSystem<T extends EffectData> extends EntityProcessingSy
     protected void tryToHit(T effectData, Entity e, Entity target) {
         if (App.CHANCE.happens(effectData.getChance())) {
             hit(effectData, e, target);
+            playSound();
         } else {
             Vector3 position = positionMapper.get(target).getPoint();
             TextInfo.registerTextInfo(world, "MISSED", Color.RED, position.x, position.y);
+        }
+    }
+
+    private void playSound() {
+        if (!Options.MUTE) {
+            Assets.getSound("hit").play();
         }
     }
 

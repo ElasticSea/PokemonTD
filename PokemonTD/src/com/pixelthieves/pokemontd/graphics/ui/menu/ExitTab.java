@@ -10,8 +10,8 @@ class ExitTab extends MenuTab {
     protected MenuButton close;
     protected final MenuButton exit;
 
-    ExitTab(Menu menu, Rectangle rectangle, boolean closeButton) {
-        super(menu, null, rectangle);
+    ExitTab(Menu menu, Rectangle rectangle, boolean closeButton, int count) {
+        super(menu, null, rectangle, count);
         Rectangle rect2 = rects.get(rects.size() - 1);
         Rectangle closeRect = new Rectangle(rect2.x, rect2.y, rect2.width / 2, rect2.height);
         Rectangle exitRect = new Rectangle(rect2.x + rect2.width / 2, rect2.y, rect2.width / 2, rect2.height);

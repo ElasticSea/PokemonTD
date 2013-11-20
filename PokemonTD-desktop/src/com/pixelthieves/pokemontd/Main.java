@@ -5,7 +5,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.pixelthieves.core.utils.ParamHolder;
 
 import java.io.File;
-import java.util.*;
+import java.util.HashMap;
 import java.util.Map;
 
 import static com.badlogic.gdx.tools.imagepacker.TexturePacker2.Settings;
@@ -34,9 +34,11 @@ public class Main {
         }
 
         new LwjglApplication(new App(new GameService() {
+            private Map<String, String> leaderboard;
+
             @Override
             public boolean isSignedIn() {
-                return false;
+                return true;
             }
 
             @Override
@@ -76,7 +78,13 @@ public class Main {
 
             @Override
             public Map<String, String> getLeaderboard() {
-                return null;
+                if (leaderboard == null) {
+                    leaderboard = new HashMap<String, String>();
+                    for (int i = 0; i < 8; i++) {
+                        leaderboard.put("Tomas Cupal "+i, "879543");
+                    }
+                }
+                return leaderboard;
             }
 
         }, args), cfg);

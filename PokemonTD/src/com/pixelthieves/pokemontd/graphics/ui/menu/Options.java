@@ -8,24 +8,28 @@ import com.pixelthieves.pokemontd.graphics.ui.Button;
 /**
  * Created by Tomas on 11/19/13.
  */
-class Options extends ChildTab {
+public class Options extends ChildTab {
 
     private Menu menu;
     private final Button guiButton;
     private final Button musicButton;
     private final GUI gui;
-    private final Music theme;
+    private static final Music theme = Assets.getMusic("theme.ogg");
 
-    Options(final Menu menu, MenuTab parent, Rectangle rectangle) {
-        super(menu, parent, rectangle);
-        this.menu = menu;
-
-        theme = Assets.getMusic("theme.ogg");
+    {
         theme.setLooping(true);
         theme.setVolume(0.2f);
-        // theme.play();
+        theme.play();
+    }
 
-        gui = new GUI(menu, this, rectangle);
+    public static boolean MUTE;
+
+    Options(final Menu menu, MenuTab parent, Rectangle rectangle, int count) {
+        super(menu, parent, rectangle, count);
+        this.menu = menu;
+
+
+        gui = new GUI(menu, this, rectangle, count);
         guiButton = new MenuButton(menu, rects.get(0)) {
             @Override
             public void process(float x, float y) {
@@ -36,7 +40,8 @@ class Options extends ChildTab {
         musicButton = new MenuButton(menu, rects.get(1)) {
             @Override
             public void process(float x, float y) {
-                if (theme.isPlaying()) {
+                MUTE = !MUTE;
+                if (MUTE) {
                     theme.stop();
                 } else {
                     theme.play();
