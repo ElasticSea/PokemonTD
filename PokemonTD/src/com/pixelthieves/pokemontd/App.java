@@ -1,7 +1,6 @@
 package com.pixelthieves.pokemontd;
 
 import aurelienribon.tweenengine.Tween;
-import com.artemis.Entity;
 import com.artemis.World;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -26,10 +25,12 @@ import com.pixelthieves.core.pathfinding.Blueprint;
 import com.pixelthieves.core.tween.TweenManagerAdapter;
 import com.pixelthieves.core.tween.Vector3Accessor;
 import com.pixelthieves.pokemontd.component.ShopComponent;
-import com.pixelthieves.pokemontd.entity.tower.TowerName;
-import com.pixelthieves.pokemontd.graphics.*;
-import com.pixelthieves.pokemontd.graphics.ui.Menu;
+import com.pixelthieves.pokemontd.graphics.CachedGaussianBlurRenderer;
+import com.pixelthieves.pokemontd.graphics.GameRenderer;
+import com.pixelthieves.pokemontd.graphics.GrayscaleRenderer;
+import com.pixelthieves.pokemontd.graphics.TileMap;
 import com.pixelthieves.pokemontd.graphics.ui.Ui;
+import com.pixelthieves.pokemontd.graphics.ui.menu.Menu;
 import com.pixelthieves.pokemontd.input.InGameInputProcessor;
 import com.pixelthieves.pokemontd.manager.*;
 import com.pixelthieves.pokemontd.map.MapBuilder;
@@ -56,7 +57,6 @@ public class App extends Game2D {
     public static int WORLD_WIDTH;
     public static int WORLD_HEIGHT;
     public static Rectangle WORLD_RECT;
-    public static final float WAVE_INTERVAL = 75f;
     public static final int PATH_SIZE = 2;
     public static final int INVISIBLE_INTERVAL = 5;
     public static final int INTEREST_INTERVAL = 15;
@@ -175,7 +175,11 @@ public class App extends Game2D {
     }
 
     private void initializeManagers() {
-        this.waveManager = new WaveManager(this, pathPack, STRESS_TEST != null ? 0.01f : WAVE_INTERVAL);
+        if (STRESS_TEST != null) {
+            this.waveManager = new WaveManager(this, pathPack, 0.01f, 0.01f);
+        } else {
+            this.waveManager = new WaveManager(this, pathPack,  75, 30);
+        }
         this.towerManager = new TowerManager(world, blueprint, player);
         this.creepManager = new CreepManager(world);
         this.invisibleManager = new InvisibleManager(world, clock, INVISIBLE_INTERVAL);

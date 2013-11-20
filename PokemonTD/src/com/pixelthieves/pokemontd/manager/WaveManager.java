@@ -32,33 +32,55 @@ public class WaveManager implements Updateable {
     private final UpdateFilter filter;
     private final Player player;
     private final App app;
+    private final float waveInterval;
+    private final float betweenWaveInterval;
     private boolean active;
     private CreepType nextWave;
     private final List<WaveComponent> waves = new LinkedList<WaveComponent>();
 
-    public WaveManager(App app, PathPack pathPack, float interval) {
+    public WaveManager(App app, PathPack pathPack, float waveInterval, float betweenWaveInterval) {
         this.app = app;
         this.world = app.getWorld();
         this.player = app.getPlayer();
         this.pathPack = pathPack;
         this.creeps = Arrays.asList(CreepName.values()).iterator();
         this.active = true;
-        this.filter = new UpdateFilter(this, interval);
+        this.waveInterval = waveInterval;
+        this.betweenWaveInterval = betweenWaveInterval;
+        this.filter = new UpdateFilter(this, betweenWaveInterval);
         updateWave();
         app.getClock().addService(filter);
     }
 
+    private enum State {
+        WAVE, BETWEEN;
+    }
+
+    private State state = State.BETWEEN;
+
     @Override
     public void update(float delta) {
         if (nextWave != null) {
+            switch (state) {
+                case WAVE:
+                    filter.setInterval(betweenWaveInterval);
+                    state = State.BETWEEN;
+                    filter.reset();
+                    return;
+                case BETWEEN:
+                    filter.setInterval(waveInterval);
+                    state = State.WAVE;
+                    filter.reset();
+                    break;
+            }
             fireNextWave(nextWave);
-        } else{
+        } else {
             app.endGame();
         }
     }
 
     public void fireNextWave(CreepType next) {
-        WaveComponent wave = new WaveComponent(this,next.getId());
+        WaveComponent wave = new WaveComponent(this, next.getId());
         for (int i = 0; i < next.getCreepsInWave(); i++) {
             Path path = getAppropriatePath(pathPack, next);
             Vector3 startPoint = path.getPath().get(0);
