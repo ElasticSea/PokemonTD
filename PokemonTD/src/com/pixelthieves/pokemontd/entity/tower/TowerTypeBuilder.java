@@ -25,14 +25,14 @@ import static java.lang.Math.pow;
 public class TowerTypeBuilder {
 
     public static final float SIZE = 1.5f;
-    public static final float XS_RANGE = 1.25f;
-    public static final float S_RANGE = 1.75f;
-    public static final float N_RANGE = 2.00f;
-    public static final float L_RANGE = 2.75f;
-    public static final float XL_RANGE = 3.25f;
-    public static final float XXL_RANGE = 4.25f;
-    public static final float XXXL_RANGE = 5.25f;
-    public static final float BUFF_RANGE = 6f;
+    public static final float XS_RANGE = 1.5f;
+    public static final float S_RANGE = 2f;
+    public static final float N_RANGE = 3f;
+    public static final float L_RANGE = 4f;
+    public static final float XL_RANGE = 5f;
+    public static final float XXL_RANGE = 6f;
+    public static final float XXXL_RANGE = 7f;
+    public static final float BUFF_RANGE = XXL_RANGE;
     public static final float XXL_SPEED = 0.25f;
     public static final float XL_SPEED = 0.5f;
     public static final float L_SPEED = 1f;
