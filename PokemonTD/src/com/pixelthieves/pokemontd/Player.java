@@ -7,14 +7,15 @@ public class Player {
     private final Treasure treasure;
     private final Health health;
     private final App app;
+    private final Score score;
     private int freeElements;
-    private int kills;
 
     public Player(App app, int health, int gold, int freeElements) {
         this.app = app;
         this.treasure = new Treasure(gold);
         this.health = new Health(Integer.MAX_VALUE, health);
         this.freeElements = freeElements;
+        this.score = new Score(0);
     }
 
     public Treasure getTreasure() {
@@ -36,8 +37,12 @@ public class Player {
         return health.getCurrentHealth();
     }
 
-    public Score getScore() {
-        return new Score(kills * 100 + treasure.getGold());
+    public int getScore() {
+        return score.getScore() + treasure.getGold();
+    }
+
+    public void addScore(int value) {
+        score.increase(value);
     }
 
     public int getFreeElements() {
@@ -50,13 +55,5 @@ public class Player {
 
     public void subtractFreeElement() {
         this.freeElements--;
-    }
-
-    public void addKill(int add) {
-        kills += add;
-    }
-
-    public int getKills() {
-        return kills;
     }
 }

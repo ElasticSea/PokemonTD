@@ -41,8 +41,8 @@ public class StatusBar extends GuiBox {
     @Override
     public void render() {
         super.render();
-        scoreTitleText.render("Kills");
-        scoreText.render(player.getKills() + "");
+        scoreTitleText.render("Score");
+        scoreText.render(player.getScore()+"");
         speedControls.render();
         menuBackground.render();
         menuButton.render("MENU");

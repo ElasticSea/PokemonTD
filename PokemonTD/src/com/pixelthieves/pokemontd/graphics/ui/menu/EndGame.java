@@ -27,7 +27,7 @@ class EndGame extends ExitTab {
                     menu.getGameSevice().signIn();
                 }
                 if (menu.getGameSevice().isSignedIn()) {
-                    menu.getGameSevice().submitScore(menu.getPlayer().getScore().getScore());
+                    menu.getGameSevice().submitScore(menu.getPlayer().getScore());
                     menu.switchCard(Menu.Type.LEADERBOARD);
                 }
             }

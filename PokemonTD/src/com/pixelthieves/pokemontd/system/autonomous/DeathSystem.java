@@ -163,17 +163,19 @@ public class DeathSystem extends EntityProcessingSystem {
         if (healthMapper.get(e).getHealth().isStealLife()) {
             stealLife(e, position);
         }
-        player.addKill((int) damageMapper.get(e).getDamage());
     }
 
     private void earnTreasure(Entity e, Vector3 position) {
         Treasure treasure = treasureMapper.get(e).getTreasure();
-        if (treasure.getGold() != 0) {
-            TextInfo.registerMoneyInfo(world, treasure.getGold(), position.x, position.y);
+        int gold = treasure.getGold();
+        if (gold != 0) {
+            TextInfo.registerMoneyInfo(world, gold, position.x, position.y);
+            player.addScore(gold);
         }
         for (Element element : Element.values()) {
             if (treasure.hasElement(element, 1)) {
                 TextInfo.registerElementInfo(world, treasure.getElement(element), element, position.x, position.y);
+                player.addScore(treasure.getElement(element) * (element.equals(Element.SOUL) ? 500 : 100));
             }
         }
         treasure.transferTo(player.getTreasure());
