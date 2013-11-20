@@ -79,7 +79,7 @@ public class MainActivity extends LibgdxBaseGameActivity implements GameService 
         if (isSignedIn() && !session.isEmpty()) {
             showMessage(R.string.your_progress_will_be_uploaded);
             for (int score : session.getScores()) {
-                getGamesClient().submitScore(getString(R.string.leaderboard_alpha), score);
+                getGamesClient().submitScore(getString(R.string.leaderboard_leaderboard), score);
             }
             for (Achievement achievement : session.getAchievements()) {
                 getGamesClient().unlockAchievement(getString(achievemtsMap.get(achievement)));
@@ -120,7 +120,7 @@ public class MainActivity extends LibgdxBaseGameActivity implements GameService 
                 leaderboardLoading = false;
             }
         };
-        getGamesClient().loadTopScores(listener, getString(R.string.leaderboard_alpha), span, leaderboardCollection,
+        getGamesClient().loadTopScores(listener, getString(R.string.leaderboard_leaderboard), span, leaderboardCollection,
                 results, true);
     }
 

@@ -9,5 +9,5 @@ Google Play game services IDs.
     <string name="achievement_keeper">CgkIhPS8x6cKEAIQAw</string>
     <string name="achievement_trifty">CgkIhPS8x6cKEAIQBA</string>
     <string name="achievement_heathy">CgkIhPS8x6cKEAIQBQ</string>
-    <string name="leaderboard_alpha">CgkIhPS8x6cKEAIQBg</string>
+    <string name="leaderboard_leaderboard">CgkIhPS8x6cKEAIQBw</string>
 </resources>
