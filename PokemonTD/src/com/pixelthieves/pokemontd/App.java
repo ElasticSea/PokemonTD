@@ -360,6 +360,7 @@ public class App extends Game2D {
             currentGameRenderer = frozenGameRenderer;
             inputMultiplexer.addProcessor(menuInputProcessor);
             inputMultiplexer.addProcessor(cameraMovementProcessor);
+            clock.setSpeedMultiplier(1);
         } else {
             currentGameRenderer = gameRenderer;
             inputMultiplexer.addProcessor(menuInputProcessor);
