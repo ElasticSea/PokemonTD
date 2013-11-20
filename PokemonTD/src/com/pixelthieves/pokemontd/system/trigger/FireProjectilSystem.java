@@ -5,11 +5,13 @@ import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.badlogic.gdx.math.Vector3;
 import com.pixelthieves.core.component.PositionComponent;
+import com.pixelthieves.core.main.Assets;
 import com.pixelthieves.pokemontd.App;
 import com.pixelthieves.pokemontd.component.attack.effects.buff.BuffableDamageComponent;
 import com.pixelthieves.pokemontd.component.attack.effects.buff.BuffableSpeedComponent;
 import com.pixelthieves.pokemontd.component.attack.projectile.HitAbility;
 import com.pixelthieves.pokemontd.entity.Projectile;
+import com.pixelthieves.pokemontd.graphics.ui.menu.Options;
 import com.pixelthieves.pokemontd.system.resolve.FirstCreepSystem;
 
 /**
@@ -57,7 +59,14 @@ public class FireProjectilSystem extends ApplyAbilitySystem<HitAbility> {
                         targetPosition, target);
                 break;
         }
+        playSound();
         return true;
+    }
+
+    private void playSound() {
+        if (!Options.MUTE) {
+            Assets.getSound("shot").play();
+        }
     }
 
 }

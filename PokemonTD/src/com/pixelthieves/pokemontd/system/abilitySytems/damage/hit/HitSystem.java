@@ -98,16 +98,9 @@ public abstract class HitSystem<T extends EffectData> extends EntityProcessingSy
     protected void tryToHit(T effectData, Entity e, Entity target) {
         if (App.CHANCE.happens(effectData.getChance())) {
             hit(effectData, e, target);
-            playSound();
         } else {
             Vector3 position = positionMapper.get(target).getPoint();
             TextInfo.registerTextInfo(world, "MISSED", Color.RED, position.x, position.y);
-        }
-    }
-
-    private void playSound() {
-        if (!Options.MUTE) {
-            Assets.getSound("hit").play();
         }
     }
 
