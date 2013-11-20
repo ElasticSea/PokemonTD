@@ -1,5 +1,8 @@
 package com.pixelthieves.pokemontd;
 
+import android.app.ActivityManager;
+import android.content.Context;
+import android.content.pm.ConfigurationInfo;
 import android.os.Bundle;
 import android.widget.Toast;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
@@ -124,7 +127,9 @@ public class MainActivity extends LibgdxBaseGameActivity implements GameService 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
-        cfg.useGL20 = true;
+        if (detectOpenGLES20()) {
+            cfg.useGL20 = true;
+        }
         initialize(new App(this), cfg);
         super.onCreate(savedInstanceState);
     }
@@ -147,5 +152,11 @@ public class MainActivity extends LibgdxBaseGameActivity implements GameService 
     @Override
     public void onSignInSucceeded() {
         process();
+    }
+
+    private boolean detectOpenGLES20() {
+        ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        ConfigurationInfo info = am.getDeviceConfigurationInfo();
+        return (info.reqGlEsVersion >= 0x20000);
     }
 }
