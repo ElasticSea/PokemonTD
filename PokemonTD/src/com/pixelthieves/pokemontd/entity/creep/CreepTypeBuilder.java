@@ -144,6 +144,7 @@ public class CreepTypeBuilder {
                     distanceBetweenCreeps = size / 3;
                     break;
                 case RESURRECT:
+                    health *= 0.75f;
                     break;
                 case INVISIBLE:
                     break;
