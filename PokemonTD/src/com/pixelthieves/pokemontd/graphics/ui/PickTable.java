@@ -2,6 +2,7 @@ package com.pixelthieves.pokemontd.graphics.ui;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.pixelthieves.pokemontd.graphics.ui.menu.Header;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +14,13 @@ public abstract class PickTable<E extends InteractiveBlock> extends GuiBox {
 
     public static final int COLUMNS = 3;
     protected final List<E> pickIcons;
+    private final Header header;
+    private String leftHeaderText = "";
+    private String rightHeaderText = "";
 
     PickTable(Gui ui, Rectangle rectangle) {
         super(ui, rectangle);
+        header = new Header(ui, new Rectangle());
         pickIcons = createPickIcons();
         refresh();
     }
@@ -26,6 +31,14 @@ public abstract class PickTable<E extends InteractiveBlock> extends GuiBox {
             pickIcons.add(createPickIcon());
         }
         return pickIcons;
+    }
+
+    public void setLeftHeaderText(String leftHeaderText) {
+        this.leftHeaderText = leftHeaderText;
+    }
+
+    public void setRightHeaderText(String rightHeaderText) {
+        this.rightHeaderText = rightHeaderText;
     }
 
     protected abstract E createPickIcon();
@@ -46,6 +59,7 @@ public abstract class PickTable<E extends InteractiveBlock> extends GuiBox {
         for (E e : pickIcons) {
             e.render();
         }
+        header.render(leftHeaderText, rightHeaderText);
     }
 
     @Override
@@ -59,5 +73,7 @@ public abstract class PickTable<E extends InteractiveBlock> extends GuiBox {
                     size.y);
             pickIcons.get(i).refresh();
         }
+        header.set(x, y + height, width, width / 10);
+        header.refresh();
     }
 }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
 import com.pixelthieves.pokemontd.entity.creep.CreepType;
+import com.pixelthieves.pokemontd.graphics.ui.menu.Header;
 import com.pixelthieves.pokemontd.manager.WaveManager;
 
 /**
@@ -19,11 +20,13 @@ public class WaveInfo extends GuiBox {
     private final Button nextWave;
     public static final Color NEXTWAVE_COLOR = new Color(Color.GREEN).mul(0.6f);
     public static final Color NEXTWAVE2_COLOR = new Color(Color.GRAY).mul(0.6f);
+    private final Header header;
 
     WaveInfo(final Ui ui, Rectangle rectangle, WaveManager waveManager, BitmapFont font) {
         super(ui, rectangle);
         this.waveManager = waveManager;
         this.pixelFont = font;
+        this.header = new Header(ui, new Rectangle());
         float textHeight = height / 7f;
         Rectangle scaled =
                 new Rectangle(offsetRectange.x + offset, offsetRectange.y + offset, offsetRectange.width - offset * 2,
@@ -58,8 +61,8 @@ public class WaveInfo extends GuiBox {
         super.render();
         CreepType nextWave = waveManager.getNextWave();
         if (nextWave != null) {
-            waveText.render("Wave");
-            waveNumberText.render(String.valueOf(nextWave.getId() + 1));
+            // waveText.render("Wave");
+            //  waveNumberText.render(String.valueOf(nextWave.getId() + 1));
             abilityText.render(nextWave.getAbilityType().toString());
             creepTexture.render(nextWave.getTexture(), "");
             this.nextWave.render("next wave", Color.WHITE, NEXTWAVE_COLOR);
@@ -67,7 +70,7 @@ public class WaveInfo extends GuiBox {
         if (nextWave == null) {
             this.nextWave.render("next wave", Color.WHITE, NEXTWAVE2_COLOR);
         }
-
+        header.render("Next Wave", String.valueOf(nextWave.getId() + 1));
     }
 
     @Override
@@ -78,19 +81,19 @@ public class WaveInfo extends GuiBox {
         float quarterSize = scaled.height / 4f;
         Rectangle waveRectangle =
                 new Rectangle(scaled.x, scaled.height + scaled.y - textHeight, scaled.width, textHeight);
-        Rectangle abilityRectangle = new Rectangle(scaled.x, scaled.y + quarterSize, scaled.width, textHeight);
 
         float offsetBlocks = height / 8;
-        Rectangle nextWaveRectangle = new Rectangle(x, y, width, offsetBlocks * 1.5f);
         this.waveText.set(waveRectangle);
         this.waveNumberText.set(waveRectangle);
-        this.abilityText.set(abilityRectangle);
+        this.abilityText.set(scaled.x, scaled.y + quarterSize, scaled.width, textHeight);
         this.creepTexture.set(scaled.x + quarterSize, scaled.y + quarterSize * 1.5f, quarterSize * 2, quarterSize * 2);
-        this.nextWave.set(nextWaveRectangle);
+        this.nextWave.set(x, y, width, offsetBlocks * 1.5f);
+        this.header.set(x, y + height, width, width / 10);
         waveText.refresh();
         waveNumberText.refresh();
         abilityText.refresh();
         creepTexture.refresh();
         nextWave.refresh();
+        header.refresh();
     }
 }

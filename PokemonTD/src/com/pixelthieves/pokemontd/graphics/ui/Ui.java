@@ -88,8 +88,10 @@ public class Ui extends Gui {
         unregister(shopIcons);
         if (towerName != null && towerName.equals(TowerName.Shop)) {
             register(shopIcons);
+            shopIcons.setLeftHeaderText("Elements");
         } else {
             towerIcons.update(towerName);
+            towerIcons.setLeftHeaderText(towerName == null ? "Towers" : "Upgrades");
             register(towerIcons);
         }
         unregister(abilityInfo);

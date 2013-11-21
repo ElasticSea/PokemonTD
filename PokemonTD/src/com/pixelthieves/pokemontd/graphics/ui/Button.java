@@ -107,4 +107,8 @@ public abstract class Button extends InteractiveBlock {
     public float getTextWidth() {
         return fontBounds.width;
     }
+
+    public void setBackgroundColor(Color backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
 }
