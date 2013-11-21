@@ -187,4 +187,8 @@ public class AbilityInfo extends GuiBox {
     public void update(AbstractEffect effect) {
         this.effect = effect;
     }
+
+    public boolean isVisible() {
+        return abilityName != null || effect != null;
+    }
 }

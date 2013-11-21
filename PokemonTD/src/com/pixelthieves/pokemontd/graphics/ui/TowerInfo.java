@@ -78,7 +78,12 @@ public class TowerInfo extends CommonInfo {
 
             @Override
             public void process(float x, float y) {
-                ui.getAbilityInfo().update(abilityCache, effectNameCache, splashCache, speedCache, damageCache);
+                AbilityInfo abilityInfo = ui.getAbilityInfo();
+                if (!abilityInfo.isVisible()) {
+                    abilityInfo.update(abilityCache, effectNameCache, splashCache, speedCache, damageCache);
+                } else {
+                    abilityInfo.reset();
+                }
             }
         };
         int buttonWidth = (int) (offsetBlocks * 1.5f);
