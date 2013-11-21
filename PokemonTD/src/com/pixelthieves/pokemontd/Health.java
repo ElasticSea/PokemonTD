@@ -22,6 +22,12 @@ public class Health {
         this.destructible = destructible;
     }
 
+    public void setHealth(int maxHealth, int currentHealth){
+        this.maxHealth = maxHealth;
+        this.currentHealth = currentHealth;
+    }
+
+
     public float getRatio() {
         return currentHealth / maxHealth;
     }
@@ -72,4 +78,5 @@ public class Health {
     public boolean isDestructible() {
         return destructible;
     }
+
 }

@@ -79,7 +79,7 @@ public class WaveManager implements Updateable {
         }
     }
 
-    public void fireNextWave(CreepType next) {
+    public WaveComponent fireNextWave(CreepType next) {
         WaveComponent wave = new WaveComponent(this, next.getId());
         for (int i = 0; i < next.getCreepsInWave(); i++) {
             Path path = getAppropriatePath(pathPack, next);
@@ -92,6 +92,7 @@ public class WaveManager implements Updateable {
         }
         registerWave(wave);
         updateWave();
+        return wave;
     }
 
     private void registerWave(WaveComponent wave) {

@@ -4,6 +4,7 @@ import com.artemis.Component;
 import com.artemis.Entity;
 import com.pixelthieves.pokemontd.manager.WaveManager;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -38,4 +39,7 @@ public class WaveComponent extends Component {
         return id;
     }
 
+    public List<Entity> getWave() {
+        return Collections.unmodifiableList(wave);
+    }
 }

@@ -14,4 +14,5 @@ public class HealthComponent extends Component {
     public Health getHealth() {
         return health;
     }
+
 }
