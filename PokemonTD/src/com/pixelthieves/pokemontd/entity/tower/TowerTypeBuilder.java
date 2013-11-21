@@ -25,14 +25,12 @@ import static java.lang.Math.pow;
 public class TowerTypeBuilder {
 
     public static final float SIZE = 1.5f;
-    public static final float XS_RANGE = 1.5f;
-    public static final float S_RANGE = 2f;
+    public static final float S_RANGE = 2.5f;
     public static final float N_RANGE = 3f;
     public static final float L_RANGE = 4f;
-    public static final float XL_RANGE = 5f;
-    public static final float XXL_RANGE = 6f;
-    public static final float XXXL_RANGE = 7f;
-    public static final float BUFF_RANGE = XXL_RANGE;
+    public static final float XL_RANGE = 6f;
+    public static final float XXL_RANGE = 8f;
+    public static final float BUFF_RANGE = XL_RANGE;
     public static final float XXL_SPEED = 0.25f;
     public static final float XL_SPEED = 0.5f;
     public static final float L_SPEED = 1f;
@@ -42,7 +40,6 @@ public class TowerTypeBuilder {
     public static final float XXS_SPEED = 16f;
     public static final int INITIAL_BASE_DAMAGE = 15;
     public static final int INITIAL_GOLD = 10;
-    private static final float koefficient = (float) (scaleByRange(XS_RANGE) - scaleByRange(XXXL_RANGE)) * 2f;
 
     private List<TowerType> getData(float scale) {
         List<Specs> specs = new ArrayList<Specs>();
@@ -106,8 +103,8 @@ public class TowerTypeBuilder {
         specs.add(new Specs(TowerName.Thief, Steal, 26784, N_SPEED, N_RANGE, HitAbility.getMoney(scale, 2f), Treasure.fromFire(3).addDarkness(3).addGold(10000)));
 
         specs.add(new Specs(TowerName.Pebble, Boulder, 398, S_SPEED, N_RANGE, HitAbility.getSplash("rock", scale, 2), Treasure.fromNature(1).addLight(1).addGold(375)));
-        specs.add(new Specs(TowerName.Rocky, Boulder, 2487, S_SPEED, S_RANGE, HitAbility.getSplash("rock", scale, 3), Treasure.fromNature(2).addLight(2).addGold(3500)));
-        specs.add(new Specs(TowerName.Massive, Boulder, 31205, XS_SPEED, XS_RANGE, HitAbility.getSplash("rock", scale, 5), Treasure.fromNature(3).addLight(3).addGold(10000)));
+        specs.add(new Specs(TowerName.Rocky, Boulder, 2487, S_SPEED, N_RANGE, HitAbility.getSplash("rock", scale, 3), Treasure.fromNature(2).addLight(2).addGold(3500)));
+        specs.add(new Specs(TowerName.Massive, Boulder, 31205, XS_SPEED, S_RANGE, HitAbility.getSplash("rock", scale, 5), Treasure.fromNature(3).addLight(3).addGold(10000)));
 
         specs.add(new Specs(TowerName.Dizzy, Impair, 473, N_SPEED, N_RANGE, HitAbility.getSlow("bullet", "orb", scale, 0, 0.5f, 1, 0.5f), Treasure.fromNature(1).addDarkness(1).addGold(375)));
         specs.add(new Specs(TowerName.Paralyze, Impair, 2044, N_SPEED, N_RANGE, HitAbility.getSlow("bullet", "orb", scale, 0, 0.7f, 2, 0.75f), Treasure.fromNature(2).addDarkness(2).addGold(3500)));
@@ -135,7 +132,7 @@ public class TowerTypeBuilder {
         specs.add(new Specs(TowerName.Supersonic, SoundWave, 7332, L_SPEED, N_RANGE, HitAbility.getBubble("bubble", scale), Treasure.fromWater(2).addLight(2).addDarkness(2).addGold(5000)));
 
         specs.add(new Specs(TowerName.Charged, Thunderbolt, 2487, S_SPEED, XL_RANGE, HitAbility.getCharge(scale), Treasure.fromFire(1).addNature(1).addLight(1).addGold(1125)));
-        specs.add(new Specs(TowerName.Supercharged, Thunderbolt, 9475, XS_SPEED, XXXL_RANGE, HitAbility.getCharge(scale * 2), Treasure.fromFire(2).addNature(2).addLight(2).addGold(5000)));
+        specs.add(new Specs(TowerName.Supercharged, Thunderbolt, 9475, XS_SPEED, XXL_RANGE, HitAbility.getCharge(scale * 2), Treasure.fromFire(2).addNature(2).addLight(2).addGold(5000)));
 
         specs.add(new Specs(TowerName.Stomp, Quake, 2017, N_SPEED, N_RANGE, HitAbility.getSlow("rock", "", scale, 0, 1f, 0.5f, 0.8f), Treasure.fromFire(1).addNature(1).addDarkness(1).addGold(1125)));
         specs.add(new Specs(TowerName.Earthquake, Quake, 8744, S_SPEED, N_RANGE, HitAbility.getSlow("rock", "", scale, 0, 1f, 1.5f, 1), Treasure.fromFire(2).addNature(2).addDarkness(2).addGold(5000)));
