@@ -1,11 +1,15 @@
 package com.pixelthieves.pokemontd.graphics.ui;
 
+import com.artemis.Entity;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.pixelthieves.core.main.Assets;
 import com.pixelthieves.pokemontd.Element;
+import com.pixelthieves.pokemontd.Health;
 import com.pixelthieves.pokemontd.Player;
 import com.pixelthieves.pokemontd.Treasure;
+import com.pixelthieves.pokemontd.component.HealthComponent;
+import com.pixelthieves.pokemontd.component.WaveComponent;
 import com.pixelthieves.pokemontd.entity.creep.CreepType;
 import com.pixelthieves.pokemontd.graphics.ui.menu.Options;
 import com.pixelthieves.pokemontd.manager.WaveManager;
@@ -49,7 +53,12 @@ class ElementIcon extends InteractiveBlock {
         if (player.getFreeElements() != 0) {
             int elements = currentElements.getElement(element);
             if (Treasure.LIMIT.getElement(element) > elements) {
-                waveManager.fireNextWave(CreepType.getWave(element, elements));
+                WaveComponent wave = waveManager.fireNextWave(CreepType.getWave(element, elements));
+                for (Entity creep : wave.getWave()) {
+                    Health health = creep.getComponent(HealthComponent.class).getHealth();
+                    int newHealth = health.getMaxHealth() * waveManager.getNextWave().getHealth();
+                    health.setHealth(newHealth, newHealth);
+                }
                 currentElements.addElement(element, 1);
                 player.subtractFreeElement();
                 if (!Options.MUTE) {
