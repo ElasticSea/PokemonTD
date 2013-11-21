@@ -180,9 +180,22 @@ public class TowerTypeBuilder {
         private final AbilityComponent attackComponent;
         private final Treasure treasure;
         private final EffectName effectName;
+        private final int level;
+
+        private Specs(TowerName name, int level, EffectName effectName, float speed, float range,
+                      AbilityComponent attackComponent, Treasure treasure) {
+            this(name, level, effectName, computeDamage(level, speed, range,
+                    attackComponent instanceof HitAbility ? ((HitAbility) attackComponent).getAoe() : 1), speed, range,
+                    attackComponent, treasure);
+        }
+
+        private static float computeDamage(int level, float speed, float range, float splash) {
+            return 0;
+        }
 
         private Specs(TowerName name, int level, EffectName effectName, float damage, float speed, float range, AbilityComponent attackComponent, Treasure treasure) {
             this.name = name;
+            this.level = level;
             this.effectName = effectName;
             this.damage = damage;
             this.speed = speed;
