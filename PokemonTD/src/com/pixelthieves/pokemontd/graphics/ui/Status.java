@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.pixelthieves.core.main.Assets;
 import com.pixelthieves.pokemontd.Player;
-import com.pixelthieves.pokemontd.manager.Interest;
+import com.pixelthieves.pokemontd.manager.InterestManager;
 import com.pixelthieves.pokemontd.manager.WaveManager;
 
 
@@ -25,14 +25,14 @@ public class Status extends GuiBox {
     private final DisplayPicture livesPicture;
     private final DisplayPicture moneyPicture;
     private final WaveManager waveManager;
-    private final Interest interest;
+    private final InterestManager interestManager;
 
     private final Player player;
     private final BitmapFont font;
     private final Vector2 textFieldCount;
     private Vector2 textSize;
 
-    Status(Ui ui, Rectangle rectangle, WaveManager waveManager, Interest interest, BitmapFont font) {
+    Status(Ui ui, Rectangle rectangle, WaveManager waveManager, InterestManager interestManager, BitmapFont font) {
         super(ui, rectangle);
 
         offsetRectange.x += offset;
@@ -40,7 +40,7 @@ public class Status extends GuiBox {
 
         this.player = ui.getPlayer();
         this.waveManager = waveManager;
-        this.interest = interest;
+        this.interestManager = interestManager;
         this.font = font;
 
         textFieldCount = new Vector2(2, 4);
@@ -80,8 +80,8 @@ public class Status extends GuiBox {
     @Override
     public void render() {
         super.render();
-        interestText.render("Interest");
-        interestTimeText.render(String.valueOf(interest.getRemainingTime()));
+        interestText.render("Interest in");
+        interestTimeText.render(String.valueOf(interestManager.getRemainingTime()));
         waveText.render("Wave in");
         waveTimeText.render(String.valueOf(waveManager.getRemainingTime()));
         livesText.render(String.valueOf(player.getHealth()));

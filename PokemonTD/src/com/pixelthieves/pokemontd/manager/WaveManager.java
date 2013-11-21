@@ -49,7 +49,6 @@ public class WaveManager implements Updateable {
         this.betweenWaveInterval = betweenWaveInterval;
         this.filter = new UpdateFilter(this, betweenWaveInterval);
         updateWave();
-        app.getClock().addService(filter);
     }
 
     private enum State {
@@ -145,7 +144,14 @@ public class WaveManager implements Updateable {
     }
 
     public void triggerNextWave() {
-        filter.triggerUpdate();
+       if (state.equals(State.WAVE)) {
+            app.updateFilters(filter.getRemainingTime());
+        }
+        app.updateFilters(filter.getRemainingTime());
+    }
+
+    public UpdateFilter getFilter() {
+        return filter;
     }
 
 }

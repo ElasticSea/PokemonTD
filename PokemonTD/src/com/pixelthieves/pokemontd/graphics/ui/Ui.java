@@ -56,7 +56,7 @@ public class Ui extends Gui {
                 shopIcons, font);
         status = new Status(this,
                 new Rectangle(width - statusDimensions.x, height - statusBar.height - statusOffSet - statusDimensions.y,
-                        statusDimensions.x, statusDimensions.y), waveManager, interest, font);
+                        statusDimensions.x, statusDimensions.y), waveManager, interestManager, font);
 
         abilityInfo = new AbilityInfo(this, pickTableRectangle);
 

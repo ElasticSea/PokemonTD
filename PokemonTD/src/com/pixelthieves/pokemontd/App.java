@@ -18,6 +18,7 @@ import com.pixelthieves.core.graphics.camera.CameraHandler;
 import com.pixelthieves.core.input.EnhancedGestureDetector;
 import com.pixelthieves.core.input.GestureProcessor;
 import com.pixelthieves.core.logic.Clock;
+import com.pixelthieves.core.logic.Updateable;
 import com.pixelthieves.core.logic.WorldUpdater;
 import com.pixelthieves.core.main.Assets;
 import com.pixelthieves.core.main.Game2D;
@@ -47,6 +48,8 @@ import com.pixelthieves.pokemontd.system.trigger.ApplySunbeamSystem;
 import com.pixelthieves.pokemontd.system.trigger.FireProjectilSystem;
 import com.pixelthieves.pokemontd.tween.ColorAccessor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class App extends Game2D {
@@ -81,7 +84,8 @@ public class App extends Game2D {
     private Blueprint blueprint;
     private Player player;
     private Ui ui;
-    private Interest interest;
+    private InterestManager interestManager;
+    private List<Updateable> filters = new ArrayList<Updateable>();
     // Tweens
     private static TweenManagerAdapter tweenManager = initTweenManager();
     private Blueprint gameBlueprint;
@@ -188,7 +192,13 @@ public class App extends Game2D {
         this.towerManager = new TowerManager(world, blueprint, player);
         this.creepManager = new CreepManager(world);
         this.invisibleManager = new InvisibleManager(world, clock, INVISIBLE_INTERVAL);
-        this.interest = new Interest(clock, world, player.getTreasure(), towerManager, 2, INTEREST_INTERVAL);
+        this.interestManager = new InterestManager(world, player.getTreasure(), towerManager, 2, INTEREST_INTERVAL);
+
+        filters.add(waveManager.getFilter());
+        filters.add(interestManager.getFilter());
+        for (Updateable updateable : filters) {
+            clock.addService(updateable);
+        }
     }
 
     private void initializeSystems() {
@@ -273,6 +283,12 @@ public class App extends Game2D {
                 6).addLeft().addStraight(2).addRight().addStraight().build();
     }
 
+    public void updateFilters(float delta) {
+        for (Updateable updateable : filters) {
+            updateable.update(delta);
+        }
+    }
+
     public void makeGuiLarger() {
         ui.makeLarger();
     }
@@ -329,8 +345,8 @@ public class App extends Game2D {
         return waveManager;
     }
 
-    public Interest getInterest() {
-        return interest;
+    public InterestManager getInterestManager() {
+        return interestManager;
     }
 
     public Clock getClock() {

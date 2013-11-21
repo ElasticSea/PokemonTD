@@ -12,7 +12,7 @@ import com.pixelthieves.core.main.Assets;
 import com.pixelthieves.pokemontd.App;
 import com.pixelthieves.pokemontd.Player;
 import com.pixelthieves.pokemontd.manager.CreepManager;
-import com.pixelthieves.pokemontd.manager.Interest;
+import com.pixelthieves.pokemontd.manager.InterestManager;
 import com.pixelthieves.pokemontd.manager.TowerManager;
 import com.pixelthieves.pokemontd.manager.WaveManager;
 
@@ -29,7 +29,7 @@ public abstract class Gui extends GestureDetector.GestureAdapter implements Rend
     protected final TowerManager towerManager;
     protected final WaveManager waveManager;
     private final CreepManager creepManager;
-    protected final Interest interest;
+    protected final InterestManager interestManager;
     protected final App app;
     protected final int height;
     protected final int width;
@@ -45,7 +45,7 @@ public abstract class Gui extends GestureDetector.GestureAdapter implements Rend
         this.creepManager = app.getCreepManager();
         this.towerManager = app.getTowerManager();
         this.waveManager = app.getWaveManager();
-        this.interest = app.getInterest();
+        this.interestManager = app.getInterestManager();
         this.shapeRenderer = new ShapeRenderer();
         this.spriteBatch = new SpriteBatch();
         height = Gdx.graphics.getHeight();

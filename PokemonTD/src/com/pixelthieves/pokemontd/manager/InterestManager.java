@@ -15,21 +15,20 @@ import com.pixelthieves.pokemontd.system.resolve.FireTextInfo;
  * Time: 15:52
  */
 
-public class Interest implements Updateable {
+public class InterestManager implements Updateable {
     private final float INTEREST_KOEFICIENT;
     private final Treasure playerTreasure;
     private final UpdateFilter filter;
     private final TowerManager towerManager;
     private final World world;
 
-    public Interest(Clock clock, World world, Treasure playerTreasure, TowerManager towerManager, int interest,
-                    float interval) {
+    public InterestManager(World world, Treasure playerTreasure, TowerManager towerManager, int interest,
+                           float interval) {
         this.INTEREST_KOEFICIENT = interest / 100f;
         this.world = world;
         this.playerTreasure = playerTreasure;
         this.filter = (new UpdateFilter(this, interval));
         this.towerManager = towerManager;
-        clock.addService(filter);
     }
 
     @Override
@@ -50,5 +49,9 @@ public class Interest implements Updateable {
 
     public int getRemainingTime() {
         return (int) filter.getRemainingTime();
+    }
+
+    public UpdateFilter getFilter() {
+        return filter;
     }
 }
