@@ -190,7 +190,7 @@ public class DeathSystem extends EntityProcessingSystem {
     private void die(Entity e) {
         // FIXME tested so far on resurrect and does not work.
         if (!Options.MUTE) {
-            Assets.getSound("pickup").play(0.25f);
+            Assets.getSound("pickup").play(0.10f);
         }
         waveMapper.get(e).removeCreep(e);
         e.deleteFromWorld();
