@@ -199,6 +199,9 @@ public class App extends Game2D {
         for (Updateable updateable : filters) {
             clock.addService(updateable);
         }
+
+        // DISCUS: If you skip all waves before first wave reaches the end you can earn about 220k score solely on interest. That is the reason why we are removing interest from updateable filters.
+        filters.remove(interestManager.getFilter());
     }
 
     private void initializeSystems() {
