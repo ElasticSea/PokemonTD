@@ -26,14 +26,14 @@ public class CreepTypeBuilder {
         list.add(new Specs(CreepName.Lanturn, 60, Treasure.fromGold(1), CreepAbilityType.NORMAL));
         list.add(new Specs(CreepName.Quagsire, 71, Treasure.fromGold(2), CreepAbilityType.NORMAL));
         list.add(new Specs(CreepName.Espeon, 82, Treasure.fromGold(2), CreepAbilityType.NORMAL));
-        list.add(new Specs(CreepName.Forretress, 96, Treasure.fromGold(2), CreepAbilityType.NORMAL));   //vymyšlené životy
+        list.add(new Specs(CreepName.Forretress, 96, Treasure.fromGold(2), CreepAbilityType.NORMAL));
         list.add(new Specs(CreepName.Snubbull, 113, Treasure.fromGold(2), CreepAbilityType.NORMAL));
         list.add(new Specs(CreepName.Corsola, 132, Treasure.fromGold(2), CreepAbilityType.NORMAL));
         list.add(new Specs(CreepName.Miltank, 154, Treasure.fromGold(3), CreepAbilityType.RESURRECT));
         list.add(new Specs(CreepName.Entei, 181, Treasure.fromGold(3), CreepAbilityType.NORMAL));
         list.add(new Specs(CreepName.Blaziken, 211, Treasure.fromGold(3), CreepAbilityType.FAST));
-        list.add(new Specs(CreepName.Wurmple, 253, Treasure.fromGold(3), CreepAbilityType.NORMAL));   //vymyšlené životy
-        list.add(new Specs(CreepName.Beautifly, 284, Treasure.fromGold(4), CreepAbilityType.NORMAL));    //vymyšlené životy
+        list.add(new Specs(CreepName.Wurmple, 253, Treasure.fromGold(3), CreepAbilityType.NORMAL));
+        list.add(new Specs(CreepName.Beautifly, 284, Treasure.fromGold(4), CreepAbilityType.NORMAL));
         list.add(new Specs(CreepName.Nuzleaf, 338, Treasure.fromGold(4), CreepAbilityType.NORMAL));
         list.add(new Specs(CreepName.Pelipper, 395, Treasure.fromGold(5), CreepAbilityType.HEALING));
         list.add(new Specs(CreepName.Kirlia, 463, Treasure.fromGold(5), CreepAbilityType.NORMAL));
