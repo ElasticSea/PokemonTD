@@ -132,7 +132,7 @@ public class DeathSystem extends EntityProcessingSystem {
         public void run() {
             grave.deleteFromWorld();
             Creep.registerCreep(world, path, waveComponent, creepType, CreepAbilityType.NORMAL, creepType.getSpeed(),
-                    creepType.getSize(), position.x, position.y);
+                    creepType.getSize(), creepType.getHealth(), position.x, position.y);
             waveComponent.removeCreep(e);
         }
     }
@@ -142,6 +142,7 @@ public class DeathSystem extends EntityProcessingSystem {
         final Path path = pathMapper.get(e).getPath();
         final WaveComponent waveComponent = waveMapper.get(e);
         final CreepType creepType = creepTypeMapper.get(e).getCreepType();
+        final int health = healthMapper.get(e).getHealth().getMaxHealth()/creeps;
 
         double circleSegment = Math.PI * 2 / creeps;
         float radius = path.getWidth() / 2f * App.WORLD_SCALE;
@@ -149,7 +150,7 @@ public class DeathSystem extends EntityProcessingSystem {
             float x = position.x + (float) (Math.cos(circleSegment * i) * radius);
             float y = position.y + (float) (Math.sin(circleSegment * i) * radius);
             Creep.registerCreep(world, new Path(path), waveComponent, creepType, CreepAbilityType.NORMAL,
-                    creepType.getSpeed(), creepType.getSize() / 4f, x, y);
+                    creepType.getSpeed(), creepType.getSize() / 4f, health, x, y);
         }
         die(e);
     }

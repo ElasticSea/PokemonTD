@@ -131,7 +131,7 @@ public class CreepTypeBuilder {
             int health = specification.getHealth();
             float speed = scale;
             float size = scale;
-            int creepsInWay = 30;
+            int creepsInWay = 32;
             float distanceBetweenCreeps = size;
 
             switch (ability) {
@@ -153,7 +153,7 @@ public class CreepTypeBuilder {
                 case SPAWN:
                     health *= 4f;
                     size *= 2f;
-                    creepsInWay /= 4;
+                    creepsInWay /= 8;
                     break;
                 case HEALING:
                     break;

@@ -17,7 +17,7 @@ import com.pixelthieves.pokemontd.map.Path;
  */
 public class Creep extends ConcreteEntity {
 
-    private Creep(CreepType creepType, CreepAbilityType creepAbilityType, float speed, float size, Path path,
+    private Creep(CreepType creepType, CreepAbilityType creepAbilityType, float speed, float size, int health, Path path,
                   WaveComponent waveComponent, World world, float x, float y) {
         super(world);
         addComponent(new PositionComponent(x, y, 0));
@@ -27,7 +27,7 @@ public class Creep extends ConcreteEntity {
         addComponent(new SpriteComponent(creepType.getTexture()));
         addComponent(new SizeComponent(size, size, 0));
         addComponent(new BuffableSpeedComponent(speed));
-        addComponent(new HealthComponent(new Health(creepType.getHealth())));
+        addComponent(new HealthComponent(new Health(health)));
         addComponent(new TreasureComponent(new Treasure(creepType.getTreasure())));
         addComponent(new TimeComponent());
         addComponent(new CreepAbilityComponent(creepAbilityType));
@@ -41,12 +41,12 @@ public class Creep extends ConcreteEntity {
     public static void registerCreep(World world, Path path, WaveComponent waveComponent, CreepType creepType, float x,
                                      float y) {
         registerCreep(world, path, waveComponent, creepType, creepType.getAbilityType(), creepType.getSpeed(),
-                creepType.getSize(), x, y);
+                creepType.getSize(), creepType.getHealth(), x, y);
     }
 
     public static void registerCreep(World world, Path path, WaveComponent waveComponent, CreepType creepType,
-                                     CreepAbilityType creepAbilityType, float speed, float size, float x, float y) {
-        Creep creep = new Creep(creepType, creepAbilityType, speed, size, path, waveComponent, world, x, y);
+                                     CreepAbilityType creepAbilityType, float speed, float size, int health, float x, float y) {
+        Creep creep = new Creep(creepType, creepAbilityType, speed, size, health, path, waveComponent, world, x, y);
         creep.register();
         waveComponent.addCreep(creep.entity);
     }

@@ -38,8 +38,7 @@ public class TowerTypeBuilder {
     public static final float S_SPEED = 4f;
     public static final float XS_SPEED = 8f;
     public static final float XXS_SPEED = 16f;
-    public static final int INITIAL_BASE_DAMAGE = 15;
-    public static final int INITIAL_GOLD = 10;
+    public static final int L_SPLASH = 2;
 
     private List<TowerType> getData(float scale) {
         List<Specs> specs = new ArrayList<Specs>();
@@ -47,38 +46,33 @@ public class TowerTypeBuilder {
         specs.add(new Specs(TowerName.Shop, 0, null, 0, 0, 0, 0,null, Treasure.fromNone()));
         /// ######################  PURES
         // Basic
-        specs.add(Specs.getSpecsFromDamage(TowerName.Needle, 1, Normal, N_SPEED, N_RANGE, 18, HitAbility.getNormal("bullet", scale), Treasure.fromNone().addGold(7)));
-        specs.add(Specs.getSpecsFromDamage(TowerName.Pinch, 2, Normal, N_SPEED, N_RANGE, 54, HitAbility.getNormal("bullet", scale), Treasure.fromNone().addGold(13)));
-        specs.add(Specs.getSpecsFromDamage(TowerName.Sting, 3, Normal, N_SPEED, N_RANGE, 162, HitAbility.getNormal("bullet", scale), Treasure.fromNone().addGold(37)));
-        specs.add(Specs.getSpecsFromMultiplier(TowerName.Scratch, 1, Splash, S_SPEED, N_RANGE, 1, HitAbility.getSplash("bullet", scale, 2), Treasure.fromNone().addGold(7)));
-        specs.add(Specs.getSpecsFromMultiplier(TowerName.Bite, 2, Splash, S_SPEED, N_RANGE, 1, HitAbility.getSplash("bullet", scale, 2), Treasure.fromNone().addGold(13)));
-        specs.add(Specs.getSpecsFromMultiplier(TowerName.Smash, 3, Splash, S_SPEED, N_RANGE, 1, HitAbility.getSplash("bullet", scale, 2), Treasure.fromNone().addGold(37)));
+        specs.add(Specs.getSpecs(TowerName.Needle, -3, Normal, N_SPEED, N_RANGE,  HitAbility.getNormal("bullet", scale), Treasure.fromNone()));
+        specs.add(Specs.getSpecs(TowerName.Pinch, -2, Normal, N_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromNone()));
+        specs.add(Specs.getSpecs(TowerName.Sting, -1, Normal, N_SPEED, N_RANGE,  HitAbility.getNormal("bullet", scale), Treasure.fromNone()));
+        specs.add(Specs.getSpecs(TowerName.Scratch, -3, Splash, S_SPEED, N_RANGE, HitAbility.getSplash("bullet", scale, L_SPLASH), Treasure.fromNone()));
+        specs.add(Specs.getSpecs(TowerName.Bite, -2, Splash, S_SPEED, N_RANGE,  HitAbility.getSplash("bullet", scale, L_SPLASH), Treasure.fromNone()));
+        specs.add(Specs.getSpecs(TowerName.Smash, -1, Splash, S_SPEED, N_RANGE,  HitAbility.getSplash("bullet", scale, L_SPLASH), Treasure.fromNone()));
         // blue
-        specs.add(new Specs(TowerName.Splash, 1, Normal, N_SPEED, N_RANGE, 280, 1, HitAbility.getNormal("bullet", scale), Treasure.fromWater(1).addGold(125)));
-        specs.add(new Specs(TowerName.Ripple, 2, Normal, N_SPEED, N_RANGE, 2124, 1, HitAbility.getNormal("bullet", scale), Treasure.fromWater(2).addGold(375)));
-        specs.add(new Specs(TowerName.Tsunami, 6, Wave, N_SPEED, N_RANGE, 106614, 1, HitAbility.getBubbleGrowing(scale), Treasure.fromWater(3).addGold(10000)));
+        specs.add(Specs.getSpecs(TowerName.Splash, 1, Normal, L_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromWater(1)));
+        specs.add(Specs.getSpecs(TowerName.Ripple, 2, Normal, L_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromWater(2)));
+        specs.add(Specs.getSpecsFromMultiplier(TowerName.Tsunami, 6, Wave, L_SPEED, N_RANGE, .33f, HitAbility.getBubbleGrowing(scale), Treasure.fromWater(3).addGold(10000)));
         //red
-       /* public static Specs getSpecsFromMultiplier(TowerName name, int level, EffectName effectName, float speed, float range, float multiplier,
-        AbilityComponent attackComponent, Treasure treasure) {
-            return new Specs(name, level, effectName, speed, range, computeDamage(level, speed, range,
-                    attackComponent instanceof HitAbility ? ((HitAbility) attackComponent).getAoe() : 1), multiplier,
-                    attackComponent, treasure);
-        }                                        */
-        specs.add(new Specs(TowerName.Sparkle, 1, Normal, N_SPEED, S_RANGE, 252, 1, HitAbility.getNormal("bullet", scale), Treasure.fromFire(1).addGold(125)));
-        specs.add(new Specs(TowerName.Burning, 2, Normal, L_SPEED, S_RANGE, 1153, 1, HitAbility.getNormal("bullet", scale), Treasure.fromFire(2).addGold(375)));
-        specs.add(new Specs(TowerName.Inferno, 6, Burn, XL_SPEED, S_RANGE, 78346, 1, HitAbility.getFireDot(scale), Treasure.fromFire(3).addGold(10000)));
+        specs.add(Specs.getSpecs(TowerName.Sparkle, 1, Normal, XL_SPEED, N_RANGE,  HitAbility.getNormal("bullet", scale), Treasure.fromFire(1)));
+        specs.add(Specs.getSpecs(TowerName.Burning, 2, Normal, XL_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromFire(2)));
+        specs.add(Specs.getSpecsFromMultiplier(TowerName.Inferno, 6, Burn, XL_SPEED, N_RANGE,  .5f, HitAbility.getFireDot(scale), Treasure.fromFire(3)));
         //green
-        specs.add(new Specs(TowerName.Flower, 1, Normal, XS_SPEED, S_RANGE, 514, 1, HitAbility.getNormal("bullet", scale), Treasure.fromNature(1).addGold(125)));
-        specs.add(new Specs(TowerName.Forest, 2, Normal, XS_SPEED, S_RANGE, 7890, 1, HitAbility.getNormal("bullet", scale), Treasure.fromNature(2).addGold(375)));
-        specs.add(new Specs(TowerName.Nature, 6, Entangle, XS_SPEED, S_RANGE, 181472, 1, HitAbility.getNature(scale, 0.7f, 2f, 0.5f), Treasure.fromNature(3).addGold(375)));
+        specs.add(Specs.getSpecs(TowerName.Flower, 1, Normal, S_SPEED, S_RANGE, HitAbility.getNormal("bullet", scale), Treasure.fromNature(1)));
+        specs.add(Specs.getSpecs(TowerName.Forest, 2, Normal, S_SPEED, S_RANGE,  HitAbility.getNormal("bullet", scale), Treasure.fromNature(2)));
+        specs.add(Specs.getSpecsFromMultiplier(TowerName.Nature, 6, Entangle, S_SPEED, S_RANGE,  .5f, HitAbility.getNature(scale, 0.7f, 2f, 0.5f), Treasure.fromNature(3)));
         //yellow
-        specs.add(new Specs(TowerName.Chicken, 1, Normal, L_SPEED, N_RANGE, 220, 1, HitAbility.getNormal("bullet", scale), Treasure.fromLight(1).addGold(125)));
-        specs.add(new Specs(TowerName.Screech, 2, Normal, L_SPEED, N_RANGE, 1914, 1, HitAbility.getNormal("bullet", scale), Treasure.fromLight(2).addGold(375)));
-        specs.add(new Specs(TowerName.Claw, 6, Peck, L_SPEED, N_RANGE, 84148, 1, HitAbility.getClaw(scale, 0.3f, 2), Treasure.fromLight(3).addGold(10000)));
+        specs.add(Specs.getSpecs(TowerName.Chicken, 1, Normal, L_SPEED, S_RANGE,  HitAbility.getNormal("bullet", scale), Treasure.fromLight(1)));
+        specs.add(Specs.getSpecs(TowerName.Screech, 2, Normal, L_SPEED, S_RANGE,  HitAbility.getNormal("bullet", scale), Treasure.fromLight(2)));
+        specs.add(Specs.getSpecsFromMultiplier(TowerName.Claw, 6, Peck, L_SPEED, S_RANGE,  0.75f, HitAbility.getClaw(scale, 0.3f, 2), Treasure.fromLight(3)));
         //purple
-        specs.add(new Specs(TowerName.Spooky, 1, Normal, N_SPEED, XL_RANGE, 239, 1, HitAbility.getNormal("bullet", scale), Treasure.fromDarkness(1).addGold(125)));
-        specs.add(new Specs(TowerName.Haunted, 2, Normal, N_SPEED, XL_RANGE, 1744, 1, HitAbility.getNormal("bullet", scale), Treasure.fromDarkness(2).addGold(375)));
-        specs.add(new Specs(TowerName.Nightmare, 6, Terrify, N_SPEED, XL_RANGE, 0.3f, 1, HitAbility.getTemLifeSteal(scale, 5f), Treasure.fromDarkness(3).addGold(10000)));
+        specs.add(Specs.getSpecs(TowerName.Spooky, 1, Normal, N_SPEED, XL_RANGE,  HitAbility.getNormal("bullet", scale), Treasure.fromDarkness(1)));
+        specs.add(Specs.getSpecs(TowerName.Haunted, 2, Normal, N_SPEED, XL_RANGE,  HitAbility.getNormal("bullet", scale), Treasure.fromDarkness(2)));
+        specs.add(Specs.getSpecsFromMultiplier(TowerName.Nightmare, 6, Terrify, N_SPEED, XL_RANGE, 0, HitAbility.getTemLifeSteal(scale, 5f), Treasure.fromDarkness(3)));
+
         /// ######################  TWO ELEMENT
         specs.add(new Specs(TowerName.Noble, 2, Haste, 45, BUFF_RANGE, 1.25f, 1, BuffAbility.getSpeed(20), Treasure.fromWater(1).addFire(1).addGold(375)));
         specs.add(new Specs(TowerName.Majestic, 4, Haste, 45, BUFF_RANGE, 1.5f, 1, BuffAbility.getSpeed(20), Treasure.fromWater(2).addFire(2).addGold(3500)));
@@ -187,23 +181,34 @@ public class TowerTypeBuilder {
         private final Treasure treasure;
         private final EffectName effectName;
 
-        public static Specs getSpecsFromDamage(TowerName name, int level, EffectName effectName, float speed, float range, float damage,
-                                               AbilityComponent attackComponent, Treasure treasure) {
+        public static Specs getSpecsFromDamage(TowerName name, int level, EffectName effectName, float speed,
+                                               float range, float damage, AbilityComponent attackComponent,
+                                               Treasure treasure) {
             return new Specs(name, level, effectName, speed, range, damage, 1, attackComponent, treasure);
         }
 
-        public static Specs getSpecsFromMultiplier(TowerName name, int level, EffectName effectName, float speed, float range, float multiplier,
-                                                   AbilityComponent attackComponent, Treasure treasure) {
-            return new Specs(name, level, effectName, speed, range, computeDamage(level, speed, range,
-                    attackComponent instanceof HitAbility ? ((HitAbility) attackComponent).getAoe() : 1), multiplier,
-                    attackComponent, treasure);
+        public static Specs getSpecsFromMultiplier(TowerName name, int level, EffectName effectName, float speed,
+                                                   float range, float multiplier, AbilityComponent attackComponent,
+                                                   Treasure treasure) {
+            return new Specs(name, level, effectName, speed, range,
+                    computeDamage(getTotalPrice(level), level, speed, range,
+                            attackComponent instanceof HitAbility ? ((HitAbility) attackComponent).getAoe() : 0),
+                    multiplier, attackComponent, treasure);
+        }
+
+        private static int getTotalPrice(int level) {
+            int totalPrice = 0;
+            Integer price;
+            while ((price = goldMap.get(level--)) != null) {
+                totalPrice += price;
+            }
+            System.out.println(totalPrice);
+            return totalPrice;
         }
 
         public static Specs getSpecs(TowerName name, int level, EffectName effectName, float speed, float range,
                                      AbilityComponent attackComponent, Treasure treasure) {
-            return new Specs(name, level, effectName, speed, range, computeDamage(level, speed, range,
-                    attackComponent instanceof HitAbility ? ((HitAbility) attackComponent).getAoe() : 1), 1,
-                    attackComponent, treasure);
+            return getSpecsFromMultiplier(name, level, effectName, speed, range, 1, attackComponent, treasure);
         }
 
         private Specs(TowerName name, int level, EffectName effectName, float speed, float range, float damage, float multiplier,
@@ -215,14 +220,14 @@ public class TowerTypeBuilder {
             this.range = range;
             this.attackComponent = attackComponent;
             this.treasure = treasure;
+            this.treasure.setGold(goldMap.get(level));
         }
 
-        private static float computeDamage(int level, float speed, float range, float splash) {
-            float aFloat = tier.get(level);
-            float aFloat1 = rangeMap.get(range);
-            float aFloat2 = splashMap.get(splash);
-            float damage = aFloat * speed * aFloat1 / aFloat2;
-            return damage;
+        private static int computeDamage(int price, int level, float speed, float range, float splash) {
+            float preciseDamage = price * damageMultiplierMap.get(level) * speedMap.get(speed) * rangeMap.get(range) /
+                    splashMap.get(splash);
+            float decimalPart = preciseDamage - (int) preciseDamage;
+            return decimalPart != 0f ? (int) (preciseDamage) + 1 : (int) preciseDamage;
         }
 
     }
@@ -245,20 +250,45 @@ public class TowerTypeBuilder {
         rangeMap.put(S_RANGE, 1.5f);
     }
 
-    static Map<Float, Float> splashMap = new HashMap<Float, Float>();{
-        //splashMap.put(null, null);
-        splashMap.put(2f, 7f);
-        splashMap.put(1f, 1f);
-        splashMap.put(200f,1f);
+    static Map<Float, Float> speedMap = new HashMap<Float, Float>();{
+        speedMap.put(0f,0f);
+        speedMap.put(XXS_SPEED, 8f);
+        speedMap.put(XS_SPEED, 4f);
+        speedMap.put(S_SPEED, 2f);
+        speedMap.put(N_SPEED, 1f);
+        speedMap.put(L_SPEED, 0.5f);
+        speedMap.put(XL_SPEED, 0.25f);
+        speedMap.put(XXL_SPEED, 0.125f);
     }
 
-    static Map<Integer, Float> tier = new HashMap<Integer, Float>();{
-        tier.put(0,0f);
-        tier.put(1, 2.5f);
-        tier.put(2, 2.8f);
-        tier.put(3, 3.1f);
-        tier.put(4, 3.4f);
-        tier.put(5, 3.6f);
-        tier.put(6, 5f);
+    static Map<Float, Float> splashMap = new HashMap<Float, Float>();{
+        splashMap.put(0f, 1f);
+        splashMap.put(200f, 7f);
+    }
+
+    static Map<Integer, Float> damageMultiplierMap = new HashMap<Integer, Float>();{
+        damageMultiplierMap.put(-3, 2.5f);
+        damageMultiplierMap.put(-2, 2.7f);
+        damageMultiplierMap.put(-1, 2.8421f);
+        damageMultiplierMap.put(0, 0f);
+        damageMultiplierMap.put(1, 2.5f);
+        damageMultiplierMap.put(2, 2.8f);
+        damageMultiplierMap.put(3, 3.1f);
+        damageMultiplierMap.put(4, 3.4f);
+        damageMultiplierMap.put(5, 3.6f);
+        damageMultiplierMap.put(6, 5f);
+    }
+
+    static Map<Integer, Integer> goldMap = new HashMap<Integer, Integer>();{
+        goldMap.put(-3, 7);
+        goldMap.put(-2, 13);
+        goldMap.put(-1, 37);
+        goldMap.put(0, 0);
+        goldMap.put(1, 125);
+        goldMap.put(2, 375);
+        goldMap.put(3, 1125);
+        goldMap.put(4, 2500);
+        goldMap.put(5, 5000);
+        goldMap.put(6, 10000);
     }
 }
