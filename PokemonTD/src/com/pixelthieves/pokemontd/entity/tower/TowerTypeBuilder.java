@@ -151,24 +151,7 @@ public class TowerTypeBuilder {
     }
 
     private TowerType createTowerType(float scale, Specs specs) {
-        // float damage = getDamage(getBaseDamage(INITIAL_BASE_DAMAGE, specs.level), specs.range, specs.speed);
         return new TowerType(specs.name, specs.effectName, SIZE * scale, specs.speed, specs.damage, specs.range * scale, specs.attackComponent, specs.treasure);
-    }
-  /*
-    private float getDamage(float baseDamage, float range, float speed) {
-        return Math.max((baseDamage + baseDamage * (float) scaleByRange(range) / koefficient) * speed, 0);
-    }     */
-
-    private static double scaleByRange(float range) {
-        return (PI * pow(N_RANGE, 2) - (PI * pow(range, 2)));
-    }
-  /*
-    public float getBaseDamage(float initialBaseDamage, int levels) {
-        return (float) (initialBaseDamage * pow(3, levels - 1));
-    }  */
-
-    public int getGold(int initialGold, int levels) {
-        return (int) (initialGold * pow(2, levels - 1));
     }
 
 
