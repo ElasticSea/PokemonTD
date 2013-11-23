@@ -19,40 +19,6 @@ import static com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 public class CreepType implements CommonDataType {
 
 
-    public static final CreepTypeBuilder creepTypeBuilder = new CreepTypeBuilder();
-    private static final Map<CreepName, CreepType> waveStore =
-            creepTypeBuilder.build(App.WORLD_SCALE, CreepTypeBuilder.normal);
-
-    public static CreepType getWave(CreepName next) {
-        return waveStore.get(next);
-    }
-
-    public static CreepType getWave(Element element, int count) {
-        return elementWaves.get(element).get(count);
-    }
-
-    private static Map<Element, List<CreepType>> elementWaves = getElementWave();
-
-    public static Map<Element, List<CreepType>> getElementWave() {
-        Map<CreepName, CreepType> waves = creepTypeBuilder.build(App.WORLD_SCALE, CreepTypeBuilder.element);
-        Map<Element, List<CreepType>> map = new HashMap<Element, List<CreepType>>();
-        for (Map.Entry<CreepName, CreepType> creep : waves.entrySet()) {
-            CreepType creepValue = creep.getValue();
-            Treasure treasure = creepValue.getTreasure();
-            for (Element element : Element.values()) {
-                if (treasure.hasElement(element, 1)) {
-                    List<CreepType> list = map.get(element);
-                    if (list == null) {
-                        list = new ArrayList<CreepType>();
-                        map.put(element, list);
-                    }
-                    list.add(creepValue);
-                    break;
-                }
-            }
-        }
-        return map;
-    }
 
     private final CreepName name;
 

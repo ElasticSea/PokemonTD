@@ -6,20 +6,16 @@ import com.badlogic.gdx.math.Vector3;
 import com.pixelthieves.core.logic.UpdateFilter;
 import com.pixelthieves.core.logic.Updateable;
 import com.pixelthieves.pokemontd.App;
+import com.pixelthieves.pokemontd.Element;
 import com.pixelthieves.pokemontd.Player;
+import com.pixelthieves.pokemontd.Treasure;
 import com.pixelthieves.pokemontd.component.WaveComponent;
-import com.pixelthieves.pokemontd.entity.creep.Creep;
-import com.pixelthieves.pokemontd.entity.creep.CreepAbilityType;
-import com.pixelthieves.pokemontd.entity.creep.CreepName;
-import com.pixelthieves.pokemontd.entity.creep.CreepType;
+import com.pixelthieves.pokemontd.entity.creep.*;
 import com.pixelthieves.pokemontd.map.Path;
 import com.pixelthieves.pokemontd.map.PathPack;
 import com.pixelthieves.pokemontd.system.resolve.FireTextInfo;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Tomas on 10/5/13.
@@ -34,9 +30,43 @@ public class WaveManager implements Updateable {
     private final App app;
     private final float waveInterval;
     private final float betweenWaveInterval;
+    private final int lastWaveId;
     private boolean active;
     private CreepType nextWave;
     private final List<WaveComponent> waves = new LinkedList<WaveComponent>();
+
+    public static final CreepTypeBuilder creepTypeBuilder = new CreepTypeBuilder();
+    private static final Map<CreepName, CreepType> waveStore =
+            creepTypeBuilder.build(App.WORLD_SCALE, CreepTypeBuilder.normal);
+
+
+    public static CreepType getWave(Element element, int count) {
+        return elementWaves.get(element).get(count);
+    }
+
+    private static Map<Element, List<CreepType>> elementWaves = getElementWave();
+
+    public static Map<Element, List<CreepType>> getElementWave() {
+        Map<CreepName, CreepType> waves = creepTypeBuilder.build(App.WORLD_SCALE, CreepTypeBuilder.element);
+        Map<Element, List<CreepType>> map = new HashMap<Element, List<CreepType>>();
+        for (Map.Entry<CreepName, CreepType> creep : waves.entrySet()) {
+            CreepType creepValue = creep.getValue();
+            Treasure treasure = creepValue.getTreasure();
+            for (Element element : Element.values()) {
+                if (treasure.hasElement(element, 1)) {
+                    List<CreepType> list = map.get(element);
+                    if (list == null) {
+                        list = new ArrayList<CreepType>();
+                        map.put(element, list);
+                    }
+                    list.add(creepValue);
+                    break;
+                }
+            }
+        }
+        return map;
+    }
+
 
     public WaveManager(App app, PathPack pathPack, float waveInterval, float betweenWaveInterval) {
         this.app = app;
@@ -48,7 +78,12 @@ public class WaveManager implements Updateable {
         this.waveInterval = waveInterval;
         this.betweenWaveInterval = betweenWaveInterval;
         this.filter = new UpdateFilter(this, betweenWaveInterval);
+        this.lastWaveId  = waveStore.size()-1;
         updateWave();
+    }
+
+    public boolean isNextWaveLast() {
+        return nextWave.getId() == lastWaveId;
     }
 
     private enum State {
@@ -115,7 +150,7 @@ public class WaveManager implements Updateable {
     }
 
     private void updateWave() {
-        nextWave = creeps.hasNext() ? CreepType.getWave(creeps.next()) : null;
+        nextWave = creeps.hasNext() ? waveStore.get(creeps.next()) : null;
     }
 
     @Override
@@ -154,4 +189,7 @@ public class WaveManager implements Updateable {
         return filter;
     }
 
+    public int getLastWaveId() {
+        return lastWaveId;
+    }
 }
