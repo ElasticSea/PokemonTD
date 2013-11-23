@@ -22,6 +22,7 @@ public abstract class Button extends InteractiveBlock {
     private Color backgroundColor = Color.CLEAR;
     private final boolean wrapped;
     private BitmapFont.TextBounds fontBounds;
+    private float scale;
 
     protected Button(Gui gui, float x, float y, float width, float height, BitmapFont font) {
         this(gui, new Rectangle(x, y, width, height), font, BitmapFont.HAlignment.CENTER, false);
@@ -48,12 +49,15 @@ public abstract class Button extends InteractiveBlock {
     }
 
     public void setScale(float scale) {
-        this.font.setScale(scale);
-        this.position = recalculatePosition(text);
+        this.scale = scale;
     }
 
     @Override
     public void render() {
+        float oldScale = font.getScaleX();
+        if (scale != 0) {
+            font.setScale(scale*oldScale);
+        }
         if (backgroundColor != Color.CLEAR || App.DEBUG != null) {
             Color color = isEnabled() ? this.backgroundColor : Color.DARK_GRAY;
             shapeRenderer.begin(App.DEBUG != null ? ShapeRenderer.ShapeType.Line : ShapeRenderer.ShapeType.Filled);
@@ -69,6 +73,9 @@ public abstract class Button extends InteractiveBlock {
             font.drawMultiLine(spriteBatch, text, x, y + position.y, width, alignment);
         }
         spriteBatch.end();
+        if (scale != 0) {
+            font.setScale(oldScale);
+        }
     }
 
     public void render(String text) {

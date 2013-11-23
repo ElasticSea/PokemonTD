@@ -24,12 +24,12 @@ public class AbilityInfo extends GuiBox {
 
     public AbilityInfo(Ui ui, Rectangle rectangle) {
         super(ui, rectangle);
-        int headerSize = (int) (height / 6);
-        float textBlockSize = height - headerSize;
-        text = new DisplayText(ui, new Rectangle(x, y, width, textBlockSize), ui.getFont(), BitmapFont.HAlignment.LEFT,
+        text = new DisplayText(ui, new Rectangle(), ui.getFont(), BitmapFont.HAlignment.LEFT,
                 true);
-        header = new DisplayText(ui, new Rectangle(x, textBlockSize, width, headerSize), ui.getFont(),
+        text.setScale(0.5f);
+        header = new DisplayText(ui, new Rectangle(), ui.getFont(),
                 BitmapFont.HAlignment.LEFT, true);
+        header.setScale(0.75f);
         refresh();
     }
 
@@ -174,8 +174,8 @@ public class AbilityInfo extends GuiBox {
     @Override
     public void refresh() {
         super.refresh();
-        int headerSize = (int) (height / 5);
-        float offset = (int) (height / 7);
+        int headerSize = (int) (height / 7);
+        float offset = (int) (height / 10);
         Rectangle innerRectangle = new Rectangle(x + offset, y + offset, width - offset * 2, height - offset * 2);
         float textBlockSize = innerRectangle.height - headerSize;
         text.set(innerRectangle.x, innerRectangle.y, innerRectangle.width, textBlockSize);
