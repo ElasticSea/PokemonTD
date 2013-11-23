@@ -246,7 +246,13 @@ public class TowerTypeBuilder {
 
     {
         splashMap.put(0f, 1f);
+        splashMap.put(100f, 2.5f);
         splashMap.put(200f, 7f);
+        splashMap.put(250f, 8f);
+        splashMap.put(300f, 10f);
+        splashMap.put(400f, 16f);
+        splashMap.put(500f, 20f);
+        splashMap.put(600f, 25f);
     }
 
     static Map<Integer, Float> damageMultiplierMap = new HashMap<Integer, Float>();
