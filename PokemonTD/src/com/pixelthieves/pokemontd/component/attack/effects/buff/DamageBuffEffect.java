@@ -12,11 +12,4 @@ public class DamageBuffEffect extends BuffEffect {
         return this;
     }
 
-    public String getName() {
-        return "  ";
-    }
-
-    public String getDescription() {
-        return "  ";
-    }
 }
