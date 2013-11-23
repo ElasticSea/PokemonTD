@@ -37,6 +37,11 @@ public class Main {
             private Map<String, String> leaderboard;
 
             @Override
+            public boolean canSingIn() {
+                return true;
+            }
+
+            @Override
             public boolean isSignedIn() {
                 return true;
             }

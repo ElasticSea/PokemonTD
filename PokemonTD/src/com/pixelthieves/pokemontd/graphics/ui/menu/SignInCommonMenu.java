@@ -7,14 +7,15 @@ import com.pixelthieves.pokemontd.GameService;
 /**
  * Created by Tomas on 11/19/13.
  */
-class CommonMenu extends ExitTab {
+class SignInCommonMenu extends ExitTab {
 
     private final Options options;
     private final Tutorial tutorial;
     private final MenuButton optionsButton;
     private final MenuButton tutorialButton;
+    private final MenuButton signInButton;
 
-    CommonMenu(final Menu menu, Rectangle rectangle, boolean closeButton, int count) {
+    SignInCommonMenu(final Menu menu, Rectangle rectangle, boolean closeButton, int count) {
         super(menu, rectangle, closeButton, count);
         tutorial =
                 new Tutorial(menu, this, new Rectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()), count);
@@ -31,8 +32,21 @@ class CommonMenu extends ExitTab {
                 menu.switchCard(options);
             }
         };
+
+        signInButton = new MenuButton(menu, rects.get(3)) {
+            @Override
+            public void process(float x, float y) {
+                GameService gameSevice = menu.getGameSevice();
+                if (gameSevice.isSignedIn()) {
+                    gameSevice.signOut();
+                } else {
+                    gameSevice.signIn();
+                }
+            }
+        };
         register(optionsButton);
         register(tutorialButton);
+        register(signInButton);
         cards.add(options);
         cards.add(tutorial);
     }
@@ -42,5 +56,6 @@ class CommonMenu extends ExitTab {
         super.render();
         optionsButton.render("OPTIONS");
         tutorialButton.render("TUTORIAL");
+        signInButton.render(menu.getGameSevice().isSignedIn() ? "SIGN OUT" : "SIGN IN");
     }
 }

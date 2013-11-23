@@ -44,9 +44,11 @@ public class Menu extends Gui {
         int menuWidth = height / 3 * 4;
         Rectangle rectangle = getRectangle(menuWidth, height);
         signInBox = new SignInBox(this, rectangle, 5);
-        inGameMenu = new InGameMenu(this, rectangle, 5);
-        menuBox = new MenuBox(this, rectangle, 5);
-        endGame = new EndGame(this, rectangle, 5);
+        boolean canSignIn = getGameSevice().canSingIn();
+        inGameMenu = canSignIn ? new SignInGameMenu(this, rectangle, 5) :
+                new InGameMenu(this, rectangle, 5);
+        menuBox = canSignIn ? new SingInMenuBox(this, rectangle, 5) : new MenuBox(this, rectangle, 5);
+        endGame = canSignIn ? new SingInEndGame(this, rectangle, 5) : new EndGame(this, rectangle, 5);
         leaderboard = new LeaderboardTab(this, getRectangle(menuWidth, (int) (height * 1.5f)), 7);
 
         guiDialogRoots.add(signInBox);
@@ -54,7 +56,7 @@ public class Menu extends Gui {
         guiDialogRoots.add(menuBox);
         guiDialogRoots.add(endGame);
 
-        defaultCard = signInBox;
+        defaultCard = canSignIn ? signInBox : menuBox;
         pickedCard = defaultCard;
     }
 

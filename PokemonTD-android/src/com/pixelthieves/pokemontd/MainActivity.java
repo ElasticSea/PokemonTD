@@ -34,6 +34,11 @@ public class MainActivity extends LibgdxBaseGameActivity implements GameService 
     }
 
     @Override
+    public boolean canSingIn() {
+        return android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.GINGERBREAD;
+    }
+
+    @Override
     public boolean isSignedIn() {
         return super.isSignedIn();
     }
