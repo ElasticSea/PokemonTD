@@ -11,6 +11,7 @@ import com.pixelthieves.pokemontd.App;
  */
 public abstract class DisplayBlock extends Rectangle implements Renderable, Refresheable {
     private final ShapeRenderer shapeRenderer;
+    protected final Gui gui;
 
     protected DisplayBlock(Gui gui) {
         this(gui, 0, 0, 0, 0);
@@ -18,10 +19,11 @@ public abstract class DisplayBlock extends Rectangle implements Renderable, Refr
 
     protected DisplayBlock(Gui gui, float x, float y, float width, float height) {
         this(gui, new Rectangle(x, y, width, height));
-    }
 
+    }
     protected DisplayBlock(Gui gui, Rectangle rect) {
         super(rect);
+        this.gui = gui;
         this.shapeRenderer = gui.getShapeRenderer();
     }
 

@@ -10,7 +10,7 @@ class InGameMenu extends CommonMenu {
 
     private final Button pause;
 
-    InGameMenu(final Menu menu, Rectangle rectangle, int count) {
+    InGameMenu(final Menu menu, Rectangle rectangle,  int count) {
         super(menu, rectangle, true, count);
         pause = new MenuButton(menu, rects.get(0)) {
             @Override

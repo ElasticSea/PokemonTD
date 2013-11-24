@@ -6,7 +6,7 @@ import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.google.android.gms.appstate.AppStateClient;
 import com.google.android.gms.games.GamesClient;
 import com.google.android.gms.plus.PlusClient;
-import typeanumber.google.example.games.basegameutils.GameHelper;
+import com.google.example.games.basegameutils.GameHelper;
 
 /**
  * Created by Tomas on 11/18/13.

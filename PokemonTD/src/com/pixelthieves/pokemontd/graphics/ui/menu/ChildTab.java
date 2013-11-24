@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
  */
 class ChildTab extends MenuTab {
 
-    private final MenuButton close;
+    protected final MenuButton close;
 
     ChildTab(Menu menu, MenuTab parent, Rectangle rectangle, int count) {
         super(menu, parent, rectangle, count);

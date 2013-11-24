@@ -1,5 +1,7 @@
 package com.pixelthieves.pokemontd.graphics.ui.menu;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -21,14 +23,14 @@ class Tutorial extends ChildTab {
                     "It´s generally good idea to save your money, because each 15 seconds you got interestManager.";
     private final DisplayText text;
 
-    Tutorial(Menu menu, MenuTab parent, Rectangle rectangle, int count) {
-        super(menu, parent, rectangle, count);
+    Tutorial(Menu menu, MenuTab parent, Rectangle rectangle) {
+        super(menu, parent, rectangle, 8);
 
         textBlockHeight = rectangle.height - buttonHeight - buttonHeight * 2;
         textBlockY = rectangle.y + buttonHeight + buttonHeight;
         text = new DisplayText(ui,
                 new Rectangle(rectangle.x + segment, textBlockY, rectangle.width - segment * 2, textBlockHeight),
-                ui.getFont(), BitmapFont.HAlignment.LEFT, true);
+                ui.getFont(), BitmapFont.HAlignment.LEFT, true, new String());
 
         register(text);
         this.setRenderLines(false);
@@ -37,7 +39,10 @@ class Tutorial extends ChildTab {
     @Override
     public void render() {
         super.render();
+        Gdx.gl.glEnable(GL10.GL_SCISSOR_TEST);
+        Gdx.gl.glScissor((int)x, (int)(close.y+close.height), (int)width, (int)(height-close.height-segment));
         text.render(tutorialText);
+        Gdx.gl.glDisable(GL10.GL_SCISSOR_TEST);
     }
 
     @Override

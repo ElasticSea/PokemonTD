@@ -1,8 +1,6 @@
 package com.pixelthieves.pokemontd.graphics.ui.menu;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
-import com.pixelthieves.pokemontd.GameService;
 
 /**
  * Created by Tomas on 11/19/13.
@@ -10,19 +8,18 @@ import com.pixelthieves.pokemontd.GameService;
 class CommonMenu extends ExitTab {
 
     private final Options options;
-    private final Tutorial tutorial;
+    private final Help help;
     private final MenuButton optionsButton;
-    private final MenuButton tutorialButton;
+    private final MenuButton helpButton;
 
     CommonMenu(final Menu menu, Rectangle rectangle, boolean closeButton, int count) {
         super(menu, rectangle, closeButton, count);
-        tutorial =
-                new Tutorial(menu, this, new Rectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()), count);
+        help = new Help(menu, this, rectangle, count);
         options = new Options(menu, this, rectangle, count);
-        tutorialButton = new MenuButton(menu, rects.get(1)) {
+        helpButton = new MenuButton(menu, rects.get(1)) {
             @Override
             public void process(float x, float y) {
-                menu.switchCard(tutorial);
+                menu.switchCard(help);
             }
         };
         optionsButton = new MenuButton(menu, rects.get(2)) {
@@ -32,15 +29,15 @@ class CommonMenu extends ExitTab {
             }
         };
         register(optionsButton);
-        register(tutorialButton);
+        register(helpButton);
+        cards.add(help);
         cards.add(options);
-        cards.add(tutorial);
     }
 
     @Override
     public void render() {
         super.render();
         optionsButton.render("OPTIONS");
-        tutorialButton.render("TUTORIAL");
+       helpButton.render("HELP");
     }
 }

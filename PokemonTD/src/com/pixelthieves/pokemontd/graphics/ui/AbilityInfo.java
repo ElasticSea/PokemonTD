@@ -12,8 +12,7 @@ import com.pixelthieves.pokemontd.component.attack.projectile.data.*;
  * Time: 11:15
  */
 
-public class AbilityInfo extends GuiBox {
-    private final DisplayText header;
+public class AbilityInfo extends HeaderGuiBox {
     private final DisplayText text;
     private EffectData ability;
     private float speed;
@@ -25,11 +24,8 @@ public class AbilityInfo extends GuiBox {
     public AbilityInfo(Ui ui, Rectangle rectangle) {
         super(ui, rectangle);
         text = new DisplayText(ui, new Rectangle(), ui.getFont(), BitmapFont.HAlignment.LEFT,
-                true);
-        text.setScale(0.5f);
-        header = new DisplayText(ui, new Rectangle(), ui.getFont(),
-                BitmapFont.HAlignment.LEFT, true);
-        header.setScale(0.75f);
+                true, new String());
+        text.setScale(0.75f);
         refresh();
     }
 
@@ -44,12 +40,15 @@ public class AbilityInfo extends GuiBox {
     @Override
     public void render() {
         if (abilityName != null || effect != null) {
+            if (abilityName != null) {
+                this.setLeftHeaderText(abilityName.name());
+            } else {
+                this.setLeftHeaderText(effect.getName());
+            }
             super.render();
             if (abilityName != null) {
-                header.render(abilityName.name());
                 text.render(getDescription(abilityName, splash, ability, damage));
             } else {
-                header.render(effect.getName());
                 text.render(effect.getDescription());
             }
         }
@@ -174,14 +173,9 @@ public class AbilityInfo extends GuiBox {
     @Override
     public void refresh() {
         super.refresh();
-        int headerSize = (int) (height / 7);
         float offset = (int) (height / 10);
-        Rectangle innerRectangle = new Rectangle(x + offset, y + offset, width - offset * 2, height - offset * 2);
-        float textBlockSize = innerRectangle.height - headerSize;
-        text.set(innerRectangle.x, innerRectangle.y, innerRectangle.width, textBlockSize);
-        header.set(innerRectangle.x, innerRectangle.y + textBlockSize, innerRectangle.width, headerSize);
+        text.set(x + offset, y + offset, width - offset * 2, height - offset * 2);
         text.refresh();
-        header.refresh();
     }
 
     public void update(AbstractEffect effect) {

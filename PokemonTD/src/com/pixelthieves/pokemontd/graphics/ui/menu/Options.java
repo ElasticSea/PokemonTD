@@ -10,30 +10,33 @@ import com.pixelthieves.pokemontd.graphics.ui.Button;
  */
 public class Options extends ChildTab {
 
-    private Menu menu;
     private final Button guiButton;
     private final Button musicButton;
-    private final GUI gui;
-    private static final Music theme = Assets.getMusic("theme.ogg");
+    private final GUI guiTab;
+    private final AbilityTab abilityTab;
+    private static Music theme;
 
-    {
-        theme.setLooping(true);
-        theme.setVolume(0.2f);
-        theme.play();
+    private Music getTheme() {
+        if (theme == null) {
+            theme = Assets.getMusic("theme.ogg");
+            theme.setLooping(true);
+            theme.setVolume(0.4f);
+            theme.play();
+        }
+        return theme;
     }
 
     public static boolean MUTE;
 
     Options(final Menu menu, MenuTab parent, Rectangle rectangle, int count) {
         super(menu, parent, rectangle, count);
-        this.menu = menu;
-
-
-        gui = new GUI(menu, this, rectangle, count);
+        getTheme();
+        guiTab = new GUI(menu, this, rectangle, count);
+        abilityTab = new AbilityTab(menu, this, rectangle, count);
         guiButton = new MenuButton(menu, rects.get(0)) {
             @Override
             public void process(float x, float y) {
-                menu.switchCard(gui);
+                menu.switchCard(guiTab);
             }
         };
 
@@ -42,21 +45,23 @@ public class Options extends ChildTab {
             public void process(float x, float y) {
                 MUTE = !MUTE;
                 if (MUTE) {
-                    theme.stop();
+                    getTheme().stop();
                 } else {
-                    theme.play();
+                    getTheme().play();
                 }
             }
+
         };
 
         register(guiButton);
         register(musicButton);
+        cards.add(abilityTab);
     }
 
     @Override
     public void render() {
         super.render();
         guiButton.render("GRAPHICAL INTERFACE");
-        musicButton.render(theme.isPlaying() ? "MUTE MUSIC" : "PLAY MUSIC");
+        musicButton.render(getTheme().isPlaying() ? "MUTE MUSIC" : "PLAY MUSIC");
     }
 }

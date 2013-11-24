@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * Created by Tomas on 10/8/13.
  */
-abstract class Icon extends InteractiveBlock {
+public abstract class Icon extends InteractiveBlock {
 
     protected final SpriteBatch spriteBatch;
     private final BitmapFont font;
@@ -18,11 +18,11 @@ abstract class Icon extends InteractiveBlock {
     private Vector2 offset;
     private String text;
 
-    Icon(Gui ui, float x, float y, float width, float height) {
+    public Icon(Gui ui, float x, float y, float width, float height) {
         this(ui, new Rectangle(x, y, width, height));
     }
 
-    Icon(Gui ui, Rectangle rectangle) {
+    public Icon(Gui ui, Rectangle rectangle) {
         super(ui, rectangle);
         this.spriteBatch = ui.getSpriteBatch();
         this.font = ui.getFont();

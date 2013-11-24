@@ -78,9 +78,9 @@ public class TowerTypeBuilder {
         specs.add(Specs.getSpecsFromDamage(TowerName.Majestic, 4, Haste, 45, BUFF_RANGE, 1.5f, BuffAbility.getSpeed(20), Treasure.fromWater(2).addFire(2)));
         specs.add(Specs.getSpecsFromDamage(TowerName.Magnificent, 5, Haste, 45, BUFF_RANGE, 2f, BuffAbility.getSpeed(20), Treasure.fromWater(3).addFire(3)));
 
-        specs.add(Specs.getSpecsFromMultiplier(TowerName.Sunny, 2, Sunbeam, XS_SPEED, L_RANGE, .33f, new SunbeamAbility(0.2f, L_RANGE), Treasure.fromWater(1).addNature(1)));
-        specs.add(Specs.getSpecsFromMultiplier(TowerName.Solar, 4, Sunbeam, XS_SPEED, L_RANGE, .33f, new SunbeamAbility(0.7f, L_RANGE * 1.5f), Treasure.fromWater(2).addNature(2)));
-        specs.add(Specs.getSpecsFromMultiplier(TowerName.Photonic, 5, Sunbeam, XS_SPEED, L_RANGE, .33f, new SunbeamAbility(1.7f, L_RANGE * 2), Treasure.fromWater(3).addNature(3)));
+        specs.add(Specs.getSpecsFromMultiplier(TowerName.Sunny, 2, Sunbeam, S_SPEED, L_RANGE, .33f, new SunbeamAbility(0.2f, L_RANGE), Treasure.fromWater(1).addNature(1)));
+        specs.add(Specs.getSpecsFromMultiplier(TowerName.Solar, 4, Sunbeam, S_SPEED, L_RANGE, .33f, new SunbeamAbility(0.7f, L_RANGE * 1.5f), Treasure.fromWater(2).addNature(2)));
+        specs.add(Specs.getSpecsFromMultiplier(TowerName.Photonic, 5, Sunbeam, S_SPEED, L_RANGE, .33f, new SunbeamAbility(1.7f, L_RANGE * 2), Treasure.fromWater(3).addNature(3)));
 
         specs.add(Specs.getSpecsFromMultiplier(TowerName.Poison, 2, Weaken, N_SPEED, N_RANGE, .33f, HitAbility.getPoison(scale, 0.2f, 1, 0.1f), Treasure.fromWater(1).addLight(1)));
         specs.add(Specs.getSpecsFromMultiplier(TowerName.Toxic, 4, Weaken, N_SPEED, N_RANGE, .33f, HitAbility.getPoison(scale, 0.5f, 1, 0.15f), Treasure.fromWater(2).addLight(2)));

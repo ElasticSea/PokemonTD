@@ -7,18 +7,14 @@ import com.pixelthieves.pokemontd.graphics.ui.DisplayText;
 /**
  * Created by Tomas on 11/19/13.
  */
-class SingInEndGame extends ExitTab {
+class SingInEndGame extends EndGame {
 
     private Menu menu;
-    private final DisplayText score;
-    private final DisplayText congratulations;
     private final MenuButton publishScoreButton;
 
     SingInEndGame(final Menu menu, Rectangle rectangle, int count) {
-        super(menu, rectangle, false, count);
+        super(menu, rectangle, count);
         this.menu = menu;
-        congratulations = new DisplayText(ui, rects.get(0), ui.getFont(), BitmapFont.HAlignment.CENTER);
-        score = new DisplayText(ui, rects.get(1), ui.getFont(), BitmapFont.HAlignment.CENTER);
 
         publishScoreButton = new MenuButton(menu, rects.get(rects.size() - 2)) {
             @Override
@@ -33,15 +29,11 @@ class SingInEndGame extends ExitTab {
             }
         };
         register(publishScoreButton);
-        this.setCloseTabWhenNotClicked(false);
-        this.setRenderLines(false);
     }
 
     @Override
     public void render() {
         super.render();
-        congratulations.render("CONGRATULATIONS");
-        score.render(menu.getPlayer().getScore() + "");
         publishScoreButton.render(menu.getGameSevice().isSignedIn() ? "SUBMIT SCORE" : "SIGN IN TO SUBMIT");
     }
 }

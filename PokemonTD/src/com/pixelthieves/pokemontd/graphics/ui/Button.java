@@ -25,27 +25,28 @@ public abstract class Button extends InteractiveBlock {
     private float scale;
 
     protected Button(Gui gui, float x, float y, float width, float height, BitmapFont font) {
-        this(gui, new Rectangle(x, y, width, height), font, BitmapFont.HAlignment.CENTER, false);
+        this(gui, new Rectangle(x, y, width, height), font, BitmapFont.HAlignment.CENTER, false, new String());
     }
 
     protected Button(Gui gui, Rectangle rectangle, BitmapFont font) {
-        this(gui, rectangle, font, BitmapFont.HAlignment.CENTER, false);
+        this(gui, rectangle, font, BitmapFont.HAlignment.CENTER, false, new String());
     }
 
 
     protected Button(Gui gui, Rectangle rectangle, BitmapFont font, BitmapFont.HAlignment alignment) {
-        this(gui, rectangle, font, alignment, false);
+        this(gui, rectangle, font, alignment, false, new String());
     }
 
-    protected Button(Gui gui, Rectangle rectangle, BitmapFont font, BitmapFont.HAlignment alignment, boolean wrapped) {
+    protected Button(Gui gui, Rectangle rectangle, BitmapFont font, BitmapFont.HAlignment alignment, boolean wrapped,
+                     String text) {
         super(gui, rectangle);
         this.shapeRenderer = gui.getShapeRenderer();
         this.spriteBatch = gui.getSpriteBatch();
-        this.text = new String();
+        this.text = text;
         this.font = font;
         this.alignment = alignment;
         this.wrapped = wrapped;
-        this.position = recalculatePosition(text);
+        this.position = recalculatePosition(this.text);
     }
 
     public void setScale(float scale) {
@@ -56,7 +57,7 @@ public abstract class Button extends InteractiveBlock {
     public void render() {
         float oldScale = font.getScaleX();
         if (scale != 0) {
-            font.setScale(scale*oldScale);
+            font.setScale(Math.round(scale*oldScale));
         }
         if (backgroundColor != Color.CLEAR || App.DEBUG != null) {
             Color color = isEnabled() ? this.backgroundColor : Color.DARK_GRAY;
@@ -97,7 +98,7 @@ public abstract class Button extends InteractiveBlock {
         render();
     }
 
-    private Vector2 recalculatePosition(String text) {
+    public Vector2 recalculatePosition(String text) {
         fontBounds = font.getBounds(text);
         return new Vector2((width - fontBounds.width) / 2f, (height + fontBounds.height) / 2f);
     }
@@ -117,5 +118,13 @@ public abstract class Button extends InteractiveBlock {
 
     public void setBackgroundColor(Color backgroundColor) {
         this.backgroundColor = backgroundColor;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 }
