@@ -46,12 +46,10 @@ class AbilityTab extends ScrollableChildTab {
         private void createTowers(String header, TowerName... names) {
             addTextEntry(header);
             addTextEntry("");
-            float size;
-            DisplayBlock entry;
 
             for (TowerName name : names) {
-                size = menu.getFont().getBounds(names[0].toString()).height;
-                entry = new Entry(name, this, new Rectangle(size, height - size * index++, width - 2 * size, size));
+                float size = menu.getFont().getBounds(names[0].toString()).height;
+                DisplayBlock entry = new Entry(name, this, new Rectangle(size, height - size * index++, width - 2 * size, size));
                 entry.refresh();
                 entries.add(entry);
             }

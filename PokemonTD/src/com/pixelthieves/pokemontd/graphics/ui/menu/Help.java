@@ -36,7 +36,7 @@ public class Help extends ChildTab {
 
         register(tutorialButton);
         register(towersButton);
-        cards.add(abilityTab);
+        cards.add(tutorialTab);
         cards.add(abilityTab);
     }
 
