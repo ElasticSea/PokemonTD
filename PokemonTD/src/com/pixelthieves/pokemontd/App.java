@@ -427,4 +427,12 @@ public class App extends Game2D {
     public void setUi(Ui ui) {
         this.ui = ui;
     }
+
+    @Override
+    public void pause() {
+        super.pause();
+        if (isSessionStarted()) {
+            freeze(true);
+        }
+    }
 }
