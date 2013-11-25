@@ -428,11 +428,11 @@ public class App extends Game2D {
         this.ui = ui;
     }
 
-    @Override
+  /*  @Override
     public void pause() {
         super.pause();
         if (isSessionStarted()) {
             freeze(true);
         }
-    }
+    }     */
 }
