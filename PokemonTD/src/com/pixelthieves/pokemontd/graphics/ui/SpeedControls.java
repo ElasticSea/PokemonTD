@@ -12,6 +12,8 @@ public class SpeedControls extends DisplayBlock {
     private final Button speed;
     private final Button faster;
     private final Clock clock;
+    private float currentMultiplierCache;
+    private String currentMultiplierTextCache;
 
     public SpeedControls(Gui ui, float x, float y, float width, float height, final Clock clock) {
         super(ui, new Rectangle(x, y, width, height));
@@ -48,7 +50,12 @@ public class SpeedControls extends DisplayBlock {
     public void render() {
         slower.render("<<");
         double currentMultiplier = clock.getSpeedMultiplier();
-        speed.render("x" + (currentMultiplier >= 1 ? (int) currentMultiplier : "1/" + (int) (1 / currentMultiplier)));
+        if (currentMultiplierCache != clock.getSpeedMultiplier()) {
+            currentMultiplierCache = clock.getSpeedMultiplier();
+            currentMultiplierTextCache =
+                    "x" + (currentMultiplier >= 1 ? (int) currentMultiplier : "1/" + (int) (1 / currentMultiplier));
+        }
+        speed.render(currentMultiplierTextCache);
         faster.render(">>");
     }
 

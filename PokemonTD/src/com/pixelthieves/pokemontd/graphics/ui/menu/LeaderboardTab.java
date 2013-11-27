@@ -21,10 +21,10 @@ class LeaderboardTab extends ExitTab {
     private final Leaderboard leaderboard;
 
     LeaderboardTab(final Menu menu, Rectangle rectangle, int count) {
-        super(menu, rectangle, false, count);
+        super(menu, rectangle, false, false, count);
         leaderboardHeader = new DisplayText(menu, rects.get(0), menu.getFont());
-        float leaderboardHeight = rectangle.height - (leaderboardHeader.height + exit.height);
-        leaderboard = new Leaderboard(menu, new Rectangle(x, y + exit.height, width, leaderboardHeight), 10);
+        float leaderboardHeight = rectangle.height - (leaderboardHeader.height + endButton.height);
+        leaderboard = new Leaderboard(menu, new Rectangle(x, y + endButton.height, width, leaderboardHeight), 10);
         this.setCloseTabWhenNotClicked(false);
         this.setRenderLines(false);
     }

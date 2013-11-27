@@ -102,6 +102,8 @@ public class App extends Game2D {
     private GestureDetector inGameInputProcessor;
     private GestureDetector cameraMovementProcessor;
     private InputMultiplexer inputMultiplexer;
+    private Difficulty difficulty = Difficulty.Easy;
+    private WorldUpdater worldUpdater;
 
     public static TweenManagerAdapter getTweenManager() {
         return tweenManager;
@@ -141,7 +143,6 @@ public class App extends Game2D {
     protected void init(OrthographicCamera camera) {
         this.clock = Clock.createInstance("Logic", true, true);
         new Assets().addAtlas(new TextureAtlas("data/textures/packed.atlas"));
-        initializeWorld();
         spriteBatch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
 
@@ -155,6 +156,7 @@ public class App extends Game2D {
         WORLD_RECT = new Rectangle(0, 0, WORLD_WIDTH * WORLD_SCALE, WORLD_HEIGHT * WORLD_SCALE);
         cameraHandler = new BoundedCameraHandler(camera, WORLD_RECT, 0.2f);
         cameraHandler.move(0, Float.MAX_VALUE);
+        initializeWorld();
         initializeContent();
         initializeManagers();
         initializeSystems();
@@ -162,7 +164,7 @@ public class App extends Game2D {
         ui = new Ui(this, menu);
         initializeInput();
         initializeTween();
-        gameRenderer = new GameRenderer(this, ui, map, world, camera);
+        gameRenderer = new GameRenderer(this, ui, map,  camera);
         if (Gdx.graphics.isGL20Available()) {
             mainMenuGaimRenderer = new CachedGaussianBlurRenderer(gameRenderer, 20);
             frozenGameRenderer = new GrayscaleRenderer(gameRenderer);
@@ -176,11 +178,16 @@ public class App extends Game2D {
 
     private void initializeWorld() {
         this.world = new World();
-        this.clock.addService(new WorldUpdater(world));
+        if (worldUpdater == null) {
+            this.worldUpdater = new WorldUpdater(world);
+            this.clock.addService(worldUpdater);
+        } else {
+            this.worldUpdater.setWorld(world);
+        }
     }
 
     private void initializeContent() {
-        player = new Player(this, 50, 70, 0);
+        player = new Player(this, 50, 70);
     }
 
     private void initializeManagers() {
@@ -189,10 +196,10 @@ public class App extends Game2D {
         } else {
             this.waveManager = new WaveManager(this, pathPack, 75, 30);
         }
-        this.towerManager = new TowerManager(world, blueprint, player);
-        this.creepManager = new CreepManager(world);
-        this.invisibleManager = new InvisibleManager(world, clock, INVISIBLE_INTERVAL);
-        this.interestManager = new InterestManager(world, player.getTreasure(), towerManager, 2, INTEREST_INTERVAL);
+        this.towerManager = new TowerManager(this, blueprint, player);
+        this.creepManager = new CreepManager(this);
+        this.invisibleManager = new InvisibleManager(this, clock, INVISIBLE_INTERVAL);
+        this.interestManager = new InterestManager(this, player.getTreasure(), 2, INTEREST_INTERVAL);
 
         filters.add(waveManager.getFilter());
         filters.add(interestManager.getFilter());
@@ -318,6 +325,14 @@ public class App extends Game2D {
         return gameService;
     }
 
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
     private class MenuRenderer implements Renderable {
 
         @Override
@@ -400,6 +415,18 @@ public class App extends Game2D {
     public void setSessionStarted(boolean sessionStarted) {
         this.sessionStarted = sessionStarted;
         currentGameRenderer = sessionStarted ? gameRenderer : mainMenuGaimRenderer;
+        if (sessionStarted && !waveManager.isActive()) {
+            waveManager.init(difficulty);
+        }
+    }
+
+    public void restart() {
+        player.reset();
+        initializeWorld();
+        initializeSystems();
+        setSessionStarted(false);
+        waveManager.setActive(false);
+        interestManager.getFilter().reset();
     }
 
 
@@ -418,6 +445,11 @@ public class App extends Game2D {
         int blockX = (int) (worldX / App.WORLD_SCALE);
         int blockY = (int) (worldY / App.WORLD_SCALE);
         return new Vector3(blockX, blockY, 0);
+    }
+    public static Vector3 getBlockPositionOptimized(float worldX, float worldY, Vector3 store) {
+        int blockX = (int) (worldX / App.WORLD_SCALE);
+        int blockY = (int) (worldY / App.WORLD_SCALE);
+        return store.set(blockX, blockY, 0);
     }
 
     public Ui getUi() {

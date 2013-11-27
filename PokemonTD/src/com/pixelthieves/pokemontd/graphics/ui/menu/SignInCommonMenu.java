@@ -10,8 +10,8 @@ class SignInCommonMenu extends CommonMenu {
 
     private final MenuButton signInButton;
 
-    SignInCommonMenu(final Menu menu, Rectangle rectangle,boolean closeButton,int count) {
-        super(menu, rectangle, closeButton,count);
+    SignInCommonMenu(final Menu menu, Rectangle rectangle, boolean closeButton, boolean restart, int count) {
+        super(menu, rectangle, closeButton, restart, count);
         signInButton = new MenuButton(menu, rects.get(3)) {
             @Override
             public void process(float x, float y) {

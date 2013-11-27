@@ -4,18 +4,19 @@ package com.pixelthieves.pokemontd;
  * Created by Tomas on 10/5/13.
  */
 public class Player {
-    private final Treasure treasure;
-    private final Health health;
+    private final Treasure treasure = new Treasure();
+    private final Health health = new Health(0, 0);
     private final App app;
-    private final Score score;
+    private final Score score = new Score(0);
+    private final int defaultHealth;
+    private final int defaultGold;
     private int freeElements;
 
-    public Player(App app, int health, int gold, int freeElements) {
+    public Player(App app, int health, int gold) {
         this.app = app;
-        this.treasure = new Treasure(gold);
-        this.health = new Health(Integer.MAX_VALUE, health);
-        this.freeElements = freeElements;
-        this.score = new Score(0);
+        this.defaultHealth = health;
+        this.defaultGold = gold;
+        reset();
     }
 
     public Treasure getTreasure() {
@@ -55,5 +56,11 @@ public class Player {
 
     public void subtractFreeElement() {
         this.freeElements--;
+    }
+
+    public void reset() {
+        score.setScore(0);
+        health.setHealth(Integer.MAX_VALUE, defaultHealth);
+        treasure.set(defaultGold);
     }
 }

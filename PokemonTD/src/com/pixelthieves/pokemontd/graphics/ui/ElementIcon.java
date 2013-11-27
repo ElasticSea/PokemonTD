@@ -1,6 +1,7 @@
 package com.pixelthieves.pokemontd.graphics.ui;
 
 import com.artemis.Entity;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.pixelthieves.core.main.Assets;
@@ -10,7 +11,6 @@ import com.pixelthieves.pokemontd.Player;
 import com.pixelthieves.pokemontd.Treasure;
 import com.pixelthieves.pokemontd.component.HealthComponent;
 import com.pixelthieves.pokemontd.component.WaveComponent;
-import com.pixelthieves.pokemontd.entity.creep.CreepType;
 import com.pixelthieves.pokemontd.graphics.ui.menu.Options;
 import com.pixelthieves.pokemontd.manager.WaveManager;
 
@@ -37,14 +37,15 @@ class ElementIcon extends InteractiveBlock {
     public void render() {
         if (element != null) {
             int elementCount = currentElements.getElement(element) + 1;
-            String text = Treasure.LIMIT.getElement(element) < elementCount ? "max" : "lvl " + elementCount;
+            if (Treasure.LIMIT.getElement(element) < elementCount) {
+                picture.setColor(Color.DARK_GRAY);
+                picture.render(Assets.getTexture("gems/" + element.toString().toLowerCase()), "max", true);
+            } else {
+                picture.setColor(player.getFreeElements() != 0 ? Color.WHITE : Color.DARK_GRAY);
+                picture.render(Assets.getTexture("gems/" + element.toString().toLowerCase()), "lvl " + elementCount,
+                        true);
 
-            picture.render(Assets.getTexture("gems/" + element.toString().toLowerCase()), text, true);
-            spriteBatch.begin();
-            if (player.getFreeElements() == 0) {
-                spriteBatch.draw(Assets.getTexture("blocked"), x, y, width, height);
             }
-            spriteBatch.end();
         }
     }
 
@@ -52,7 +53,8 @@ class ElementIcon extends InteractiveBlock {
     public void process(float x, float y) {
         if (player.getFreeElements() != 0) {
             int elements = currentElements.getElement(element);
-            if (Treasure.LIMIT.getElement(element) > elements && (!element.equals(Element.PURE) || waveManager.isNextWaveLast())) {
+            if (Treasure.LIMIT.getElement(element) > elements &&
+                    (!element.equals(Element.PURE) || waveManager.isNextWaveLast())) {
                 WaveComponent wave = waveManager.fireNextWave(WaveManager.getWave(element, elements));
                 for (Entity creep : wave.getWave()) {
                     Health health = creep.getComponent(HealthComponent.class).getHealth();

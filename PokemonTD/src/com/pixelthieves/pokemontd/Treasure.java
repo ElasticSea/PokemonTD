@@ -10,6 +10,7 @@ import static com.pixelthieves.pokemontd.Element.*;
  */
 public class Treasure {
 
+    public static final Element[] ELEMENTS = Element.values();
     private int gold;
     private final Map<Element, Integer> elementSet = new EnumMap<Element, Integer>(Element.class);
     public static final Treasure LIMIT = new Treasure(Integer.MAX_VALUE, 3, 3, 3, 3, 3, 3, 1);
@@ -20,12 +21,25 @@ public class Treasure {
                 treasure.getElement(SOUL));
     }
 
+    public Treasure() {
+        this(0);
+    }
+
     public Treasure(int gold) {
         this(gold, 0, 0, 0, 0, 0, 0, 0);
     }
 
     public Treasure(int gold, int water, int fire, int nature, int light, int darkness, int pure, int soul) {
+        set(gold, water, fire, nature, light, darkness, pure, soul);
+    }
+
+    public void set(int gold) {
+        elementSet.clear();
         this.gold = gold;
+    }
+
+    public void set(int gold, int water, int fire, int nature, int light, int darkness, int pure, int soul) {
+        set(gold);
         addElement(WATER, water);
         addElement(FIRE, fire);
         addElement(NATURE, nature);
@@ -137,7 +151,7 @@ public class Treasure {
      */
     public boolean includes(Treasure treasure) {
         if (hasGold(treasure.gold)) {
-            for (Element element : Element.values()) {
+            for (Element element : ELEMENTS) {
                 if (!hasElement(element, treasure.getElement(element))) {
                     return false;
                 }

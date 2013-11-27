@@ -12,8 +12,8 @@ class CommonMenu extends ExitTab {
     private final MenuButton optionsButton;
     private final MenuButton helpButton;
 
-    CommonMenu(final Menu menu, Rectangle rectangle, boolean closeButton, int count) {
-        super(menu, rectangle, closeButton, count);
+    CommonMenu(final Menu menu, Rectangle rectangle, boolean closeButton, boolean restart, int count) {
+        super(menu, rectangle, closeButton, restart,count);
         help = new Help(menu, this, rectangle, count);
         options = new Options(menu, this, rectangle, count);
         helpButton = new MenuButton(menu, rects.get(1)) {

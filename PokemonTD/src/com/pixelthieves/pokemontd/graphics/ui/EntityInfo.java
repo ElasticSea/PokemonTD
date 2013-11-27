@@ -53,6 +53,17 @@ class EntityInfo extends GuiBox {
         super.render();
         disableClickables();
         TowerType towerType = ui.getTowerManager().getSelectedTowerType();
+
+        entity = ui.getCreepManager().getClicked();
+        if (entity != null) {
+            ui.getTowerManager().reset();
+            check(entity);
+            lastObject = entity;
+            creepEntityInfo.render(entity);
+            return;
+        }
+
+
         if (towerType != null) {
             check(towerType);
             lastObject = towerType;
@@ -78,14 +89,6 @@ class EntityInfo extends GuiBox {
             return;
         }
 
-        entity = ui.getCreepManager().getClicked();
-        if (entity != null) {
-            check(entity);
-            lastObject = entity;
-            creepEntityInfo.render(entity);
-            return;
-        }
-
         check(null);
 
     }
@@ -97,8 +100,8 @@ class EntityInfo extends GuiBox {
     }
 
     private void disableClickables() {
-        for (Clickable clickable : clickables) {
-            clickable.setEnabled(false);
+        for (int i = 0; i < clickables.size(); i++) {
+            clickables.get(i).setEnabled(false);
         }
     }
 

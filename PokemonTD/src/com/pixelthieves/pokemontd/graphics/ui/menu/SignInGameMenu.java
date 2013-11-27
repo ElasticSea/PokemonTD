@@ -11,7 +11,7 @@ class SignInGameMenu extends SignInCommonMenu {
     private final Button pause;
 
     SignInGameMenu(final Menu menu, Rectangle rectangle, int count) {
-        super(menu, rectangle, true, count);
+        super(menu, rectangle, true,true, count);
         pause = new MenuButton(menu, rects.get(0)) {
             @Override
             public void process(float x, float y) {

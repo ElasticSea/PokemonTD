@@ -2,6 +2,7 @@ package com.pixelthieves.pokemontd.manager;
 
 import com.artemis.Entity;
 import com.artemis.World;
+import com.pixelthieves.pokemontd.App;
 import com.pixelthieves.pokemontd.graphics.ui.Clickable;
 import com.pixelthieves.pokemontd.system.resolve.ui.GetCreep;
 
@@ -10,16 +11,16 @@ import com.pixelthieves.pokemontd.system.resolve.ui.GetCreep;
  */
 public class CreepManager implements Clickable {
 
-    private final World world;
+    private final App app;
     private Entity clickedCreep;
 
-    public CreepManager(World world) {
-        this.world = world;
+    public CreepManager(App app) {
+        this.app = app;
     }
 
     @Override
     public boolean hit(float x, float y) {
-        clickedCreep = world.getSystem(GetCreep.class).getEntity(x, y);
+        clickedCreep = app.getWorld().getSystem(GetCreep.class).getEntity(x, y);
         return clickedCreep != null;
     }
 

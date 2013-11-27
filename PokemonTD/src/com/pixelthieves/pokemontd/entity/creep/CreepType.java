@@ -30,6 +30,7 @@ public class CreepType implements CommonDataType {
     private final float distanceBetweenCreeps;
     private final CreepAbilityType abilityType;
     private final int id;
+    private final AtlasRegion texture;
 
     public CreepType(int id, CreepName name, float speed, float size, int health, Treasure treasure, int creepsInWave,
                      float distanceBetweenCreeps, CreepAbilityType abilityType) {
@@ -42,10 +43,11 @@ public class CreepType implements CommonDataType {
         this.creepsInWave = creepsInWave;
         this.distanceBetweenCreeps = distanceBetweenCreeps;
         this.abilityType = abilityType;
+        this.texture  = Assets.getTexture("creeps/" + name.toString().toLowerCase());
     }
 
     public AtlasRegion getTexture() {
-        return Assets.getTexture("creeps/" + name.toString().toLowerCase());
+        return texture;
     }
 
     public float getSpeed() {

@@ -16,6 +16,8 @@ public class SpriteComponent extends Component {
 
     Map<String, Animation> map = new LinkedHashMap<String, Animation>();
     private Animation defaultAnimation;
+    private boolean dirty = true;
+    private Animation[] values;
 
     public SpriteComponent(String type) {
         add(type);
@@ -35,9 +37,11 @@ public class SpriteComponent extends Component {
             defaultAnimation = a;
         }
         map.put(type, a);
+        this.dirty = true;
     }
 
     public Animation remove(String type) {
+        this.dirty = true;
         return map.remove(type);
     }
 
@@ -45,8 +49,16 @@ public class SpriteComponent extends Component {
         return map.get(type);
     }
 
-    public Collection<Animation> get() {
-        return map.values();
+    public Animation[] get() {
+        if (dirty) {
+            values = new Animation[map.size()];
+            int i = 0;
+            for (Animation animation : map.values()) {
+                values[i++] = animation;
+            }
+            dirty = false;
+        }
+        return values;
     }
 
 

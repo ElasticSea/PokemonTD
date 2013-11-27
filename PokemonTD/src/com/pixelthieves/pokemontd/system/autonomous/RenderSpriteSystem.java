@@ -19,8 +19,6 @@ import com.pixelthieves.pokemontd.component.SpriteComponent;
 import com.pixelthieves.pokemontd.component.TintComponent;
 import com.pixelthieves.pokemontd.component.VisibleComponent;
 
-import java.util.*;
-
 /**
  * Created by Tomas on 10/4/13.
  */
@@ -55,7 +53,9 @@ public class RenderSpriteSystem extends EntitySystem {
         PositionComponent positionComponent = positionMapper.get(e);
         Vector3 size = sizeMapper.get(e).getPoint();
 
-        for (Animation animation : spriteMapper.get(e).get()) {
+        Animation[] animations = spriteMapper.get(e).get();
+        for (int i = 0; i < animations.length; i++) {
+            Animation animation = animations[i];
             if (animation != null && animation.hasNext()) {
                 TextureAtlas.AtlasRegion sprite = animation.next();
                 float x = positionComponent.getPoint().x - size.x / 2f;
@@ -90,18 +90,96 @@ public class RenderSpriteSystem extends EntitySystem {
 
     @Override
     protected void processEntities(ImmutableBag<Entity> entities) {
-        List<PositionComponent> positions = new ArrayList<PositionComponent>(entities.size());
-        Map<PositionComponent, Entity> map = new HashMap<PositionComponent, Entity>();
-        for (int i = 0; i < entities.size(); i++) {
-            Entity entity = entities.get(i);
-            PositionComponent position = positionMapper.get(entity);
-            positions.add(position);
-            map.put(position, entity);
+        Entity[] data = new Entity[entities.size()];
+        int m = 0;
+        int n = 0;
+        while (n < data.length) {
+            Entity entity = entities.get(m++);
+            if (entity != null) {
+                data[n++] = entity;
+            }
         }
-        Collections.sort(positions);
-        for (PositionComponent position : positions) {
-            process(map.get(position));
+        Object[] dataCopy = data.clone();
+
+        PositionComponent[] positions = new PositionComponent[data.length];
+        for (int i = 0; i < positions.length; i++) {
+            positions[i] = positionMapper.get(data[i]);
         }
+
+        Object[] positionCopy = positions.clone();
+        mergeSort(dataCopy, data, positions, positionCopy,0, data.length, 0);
+
+        for (int i = 0; i < data.length; i++) {
+            process(data[i]);
+        }
+    }
+
+    /**
+     * Tuning parameter: list size at or below which insertion sort will be
+     * used in preference to mergesort or quicksort.
+     */
+    private static final int INSERTIONSORT_THRESHOLD = 7;
+
+    /**
+     * Src is the source array that starts at index 0
+     * Dest is the (possibly larger) array destination with a possible offset
+     * low is the index in dest to start sorting
+     * high is the end index in dest to end sorting
+     * off is the offset to generate corresponding low, high in src
+     */
+    private static void mergeSort(Object[] src, Object[] dest, Object[] compareSrc, Object[] compareDest, int low,
+                                  int high, int off) {
+        int length = high - low;
+
+        // Insertion sort on smallest arrays
+        if (length < INSERTIONSORT_THRESHOLD) {
+            for (int i=low; i<high; i++)
+                for (int j=i; j>low &&
+                        ((Comparable) compareDest[j-1]).compareTo(compareDest[j])>0; j--) {
+                    swap(dest, j, j-1);
+            swap(compareDest, j, j-1);
+                }
+            return;
+        }
+
+
+        // Recursively sort halves of dest into src
+        int destLow = low;
+        int destHigh = high;
+        low += off;
+        high += off;
+        int mid = (low + high) >>> 1;
+        mergeSort(dest, src, compareDest, compareSrc, low, mid, -off);
+        mergeSort(dest, src, compareDest, compareSrc, mid, high, -off);
+
+        // If list is already sorted, just copy from src to dest.  This is an
+        // optimization that results in faster sorts for nearly ordered lists.
+        if (((Comparable)compareSrc[mid-1]).compareTo(compareSrc[mid]) <= 0) {
+            System.arraycopy(src, low, dest, destLow, length);
+            return;
+        }
+
+        // Merge sorted halves (now in src) into dest
+        for (int i = destLow, p = low, q = mid; i < destHigh; i++) {
+            if (q >= high || p < mid && ((Comparable) compareSrc[p]).compareTo(compareSrc[q]) < 0) {
+                int i1 = p++;
+                dest[i] = src[i1];
+                compareDest[i] = compareSrc[i1];
+            } else {
+                int i1 = q++;
+                dest[i] = src[i1];
+                compareDest[i] = compareSrc[i1];
+            }
+        }
+    }
+
+    /**
+     * Swaps x[a] with x[b].
+     */
+    private static void swap(Object[] x, int a, int b) {
+        Object t = x[a];
+        x[a] = x[b];
+        x[b] = t;
     }
 
     @Override

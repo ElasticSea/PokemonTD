@@ -17,6 +17,8 @@ public class StatusBar extends GuiBox {
     private final Button menuButton;
     private final GuiBox menuBackground;
     private Rectangle square;
+    private int scoreCache;
+    private String scoreTextCache;
 
     StatusBar(final Ui ui, final Menu otherUi, Rectangle rectangle, Rectangle square, BitmapFont font) {
         super(ui, rectangle);
@@ -41,8 +43,12 @@ public class StatusBar extends GuiBox {
     @Override
     public void render() {
         super.render();
+        if (scoreCache != player.getScore()) {
+            scoreCache = player.getScore();
+            scoreTextCache = scoreCache + "";
+        }
         scoreTitleText.render("Score");
-        scoreText.render(player.getScore()+"");
+        scoreText.render(scoreTextCache);
         speedControls.render();
         menuBackground.render();
         menuButton.render("MENU");

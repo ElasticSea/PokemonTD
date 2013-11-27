@@ -1,5 +1,6 @@
 package com.pixelthieves.pokemontd.entity.creep;
 
+import com.pixelthieves.pokemontd.Difficulty;
 import com.pixelthieves.pokemontd.Treasure;
 
 import java.util.ArrayList;
@@ -26,14 +27,14 @@ public class CreepTypeBuilder {
         list.add(new Specs(CreepName.Lanturn, 60, Treasure.fromGold(1), CreepAbilityType.NORMAL));
         list.add(new Specs(CreepName.Quagsire, 71, Treasure.fromGold(2), CreepAbilityType.NORMAL));
         list.add(new Specs(CreepName.Espeon, 82, Treasure.fromGold(2), CreepAbilityType.SWARM));
-        list.add(new Specs(CreepName.Forretress, 96, Treasure.fromGold(2), CreepAbilityType.NORMAL));   //vymyšlené životy
+        list.add(new Specs(CreepName.Forretress, 96, Treasure.fromGold(2), CreepAbilityType.NORMAL));
         list.add(new Specs(CreepName.Snubbull, 113, Treasure.fromGold(2), CreepAbilityType.NORMAL));
         list.add(new Specs(CreepName.Corsola, 132, Treasure.fromGold(2), CreepAbilityType.RESURRECT));
         list.add(new Specs(CreepName.Miltank, 154, Treasure.fromGold(3), CreepAbilityType.NORMAL));
         list.add(new Specs(CreepName.Entei, 181, Treasure.fromGold(3), CreepAbilityType.NORMAL));
         list.add(new Specs(CreepName.Blaziken, 211, Treasure.fromGold(3), CreepAbilityType.FAST));
-        list.add(new Specs(CreepName.Wurmple, 253, Treasure.fromGold(3), CreepAbilityType.NORMAL));   //vymyšlené životy
-        list.add(new Specs(CreepName.Beautifly, 284, Treasure.fromGold(4), CreepAbilityType.NORMAL));    //vymyšlené životy
+        list.add(new Specs(CreepName.Wurmple, 253, Treasure.fromGold(3), CreepAbilityType.NORMAL));
+        list.add(new Specs(CreepName.Beautifly, 284, Treasure.fromGold(4), CreepAbilityType.NORMAL));
         list.add(new Specs(CreepName.Nuzleaf, 338, Treasure.fromGold(4), CreepAbilityType.SPAWN));
         list.add(new Specs(CreepName.Pelipper, 395, Treasure.fromGold(5), CreepAbilityType.NORMAL));
         list.add(new Specs(CreepName.Kirlia, 463, Treasure.fromGold(5), CreepAbilityType.NORMAL));
@@ -70,7 +71,7 @@ public class CreepTypeBuilder {
         list.add(new Specs(CreepName.Darkrai, 49004, Treasure.fromGold(97), CreepAbilityType.NORMAL));
         list.add(new Specs(CreepName.Snivy, 68569, Treasure.fromGold(107), CreepAbilityType.SWARM));
         list.add(new Specs(CreepName.Tepig, 80911, Treasure.fromGold(117), CreepAbilityType.SPAWN));
-        list.add(new Specs(CreepName.Emboar, 95475, Treasure.fromGold(129), CreepAbilityType.INVISIBLE));    // a dále též vymyšlené
+        list.add(new Specs(CreepName.Emboar, 95475, Treasure.fromGold(129), CreepAbilityType.INVISIBLE));
         list.add(new Specs(CreepName.Watchog, 106876, Treasure.fromGold(142), CreepAbilityType.RESURRECT));
         list.add(new Specs(CreepName.Herdier, 119320, Treasure.fromGold(156), CreepAbilityType.NORMAL));
         list.add(new Specs(CreepName.Liepard, 131764, Treasure.fromGold(172), CreepAbilityType.HEALING));
@@ -119,16 +120,17 @@ public class CreepTypeBuilder {
     /**
      * Creates predefined Map of {@link CreepType} templates.
      *
-     * @param scale scale of templates size, speed, etc..
+     * @param scale      scale of templates size, speed, etc..
      * @param data
+     * @param difficulty
      * @return map of CreepType templates
      */
-    public Map<CreepName, CreepType> build(float scale, List<Specs> data) {
+    public Map<CreepName, CreepType> build(float scale, List<Specs> data, Difficulty difficulty) {
         List<CreepType> list = new ArrayList<CreepType>();
         for (int id = 0; id < data.size(); id++) {
             Specs specification = data.get(id);
             CreepAbilityType ability = specification.getAbilityType();
-            int health = specification.getHealth();
+            int health = (int) (specification.getHealth() * difficulty.getMultiplyer());
             float speed = scale;
             float size = scale;
             int creepsInWay = 32;

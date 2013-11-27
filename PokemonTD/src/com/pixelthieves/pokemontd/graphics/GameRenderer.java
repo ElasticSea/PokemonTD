@@ -25,33 +25,29 @@ public class GameRenderer implements Renderable {
     private final Camera camera;
     private final SpriteBatch spriteBatch;
     private final ShapeRenderer shapeRenderer;
-    private final RenderTextSystem renderTextSystem;
-    private final RenderSpriteSystem renderSpriteSystem;
-    private final RenderRangeSystem renderRangeSystem;
-    private final RenderDebugSystem renderDebugSystem;
-    private final RenderHealthSystem renderHealthSystem;
     private final TileMap<TextureAtlas.AtlasRegion> tileMap;
     private final PathPack pathPack;
     private final TowerManager towerManager;
 
-    public GameRenderer(App app, Ui ui, MapData mapData, World world, Camera camera) {
+    public GameRenderer(App app, Ui ui, MapData mapData, Camera camera) {
         this.app = app;
         this.ui = ui;
         this.camera = camera;
         this.towerManager = ui.getTowerManager();
         this.spriteBatch = app.getSpriteBatch();
         this.shapeRenderer = app.getShapeRenderer();
-        this.renderSpriteSystem = world.getSystem(RenderSpriteSystem.class);
-        this.renderTextSystem = world.getSystem(RenderTextSystem.class);
-        this.renderRangeSystem = world.getSystem(RenderRangeSystem.class);
-        this.renderDebugSystem = world.getSystem(RenderDebugSystem.class);
-        this.renderHealthSystem = world.getSystem(RenderHealthSystem.class);
         this.tileMap = mapData.getTileMap();
         this.pathPack = mapData.getPathPack();
     }
 
     @Override
     public void render() {
+        RenderSpriteSystem renderSpriteSystem = app.getWorld().getSystem(RenderSpriteSystem.class);
+        RenderTextSystem renderTextSystem = app.getWorld().getSystem(RenderTextSystem.class);
+        RenderRangeSystem renderRangeSystem = app.getWorld().getSystem(RenderRangeSystem.class);
+        RenderDebugSystem renderDebugSystem = app.getWorld().getSystem(RenderDebugSystem.class);
+        RenderHealthSystem renderHealthSystem = app.getWorld().getSystem(RenderHealthSystem.class);
+
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
         drawMap(0);

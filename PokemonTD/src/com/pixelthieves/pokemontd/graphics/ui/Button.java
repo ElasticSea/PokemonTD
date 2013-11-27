@@ -57,7 +57,7 @@ public abstract class Button extends InteractiveBlock {
     public void render() {
         float oldScale = font.getScaleX();
         if (scale != 0) {
-            font.setScale(Math.round(scale*oldScale));
+            font.setScale(Math.round(scale * oldScale));
         }
         if (backgroundColor != Color.CLEAR || App.DEBUG != null) {
             Color color = isEnabled() ? this.backgroundColor : Color.DARK_GRAY;
@@ -126,5 +126,9 @@ public abstract class Button extends InteractiveBlock {
 
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    public void renderText() {
+        render(text);
     }
 }

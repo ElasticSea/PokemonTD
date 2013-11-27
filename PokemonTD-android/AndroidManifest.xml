@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pixelthieves.pokemontd"
-    android:versionCode="2"
-    android:versionName="0.9.9-a" >
-    <uses-sdk android:minSdkVersion="5" android:targetSdkVersion="17" />
+    android:versionCode="6"
+    android:versionName="0.9.9-a3" >
+    <uses-sdk android:minSdkVersion="3" android:targetSdkVersion="17" />
 
     <application
         android:icon="@drawable/ic_launcher"

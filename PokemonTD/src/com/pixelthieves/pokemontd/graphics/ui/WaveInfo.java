@@ -61,16 +61,13 @@ public class WaveInfo extends GuiBox {
         super.render();
         CreepType nextWave = waveManager.getNextWave();
         if (nextWave != null) {
-            // waveText.render("Wave");
-            //  waveNumberText.render(String.valueOf(nextWave.getId() + 1));
             abilityText.render(nextWave.getAbilityType().toString());
             creepTexture.render(nextWave.getTexture(), "");
             this.nextWave.render("next wave", Color.WHITE, NEXTWAVE_COLOR);
+            header.render("Next Wave", String.valueOf(nextWave.getId() + 1));
+        }else{
+            header.render("","");
         }
-        if (nextWave == null) {
-            this.nextWave.render("next wave", Color.WHITE, NEXTWAVE2_COLOR);
-        }
-        header.render("Next Wave", String.valueOf(nextWave.getId() + 1));
     }
 
     @Override

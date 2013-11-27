@@ -63,8 +63,8 @@ public abstract class Gui extends GestureDetector.GestureAdapter implements Rend
 
     @Override
     public void render() {
-        for (DisplayBlock displayBlock : clickables) {
-            displayBlock.render();
+        for (int i = 0; i < clickables.size(); i++){
+            clickables.get(i).render();
         }
     }
 
@@ -75,8 +75,8 @@ public abstract class Gui extends GestureDetector.GestureAdapter implements Rend
 
     protected boolean checkUiHit(float x, float y) {
         boolean condition = false;
-        for (Clickable clickable : clickables) {
-            if (clickable.hit(x, y)) {
+        for (int i = 0; i < clickables.size(); i++){
+            if (clickables.get(i).hit(x, y)) {
                 condition = true;
             }
         }

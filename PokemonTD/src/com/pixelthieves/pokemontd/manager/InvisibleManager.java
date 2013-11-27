@@ -4,6 +4,7 @@ import com.artemis.World;
 import com.pixelthieves.core.logic.Clock;
 import com.pixelthieves.core.logic.UpdateFilter;
 import com.pixelthieves.core.logic.Updateable;
+import com.pixelthieves.pokemontd.App;
 import com.pixelthieves.pokemontd.system.autonomous.InvisibleSystem;
 
 
@@ -14,17 +15,17 @@ import com.pixelthieves.pokemontd.system.autonomous.InvisibleSystem;
  */
 
 public class InvisibleManager implements Updateable {
-    private final World world;
+    private final App app;
     private boolean visibility;
 
-    public InvisibleManager(World world, Clock clock, float interval) {
-        this.world = world;
+    public InvisibleManager(App app, Clock clock, float interval) {
+        this.app = app;
         clock.addService(new UpdateFilter(this, interval));
     }
 
     @Override
     public void update(float delta) {
-        world.getSystem(InvisibleSystem.class).start(visibility);
+        app.getWorld().getSystem(InvisibleSystem.class).start(visibility);
         switchVisibility();
     }
 

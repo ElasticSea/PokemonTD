@@ -29,6 +29,7 @@ public class TowerManager implements Clickable {
 
     public static final Color TINT = new Color(1, 1, 1, 0.5f);
     private final Blueprint blueprint;
+    private final App app;
     private Entity placeholderTower;
     private Entity clickedTower;
 
@@ -45,11 +46,11 @@ public class TowerManager implements Clickable {
 
     @Override
     public boolean hit(float x, float y) {
-        clickedTower = world.getSystem(GetTower.class).getEntity(x, y);
+        clickedTower = app.getWorld().getSystem(GetTower.class).getEntity(x, y);
         if (clickedTower == null) {
             switch (status) {
                 case NONE:
-                    rollBack();
+                    reset();
                 case PLACING_TOWER:
                     placeTower((int) x, (int) y);
                     break;
@@ -58,8 +59,7 @@ public class TowerManager implements Clickable {
                     break;
             }
         } else {
-            rollBack();
-            status = Status.NONE;
+            reset();
         }
         return clickedTower != null;
     }
@@ -74,9 +74,10 @@ public class TowerManager implements Clickable {
 
     }
 
-    private void rollBack() {
+    public void reset() {
         removePlaceholderTower();
         selectedTower = null;
+        status = Status.NONE;
     }
 
     public Entity getClicked() {
@@ -94,15 +95,15 @@ public class TowerManager implements Clickable {
             } else if (clickedTower != null) {
                 upgradeTower();
             }
-            this.setStatus(Status.NONE);
-            selectedTower = null;
         }
+        this.setStatus(Status.NONE);
+        selectedTower = null;
     }
 
     private void upgradeTower() {
         purchaseTower(selectedTower);
         Vector3 towerPosition = clickedTower.getComponent(PositionComponent.class).getPoint();
-        Entity entity = Tower.registerTower(world, selectedTower, towerPosition.x, towerPosition.y);
+        Entity entity = Tower.registerTower(app.getWorld(), selectedTower, towerPosition.x, towerPosition.y);
         entity.getComponent(UpgradeComponent.class).add(clickedTower.getComponent(UpgradeComponent
                 .class));
         entity.getComponent(UpgradeComponent.class).add(clickedTower.getComponent(TowerTypeComponent
@@ -128,7 +129,7 @@ public class TowerManager implements Clickable {
     private void buyNewTower() {
         Vector3 placeholderPosition = placeholderTower.getComponent(PositionComponent.class).getPoint();
         purchaseTower(selectedTower);
-        clickedTower = Tower.registerTower(world, selectedTower, placeholderPosition.x, placeholderPosition.y);
+        clickedTower = Tower.registerTower(app.getWorld(), selectedTower, placeholderPosition.x, placeholderPosition.y);
         removePlaceholderTower();
     }
 
@@ -170,13 +171,12 @@ public class TowerManager implements Clickable {
 
     private Status status = Status.NONE;
 
-    private final World world;
     private final Player player;
     private TowerType selectedTower = null;
 
 
-    public TowerManager(World world, Blueprint blueprint, Player player) {
-        this.world = world;
+    public TowerManager(App app, Blueprint blueprint, Player player) {
+        this.app = app;
         this.blueprint = blueprint;
         this.player = player;
         if (App.STRESS_TEST != null) {
@@ -189,7 +189,7 @@ public class TowerManager implements Clickable {
                             tower = TowerType.getType(name);
                         } while (tower == null);
                         Vector3 towerPosition = App.getTowerPositionByBlock(i, j);
-                        Tower.registerTower(world, tower, towerPosition.x, towerPosition.y);
+                        Tower.registerTower(app.getWorld(), tower, towerPosition.x, towerPosition.y);
                     }
                 }
             }
@@ -211,7 +211,7 @@ public class TowerManager implements Clickable {
 
     private void createPlaceholder(Vector3 towerPosition) {
         this.placeholderTower =
-                StaticObject.registerFakeTower(this.world, selectedTower, towerPosition.x, towerPosition.y, TINT);
+                StaticObject.registerFakeTower(app.getWorld(), selectedTower, towerPosition.x, towerPosition.y, TINT);
     }
 
     private void movePlaceholder(int x, int y) {

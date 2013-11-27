@@ -5,10 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.pixelthieves.core.logic.UpdateFilter;
 import com.pixelthieves.core.logic.Updateable;
-import com.pixelthieves.pokemontd.App;
-import com.pixelthieves.pokemontd.Element;
-import com.pixelthieves.pokemontd.Player;
-import com.pixelthieves.pokemontd.Treasure;
+import com.pixelthieves.pokemontd.*;
 import com.pixelthieves.pokemontd.component.WaveComponent;
 import com.pixelthieves.pokemontd.entity.creep.*;
 import com.pixelthieves.pokemontd.map.Path;
@@ -16,38 +13,37 @@ import com.pixelthieves.pokemontd.map.PathPack;
 import com.pixelthieves.pokemontd.system.resolve.FireTextInfo;
 
 import java.util.*;
+import java.util.Map;
 
 /**
  * Created by Tomas on 10/5/13.
  */
 public class WaveManager implements Updateable {
-    private final World world;
     private final PathPack pathPack;
 
-    private final Iterator<CreepName> creeps;
+    private Iterator<CreepName> creeps;
     private final UpdateFilter filter;
     private final Player player;
     private final App app;
     private final float waveInterval;
     private final float betweenWaveInterval;
-    private final int lastWaveId;
+    private int lastWaveId;
     private boolean active;
     private CreepType nextWave;
     private final List<WaveComponent> waves = new LinkedList<WaveComponent>();
 
-    public static final CreepTypeBuilder creepTypeBuilder = new CreepTypeBuilder();
-    private static final Map<CreepName, CreepType> waveStore =
-            creepTypeBuilder.build(App.WORLD_SCALE, CreepTypeBuilder.normal);
+    public static CreepTypeBuilder creepTypeBuilder;
+    private static Map<CreepName, CreepType> waveStore;
 
 
     public static CreepType getWave(Element element, int count) {
         return elementWaves.get(element).get(count);
     }
 
-    private static Map<Element, List<CreepType>> elementWaves = getElementWave();
+    private static Map<Element, List<CreepType>> elementWaves;
 
-    public static Map<Element, List<CreepType>> getElementWave() {
-        Map<CreepName, CreepType> waves = creepTypeBuilder.build(App.WORLD_SCALE, CreepTypeBuilder.element);
+    public static Map<Element, List<CreepType>> getElementWave(Difficulty difficulty) {
+        Map<CreepName, CreepType> waves = creepTypeBuilder.build(App.WORLD_SCALE, CreepTypeBuilder.element, difficulty);
         Map<Element, List<CreepType>> map = new HashMap<Element, List<CreepType>>();
         for (Map.Entry<CreepName, CreepType> creep : waves.entrySet()) {
             CreepType creepValue = creep.getValue();
@@ -70,16 +66,22 @@ public class WaveManager implements Updateable {
 
     public WaveManager(App app, PathPack pathPack, float waveInterval, float betweenWaveInterval) {
         this.app = app;
-        this.world = app.getWorld();
         this.player = app.getPlayer();
         this.pathPack = pathPack;
-        this.creeps = Arrays.asList(CreepName.values()).iterator();
-        this.active = true;
         this.waveInterval = waveInterval;
         this.betweenWaveInterval = betweenWaveInterval;
         this.filter = new UpdateFilter(this, betweenWaveInterval);
-        this.lastWaveId  = waveStore.size()-1;
+    }
+
+    public void init(Difficulty difficulty) {
+        creeps = Arrays.asList(CreepName.values()).iterator();
+        creepTypeBuilder = new CreepTypeBuilder();
+        waveStore = creepTypeBuilder.build(App.WORLD_SCALE, CreepTypeBuilder.normal, difficulty);
+        elementWaves = getElementWave(difficulty);
+        lastWaveId = waveStore.size() - 1;
+        filter.reset(betweenWaveInterval);
         updateWave();
+        this.active = true;
     }
 
     public boolean isNextWaveLast() {
@@ -94,6 +96,7 @@ public class WaveManager implements Updateable {
 
     @Override
     public void update(float delta) {
+        System.out.println(nextWave+" "+state);
         if (nextWave != null) {
             switch (state) {
                 case WAVE:
@@ -109,7 +112,9 @@ public class WaveManager implements Updateable {
             }
             fireNextWave(nextWave);
         } else {
-            app.endGame();
+            if (App.STRESS_TEST == null) {
+                app.endGame();
+            }
         }
     }
 
@@ -122,7 +127,7 @@ public class WaveManager implements Updateable {
             double angleToNextPoint = Math.atan2(nextPoint.y - startPoint.y, nextPoint.x - startPoint.x);
             float xOffset = (float) (Math.cos(angleToNextPoint + Math.PI) * next.getDistanceBetweenCreeps() * i);
             float yOffset = (float) (Math.sin(angleToNextPoint + Math.PI) * next.getDistanceBetweenCreeps() * i);
-            Creep.registerCreep(world, new Path(path), wave, next, startPoint.x + xOffset, startPoint.y + yOffset);
+            Creep.registerCreep(app.getWorld(), new Path(path), wave, next, startPoint.x + xOffset, startPoint.y + yOffset);
         }
         registerWave(wave);
         updateWave();
@@ -136,7 +141,7 @@ public class WaveManager implements Updateable {
     private void unregisterWave(WaveComponent wave) {
         if ((wave.getId() + 1) % 5 == 0) {
             player.addFreeElement();
-            world.getSystem(FireTextInfo.class).fireText("FREE ELEMENT", Color.GREEN);
+            app.getWorld().getSystem(FireTextInfo.class).fireText("FREE ELEMENT", Color.GREEN);
         }
         waves.remove(wave);
     }
@@ -179,7 +184,7 @@ public class WaveManager implements Updateable {
     }
 
     public void triggerNextWave() {
-       if (state.equals(State.WAVE)) {
+        if (state.equals(State.WAVE)) {
             app.updateFilters(filter.getRemainingTime());
         }
         app.updateFilters(filter.getRemainingTime());

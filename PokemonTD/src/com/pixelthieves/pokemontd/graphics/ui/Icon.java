@@ -1,5 +1,6 @@
 package com.pixelthieves.pokemontd.graphics.ui;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -17,6 +18,7 @@ public abstract class Icon extends InteractiveBlock {
     private float size;
     private Vector2 offset;
     private String text;
+    private Color color = Color.WHITE;
 
     public Icon(Gui ui, float x, float y, float width, float height) {
         this(ui, new Rectangle(x, y, width, height));
@@ -30,29 +32,20 @@ public abstract class Icon extends InteractiveBlock {
 
     @Override
     public void render() {
-       /* if (color != Color.CLEAR) {
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            shapeRenderer.setColor(color);
-            shapeRenderer.rect(x, y, width, height);
-            shapeRenderer.end();
-        }   */
-
     }
 
     private void renderInternal() {
         spriteBatch.begin();
         if (texture != null) {
+            spriteBatch.setColor(color);
             spriteBatch.draw(texture, x + offset.x, y + offset.y, size, size);
         }
 
         if (text != null && !text.equals("")) {
-            float oldScale = font.getScaleY();
-            //font.setScale(Math.max(Math.round( oldScale / 1.5f), 0));
+            font.setColor(color);
             BitmapFont.TextBounds fontBounds = font.getBounds(text);
-
             float x = this.x + (width - fontBounds.width) / 2f;
             font.draw(spriteBatch, text, x, y + fontBounds.height);
-            //  font.setScale(oldScale);
         }
         spriteBatch.end();
     }
@@ -82,9 +75,12 @@ public abstract class Icon extends InteractiveBlock {
         text = "";
         texture = null;
     }
-    /*
-        spriteBatch.begin();
-        spriteBatch.draw(texture, x + offset.x, y + offset.y, size, size);
-        spriteBatch.end();
-    }    */
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
 }
