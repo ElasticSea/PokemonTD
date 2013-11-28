@@ -13,12 +13,11 @@ public class Treasure {
     public static final Element[] ELEMENTS = Element.values();
     private int gold;
     private final Map<Element, Integer> elementSet = new EnumMap<Element, Integer>(Element.class);
-    public static final Treasure LIMIT = new Treasure(Integer.MAX_VALUE, 3, 3, 3, 3, 3, 3, 1);
+    public static final Treasure LIMIT = new Treasure(Integer.MAX_VALUE, 3, 3, 3, 3, 3, 1);
 
     public Treasure(Treasure treasure) {
         this(treasure.getGold(), treasure.getElement(WATER), treasure.getElement(FIRE), treasure.getElement(NATURE),
-                treasure.getElement(LIGHT), treasure.getElement(DARKNESS), treasure.getElement(PURE),
-                treasure.getElement(SOUL));
+                treasure.getElement(LIGHT), treasure.getElement(DARKNESS), treasure.getElement(SOUL));
     }
 
     public Treasure() {
@@ -26,11 +25,11 @@ public class Treasure {
     }
 
     public Treasure(int gold) {
-        this(gold, 0, 0, 0, 0, 0, 0, 0);
+        this(gold, 0, 0, 0, 0, 0, 0);
     }
 
-    public Treasure(int gold, int water, int fire, int nature, int light, int darkness, int pure, int soul) {
-        set(gold, water, fire, nature, light, darkness, pure, soul);
+    public Treasure(int gold, int water, int fire, int nature, int light, int darkness, int soul) {
+        set(gold, water, fire, nature, light, darkness, soul);
     }
 
     public void set(int gold) {
@@ -38,14 +37,13 @@ public class Treasure {
         this.gold = gold;
     }
 
-    public void set(int gold, int water, int fire, int nature, int light, int darkness, int pure, int soul) {
+    public void set(int gold, int water, int fire, int nature, int light, int darkness, int soul) {
         set(gold);
         addElement(WATER, water);
         addElement(FIRE, fire);
         addElement(NATURE, nature);
         addElement(LIGHT, light);
         addElement(DARKNESS, darkness);
-        addElement(PURE, pure);
         addElement(SOUL, soul);
     }
 
@@ -101,11 +99,6 @@ public class Treasure {
 
     public Treasure addDarkness(int count) {
         addElement(DARKNESS, count);
-        return this;
-    }
-
-    public Treasure addPure(int count) {
-        addElement(PURE, count);
         return this;
     }
 
@@ -200,34 +193,30 @@ public class Treasure {
     }
 
     public static Treasure fromGold(int count) {
-        return new Treasure(count, 0, 0, 0, 0, 0, 0, 0);
+        return new Treasure(count, 0, 0, 0, 0, 0, 0);
     }
 
     public static Treasure fromWater(int count) {
-        return new Treasure(0, count, 0, 0, 0, 0, 0, 0);
+        return new Treasure(0, count, 0, 0, 0, 0, 0);
     }
 
     public static Treasure fromFire(int count) {
-        return new Treasure(0, 0, count, 0, 0, 0, 0, 0);
+        return new Treasure(0, 0, count, 0, 0, 0, 0);
     }
 
     public static Treasure fromNature(int count) {
-        return new Treasure(0, 0, 0, count, 0, 0, 0, 0);
+        return new Treasure(0, 0, 0, count, 0, 0, 0);
     }
 
     public static Treasure fromLight(int count) {
-        return new Treasure(0, 0, 0, 0, count, 0, 0, 0);
+        return new Treasure(0, 0, 0, 0, count, 0, 0);
     }
 
     public static Treasure fromDarkness(int count) {
-        return new Treasure(0, 0, 0, 0, 0, count, 0, 0);
-    }
-
-    public static Treasure fromPure(int count) {
-        return new Treasure(0, 0, 0, 0, 0, 0, count, 0);
+        return new Treasure(0, 0, 0, 0, 0, count, 0);
     }
 
     public static Treasure fromSoul(int count) {
-        return new Treasure(0, 0, 0, 0, 0, 0, 0, count);
+        return new Treasure(0, 0, 0, 0, 0, 0, count);
     }
 }

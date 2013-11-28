@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.Color;
  */
 public enum Element {
     WATER(Color.BLUE), FIRE(Color.RED), NATURE(Color.GREEN), LIGHT(Color.YELLOW), DARKNESS(Color.MAGENTA),
-    PURE(Color.GRAY),
     SOUL(Color.PINK);
 
     private final Color color;

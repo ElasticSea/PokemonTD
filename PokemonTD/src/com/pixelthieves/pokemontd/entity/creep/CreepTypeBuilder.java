@@ -89,10 +89,10 @@ public class CreepTypeBuilder {
 
     public static List<Specs> getElement() {
         List<Specs> list = new ArrayList<Specs>();
-        list.add(new Specs(CreepName.Xatu, 10, Treasure.fromPure(1), CreepAbilityType.BOSS));
+       /* list.add(new Specs(CreepName.Xatu, 10, Treasure.fromPure(1), CreepAbilityType.BOSS));
         list.add(new Specs(CreepName.Mareep, 36, Treasure.fromPure(1), CreepAbilityType.BOSS));
         list.add(new Specs(CreepName.Jumpluff, 75, Treasure.fromPure(1), CreepAbilityType.BOSS));
-
+                                                                                                    */
         list.add(new Specs(CreepName.Flaaffy, 10, Treasure.fromFire(1), CreepAbilityType.BOSS));
         list.add(new Specs(CreepName.Ampharos, 36, Treasure.fromFire(1), CreepAbilityType.BOSS));
         list.add(new Specs(CreepName.Yanma, 75, Treasure.fromFire(1), CreepAbilityType.BOSS));
