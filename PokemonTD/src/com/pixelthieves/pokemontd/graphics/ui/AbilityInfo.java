@@ -72,7 +72,7 @@ public class AbilityInfo extends HeaderGuiBox {
 
             case Burn:
                 DotData data = (DotData) abilityCache;
-                return "Deals " + data.getIterations() + "x " + (int) (data.getDamageMultiplier()*damage) + " every " +
+                return "Deals " + data.getIterations() + "x " + (int) (data.getDamage()*damage) + " every " +
                         (int) (data.getInterval() * 1000) +
                         " ms.";
 

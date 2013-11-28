@@ -38,7 +38,7 @@ class SignInBox extends MenuTab {
         }
 
         super.render();
-        signInButton.render("SING IN");
-        skipButton.render("SKIP");
+        signInButton.render("Sign In");
+        skipButton.render("Skip");
     }
 }

@@ -27,6 +27,6 @@ class SingInMenuBox extends SignInCommonMenu {
     @Override
     public void render() {
         super.render();
-        startGame.render("PLAY GAME");
+        startGame.render("Play Game");
     }
 }

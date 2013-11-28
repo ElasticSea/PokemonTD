@@ -37,7 +37,7 @@ class CommonMenu extends ExitTab {
     @Override
     public void render() {
         super.render();
-        optionsButton.render("OPTIONS");
-       helpButton.render("HELP");
+        optionsButton.render("Options");
+       helpButton.render("Help");
     }
 }

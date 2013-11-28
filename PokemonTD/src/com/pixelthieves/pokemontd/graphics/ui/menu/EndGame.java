@@ -26,7 +26,7 @@ class EndGame extends ExitTab {
     @Override
     public void render() {
         super.render();
-        congratulations.render("CONGRATULATIONS");
+        congratulations.render("Congratulations");
         score.render(menu.getPlayer().getScore() + "");
     }
 }

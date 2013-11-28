@@ -8,7 +8,7 @@ import com.pixelthieves.pokemontd.component.attack.EffectName;
 public class DotData extends EffectData {
     private final float interval;
     private final int iterations;
-    private final float damageMultiplier;
+    private final float damage;
 
     public DotData(String effect, int iterations, float interval) {
         this(effect, iterations, interval, 1);
@@ -18,7 +18,7 @@ public class DotData extends EffectData {
         super(effect);
         this.iterations = iterations;
         this.interval = interval;
-        this.damageMultiplier = damageMultiplier;
+        this.damage = damageMultiplier * interval / iterations;;
     }
 
     public float getInterval() {
@@ -29,8 +29,8 @@ public class DotData extends EffectData {
         return iterations;
     }
 
-    public float getDamageMultiplier() {
-        return damageMultiplier;
+    public float getDamage() {
+        return damage;
     }
 
     @Override

@@ -172,7 +172,7 @@ public class Treasure {
 
     public void purchase(Treasure cost) {
         this.subtractGold(cost.getGold());
-        this.subtractElement(PURE, cost.getElement(PURE));
+        this.subtractElement(SOUL, cost.getElement(SOUL));
     }
 
     public void add(Treasure treasure) {

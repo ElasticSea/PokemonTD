@@ -32,7 +32,7 @@ class EndTab extends ChildTab {
     @Override
     public void render() {
         super.render();
-        restart.render("RESTART");
-        exit.render("EXIT");
+        restart.render("Restart");
+        exit.render("Exit");
     }
 }

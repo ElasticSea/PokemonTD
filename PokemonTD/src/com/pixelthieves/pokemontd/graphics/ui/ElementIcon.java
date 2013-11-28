@@ -41,7 +41,7 @@ class ElementIcon extends InteractiveBlock {
                 picture.setColor(Color.DARK_GRAY);
                 picture.render(Assets.getTexture("gems/" + element.toString().toLowerCase()), "max", true);
             } else {
-                picture.setColor(player.getFreeElements() != 0 ? Color.WHITE : Color.DARK_GRAY);
+                picture.setColor(player.getFreeElements() != 0 && elementAllowed() ? Color.WHITE : Color.DARK_GRAY);
                 picture.render(Assets.getTexture("gems/" + element.toString().toLowerCase()), "lvl " + elementCount,
                         true);
 
@@ -49,12 +49,15 @@ class ElementIcon extends InteractiveBlock {
         }
     }
 
+    private boolean elementAllowed() {
+        return (!element.equals(Element.SOUL) || waveManager.isNextWaveLast());
+    }
+
     @Override
     public void process(float x, float y) {
         if (player.getFreeElements() != 0) {
             int elements = currentElements.getElement(element);
-            if (Treasure.LIMIT.getElement(element) > elements &&
-                    (!element.equals(Element.PURE) || waveManager.isNextWaveLast())) {
+            if (Treasure.LIMIT.getElement(element) > elements && elementAllowed()) {
                 WaveComponent wave = waveManager.fireNextWave(WaveManager.getWave(element, elements));
                 for (Entity creep : wave.getWave()) {
                     Health health = creep.getComponent(HealthComponent.class).getHealth();

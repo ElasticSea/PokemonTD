@@ -25,6 +25,6 @@ class InGameMenu extends CommonMenu {
     @Override
     public void render() {
         super.render();
-        pause.render(menu.getApp().isFreezed() ? "RESUME" : "PAUSE");
+        pause.render(menu.getApp().isFreezed() ? "Resume" : "pause");
     }
 }

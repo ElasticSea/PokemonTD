@@ -49,8 +49,8 @@ class ExitTab extends MenuTab {
     public void render() {
         super.render();
         if (close != null) {
-            close.render("CLOSE");
+            close.render("Close");
         }
-        endButton.render(restart ? "END" : "EXIT");
+        endButton.render(restart ? "End" : "Exit");
     }
 }

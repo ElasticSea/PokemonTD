@@ -22,7 +22,7 @@ import com.pixelthieves.pokemontd.entity.tower.TowerType;
  */
 
 public class TowerInfo extends CommonInfo {
-    public static final Color CANCEL_COLOR = new Color(Color.ORANGE).mul(0.6f);
+    public static final Color CANCEL_COLOR = new Color(Color.YELLOW).mul(0.6f);
     public static final Color SELL_COLOR = new Color(Color.RED).mul(0.6f);
     public static final Color BUY_COLOR = new Color(Color.GREEN).mul(0.6f);
     protected final DisplayText damage;
@@ -149,11 +149,11 @@ public class TowerInfo extends CommonInfo {
             this.range.render(rangeText, rangeColorCache);
         }
         this.cost.render(costCache);
-        this.cancel.render("cancel", Color.WHITE, CANCEL_COLOR);
+        this.cancel.render("CANCEL", Color.WHITE, CANCEL_COLOR);
         if (sell.isEnabled()) {
-            this.sell.render("sell", Color.WHITE, SELL_COLOR);
+            this.sell.render("SELL", Color.WHITE, SELL_COLOR);
         }
-        this.buy.render("buy", Color.WHITE, BUY_COLOR);
+        this.buy.render("BUY", Color.WHITE, BUY_COLOR);
         if (effectNameCache != null) {
             this.ability.render(Assets.getTexture("abilities/" + effectNameCache.name().toLowerCase()), "");
         }

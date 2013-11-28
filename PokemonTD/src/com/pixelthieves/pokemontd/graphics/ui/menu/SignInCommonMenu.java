@@ -29,6 +29,6 @@ class SignInCommonMenu extends CommonMenu {
     @Override
     public void render() {
         super.render();
-        signInButton.render(menu.getGameSevice().isSignedIn() ? "SIGN OUT" : "SIGN IN");
+        signInButton.render(menu.getGameSevice().isSignedIn() ? "Sign Out" : "Sign In");
     }
 }

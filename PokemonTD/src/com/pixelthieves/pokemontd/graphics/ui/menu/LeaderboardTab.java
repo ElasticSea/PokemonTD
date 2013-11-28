@@ -32,7 +32,7 @@ class LeaderboardTab extends ExitTab {
     @Override
     public void render() {
         super.render();
-        leaderboardHeader.render("LEADERBOARD");
+        leaderboardHeader.render("Leaderboard");
         leaderboard.render();
     }
 

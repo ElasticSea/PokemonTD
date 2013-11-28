@@ -53,7 +53,7 @@ class GUI extends ChildTab {
         super.render();
         minus.render("-");
         plus.render("+");
-        guiSize.render("GUI SIZE");
-        defaultGuiSize.render("RESET");
+        guiSize.render("GUI Size");
+        defaultGuiSize.render("Reset");
     }
 }

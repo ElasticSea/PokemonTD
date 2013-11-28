@@ -61,7 +61,7 @@ public class Options extends ChildTab {
     @Override
     public void render() {
         super.render();
-        guiButton.render("GRAPHICAL INTERFACE");
-        musicButton.render(getTheme().isPlaying() ? "MUTE MUSIC" : "PLAY MUSIC");
+        guiButton.render("Graphical Interface");
+        musicButton.render(getTheme().isPlaying() ? "Mute Music" : "Play Music");
     }
 }

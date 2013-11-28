@@ -22,6 +22,7 @@ public class ShopEntityInfo extends TowerTypeInfo {
                    Player player) {
         super(ui, rectangle, shapeRenderer, spriteBatch, font);
         this.player = player;
+        this.cost.setShowCost(false);
     }
 
     public void render(Entity entity) {

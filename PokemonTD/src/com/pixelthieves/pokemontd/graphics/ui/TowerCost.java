@@ -19,6 +19,7 @@ public class TowerCost extends InteractiveBlock {
     private final ShapeRenderer shapeRenderer;
     private final SpriteBatch spriteBatch;
     private final BitmapFont font;
+    private  boolean showCost;
     private float scale = 1;
     private Treasure cost;
     private float fontScale;
@@ -29,6 +30,11 @@ public class TowerCost extends InteractiveBlock {
         this.shapeRenderer = gui.getShapeRenderer();
         this.spriteBatch = gui.getSpriteBatch();
         this.font = gui.getFont();
+        this.showCost = true;
+    }
+
+    public void setShowCost(boolean showCost) {
+        this.showCost = showCost;
     }
 
     @Override
@@ -53,9 +59,11 @@ public class TowerCost extends InteractiveBlock {
             this.cost = cost;
 
             caches = new ArrayList<costValueCache>();
-            if (cost.getGold() > 0) {
-                caches.add(new costValueCache(Color.WHITE, "Cost: "));
-                caches.add(new costValueCache(Color.YELLOW, cost.getGold() + " "));
+            if (showCost) {
+                if (cost.getGold() > 0) {
+                    caches.add(new costValueCache(Color.WHITE, "Cost: "));
+                    caches.add(new costValueCache(Color.YELLOW, cost.getGold() + " "));
+                }
             }
             for (Element element : Element.values()) {
                 int element1 = cost.getElement(element);

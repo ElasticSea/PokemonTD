@@ -34,6 +34,6 @@ class SingInEndGame extends EndGame {
     @Override
     public void render() {
         super.render();
-        publishScoreButton.render(menu.getGameSevice().isSignedIn() ? "SUBMIT SCORE" : "SIGN IN TO SUBMIT");
+        publishScoreButton.render(menu.getGameSevice().isSignedIn() ? "Submit Score" : "Sign In To Submit");
     }
 }

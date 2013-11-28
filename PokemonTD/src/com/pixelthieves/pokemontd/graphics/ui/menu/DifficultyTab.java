@@ -16,7 +16,7 @@ class DifficultyTab extends ChildTab {
         this.buttons = new MenuButton[Difficulty.values().length];
         int i = 0;
         for (final Difficulty difficulty : Difficulty.values()) {
-            buttons[i] = new MenuButton(menu, rects.get(i),difficulty.toString().toUpperCase()) {
+            buttons[i] = new MenuButton(menu, rects.get(i),difficulty.toString()) {
 
                 @Override
                 public void process(float x, float y) {
