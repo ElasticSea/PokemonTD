@@ -24,13 +24,14 @@ public class InGameInputProcessor extends GestureDetector.GestureAdapter {
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
+        boolean condition = false;
         Vector2 world = camera.screenToWorld(x, y);
         for (Clickable clickable : clickables) {
             if (clickable.hit(world.x, world.y)) {
-                return true;
+                condition = true;
             }
         }
-        return false;
+        return condition;
     }
 
 }

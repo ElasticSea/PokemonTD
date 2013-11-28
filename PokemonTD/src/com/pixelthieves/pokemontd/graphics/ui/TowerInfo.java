@@ -22,14 +22,16 @@ import com.pixelthieves.pokemontd.entity.tower.TowerType;
  */
 
 public class TowerInfo extends CommonInfo {
+    public static final Color CANCEL_COLOR = new Color(Color.ORANGE).mul(0.6f);
     public static final Color SELL_COLOR = new Color(Color.RED).mul(0.6f);
     public static final Color BUY_COLOR = new Color(Color.GREEN).mul(0.6f);
     protected final DisplayText damage;
     protected final DisplayText speed;
     protected final DisplayText range;
-    protected final Button sell;
     protected final Button buy;
-    private final TowerCost cost;
+    protected final Button sell;
+    protected final Button cancel;
+    protected final TowerCost cost;
     private final Icon ability;
     private float damageCache;
     private float speedCache;
@@ -65,7 +67,7 @@ public class TowerInfo extends CommonInfo {
         float offset = height / 5;
         float offsetBlocks = height / 2;
         float offsetBlocks2 = offsetBlocks / 2f;
-        cost = new TowerCost(ui, new Rectangle(x + offset, y, width - offset * 2, offset), width - offsetBlocks);
+        cost = new TowerCost(ui, new Rectangle(x + offset, y, width - offset * 2, offset));
         damage = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset * 3, offset * 2, offset), font,
                 BitmapFont.HAlignment.LEFT);
         speed = new DisplayText(ui, new Rectangle(x + offset * 5, y + offset * 2, offset * 2, offset), font,
@@ -86,26 +88,31 @@ public class TowerInfo extends CommonInfo {
                 }
             }
         };
-        int buttonWidth = (int) (offsetBlocks * 1.5f);
-        sell = new Button(ui, new Rectangle(x + width - buttonWidth, y, buttonWidth, offsetBlocks), font,
-                BitmapFont.HAlignment.CENTER) {
-            @Override
-            public void process(float x, float y) {
-                ui.getTowerManager().sellTower();
-            }
-        };
-        buy = new Button(ui, new Rectangle(x + width - buttonWidth, y + buttonWidth, offsetBlocks, offsetBlocks), font,
-                BitmapFont.HAlignment.CENTER) {
+        buy = new Button(ui, new Rectangle(), font, BitmapFont.HAlignment.CENTER) {
             @Override
             public void process(float x, float y) {
                 ui.getTowerManager().buyNewOrUpgrade();
             }
         };
+        sell = new Button(ui, new Rectangle(), font, BitmapFont.HAlignment.CENTER) {
+            @Override
+            public void process(float x, float y) {
+                ui.getTowerManager().sellTower();
+            }
+        };
+        cancel = new Button(ui, new Rectangle(), font, BitmapFont.HAlignment.CENTER) {
+            @Override
+            public void process(float x, float y) {
+                ui.getTowerManager().reset();
+            }
+        };
         ui.register(sell);
         ui.register(buy);
+        ui.register(cancel);
         ui.register(ability);
         clickables.add(sell);
         clickables.add(buy);
+        clickables.add(cancel);
         clickables.add(ability);
     }
 
@@ -116,6 +123,7 @@ public class TowerInfo extends CommonInfo {
     public void render() {
         this.sell.setEnabled(sellCache);
         this.buy.setEnabled(buyCache);
+        this.cancel.setEnabled(!sell.isEnabled());
         this.ability.setEnabled(effectNameCache != null);
         super.render();
 
@@ -141,10 +149,13 @@ public class TowerInfo extends CommonInfo {
             this.range.render(rangeText, rangeColorCache);
         }
         this.cost.render(costCache);
-        this.sell.render("sell", Color.WHITE, SELL_COLOR);
+        this.cancel.render("cancel", Color.WHITE, CANCEL_COLOR);
+        if (sell.isEnabled()) {
+            this.sell.render("sell", Color.WHITE, SELL_COLOR);
+        }
         this.buy.render("buy", Color.WHITE, BUY_COLOR);
         if (effectNameCache != null) {
-            this.ability.render(Assets.getTexture("abilities/" + effectNameCache.name().toLowerCase()),"");
+            this.ability.render(Assets.getTexture("abilities/" + effectNameCache.name().toLowerCase()), "");
         }
     }
 
@@ -231,6 +242,7 @@ public class TowerInfo extends CommonInfo {
                 height - offsetBlocks);
         int buttonWidth = (int) (offsetBlocks * 1.5f);
         sell.set(x + width - buttonWidth, y, buttonWidth, offsetBlocks);
+        cancel.set(x + width - buttonWidth, y, buttonWidth, offsetBlocks);
         buy.set(x + width - buttonWidth, y + offsetBlocks, buttonWidth, offsetBlocks);
         cost.refresh();
         damage.refresh();
@@ -238,6 +250,7 @@ public class TowerInfo extends CommonInfo {
         range.refresh();
         ability.refresh();
         sell.refresh();
+        cancel.refresh();
         buy.refresh();
     }
 

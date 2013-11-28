@@ -63,7 +63,6 @@ class EntityInfo extends GuiBox {
             return;
         }
 
-
         if (towerType != null) {
             check(towerType);
             lastObject = towerType;

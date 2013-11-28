@@ -16,6 +16,8 @@ import java.util.List;
 public class Menu extends Gui {
 
     private final LeaderboardTab leaderboard;
+    private final int menuWidth;
+    private final int buttonHeight;
     private Button menu;
 
     public void setMenu(Button menu) {
@@ -41,14 +43,16 @@ public class Menu extends Gui {
     public Menu(App app) {
         super(app);
         int height = (int) (squareSize * 1.5f);
-        int menuWidth = height / 3 * 4;
+        menuWidth = height / 3 * 4;
+        int defaultButtonCount = 5;
+        buttonHeight = height/ defaultButtonCount;
         Rectangle rectangle = getRectangle(menuWidth, height);
-        signInBox = new SignInBox(this, rectangle, 5);
+        signInBox = new SignInBox(this, rectangle, defaultButtonCount);
         boolean canSignIn = getGameSevice().canSingIn();
-        inGameMenu = canSignIn ? new SignInGameMenu(this, rectangle, 5) :
-                new InGameMenu(this, rectangle, 5);
-        menuBox = canSignIn ? new SingInMenuBox(this, rectangle, 5) : new MenuBox(this, rectangle, 5);
-        endGame = canSignIn ? new SingInEndGame(this, rectangle, 5) : new EndGame(this, rectangle, 5);
+        inGameMenu = canSignIn ? new SignInGameMenu(this, rectangle, defaultButtonCount) :
+                new InGameMenu(this, rectangle, defaultButtonCount);
+        menuBox = canSignIn ? new SingInMenuBox(this, rectangle, defaultButtonCount) : new MenuBox(this, rectangle, defaultButtonCount);
+        endGame = canSignIn ? new SingInEndGame(this, rectangle, defaultButtonCount) : new EndGame(this, rectangle, defaultButtonCount);
         leaderboard = new LeaderboardTab(this, getRectangle(menuWidth, (int) (height * 1.5f)), 7);
 
         guiDialogRoots.add(signInBox);
@@ -60,8 +64,12 @@ public class Menu extends Gui {
         pickedCard = defaultCard;
     }
 
-    private Rectangle getRectangle(int width, int height) {
+    public Rectangle getRectangle(int width, int height) {
         return new Rectangle(center.x - width / 2, center.y - height / 2, width, height);
+    }
+
+    public Rectangle getRectangle(int buttons) {
+        return getRectangle(menuWidth, buttons*buttonHeight);
     }
 
     @Override

@@ -19,14 +19,13 @@ public class TowerCost extends InteractiveBlock {
     private final ShapeRenderer shapeRenderer;
     private final SpriteBatch spriteBatch;
     private final BitmapFont font;
-    private final float maxWidth;
+    private float scale = 1;
     private Treasure cost;
     private float fontScale;
     private Rectangle bounds;
 
-    public TowerCost(Gui gui, Rectangle rectangle, float maxWidth) {
+    public TowerCost(Gui gui, Rectangle rectangle) {
         super(gui, rectangle);
-        this.maxWidth = maxWidth;
         this.shapeRenderer = gui.getShapeRenderer();
         this.spriteBatch = gui.getSpriteBatch();
         this.font = gui.getFont();
@@ -48,7 +47,7 @@ public class TowerCost extends InteractiveBlock {
 
     public void render(Treasure cost) {
         fontScale = font.getScaleX();
-        font.setScale(Math.max(Math.round(fontScale / 1.5f), 1));
+        font.setScale(Math.max(Math.round(fontScale / scale), 1));
         if (!cost.equals(this.cost) || !this.equals(bounds)) {
             this.bounds = new Rectangle(this);
             this.cost = cost;
@@ -82,25 +81,12 @@ public class TowerCost extends InteractiveBlock {
 
     }
 
-    private String getText(Treasure cost) {
-        String text = "";
-        if (cost.getGold() > 0) {
-            text += "Cost: ";
-            text += cost.getGold() + " ";
-        }
-        for (Element element : Element.values()) {
-            int element1 = cost.getElement(element);
-            if (element1 > 0) {
-                text += element1 + "x";
-                text += element.toString() + " ";
-            }
-        }
-        return text;
+    public void setScale(float scale) {
+        this.scale = scale;
     }
 
-
-    private float getOffset(String text) {
-        return font.getBounds(text).width / 2f;
+    public float getScale() {
+        return scale;
     }
 
     private float maximalHeight;
@@ -128,10 +114,8 @@ public class TowerCost extends InteractiveBlock {
                 this.xPosition = previousCashe.xPosition + previousCashe.bounds.width;
                 this.yPosition = previousCashe.yPosition;
                 int offset = (int) ((xPosition + bounds.width) / TowerCost.this.bounds.width);
-                System.out.println(offset);
                 xPosition = Math.max(0, xPosition - offset * TowerCost.this.bounds.width);
                 yPosition = Math.min(0, yPosition - offset * previousCashe.bounds.height);
-                System.out.println(previousCashe.bounds.height);
             }
             maximalHeight = Math.max(bounds.height, maximalHeight);
         }

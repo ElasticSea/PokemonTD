@@ -11,7 +11,7 @@ class EndTab extends ChildTab {
     protected final MenuButton exit;
 
     EndTab(final Menu menu, MenuTab parent, Rectangle rectangle) {
-        super(menu, parent, rectangle, 3);
+        super(menu, parent, menu.getRectangle(3), 3);
         restart = new MenuButton(menu, rects.get(0)) {
             @Override
             public void process(float x, float y) {
