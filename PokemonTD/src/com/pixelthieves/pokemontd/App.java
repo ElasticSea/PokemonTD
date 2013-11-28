@@ -164,7 +164,7 @@ public class App extends Game2D {
         ui = new Ui(this, menu);
         initializeInput();
         initializeTween();
-        gameRenderer = new GameRenderer(this, ui, map,  camera);
+        gameRenderer = new GameRenderer(this, ui, map, camera);
         if (Gdx.graphics.isGL20Available()) {
             mainMenuGaimRenderer = new CachedGaussianBlurRenderer(gameRenderer, 20);
             frozenGameRenderer = new GrayscaleRenderer(gameRenderer);
@@ -446,6 +446,7 @@ public class App extends Game2D {
         int blockY = (int) (worldY / App.WORLD_SCALE);
         return new Vector3(blockX, blockY, 0);
     }
+
     public static Vector3 getBlockPositionOptimized(float worldX, float worldY, Vector3 store) {
         int blockX = (int) (worldX / App.WORLD_SCALE);
         int blockY = (int) (worldY / App.WORLD_SCALE);
@@ -459,7 +460,6 @@ public class App extends Game2D {
     public void setUi(Ui ui) {
         this.ui = ui;
     }
-
   /*  @Override
     public void pause() {
         super.pause();
