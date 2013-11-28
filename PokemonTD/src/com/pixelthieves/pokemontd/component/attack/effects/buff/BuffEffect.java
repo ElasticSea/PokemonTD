@@ -4,7 +4,7 @@ import com.pixelthieves.pokemontd.component.attack.effects.AbstractEffect;
 import com.pixelthieves.pokemontd.component.attack.projectile.BuffAbility;
 
 /**
- * Created by Tomas on 10/21/13.
+ * Created by Seda on 10/21/13.
  */
 public abstract class BuffEffect extends AbstractEffect<BuffEffect> {
     private float ratio;

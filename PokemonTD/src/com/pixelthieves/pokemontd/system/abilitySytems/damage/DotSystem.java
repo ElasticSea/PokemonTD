@@ -7,7 +7,7 @@ import com.pixelthieves.pokemontd.component.HealthComponent;
 import com.pixelthieves.pokemontd.component.attack.effects.DotEffect;
 
 /**
- * Created by Tomas on 10/4/13.
+ * Created by Seda on 10/4/13.
  */
 public class DotSystem extends EffectSystem<DotEffect> {
 

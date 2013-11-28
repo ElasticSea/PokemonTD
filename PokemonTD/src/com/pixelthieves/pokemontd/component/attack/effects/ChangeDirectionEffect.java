@@ -1,7 +1,7 @@
 package com.pixelthieves.pokemontd.component.attack.effects;
 
 /**
- * Created by Tomas on 10/21/13.
+ * Created by Seda on 10/21/13.
  */
 public class ChangeDirectionEffect extends AbstractEffect<ChangeDirectionEffect> {
 

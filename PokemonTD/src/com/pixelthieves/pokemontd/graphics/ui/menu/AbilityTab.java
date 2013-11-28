@@ -16,7 +16,7 @@ import java.util.List;
 import static com.pixelthieves.pokemontd.entity.tower.TowerName.*;
 
 /**
- * Created by Tomas on 11/19/13.
+ * Created by Seda on 11/19/13.
  */
 class AbilityTab extends ScrollableChildTab {
 

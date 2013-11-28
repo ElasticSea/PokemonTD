@@ -4,7 +4,7 @@ import com.artemis.Component;
 import com.pixelthieves.pokemontd.entity.creep.CreepAbilityType;
 
 /**
- * Created by Tomas on 9/8/13.
+ * Created by Seda on 9/8/13.
  */
 public class CreepAbilityComponent extends Component {
 

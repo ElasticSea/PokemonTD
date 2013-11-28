@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by Tomas on 10/7/13.
+ * Created by Seda on 10/7/13.
  */
 public class InGameInputProcessor extends GestureDetector.GestureAdapter {
     private final List<Clickable> clickables;

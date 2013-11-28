@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by Tomas on 10/13/13.
+ * Created by Seda on 10/13/13.
  */
 public class HitAbility extends EffectData {
     public static final float SLOW_SPEED = 2.0f;

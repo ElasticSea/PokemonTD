@@ -15,7 +15,7 @@ import com.pixelthieves.pokemontd.graphics.ui.menu.Options;
 import com.pixelthieves.pokemontd.manager.WaveManager;
 
 /**
- * Created by Tomas on 10/8/13.
+ * Created by Seda on 10/8/13.
  */
 class ElementIcon extends InteractiveBlock {
 

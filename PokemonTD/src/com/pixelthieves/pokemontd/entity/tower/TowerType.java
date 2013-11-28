@@ -13,7 +13,7 @@ import static com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import static com.pixelthieves.pokemontd.entity.tower.TowerName.*;
 
 /**
- * Created by Tomas on 10/5/13.
+ * Created by Seda on 10/5/13.
  */
 public class TowerType implements CommonDataType {
 

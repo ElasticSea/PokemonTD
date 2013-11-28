@@ -6,7 +6,7 @@ import java.util.Map;
 import static com.pixelthieves.pokemontd.Element.*;
 
 /**
- * Created by Tomas on 10/5/13.
+ * Created by Seda on 10/5/13.
  */
 public class Treasure {
 

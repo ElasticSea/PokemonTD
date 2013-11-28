@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Tomas on 10/5/13.
+ * Created by Seda on 10/5/13.
  */
 public class UpgradeComponent extends Component {
 

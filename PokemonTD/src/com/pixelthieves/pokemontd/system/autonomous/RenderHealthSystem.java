@@ -14,7 +14,7 @@ import com.pixelthieves.pokemontd.Health;
 import com.pixelthieves.pokemontd.component.HealthComponent;
 
 /**
- * Created by Tomas on 10/4/13.
+ * Created by Seda on 10/4/13.
  */
 public class RenderHealthSystem extends EntityProcessingSystem {
     private final ShapeRenderer shapeRenderer;

@@ -9,7 +9,7 @@ import com.pixelthieves.core.graphics.Renderable;
 import com.pixelthieves.core.graphics.Shader;
 
 /**
- * Created by Tomas on 11/6/13.
+ * Created by Seda on 11/6/13.
  */
 public class GaussianBlurRenderer implements Renderable {
     private final float FBO_SCALE;

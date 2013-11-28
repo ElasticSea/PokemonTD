@@ -6,7 +6,7 @@ import com.pixelthieves.pokemontd.component.attack.effects.AbstractEffect;
 import com.pixelthieves.pokemontd.component.attack.projectile.data.EffectData;
 
 /**
- * Created by Tomas on 10/4/13.
+ * Created by Seda on 10/4/13.
  */
 public abstract class HitEffectSystem<T extends EffectData, V extends AbstractEffect> extends HitSystem<T> {
 

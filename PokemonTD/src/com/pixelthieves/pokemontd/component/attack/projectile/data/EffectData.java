@@ -4,7 +4,7 @@ import com.pixelthieves.pokemontd.component.attack.AbilityComponent;
 import com.pixelthieves.pokemontd.component.attack.EffectName;
 
 /**
- * Created by Tomas on 10/13/13.
+ * Created by Seda on 10/13/13.
  */
 public class EffectData extends AbilityComponent {
     private final String effect;

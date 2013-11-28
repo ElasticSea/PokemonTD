@@ -9,7 +9,7 @@ import com.pixelthieves.pokemontd.component.TreasureComponent;
 import com.pixelthieves.pokemontd.component.attack.projectile.data.MoneyData;
 
 /**
- * Created by Tomas on 10/4/13.
+ * Created by Seda on 10/4/13.
  */
 public class HitMoneySystem extends HitSystem<MoneyData> {
 

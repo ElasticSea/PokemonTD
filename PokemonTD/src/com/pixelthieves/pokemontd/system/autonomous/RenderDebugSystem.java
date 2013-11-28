@@ -12,7 +12,7 @@ import com.pixelthieves.core.component.PositionComponent;
 import com.pixelthieves.core.component.SizeComponent;
 
 /**
- * Created by Tomas on 10/4/13.
+ * Created by Seda on 10/4/13.
  */
 public class RenderDebugSystem extends EntityProcessingSystem {
     private final ShapeRenderer shapeRenderer;

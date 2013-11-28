@@ -7,7 +7,7 @@ import com.pixelthieves.pokemontd.component.attack.effects.SlowEffect;
 import com.pixelthieves.pokemontd.component.attack.effects.buff.BuffableSpeedComponent;
 
 /**
- * Created by Tomas on 10/4/13.
+ * Created by Seda on 10/4/13.
  */
 public class SlowSystem extends EffectSystem<SlowEffect> {
 

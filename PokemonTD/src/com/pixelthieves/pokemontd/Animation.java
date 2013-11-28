@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
 
 /**
- * Created by Tomas on 10/25/13.
+ * Created by Seda on 10/25/13.
  */
 public class Animation {
     private int position;

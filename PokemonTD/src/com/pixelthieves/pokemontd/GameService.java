@@ -3,7 +3,7 @@ package com.pixelthieves.pokemontd;
 import java.util.Map;
 
 /**
- * Created by Tomas on 11/18/13.
+ * Created by Seda on 11/18/13.
  */
 public interface GameService {
     public boolean canSingIn();

@@ -1,7 +1,7 @@
 package com.pixelthieves.pokemontd.graphics.ui;
 
 /**
- * Created by Tomas on 10/18/13.
+ * Created by Seda on 10/18/13.
  */
 public interface Clickable {
 

@@ -7,7 +7,7 @@ import com.pixelthieves.pokemontd.component.attack.effects.buff.BuffableSpeedCom
 import com.pixelthieves.pokemontd.component.attack.effects.buff.SpeedBuffEffect;
 
 /**
- * Created by Tomas on 10/4/13.
+ * Created by Seda on 10/4/13.
  */
 public class SpeedBuffSystem extends EffectSystem<SpeedBuffEffect> {
 

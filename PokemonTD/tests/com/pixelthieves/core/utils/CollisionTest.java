@@ -6,7 +6,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 /**
- * Created by Tomas on 10/8/13.
+ * Created by Seda on 10/8/13.
  */
 public class CollisionTest {
     private Rect rectA;

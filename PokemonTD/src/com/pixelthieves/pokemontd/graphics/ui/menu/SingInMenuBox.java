@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.pixelthieves.pokemontd.graphics.ui.Button;
 
 /**
- * Created by Tomas on 11/19/13.
+ * Created by Seda on 11/19/13.
  */
 class SingInMenuBox extends SignInCommonMenu {
 

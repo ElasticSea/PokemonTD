@@ -12,7 +12,7 @@ import com.pixelthieves.core.utils.Collision;
 import com.pixelthieves.pokemontd.component.HealthComponent;
 
 /**
- * Created by Tomas on 10/4/13.
+ * Created by Seda on 10/4/13.
  */
 public class DamageOverPolySystem extends EntityProcessingSystem {
 

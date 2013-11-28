@@ -11,7 +11,7 @@ import com.pixelthieves.pokemontd.system.resolve.ClosestSystem;
 import com.pixelthieves.pokemontd.system.resolve.PickEntitySystem;
 
 /**
- * Created by Tomas on 10/4/13.
+ * Created by Seda on 10/4/13.
  */
 public abstract class ApplyAbilitySystem<T extends AbilityComponent> extends IntervalAbilitySystem<T> {
 

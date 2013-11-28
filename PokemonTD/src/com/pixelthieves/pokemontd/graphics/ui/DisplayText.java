@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
 
 /**
- * Created by Tomas on 10/8/13.
+ * Created by Seda on 10/8/13.
  */
 public class DisplayText extends Button {
 

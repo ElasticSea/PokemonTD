@@ -13,7 +13,7 @@ import com.pixelthieves.pokemontd.component.HealthComponent;
 import com.pixelthieves.pokemontd.component.WaveComponent;
 
 /**
- * Created by Tomas on 10/4/13.
+ * Created by Seda on 10/4/13.
  */
 public class IndestructibilitySystem extends EntityProcessingSystem {
 

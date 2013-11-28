@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 import java.util.Random;
 
 /**
- * Created by Tomas on 10/22/13.
+ * Created by Seda on 10/22/13.
  */
 public class ChanceTest {
     private Chance chanceMachine;

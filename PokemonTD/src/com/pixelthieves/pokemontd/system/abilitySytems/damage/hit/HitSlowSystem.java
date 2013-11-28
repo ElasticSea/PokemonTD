@@ -5,7 +5,7 @@ import com.pixelthieves.pokemontd.component.attack.effects.SlowEffect;
 import com.pixelthieves.pokemontd.component.attack.projectile.data.SlowData;
 
 /**
- * Created by Tomas on 10/4/13.
+ * Created by Seda on 10/4/13.
  */
 public class HitSlowSystem extends HitEffectSystem<SlowData, SlowEffect> {
 

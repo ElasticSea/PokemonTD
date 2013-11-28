@@ -16,7 +16,7 @@ import com.pixelthieves.pokemontd.map.PathPack;
 import com.pixelthieves.pokemontd.system.autonomous.*;
 
 /**
- * Created by Tomas on 11/7/13.
+ * Created by Seda on 11/7/13.
  */
 public class GameRenderer implements Renderable {
 

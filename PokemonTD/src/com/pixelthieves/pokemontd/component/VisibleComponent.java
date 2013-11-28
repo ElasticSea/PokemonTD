@@ -3,7 +3,7 @@ package com.pixelthieves.pokemontd.component;
 import com.artemis.Component;
 
 /**
- * Created by Tomas on 10/13/13.
+ * Created by Seda on 10/13/13.
  */
 public class VisibleComponent extends Component {
     private boolean visible;

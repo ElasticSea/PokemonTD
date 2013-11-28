@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Tomas on 10/7/13.
+ * Created by Seda on 10/7/13.
  */
 public class TileMap<E> {
     private final List<Map<E>> levels;

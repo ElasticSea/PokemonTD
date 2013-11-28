@@ -7,7 +7,7 @@ import com.pixelthieves.core.graphics.Renderable;
 import com.pixelthieves.pokemontd.App;
 
 /**
- * Created by Tomas on 10/8/13.
+ * Created by Seda on 10/8/13.
  */
 public abstract class DisplayBlock extends Rectangle implements Renderable, Refresheable {
     private final ShapeRenderer shapeRenderer;

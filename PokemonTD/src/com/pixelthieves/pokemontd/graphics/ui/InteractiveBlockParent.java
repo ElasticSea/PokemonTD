@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Tomas on 11/6/13.
+ * Created by Seda on 11/6/13.
  */
 public abstract class InteractiveBlockParent extends InteractiveElement {
     private final List<InteractiveBlock> interactiveBlocks = new ArrayList<InteractiveBlock>();

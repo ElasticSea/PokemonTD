@@ -5,7 +5,7 @@ import com.pixelthieves.pokemontd.component.attack.effects.DotEffect;
 import com.pixelthieves.pokemontd.component.attack.projectile.data.DotData;
 
 /**
- * Created by Tomas on 10/4/13.
+ * Created by Seda on 10/4/13.
  */
 public class HitDotSystem extends HitEffectSystem<DotData, DotEffect> {
 

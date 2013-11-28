@@ -11,7 +11,7 @@ import com.pixelthieves.pokemontd.component.attack.AbilityComponent;
 import com.pixelthieves.pokemontd.component.attack.effects.buff.BuffableSpeedComponent;
 
 /**
- * Created by Tomas on 10/4/13.
+ * Created by Seda on 10/4/13.
  */
 public abstract class IntervalAbilitySystem<T extends AbilityComponent> extends EntityProcessingSystem {
 

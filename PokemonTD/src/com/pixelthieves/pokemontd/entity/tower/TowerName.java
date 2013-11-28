@@ -1,7 +1,7 @@
 package com.pixelthieves.pokemontd.entity.tower;
 
 /**
- * Created by Tomas on 10/14/13.
+ * Created by Seda on 10/14/13.
  */
 
 public enum TowerName {

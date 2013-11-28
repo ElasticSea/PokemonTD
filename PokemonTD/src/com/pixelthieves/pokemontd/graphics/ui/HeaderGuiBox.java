@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.pixelthieves.pokemontd.graphics.ui.menu.Header;
 
 /**
- * Created by Tomas on 10/8/13.
+ * Created by Seda on 10/8/13.
  */
 public class HeaderGuiBox extends GuiBox {
 

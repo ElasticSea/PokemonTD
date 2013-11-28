@@ -3,7 +3,7 @@ package com.pixelthieves.pokemontd.component.attack.effects.buff;
 import com.pixelthieves.core.component.SpeedComponent;
 
 /**
- * Created by Tomas on 10/30/13.
+ * Created by Seda on 10/30/13.
  */
 public class BuffableSpeedComponent extends SpeedComponent {
     private SpeedBuffEffect buff;

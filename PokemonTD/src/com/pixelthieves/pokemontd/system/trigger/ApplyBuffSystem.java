@@ -12,7 +12,7 @@ import com.pixelthieves.pokemontd.system.resolve.ClosestSystemTowerWithoutDamage
 import com.pixelthieves.pokemontd.system.resolve.ClosestSystemTowerWithoutSpeedBuff;
 
 /**
- * Created by Tomas on 10/4/13.
+ * Created by Seda on 10/4/13.
  */
 public class ApplyBuffSystem extends ApplyAbilitySystem<BuffAbility> {
 

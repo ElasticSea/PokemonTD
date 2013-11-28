@@ -6,7 +6,7 @@ import com.pixelthieves.pokemontd.Player;
 import com.pixelthieves.pokemontd.Treasure;
 
 /**
- * Created by Tomas on 10/27/13.
+ * Created by Seda on 10/27/13.
  */
 public class ShopIcons extends PickTable<ElementIcon> {
 

@@ -4,7 +4,7 @@ import aurelienribon.tweenengine.TweenAccessor;
 import com.badlogic.gdx.graphics.Color;
 
 /**
- * User: Tomas <br>
+ * User: Seda <br>
  * Date: 7/22/13 <br>
  * Time: 2:26 PM <br>
  */

@@ -23,7 +23,7 @@ import com.pixelthieves.pokemontd.graphics.ui.Clickable;
 import com.pixelthieves.pokemontd.system.resolve.ui.GetTower;
 
 /**
- * Created by Tomas on 10/7/13.
+ * Created by Seda on 10/7/13.
  */
 public class TowerManager implements Clickable {
 

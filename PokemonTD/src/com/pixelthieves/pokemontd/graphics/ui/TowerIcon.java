@@ -6,7 +6,7 @@ import com.pixelthieves.pokemontd.entity.tower.TowerType;
 import com.pixelthieves.pokemontd.manager.TowerManager;
 
 /**
- * Created by Tomas on 10/8/13.
+ * Created by Seda on 10/8/13.
  */
 abstract class TowerIcon extends Icon {
 

@@ -8,7 +8,7 @@ import com.pixelthieves.pokemontd.graphics.ui.menu.Header;
 import com.pixelthieves.pokemontd.manager.WaveManager;
 
 /**
- * Created by Tomas on 10/11/13.
+ * Created by Seda on 10/11/13.
  */
 public class WaveInfo extends GuiBox {
     private final BitmapFont pixelFont;
@@ -45,7 +45,7 @@ public class WaveInfo extends GuiBox {
         float offsetBlocks = height / 8;
 
         Rectangle nextWaveRectangle =
-                new Rectangle(scaled.x - offset * 2, scaled.y - offset * 2, width, offsetBlocks * 1.5f);
+                new Rectangle(scaled.x - offset * 2, scaled.y - offset * 2, width, offsetBlocks * 10f);
         nextWave = new Button(ui, nextWaveRectangle, font, BitmapFont.HAlignment.CENTER) {
             @Override
             public void process(float x, float y) {

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Tomas on 11/18/13.
+ * Created by Seda on 11/18/13.
  */
 public class GameServiceSession {
     private final List<Integer> scores = new ArrayList<Integer>();

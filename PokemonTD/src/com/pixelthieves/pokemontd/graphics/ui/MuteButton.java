@@ -4,7 +4,7 @@ import com.badlogic.gdx.audio.Music;
 import com.pixelthieves.core.main.Assets;
 
 /**
- * Created by Tomas on 11/6/13.
+ * Created by Seda on 11/6/13.
  */
 public class MuteButton extends Icon {
     private final Music theme;

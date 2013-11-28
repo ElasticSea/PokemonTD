@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.pixelthieves.core.logic.Clock;
 
 /**
- * Created by Tomas on 11/6/13.
+ * Created by Seda on 11/6/13.
  */
 public class SpeedControls extends DisplayBlock {
     private final Button slower;

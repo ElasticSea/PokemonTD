@@ -6,7 +6,7 @@ import com.pixelthieves.core.main.Assets;
 import com.pixelthieves.pokemontd.graphics.ui.Button;
 
 /**
- * Created by Tomas on 11/19/13.
+ * Created by Seda on 11/19/13.
  */
 public class Options extends ChildTab {
 

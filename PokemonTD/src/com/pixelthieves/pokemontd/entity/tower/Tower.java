@@ -13,7 +13,7 @@ import com.pixelthieves.pokemontd.component.attack.effects.buff.BuffableDamageCo
 import com.pixelthieves.pokemontd.component.attack.effects.buff.BuffableSpeedComponent;
 
 /**
- * Created by Tomas on 10/5/13.
+ * Created by Seda on 10/5/13.
  */
 public class Tower extends ConcreteEntity {
 

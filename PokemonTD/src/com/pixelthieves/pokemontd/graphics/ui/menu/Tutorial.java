@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.pixelthieves.pokemontd.graphics.ui.DisplayText;
 
 /**
- * Created by Tomas on 11/19/13.
+ * Created by Seda on 11/19/13.
  */
 class Tutorial extends ChildTab {
 

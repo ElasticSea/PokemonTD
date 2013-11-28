@@ -17,7 +17,7 @@ import com.pixelthieves.pokemontd.tween.ColorAccessor;
 
 
 /**
- * Created by Tomas on 10/5/13.
+ * Created by Seda on 10/5/13.
  */
 public class TextInfo extends ConcreteEntity {
 

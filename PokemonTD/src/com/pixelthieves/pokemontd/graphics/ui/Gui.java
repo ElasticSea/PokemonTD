@@ -19,7 +19,7 @@ import com.pixelthieves.pokemontd.manager.WaveManager;
 import java.util.ArrayList;
 
 /**
- * Created by Tomas on 11/5/13.
+ * Created by Seda on 11/5/13.
  */
 public abstract class Gui extends GestureDetector.GestureAdapter implements Renderable {
     private final ArrayList<InteractiveElement> clickables = new ArrayList<InteractiveElement>();

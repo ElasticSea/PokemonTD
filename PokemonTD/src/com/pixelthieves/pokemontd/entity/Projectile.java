@@ -14,7 +14,7 @@ import com.pixelthieves.pokemontd.component.attack.projectile.HitAbility;
 import com.pixelthieves.pokemontd.map.Path;
 
 /**
- * Created by Tomas on 10/5/13.
+ * Created by Seda on 10/5/13.
  */
 public class Projectile extends ConcreteEntity {
 

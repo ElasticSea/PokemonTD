@@ -11,7 +11,7 @@ import com.pixelthieves.pokemontd.component.VisibleComponent;
 import com.pixelthieves.pokemontd.entity.creep.CreepAbilityType;
 
 /**
- * Created by Tomas on 10/4/13.
+ * Created by Seda on 10/4/13.
  */
 public class InvisibleSystem extends EntityProcessingSystem {
     @Mapper

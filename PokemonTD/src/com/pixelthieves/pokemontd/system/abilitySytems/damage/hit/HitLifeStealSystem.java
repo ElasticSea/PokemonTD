@@ -9,7 +9,7 @@ import com.pixelthieves.pokemontd.component.attack.effects.buff.BuffableDamageCo
 import com.pixelthieves.pokemontd.component.attack.projectile.data.LifeData;
 
 /**
- * Created by Tomas on 10/4/13.
+ * Created by Seda on 10/4/13.
  */
 public class HitLifeStealSystem extends HitSystem<LifeData> {
 

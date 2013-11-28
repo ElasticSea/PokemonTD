@@ -16,7 +16,7 @@ import java.util.*;
 import java.util.Map;
 
 /**
- * Created by Tomas on 10/5/13.
+ * Created by Seda on 10/5/13.
  */
 public class WaveManager implements Updateable {
     private final PathPack pathPack;

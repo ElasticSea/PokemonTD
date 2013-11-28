@@ -21,7 +21,7 @@ import com.pixelthieves.pokemontd.entity.TextInfo;
 import com.pixelthieves.pokemontd.graphics.ui.menu.Options;
 
 /**
- * Created by Tomas on 10/4/13.
+ * Created by Seda on 10/4/13.
  */
 public abstract class HitSystem<T extends EffectData> extends EntityProcessingSystem {
 

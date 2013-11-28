@@ -1,7 +1,7 @@
 package com.pixelthieves.pokemontd.component.attack.effects;
 
 /**
- * Created by Tomas on 10/21/13.
+ * Created by Seda on 10/21/13.
  */
 public class DotEffect extends AbstractEffect<DotEffect> {
     private float damage;

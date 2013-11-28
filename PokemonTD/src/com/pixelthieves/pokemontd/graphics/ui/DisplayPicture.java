@@ -3,7 +3,7 @@ package com.pixelthieves.pokemontd.graphics.ui;
 import com.badlogic.gdx.math.Rectangle;
 
 /**
- * Created by Tomas on 10/8/13.
+ * Created by Seda on 10/8/13.
  */
 public class DisplayPicture extends Icon {
 

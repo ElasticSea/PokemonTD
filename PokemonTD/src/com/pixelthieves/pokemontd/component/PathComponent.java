@@ -4,7 +4,7 @@ import com.artemis.Component;
 import com.pixelthieves.pokemontd.map.Path;
 
 /**
- * Created by Tomas on 10/5/13.
+ * Created by Seda on 10/5/13.
  */
 public class PathComponent extends Component {
 

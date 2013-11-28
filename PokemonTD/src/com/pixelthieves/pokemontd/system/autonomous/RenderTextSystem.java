@@ -15,7 +15,7 @@ import com.pixelthieves.pokemontd.component.TextComponent;
 import com.pixelthieves.pokemontd.component.TintComponent;
 
 /**
- * Created by Tomas on 10/4/13.
+ * Created by Seda on 10/4/13.
  */
 public class RenderTextSystem extends EntityProcessingSystem {
     private final SpriteBatch spriteBatch;

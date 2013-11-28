@@ -3,7 +3,7 @@ package com.pixelthieves.pokemontd;
 import java.util.Random;
 
 /**
- * Created by Tomas on 10/22/13.
+ * Created by Seda on 10/22/13.
  */
 public class Chance {
     private final Random random;

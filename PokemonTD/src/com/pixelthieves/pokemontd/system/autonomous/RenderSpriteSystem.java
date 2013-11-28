@@ -20,7 +20,7 @@ import com.pixelthieves.pokemontd.component.TintComponent;
 import com.pixelthieves.pokemontd.component.VisibleComponent;
 
 /**
- * Created by Tomas on 10/4/13.
+ * Created by Seda on 10/4/13.
  */
 public class RenderSpriteSystem extends EntitySystem {
     private final Camera camera;

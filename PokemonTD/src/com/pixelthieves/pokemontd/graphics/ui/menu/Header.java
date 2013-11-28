@@ -7,7 +7,7 @@ import com.pixelthieves.pokemontd.graphics.ui.Gui;
 import com.pixelthieves.pokemontd.graphics.ui.SimpleGuiBox;
 
 /**
- * Created by Tomas on 11/21/13.
+ * Created by Seda on 11/21/13.
  */
 public class Header extends SimpleGuiBox {
     private final DisplayText leftText;

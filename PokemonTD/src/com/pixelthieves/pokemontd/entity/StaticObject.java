@@ -16,7 +16,7 @@ import com.pixelthieves.pokemontd.entity.datatypes.StaticObjectType;
 import com.pixelthieves.pokemontd.entity.tower.TowerType;
 
 /**
- * Created by Tomas on 10/5/13.
+ * Created by Seda on 10/5/13.
  */
 public class StaticObject extends ConcreteEntity {
 

@@ -9,7 +9,7 @@ import com.pixelthieves.core.graphics.Renderable;
 import com.pixelthieves.core.graphics.Shader;
 
 /**
- * Created by Tomas on 11/6/13.
+ * Created by Seda on 11/6/13.
  */
 public class BoxBlurRenderer implements Renderable {
     public static final float FBO_SCALE = 1f;

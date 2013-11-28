@@ -5,7 +5,7 @@ import com.pixelthieves.pokemontd.component.attack.effects.IncreasingDamageEffec
 import com.pixelthieves.pokemontd.component.attack.projectile.data.IncreasingDamageData;
 
 /**
- * Created by Tomas on 10/4/13.
+ * Created by Seda on 10/4/13.
  */
 public class HitIncreasingDamageSystem extends HitEffectSystem<IncreasingDamageData, IncreasingDamageEffect> {
 

@@ -14,7 +14,7 @@ import java.util.Map;
 import static com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 
 /**
- * Created by Tomas on 10/5/13.
+ * Created by Seda on 10/5/13.
  */
 public class CreepType implements CommonDataType {
 

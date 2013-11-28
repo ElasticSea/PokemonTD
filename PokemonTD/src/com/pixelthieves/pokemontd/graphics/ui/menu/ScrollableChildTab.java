@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.pixelthieves.pokemontd.graphics.ui.DisplayBlock;
 
 /**
- * Created by Tomas on 11/19/13.
+ * Created by Seda on 11/19/13.
  */
 class ScrollableChildTab extends ChildTab {
 

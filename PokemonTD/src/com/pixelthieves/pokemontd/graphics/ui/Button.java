@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.pixelthieves.pokemontd.App;
 
 /**
- * Created by Tomas on 10/8/13.
+ * Created by Seda on 10/8/13.
  */
 public abstract class Button extends InteractiveBlock {
     private final SpriteBatch spriteBatch;

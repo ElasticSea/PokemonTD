@@ -5,7 +5,7 @@ import com.pixelthieves.pokemontd.App;
 import com.pixelthieves.pokemontd.Difficulty;
 
 /**
- * Created by Tomas on 11/19/13.
+ * Created by Seda on 11/19/13.
  */
 class DifficultyTab extends ChildTab {
 

@@ -3,7 +3,7 @@ package com.pixelthieves.pokemontd.component;
 import com.artemis.Component;
 
 /**
- * Created by Tomas on 10/4/13.
+ * Created by Seda on 10/4/13.
  */
 public class NameComponent extends Component {
 

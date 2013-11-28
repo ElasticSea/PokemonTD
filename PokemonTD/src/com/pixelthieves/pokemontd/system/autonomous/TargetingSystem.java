@@ -11,7 +11,7 @@ import com.pixelthieves.core.component.RotationComponent;
 import com.pixelthieves.core.component.TargetComponent;
 
 /**
- * Created by Tomas on 10/4/13.
+ * Created by Seda on 10/4/13.
  */
 public class TargetingSystem extends EntityProcessingSystem {
 

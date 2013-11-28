@@ -7,7 +7,7 @@ import com.pixelthieves.pokemontd.graphics.ui.menu.Menu;
 
 
 /**
- * Created by Tomas on 10/11/13.
+ * Created by Seda on 10/11/13.
  */
 public class StatusBar extends GuiBox {
     private final Player player;

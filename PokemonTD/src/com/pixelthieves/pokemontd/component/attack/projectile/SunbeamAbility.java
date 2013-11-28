@@ -5,7 +5,7 @@ import com.pixelthieves.pokemontd.component.attack.EffectName;
 import com.pixelthieves.pokemontd.component.attack.projectile.data.EffectData;
 
 /**
- * Created by Tomas on 10/25/13.
+ * Created by Seda on 10/25/13.
  */
 public class SunbeamAbility extends EffectData {
 

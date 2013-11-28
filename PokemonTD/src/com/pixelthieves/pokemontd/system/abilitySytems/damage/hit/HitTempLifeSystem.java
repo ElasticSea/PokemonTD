@@ -5,7 +5,7 @@ import com.pixelthieves.pokemontd.component.attack.effects.TempLifeEffect;
 import com.pixelthieves.pokemontd.component.attack.projectile.data.TempLifeData;
 
 /**
- * Created by Tomas on 10/4/13.
+ * Created by Seda on 10/4/13.
  */
 public class HitTempLifeSystem extends HitEffectSystem<TempLifeData, TempLifeEffect> {
 

@@ -18,7 +18,7 @@ import com.pixelthieves.pokemontd.component.attack.projectile.data.BubbleData;
 import com.pixelthieves.pokemontd.system.resolve.IntersectEnemySystem;
 
 /**
- * Created by Tomas on 10/4/13.
+ * Created by Seda on 10/4/13.
  */
 public class BubbleSystem extends EntityProcessingSystem {
 

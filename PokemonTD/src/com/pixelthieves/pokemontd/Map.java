@@ -1,7 +1,7 @@
 package com.pixelthieves.pokemontd;
 
 /**
- * Created by Tomas on 10/7/13.
+ * Created by Seda on 10/7/13.
  */
 public class Map<T> {
     private Object[][] map;

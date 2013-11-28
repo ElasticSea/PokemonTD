@@ -14,7 +14,7 @@ import com.pixelthieves.core.component.SizeComponent;
 import com.pixelthieves.pokemontd.manager.TowerManager;
 
 /**
- * Created by Tomas on 10/4/13.
+ * Created by Seda on 10/4/13.
  */
 public class RenderRangeSystem extends EntityProcessingSystem {
     private final ShapeRenderer shapeRenderer;

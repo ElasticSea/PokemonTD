@@ -9,7 +9,7 @@ import com.google.android.gms.plus.PlusClient;
 import com.google.example.games.basegameutils.GameHelper;
 
 /**
- * Created by Tomas on 11/18/13.
+ * Created by Seda on 11/18/13.
  */
 public abstract class LibgdxBaseGameActivity extends AndroidApplication implements GameHelper.GameHelperListener {
 

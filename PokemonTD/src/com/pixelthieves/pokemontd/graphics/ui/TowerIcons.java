@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Created by Tomas on 10/27/13.
+ * Created by Seda on 10/27/13.
  */
 public class TowerIcons extends PickTable<TowerIcon> {
 

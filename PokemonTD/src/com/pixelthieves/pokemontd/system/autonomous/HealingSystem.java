@@ -11,7 +11,7 @@ import com.pixelthieves.pokemontd.component.HealthComponent;
 import com.pixelthieves.pokemontd.entity.creep.CreepAbilityType;
 
 /**
- * Created by Tomas on 10/4/13.
+ * Created by Seda on 10/4/13.
  */
 public class HealingSystem extends EntityProcessingSystem {
     @Mapper

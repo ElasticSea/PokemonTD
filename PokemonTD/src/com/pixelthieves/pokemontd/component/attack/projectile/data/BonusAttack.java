@@ -3,7 +3,7 @@ package com.pixelthieves.pokemontd.component.attack.projectile.data;
 import com.pixelthieves.pokemontd.component.attack.EffectName;
 
 /**
- * Created by Tomas on 10/13/13.
+ * Created by Seda on 10/13/13.
  */
 public class BonusAttack extends EffectData {
     private final int iterations;

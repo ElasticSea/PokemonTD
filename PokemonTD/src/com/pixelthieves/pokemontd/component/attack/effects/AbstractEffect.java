@@ -6,7 +6,7 @@ import com.pixelthieves.core.logic.Updateable;
 import com.pixelthieves.core.main.Assets;
 
 /**
- * Created by Tomas on 10/21/13.
+ * Created by Seda on 10/21/13.
  */
 public abstract class AbstractEffect<T> extends Component implements Effect, Updateable, Comparable<T> {
     private String effect;

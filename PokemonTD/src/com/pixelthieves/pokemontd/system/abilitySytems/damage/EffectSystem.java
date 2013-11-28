@@ -9,7 +9,7 @@ import com.pixelthieves.pokemontd.component.SpriteComponent;
 import com.pixelthieves.pokemontd.component.attack.effects.AbstractEffect;
 
 /**
- * Created by Tomas on 10/4/13.
+ * Created by Seda on 10/4/13.
  */
 public abstract class EffectSystem<T extends AbstractEffect> extends EntityProcessingSystem {
 

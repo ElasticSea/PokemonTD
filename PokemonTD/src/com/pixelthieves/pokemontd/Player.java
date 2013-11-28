@@ -1,7 +1,7 @@
 package com.pixelthieves.pokemontd;
 
 /**
- * Created by Tomas on 10/5/13.
+ * Created by Seda on 10/5/13.
  */
 public class Player {
     private final Treasure treasure = new Treasure();
