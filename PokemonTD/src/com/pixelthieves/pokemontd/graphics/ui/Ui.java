@@ -26,6 +26,7 @@ public class Ui extends Gui {
     private final GuiBox status;
     private final AbilityInfo abilityInfo;
     private final List<GuiBox> boxes = new ArrayList<GuiBox>();
+    private final SpeedControlsBar speedControlsBar;
     private float defaultSize;
     private int offset;
 
@@ -56,7 +57,9 @@ public class Ui extends Gui {
                 shopIcons, font);
         status = new Status(this,
                 new Rectangle(width - statusDimensions.x, height - statusBar.height - statusOffSet - statusDimensions.y,
-                        statusDimensions.x/4*6, statusDimensions.y), waveManager, interestManager, font);
+                        statusDimensions.x, statusDimensions.y), waveManager, interestManager, font);
+
+       speedControlsBar = new SpeedControlsBar(this, status.x, status.y - status.height/4, status.width, status.height);
 
         abilityInfo = new AbilityInfo(this, pickTableRectangle);
 
@@ -68,11 +71,13 @@ public class Ui extends Gui {
         register(entityInfo);
         register(nextWaveInfo);
         register(status);
+        register(speedControlsBar);
 
         boxes.add(towerIcons);
         boxes.add(shopIcons);
         boxes.add(statusBar);
         boxes.add(status);
+        boxes.add(speedControlsBar);
         boxes.add(abilityInfo);
         boxes.add(nextWaveInfo);
         boxes.add(entityInfo);
@@ -127,7 +132,6 @@ public class Ui extends Gui {
         float statusHeightBlock = statusHeight / 5;
         float statusOffSet = statusHeightBlock / 2;
         statusHeight = (int) (statusHeightBlock * 4);
-        // squareSize = (squareSize / 3) * 3 + offset * 2;
         Vector2 statusBarDimensions = new Vector2(width, statusBarHeight);
         Vector2 statusDimensions = new Vector2(squareSize, statusHeight);
 
@@ -138,6 +142,8 @@ public class Ui extends Gui {
         statusBar.setSquare(towerIcons);
         status.set(width - statusDimensions.x, height - statusBar.height - statusOffSet - statusDimensions.y,
                 statusDimensions.x, statusDimensions.y);
+        float size = status.height / 3;
+        speedControlsBar.set(status.x, status.y - size - statusOffSet, status.width, size);
         nextWaveInfo.set(0, 0, squareSize, squareSize);
         entityInfo.set(squareSize - offset, 0, width - (squareSize - offset) * 2, stripHeight);
         for (GuiBox guiBox : boxes) {
