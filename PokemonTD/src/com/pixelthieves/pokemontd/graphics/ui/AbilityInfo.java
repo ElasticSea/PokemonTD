@@ -132,7 +132,7 @@ public class AbilityInfo extends HeaderGuiBox {
 
             case Blaze:
                 bubble = (BubbleData) abilityCache;
-                return "Deals " + damage + " every " + speed + " ms on contact." +
+                return "Deals " + (damage * bubble.getInterval()) + " every " + speed + " ms on contact." +
                         (bubble.getGrow() != 1 ?
                                 "Bubble grows by " + (int) ((bubble.getGrow() - 1) * 100) + "% per second." : "");
 
