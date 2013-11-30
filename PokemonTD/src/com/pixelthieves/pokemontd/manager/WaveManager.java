@@ -112,7 +112,7 @@ public class WaveManager implements Updateable {
             }
             fireNextWave(nextWave);
         } else {
-            if (App.STRESS_TEST == null) {
+            if (waves.isEmpty() && App.STRESS_TEST == null) {
                 app.endGame();
             }
         }
