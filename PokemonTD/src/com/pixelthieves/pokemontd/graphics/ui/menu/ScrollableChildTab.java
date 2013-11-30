@@ -23,12 +23,9 @@ class ScrollableChildTab extends ChildTab {
     private void fixPosition() {
         if (content != null) {
             Vector2 overlap = new Vector2(content.getWidth() - width, content.getHeight() - (height - close.height));
-            if (overlap.x > 0) {
-                content.x = MathUtils.clamp(content.x, x, x + overlap.x);
-            }
-            if (overlap.y > 0) {
-                content.y = MathUtils.clamp(content.y, y, y + overlap.y);
-            }
+            content.x = MathUtils.clamp(content.x, x, x + overlap.x);
+            content.y = MathUtils.clamp(content.y, y, y + overlap.y);
+            content.refresh();
         }
     }
 
@@ -47,8 +44,6 @@ class ScrollableChildTab extends ChildTab {
     @Override
     public void render() {
         super.render();
-        content.refresh();
-
         Gdx.gl.glEnable(GL10.GL_SCISSOR_TEST);
         Gdx.gl.glScissor((int) x, (int) (close.y + close.height), (int) width, (int) (height - close.height));
         content.render();
