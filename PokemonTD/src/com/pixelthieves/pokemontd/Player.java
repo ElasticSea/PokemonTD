@@ -61,10 +61,6 @@ public class Player {
     public void reset() {
         score.setScore(0);
         health.setHealth(Integer.MAX_VALUE, defaultHealth);
-        if (App.DEBUG != null) {
-            treasure.set(defaultGold * 1000, 3, 3, 3, 3, 3, 1);
-        }  else{
-            treasure.set(defaultGold);
-        }
+        treasure.set(defaultGold);
     }
 }
