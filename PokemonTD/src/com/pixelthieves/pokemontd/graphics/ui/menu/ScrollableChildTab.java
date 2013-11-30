@@ -23,8 +23,12 @@ class ScrollableChildTab extends ChildTab {
     private void fixPosition() {
         if (content != null) {
             Vector2 overlap = new Vector2(content.getWidth() - width, content.getHeight() - (height - close.height));
-            content.x = MathUtils.clamp(content.x, x, x + overlap.x);
-            content.y = MathUtils.clamp(content.y, y, y + overlap.y);
+            if (overlap.x > 0) {
+                content.x = MathUtils.clamp(content.x, x, x + overlap.x);
+            }
+            if (overlap.y > 0) {
+                content.y = MathUtils.clamp(content.y, y, y + overlap.y);
+            }
         }
     }
 

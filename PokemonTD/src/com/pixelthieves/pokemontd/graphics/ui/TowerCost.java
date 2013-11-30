@@ -31,6 +31,7 @@ public class TowerCost extends InteractiveBlock {
         this.spriteBatch = gui.getSpriteBatch();
         this.font = gui.getFont();
         this.showCost = true;
+        this.setScale(0.5f);
     }
 
     public void setShowCost(boolean showCost) {
@@ -53,7 +54,7 @@ public class TowerCost extends InteractiveBlock {
 
     public void render(Treasure cost) {
         fontScale = font.getScaleX();
-        font.setScale(Math.max(Math.round(fontScale / scale), 1));
+        font.setScale(Math.max(Math.round(fontScale * scale), 1));
         if (!cost.equals(this.cost) || !this.equals(bounds)) {
             this.bounds = new Rectangle(this);
             this.cost = cost;

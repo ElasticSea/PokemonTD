@@ -42,7 +42,7 @@ public class Help extends ChildTab {
     @Override
     public void render() {
         super.render();
-        tutorialButton.render("TUTORIAL");
-        towersButton.render("TOWERS");
+        tutorialButton.render("Tutorial");
+        towersButton.render("Towers");
     }
 }
