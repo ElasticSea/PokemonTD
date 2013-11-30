@@ -86,7 +86,6 @@ public class MapBuilder {
         }
     }
 
-
     /**
      * Convinient class for translating direction to appropriate angle.
      */

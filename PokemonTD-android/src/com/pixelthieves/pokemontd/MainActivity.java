@@ -132,9 +132,7 @@ public class MainActivity extends LibgdxBaseGameActivity implements GameService 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
-        if (detectOpenGLES20()) {
-            cfg.useGL20 = true;
-        }
+            cfg.useGL20 = detectOpenGLES20();
         initialize(new App(this), cfg);
         super.onCreate(savedInstanceState);
     }

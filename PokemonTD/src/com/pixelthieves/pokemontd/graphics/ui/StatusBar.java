@@ -13,7 +13,6 @@ public class StatusBar extends GuiBox {
     private final Player player;
     private final DisplayText scoreTitleText;
     private final DisplayText scoreText;
-    private final SpeedControls speedControls;
     private final Button menuButton;
     private final GuiBox menuBackground;
     private Rectangle square;
@@ -32,8 +31,6 @@ public class StatusBar extends GuiBox {
                 ui.getApp().triggerMenu(Menu.Type.INGAME);
             }
         };
-        speedControls =
-                new SpeedControls(ui, x + menuBackground.width, y, height * 4.5f, height, ui.getApp().getClock());
         scoreTitleText = new DisplayText(ui, new Rectangle(), font, BitmapFont.HAlignment.LEFT);
         scoreText = new DisplayText(ui, new Rectangle(), font, BitmapFont.HAlignment.RIGHT);
         otherUi.setMenu(menuButton);
@@ -49,7 +46,6 @@ public class StatusBar extends GuiBox {
         }
         scoreTitleText.render("Score");
         scoreText.render(scoreTextCache);
-        speedControls.render();
         menuBackground.render();
         menuButton.render("MENU");
     }
@@ -63,19 +59,13 @@ public class StatusBar extends GuiBox {
         scoreText.set(scoreRect);
         menuBackground.set(x - ui.getOffset(), y - height, height * 2 + ui.getOffset(), height * 2 + ui.getOffset());
         menuButton.set(menuBackground);
-        speedControls.set(x + menuButton.width, y, height * 4f, height);
         menuBackground.refresh();
         menuButton.refresh();
-        speedControls.refresh();
         scoreTitleText.refresh();
         scoreText.refresh();
     }
 
     public void setSquare(Rectangle square) {
         this.square = square;
-    }
-
-    public Rectangle getSquare() {
-        return square;
     }
 }

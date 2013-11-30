@@ -15,18 +15,17 @@ public class SpeedControls extends DisplayBlock {
     private float currentMultiplierCache;
     private String currentMultiplierTextCache;
 
-    public SpeedControls(Gui ui, float x, float y, float width, float height, final Clock clock) {
-        super(ui, new Rectangle(x, y, width, height));
+    public SpeedControls(Gui ui,  final Clock clock) {
+        super(ui, new Rectangle());
         this.clock = clock;
-        int buttonWidth = (int) (width / 3);
-        slower = new Button(ui, new Rectangle(x, y, buttonWidth, height), ui.getFont(), BitmapFont.HAlignment.CENTER) {
+        slower = new Button(ui, new Rectangle(), ui.getFont(), BitmapFont.HAlignment.CENTER) {
             @Override
             public void process(float x, float y) {
                 clock.setSpeedMultiplier(clock.getSpeedMultiplier() / 2);
 
             }
         };
-        speed = new Button(ui, new Rectangle(x + buttonWidth, y, buttonWidth, height), ui.getFont(),
+        speed = new Button(ui, new Rectangle(), ui.getFont(),
                 BitmapFont.HAlignment.CENTER) {
             @Override
             public void process(float x, float y) {
@@ -34,7 +33,7 @@ public class SpeedControls extends DisplayBlock {
             }
         };
 
-        faster = new Button(ui, new Rectangle(x + buttonWidth * 2, y, buttonWidth, height), ui.getFont(),
+        faster = new Button(ui, new Rectangle(), ui.getFont(),
                 BitmapFont.HAlignment.CENTER) {
             @Override
             public void process(float x, float y) {

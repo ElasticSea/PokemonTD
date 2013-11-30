@@ -67,9 +67,9 @@ public class GameRenderer implements Renderable {
         renderRangeSystem.process();
         if (App.DEBUG != null) {
             renderDebugSystem.process();
-        }
         drawPath();
         drawGrid();
+        }
         if (!app.isFreezed()) {
             renderHealthSystem.process();
         }
@@ -80,7 +80,6 @@ public class GameRenderer implements Renderable {
     }
 
     private void drawGrid() {
-        if (App.DEBUG != null) {
             int height = tileMap.getHeight(0) * tileMap.getTileSize(0);
             int width = tileMap.getWidth(0) * tileMap.getTileSize(0);
             for (int i = 0; i < height; i++) {
@@ -89,7 +88,6 @@ public class GameRenderer implements Renderable {
             for (int i = 0; i < width; i++) {
                 shapeRenderer.line(i * App.WORLD_SCALE, 0, i * App.WORLD_SCALE, height * App.WORLD_SCALE);
             }
-        }
     }
 
     private void drawMap(int level) {
@@ -106,7 +104,6 @@ public class GameRenderer implements Renderable {
     }
 
     private void drawPath() {
-        if (App.DEBUG != null) {
             for (Path path : pathPack.getPaths()) {
                 Vector3 lastPoint = null;
                 for (Vector3 point : path.getPath()) {
@@ -115,7 +112,6 @@ public class GameRenderer implements Renderable {
                     }
                     lastPoint = point;
                 }
-            }
         }
     }
 

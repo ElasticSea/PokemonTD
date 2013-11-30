@@ -30,7 +30,9 @@ public class Status extends GuiBox {
     private final Player player;
     private final BitmapFont font;
     private final Vector2 textFieldCount;
+    private final SpeedControls speedControls;
     private Vector2 textSize;
+    private int buttonOffset = 2;
 
     Status(Ui ui, Rectangle rectangle, WaveManager waveManager, InterestManager interestManager, BitmapFont font) {
         super(ui, rectangle);
@@ -43,7 +45,7 @@ public class Status extends GuiBox {
         this.interestManager = interestManager;
         this.font = font;
 
-        textFieldCount = new Vector2(2, 4);
+        textFieldCount = new Vector2(2, 4+buttonOffset);
         interestText = createDisplayBlock(BitmapFont.HAlignment.LEFT);
         waveText = createDisplayBlock(BitmapFont.HAlignment.LEFT);
         livesText = createDisplayBlock(BitmapFont.HAlignment.LEFT);
@@ -54,6 +56,11 @@ public class Status extends GuiBox {
         waveTimeText = createDisplayBlock(BitmapFont.HAlignment.RIGHT);
         livesPicture = createDisplayPicture();
         moneyPicture = createDisplayPicture();
+
+
+
+        speedControls =
+                new SpeedControls(ui,  ui.getApp().getClock());
         refresh();
     }
 
@@ -88,6 +95,7 @@ public class Status extends GuiBox {
         livesPicture.render(Assets.getTexture("hearth"), "", textSize.y * 0.7f, true);
         moneyText.render(String.valueOf(player.getTreasure().getGold()));
         moneyPicture.render(Assets.getTexture("coin"), "", textSize.y * 0.7f, true);
+        speedControls.render();
     }
 
     @Override
@@ -95,13 +103,15 @@ public class Status extends GuiBox {
         super.refresh();
         textSize = new Vector2(offsetRectange.width / textFieldCount.x, offsetRectange.
                 height / textFieldCount.y);
-        refresh(interestText, 0, 0, textSize);
-        refresh(waveText, 0, 1, textSize);
-        refresh(livesText, 0, 2, textSize);
-        refresh(moneyText, 0, 3, textSize);
-        refresh(interestTimeText, 1, 0, textSize);
-        refresh(waveTimeText, 1, 1, textSize);
-        refresh(livesPicture, 1, 2, textSize, BitmapFont.HAlignment.RIGHT);
-        refresh(moneyPicture, 1, 3, textSize, BitmapFont.HAlignment.RIGHT);
+        refresh(interestText, 0, buttonOffset, textSize);
+        refresh(waveText, 0, buttonOffset+1, textSize);
+        refresh(livesText, 0, buttonOffset+2, textSize);
+        refresh(moneyText, 0, buttonOffset+3, textSize);
+        refresh(interestTimeText, 1, buttonOffset, textSize);
+        refresh(waveTimeText, 1, buttonOffset+1, textSize);
+        refresh(livesPicture, 1, buttonOffset+2, textSize, BitmapFont.HAlignment.RIGHT);
+        refresh(moneyPicture, 1, buttonOffset+3, textSize, BitmapFont.HAlignment.RIGHT);
+        speedControls.set(offsetRectange.x, offsetRectange.y, width,textSize.y*buttonOffset);
+        speedControls.refresh();
     }
 }

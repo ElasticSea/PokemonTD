@@ -6,11 +6,11 @@ import com.badlogic.gdx.math.Rectangle;
 /**
  * Created by Tomas on 10/8/13.
  */
-abstract class InteractiveBlock extends InteractiveElement {
+public abstract class InteractiveBlock extends InteractiveElement {
 
     private boolean enabled = true;
 
-    InteractiveBlock(Gui gui, Rectangle rectangle) {
+    public InteractiveBlock(Gui gui, Rectangle rectangle) {
         super(gui, rectangle);
     }
 

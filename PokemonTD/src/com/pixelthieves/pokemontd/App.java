@@ -429,7 +429,6 @@ public class App extends Game2D {
         interestManager.getFilter().reset();
     }
 
-
     public static Vector3 getTowerPosition(float worldX, float worldY) {
         Vector3 block = getBlockPosition(worldX, worldY);
         return getTowerPositionByBlock(block.x, block.y);
@@ -459,12 +458,4 @@ public class App extends Game2D {
     public void setUi(Ui ui) {
         this.ui = ui;
     }
-
-  /*  @Override
-    public void pause() {
-        super.pause();
-        if (isSessionStarted()) {
-            freeze(true);
-        }
-    }     */
 }
