@@ -151,6 +151,7 @@ public class CreepTypeBuilder {
                     health *= 0.75f;
                     break;
                 case INVISIBLE:
+                    health *= 0.75f;
                     break;
                 case SPAWN:
                     health *= 4f;
