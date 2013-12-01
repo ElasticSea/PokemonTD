@@ -2,6 +2,7 @@ package com.pixelthieves.pokemontd.entity.tower;
 
 import com.pixelthieves.core.main.Assets;
 import com.pixelthieves.pokemontd.App;
+import com.pixelthieves.pokemontd.Element;
 import com.pixelthieves.pokemontd.Treasure;
 import com.pixelthieves.pokemontd.component.attack.AbilityComponent;
 import com.pixelthieves.pokemontd.component.attack.EffectName;
@@ -175,5 +176,16 @@ public class TowerType implements CommonDataType {
 
     public static TowerType getType(TowerName towerName) {
         return towerTypeMap.get(towerName);
+    }
+
+    private static final Element[] elements = Element.values();
+
+    public boolean isElementTower() {
+        for (Element element : elements) {
+            if (this.cost.hasElement(element, 1)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

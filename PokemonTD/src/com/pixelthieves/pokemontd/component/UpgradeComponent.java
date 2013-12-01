@@ -1,7 +1,6 @@
 package com.pixelthieves.pokemontd.component;
 
 import com.artemis.Component;
-import com.pixelthieves.pokemontd.Treasure;
 import com.pixelthieves.pokemontd.entity.tower.TowerType;
 
 import java.util.ArrayList;
@@ -25,11 +24,11 @@ public class UpgradeComponent extends Component {
     }
 
     public int getGoldWorthThoseUpgrades() {
-        Treasure treasure = new Treasure(0);
+        int gold = 0;
         for (TowerType upgrade : pastUpgrades) {
-            treasure.add(upgrade.getCost());
+            gold += upgrade.getCost().getGold() * (upgrade.isElementTower() ? 0.75f : 1);
         }
-        return treasure.getGold();
+        return gold;
     }
 
 }
