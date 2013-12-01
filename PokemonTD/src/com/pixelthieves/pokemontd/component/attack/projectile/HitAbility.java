@@ -26,13 +26,13 @@ public class HitAbility extends EffectData {
     private float size;
     private final List<EffectData> effectData;
 
-    public static AbilityComponent getNormal(String texture, float scale) {
-        return new HitAbility(texture, Type.FOLLOW_TARGET, DEFAULT_SIZE * scale, NORMAL_SPEED * scale,
+    public static AbilityComponent getNormal(String texture, float scale, float size) {
+        return new HitAbility(texture, Type.FOLLOW_TARGET, size * scale, NORMAL_SPEED * scale,
                 new NormalData());
     }
 
-    public static AbilityComponent getSplash(String texture, float scale, float range) {
-        return new HitAbility(texture, Type.FOLLOW_TARGET, DEFAULT_SIZE * scale, NORMAL_SPEED * scale, range * scale,
+    public static AbilityComponent getSplash(String texture, float scale, float range, float size) {
+        return new HitAbility(texture, Type.FOLLOW_TARGET, size * scale, NORMAL_SPEED * scale, range * scale,
                 new NormalData());
     }
 
