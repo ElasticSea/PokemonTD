@@ -13,9 +13,9 @@ import java.util.List;
  * Created by Tomas on 10/13/13.
  */
 public class HitAbility extends EffectData {
-    public static final float SLOW_SPEED = 2.0f;
-    public static final float NORMAL_SPEED = 4.0f;
-    public static final float FAST_SPEED = 8.0f;
+    public static final float SLOW_SPEED = 3.0f;
+    public static final float NORMAL_SPEED = 6.0f;
+    public static final float FAST_SPEED = 12.0f;
     public static final float DEFAULT_SIZE = 0.1f;
     public static final float BIG_SIZE = 0.25f;
     public static final float SUPER_BIG_SIZE = 0.5f;
