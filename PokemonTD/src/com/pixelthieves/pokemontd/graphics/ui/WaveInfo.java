@@ -63,7 +63,7 @@ public class WaveInfo extends GuiBox {
         if (nextWave != null) {
             abilityText.render(nextWave.getAbilityType().toString());
             creepTexture.render(nextWave.getTexture(), "");
-            this.nextWave.render("NEXT WAVE", Color.WHITE, NEXTWAVE_COLOR);
+            this.nextWave.render(nextWave.getId() == 0 ? "START GAME" : "NEXT WAVE", Color.WHITE, NEXTWAVE_COLOR);
             header.render("Next Wave", String.valueOf(nextWave.getId() + 1));
         }else{
             header.render("","");

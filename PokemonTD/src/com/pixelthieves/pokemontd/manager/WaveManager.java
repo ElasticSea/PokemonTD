@@ -20,6 +20,7 @@ import java.util.Map;
  */
 public class WaveManager implements Updateable {
     private final PathPack pathPack;
+    private final float initialDelay;
 
     private Iterator<CreepName> creeps;
     private final UpdateFilter filter;
@@ -64,13 +65,14 @@ public class WaveManager implements Updateable {
     }
 
 
-    public WaveManager(App app, PathPack pathPack, float waveInterval, float betweenWaveInterval) {
+    public WaveManager(App app, PathPack pathPack, float waveInterval, float betweenWaveInterval, float initialDelay) {
         this.app = app;
         this.player = app.getPlayer();
         this.pathPack = pathPack;
         this.waveInterval = waveInterval;
         this.betweenWaveInterval = betweenWaveInterval;
-        this.filter = new UpdateFilter(this, betweenWaveInterval);
+        this.initialDelay = initialDelay;
+        this.filter = new UpdateFilter(this, initialDelay);
     }
 
     public void init(Difficulty difficulty) {
@@ -79,7 +81,7 @@ public class WaveManager implements Updateable {
         waveStore = creepTypeBuilder.build(App.WORLD_SCALE, CreepTypeBuilder.normal, difficulty);
         elementWaves = getElementWave(difficulty);
         lastWaveId = waveStore.size() - 1;
-        filter.reset(betweenWaveInterval);
+        filter.reset(initialDelay);
         updateWave();
         this.active = true;
     }
