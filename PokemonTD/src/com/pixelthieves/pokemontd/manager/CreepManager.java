@@ -21,7 +21,6 @@ public class CreepManager implements Clickable {
     @Override
     public boolean hit(float x, float y) {
         clickedCreep = app.getWorld().getSystem(GetCreep.class).getEntity(x, y);
-        System.out.println(clickedCreep);
         return clickedCreep != null;
     }
 

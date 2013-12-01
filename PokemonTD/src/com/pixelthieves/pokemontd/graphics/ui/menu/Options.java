@@ -3,6 +3,7 @@ package com.pixelthieves.pokemontd.graphics.ui.menu;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.Rectangle;
 import com.pixelthieves.core.main.Assets;
+import com.pixelthieves.pokemontd.GameService;
 import com.pixelthieves.pokemontd.graphics.ui.Button;
 
 /**
@@ -15,6 +16,7 @@ public class Options extends ChildTab {
     private final GUI guiTab;
     private final AbilityTab abilityTab;
     private static Music theme;
+    private MenuButton signInButton;
 
     private Music getTheme() {
         if (theme == null) {
@@ -52,6 +54,21 @@ public class Options extends ChildTab {
             }
 
         };
+        if (menu.getGameSevice().canSingIn()) {
+            signInButton = new MenuButton(menu, rects.get(2)) {
+                @Override
+                public void process(float x, float y) {
+                    GameService gameSevice = menu.getGameSevice();
+                    if (gameSevice.isSignedIn()) {
+                        gameSevice.signOut();
+                    } else {
+                        gameSevice.signIn();
+                    }
+                }
+            };
+            register(signInButton);
+        }
+
 
         register(guiButton);
         register(musicButton);
@@ -63,5 +80,8 @@ public class Options extends ChildTab {
         super.render();
         guiButton.render("Graphical Interface");
         musicButton.render(getTheme().isPlaying() ? "Mute Music" : "Play Music");
+        if (signInButton != null) {
+            signInButton.render(menu.getGameSevice().isSignedIn() ? "Sign Out" : "Sign In");
+        }
     }
 }

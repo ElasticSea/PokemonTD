@@ -79,7 +79,6 @@ class ElementIcon extends InteractiveBlock {
 
     public void setElement(Element element) {
         this.element = element;
-        System.out.println(element);
     }
 
     public Element getElement() {

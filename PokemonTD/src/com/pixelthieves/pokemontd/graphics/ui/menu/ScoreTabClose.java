@@ -7,14 +7,14 @@ import com.pixelthieves.pokemontd.graphics.ui.DisplayText;
 /**
  * Created by Tomas on 11/19/13.
  */
-class ScoreTab extends ExitTab {
+class ScoreTabClose extends CloseExitTab {
 
     private Menu menu;
     private final DisplayText score;
     private final DisplayText congratulations;
 
-    ScoreTab(final Menu menu, Rectangle rectangle, int count) {
-        super(menu, rectangle, false, true, count);
+    ScoreTabClose(final Menu menu, Rectangle rectangle, int count) {
+        super(menu, null,rectangle, Type.EXIT, true, count);
         this.menu = menu;
         congratulations = new DisplayText(ui, rects.get(0), ui.getFont(), BitmapFont.HAlignment.CENTER);
         score = new DisplayText(ui, rects.get(1), ui.getFont(), BitmapFont.HAlignment.CENTER);

@@ -1,5 +1,6 @@
 package com.pixelthieves.pokemontd.entity.tower;
 
+import com.artemis.ComponentMapper;
 import com.pixelthieves.pokemontd.Treasure;
 import com.pixelthieves.pokemontd.component.attack.AbilityComponent;
 import com.pixelthieves.pokemontd.component.attack.EffectName;
@@ -182,7 +183,6 @@ public class TowerTypeBuilder {
             while ((price = goldMap.get(level--)) != null) {
                 totalPrice += price;
             }
-            System.out.println(totalPrice);
             return totalPrice;
         }
 

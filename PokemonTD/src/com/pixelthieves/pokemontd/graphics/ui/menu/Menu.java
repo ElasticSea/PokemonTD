@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class Menu extends Gui {
 
-    private final LeaderboardTab leaderboard;
+    private final LeaderboardTabClose leaderboard;
     private final int menuWidth;
     private final int buttonHeight;
     private Button menu;
@@ -49,11 +49,11 @@ public class Menu extends Gui {
         Rectangle rectangle = getRectangle(menuWidth, height);
         signInBox = new SignInBox(this, rectangle, defaultButtonCount);
         boolean canSignIn = getGameSevice().canSingIn();
-        inGameMenu = canSignIn ? new SignInGameMenu(this, rectangle, defaultButtonCount) :
-                new InGameMenu(this, rectangle, defaultButtonCount);
-        menuBox = canSignIn ? new SingInMenuBox(this, rectangle, defaultButtonCount) : new MenuBox(this, rectangle, defaultButtonCount);
-        endGame = canSignIn ? new SingInEndGame(this, rectangle, defaultButtonCount) : new ScoreTab(this, rectangle, defaultButtonCount);
-        leaderboard = new LeaderboardTab(this, getRectangle(menuWidth, (int) (height * 1.5f)), 7);
+        inGameMenu = new InGameMenu(this, rectangle, defaultButtonCount);
+        menuBox = new MenuBox(this, rectangle, defaultButtonCount);
+        endGame = new ScoreTabClose(this, rectangle, defaultButtonCount);
+        leaderboard = new LeaderboardTabClose(this, null,getRectangle(menuWidth, (int) (height * 1.5f)), 7,
+                CloseExitTab.Type.EXIT);
 
         guiDialogRoots.add(signInBox);
         guiDialogRoots.add(inGameMenu);

@@ -2,6 +2,7 @@ package com.pixelthieves.pokemontd;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.pixelthieves.core.utils.Param;
 import com.pixelthieves.core.utils.ParamHolder;
 
 import java.io.File;
@@ -13,25 +14,30 @@ import static com.badlogic.gdx.tools.imagepacker.TexturePacker2.process;
 
 public class Main {
     public static void main(String[] args) {
-        Settings texturePackerSettings = new Settings();
-        texturePackerSettings.edgePadding = false;
-        texturePackerSettings.combineSubdirectories = true;
+        ParamHolder params = new ParamHolder(args);
+        if(params.getParam("-h","--h", "-help","--help") != null){
+            System.out.println("Usage: -fullscreen                   triggers fullscreen.");
+            System.out.println("       -resolution [width] [height]  sets application resoltuion.");
+            System.exit(0);
+        }
+        Param resolution = params.getParam("-resolution");
+        if (params.getParam("-textures") != null) {
+            Settings texturePackerSettings = new Settings();
+            texturePackerSettings.edgePadding = false;
+            texturePackerSettings.combineSubdirectories = true;
 
-        String source = new File(".").getAbsoluteFile().getParentFile().getParentFile().getParentFile().toString() +
-                "/unprocessed/textures/";
-        String destination = new File(".").toString() + "/data/textures/";
-        process(texturePackerSettings, source, destination, "packed");
+            String source = new File(".").getAbsoluteFile().getParentFile().getParentFile().getParentFile().toString() +
+                    "/unprocessed/textures/";
+            String destination = new File(".").toString() + "/data/textures/";
+            process(texturePackerSettings, source, destination, "packed");
 
+        }
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "PokemonTD";
         cfg.useGL20 = true;
-        cfg.width = 1920;
-        cfg.height = 1080;
-        if (new ParamHolder(args).getParam("-fullscreen") != null) {
-            cfg.fullscreen = true;
-            cfg.width = 2560;
-            cfg.height = 1440;
-        }
+        cfg.width = resolution != null ? Integer.valueOf(resolution.getArgument(0)) : 800;
+        cfg.height = resolution != null ? Integer.valueOf(resolution.getArgument(1)) : 640;
+        cfg.fullscreen = params.getParam("-fullscreen") != null;
 
         new LwjglApplication(new App(new GameService() {
             private Map<String, String> leaderboard;

@@ -32,7 +32,6 @@ public abstract class IntervalAbilitySystem<T extends AbilityComponent> extends 
     protected void initialize() {
         super.initialize();
         abilityMapper = world.getMapper(ability);
-        System.out.println(abilityMapper);
     }
 
     @Override

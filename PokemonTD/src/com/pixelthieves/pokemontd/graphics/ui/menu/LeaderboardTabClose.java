@@ -15,16 +15,17 @@ import java.util.Map;
 /**
  * Created by Tomas on 11/19/13.
  */
-class LeaderboardTab extends ExitTab {
+class LeaderboardTabClose extends CloseExitTab {
 
     private final DisplayText leaderboardHeader;
     private final Leaderboard leaderboard;
 
-    LeaderboardTab(final Menu menu, Rectangle rectangle, int count) {
-        super(menu, rectangle, false, false, count);
+    LeaderboardTabClose(final Menu menu, MenuTab parent, Rectangle rectangle, int count, Type type) {
+        super(menu,parent, rectangle, type, false, count);
         leaderboardHeader = new DisplayText(menu, rects.get(0), menu.getFont());
-        float leaderboardHeight = rectangle.height - (leaderboardHeader.height + endButton.height);
-        leaderboard = new Leaderboard(menu, new Rectangle(x, y + endButton.height, width, leaderboardHeight), 10);
+        float buttonHeight2 = endButton != null ? endButton.height : closeButton.height;
+        float leaderboardHeight = rectangle.height - (leaderboardHeader.height + buttonHeight2);
+        leaderboard = new Leaderboard(menu, new Rectangle(x, y + buttonHeight2, width, leaderboardHeight), 10);
         this.setCloseTabWhenNotClicked(false);
         this.setRenderLines(false);
     }
