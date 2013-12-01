@@ -33,6 +33,7 @@ import java.util.concurrent.TimeUnit;
 public class DeathSystem extends EntityProcessingSystem {
 
     private final Player player;
+    private final GameService gameService;
     @Mapper
     ComponentMapper<PositionComponent> positionMapper;
     @Mapper
@@ -52,9 +53,10 @@ public class DeathSystem extends EntityProcessingSystem {
 
     private final List<ResurrectTrigger> deathsToProcess = new ArrayList<ResurrectTrigger>();
 
-    public DeathSystem(Player player) {
+    public DeathSystem(GameService gameService, Player player) {
         super(Aspect.getAspectForAll(HealthComponent.class, TreasureComponent.class, CreepAbilityComponent.class,
                 DamageComponent.class));
+        this.gameService = gameService;
         this.player = player;
     }
 
@@ -142,7 +144,7 @@ public class DeathSystem extends EntityProcessingSystem {
         final Path path = pathMapper.get(e).getPath();
         final WaveComponent waveComponent = waveMapper.get(e);
         final CreepType creepType = creepTypeMapper.get(e).getCreepType();
-        final int health = healthMapper.get(e).getHealth().getMaxHealth()/creeps;
+        final int health = healthMapper.get(e).getHealth().getMaxHealth() / creeps;
 
         double circleSegment = Math.PI * 2 / creeps;
         float radius = path.getWidth() / 2f * App.WORLD_SCALE;
@@ -175,6 +177,7 @@ public class DeathSystem extends EntityProcessingSystem {
         }
         for (Element element : Element.values()) {
             if (treasure.hasElement(element, 1)) {
+                gameService.submitAchievement(Achievement.Jeweller);
                 TextInfo.registerElementInfo(world, treasure.getElement(element), element, position.x, position.y);
                 player.addScore(treasure.getElement(element) * (element.equals(Element.SOUL) ? 500 : 100));
             }

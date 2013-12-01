@@ -30,7 +30,7 @@ public class Player {
     public void decreaseHealth(int sub) {
         health.decease(sub);
         if (!health.isAlive()) {
-            app.endGame();
+            app.endGame(false);
         }
     }
 

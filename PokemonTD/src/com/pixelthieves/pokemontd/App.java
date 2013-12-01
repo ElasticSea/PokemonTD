@@ -104,6 +104,7 @@ public class App extends Game2D {
     private InputMultiplexer inputMultiplexer;
     private Difficulty difficulty = Difficulty.Easy;
     private WorldUpdater worldUpdater;
+    private boolean finishedGame;
 
     public static TweenManagerAdapter getTweenManager() {
         return tweenManager;
@@ -164,7 +165,7 @@ public class App extends Game2D {
         ui = new Ui(this, menu);
         initializeInput();
         initializeTween();
-        gameRenderer = new GameRenderer(this, ui, map,  camera);
+        gameRenderer = new GameRenderer(this, ui, map, camera);
         if (Gdx.graphics.isGL20Available()) {
             mainMenuGaimRenderer = new CachedGaussianBlurRenderer(gameRenderer, 20);
             frozenGameRenderer = new GrayscaleRenderer(gameRenderer);
@@ -212,7 +213,7 @@ public class App extends Game2D {
     }
 
     private void initializeSystems() {
-        deathSystem = new DeathSystem(player);
+        deathSystem = new DeathSystem(gameService, player);
         renderSpriteSystem = new RenderSpriteSystem(cameraHandler.getCamera(), spriteBatch);
         renderTextSystem = new RenderTextSystem(spriteBatch);
         renderHealthSystem = new RenderHealthSystem(shapeRenderer);
@@ -316,9 +317,24 @@ public class App extends Game2D {
         return world;
     }
 
-    public void endGame() {
+    public void endGame(boolean survived) {
+        finishedGame = true;
         freeze(true);
         menu.triggerMenu(Menu.Type.END);
+        if (survived) {
+            if (player.getHealth() >= 100) {
+                gameService.submitAchievement(Achievement.Healty);
+            }
+            if (player.getHealth() >= 50) {
+                gameService.submitAchievement(Achievement.Champion);
+            }
+            if (player.getTreasure().getGold() >= 200000) {
+                gameService.submitAchievement(Achievement.Trifty);
+            }
+            if (towerManager.getSoldTowers() == 0) {
+                gameService.submitAchievement(Achievement.Keeper);
+            }
+        }
     }
 
     public GameService getGameSevice() {
@@ -412,6 +428,10 @@ public class App extends Game2D {
         return sessionStarted;
     }
 
+    public boolean isFinishedGame() {
+        return finishedGame;
+    }
+
     public void setSessionStarted(boolean sessionStarted) {
         this.sessionStarted = sessionStarted;
         currentGameRenderer = sessionStarted ? gameRenderer : mainMenuGaimRenderer;
@@ -445,6 +465,7 @@ public class App extends Game2D {
         int blockY = (int) (worldY / App.WORLD_SCALE);
         return new Vector3(blockX, blockY, 0);
     }
+
     public static Vector3 getBlockPositionOptimized(float worldX, float worldY, Vector3 store) {
         int blockX = (int) (worldX / App.WORLD_SCALE);
         int blockY = (int) (worldY / App.WORLD_SCALE);

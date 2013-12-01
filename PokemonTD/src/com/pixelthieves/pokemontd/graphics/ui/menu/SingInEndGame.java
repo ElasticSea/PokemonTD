@@ -1,14 +1,14 @@
 package com.pixelthieves.pokemontd.graphics.ui.menu;
 
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Rectangle;
-import com.pixelthieves.pokemontd.graphics.ui.DisplayText;
 
 /**
  * Created by Tomas on 11/19/13.
  */
-class SingInEndGame extends EndGame {
+class SingInEndGame extends ScoreTab {
 
+    public static final Color GREEN = new Color(Color.GREEN).mul(0.6f);
     private Menu menu;
     private final MenuButton publishScoreButton;
 
@@ -34,6 +34,7 @@ class SingInEndGame extends EndGame {
     @Override
     public void render() {
         super.render();
-        publishScoreButton.render(menu.getGameSevice().isSignedIn() ? "Submit Score" : "Sign In To Submit");
+        publishScoreButton.render((menu.getGameSevice().isSignedIn() ? "Submit Score" : "Sign In To Submit").toUpperCase(),
+                Color.WHITE, GREEN);
     }
 }

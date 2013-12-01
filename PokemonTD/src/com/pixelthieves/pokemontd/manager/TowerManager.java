@@ -32,6 +32,7 @@ public class TowerManager implements Clickable {
     private final App app;
     private Entity placeholderTower;
     private Entity clickedTower;
+    private int soldTowers;
 
     public void setPickedTower(TowerType towerType) {
         removePlaceholderTower();
@@ -165,6 +166,10 @@ public class TowerManager implements Clickable {
         }
     }
 
+    public int getSoldTowers() {
+        return soldTowers;
+    }
+
     public enum Status {
         NONE, PLACING_TOWER, MOVE_PLACEHOLDER;
     }
@@ -240,6 +245,7 @@ public class TowerManager implements Clickable {
                 player.getTreasure().addGold(towerTreasure.getTreasure().getGold() + goldWorthThoseUpgrades);
                 clickedTower.deleteFromWorld();
                 clickedTower = null;
+                soldTowers++;
             }
             return true;
         }

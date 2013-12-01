@@ -52,7 +52,7 @@ public class Menu extends Gui {
         inGameMenu = canSignIn ? new SignInGameMenu(this, rectangle, defaultButtonCount) :
                 new InGameMenu(this, rectangle, defaultButtonCount);
         menuBox = canSignIn ? new SingInMenuBox(this, rectangle, defaultButtonCount) : new MenuBox(this, rectangle, defaultButtonCount);
-        endGame = canSignIn ? new SingInEndGame(this, rectangle, defaultButtonCount) : new EndGame(this, rectangle, defaultButtonCount);
+        endGame = canSignIn ? new SingInEndGame(this, rectangle, defaultButtonCount) : new ScoreTab(this, rectangle, defaultButtonCount);
         leaderboard = new LeaderboardTab(this, getRectangle(menuWidth, (int) (height * 1.5f)), 7);
 
         guiDialogRoots.add(signInBox);

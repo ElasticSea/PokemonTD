@@ -1,6 +1,7 @@
 package com.pixelthieves.pokemontd.graphics.ui.menu;
 
 import com.badlogic.gdx.math.Rectangle;
+import com.pixelthieves.pokemontd.App;
 import com.pixelthieves.pokemontd.graphics.ui.Button;
 
 /**
@@ -10,12 +11,15 @@ class InGameMenu extends CommonMenu {
 
     private final Button pause;
 
-    InGameMenu(final Menu menu, Rectangle rectangle,  int count) {
-        super(menu, rectangle, true,true, count);
+    InGameMenu(final Menu menu, Rectangle rectangle, int count) {
+        super(menu, rectangle, true, true, count);
         pause = new MenuButton(menu, rects.get(0)) {
             @Override
             public void process(float x, float y) {
-                menu.getApp().freeze(!menu.getApp().isFreezed());
+                App app = menu.getApp();
+                if (!app.isFinishedGame()) {
+                    app.freeze(!app.isFreezed());
+                }
             }
         };
 

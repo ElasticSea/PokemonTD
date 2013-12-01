@@ -96,7 +96,6 @@ public class WaveManager implements Updateable {
 
     @Override
     public void update(float delta) {
-        System.out.println(nextWave+" "+state);
         if (nextWave != null) {
             switch (state) {
                 case WAVE:
@@ -113,7 +112,7 @@ public class WaveManager implements Updateable {
             fireNextWave(nextWave);
         } else {
             if (waves.isEmpty() && App.STRESS_TEST == null) {
-                app.endGame();
+                app.endGame(true);
             }
         }
     }
@@ -139,6 +138,9 @@ public class WaveManager implements Updateable {
     }
 
     private void unregisterWave(WaveComponent wave) {
+        if(wave.getId() == 0){
+            app.getGameSevice().submitAchievement(Achievement.Novice);
+        }
         if ((wave.getId() + 1) % 5 == 0) {
             player.addFreeElement();
             app.getWorld().getSystem(FireTextInfo.class).fireText("FREE ELEMENT", Color.GREEN);
@@ -192,9 +194,5 @@ public class WaveManager implements Updateable {
 
     public UpdateFilter getFilter() {
         return filter;
-    }
-
-    public int getLastWaveId() {
-        return lastWaveId;
     }
 }

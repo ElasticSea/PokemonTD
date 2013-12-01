@@ -18,6 +18,7 @@ public class MainActivity extends LibgdxBaseGameActivity implements GameService 
     private final GameServiceSession session;
     private Map<String, String> leaderboard;
     private boolean leaderboardLoading;
+    private App application;
 
     public MainActivity() {
         session = new GameServiceSession();
@@ -25,11 +26,14 @@ public class MainActivity extends LibgdxBaseGameActivity implements GameService 
 
     private static java.util.Map<Achievement, Integer> getAchievemtsMap() {
         java.util.Map<Achievement, Integer> map = new HashMap<Achievement, Integer>();
+        map.put(Achievement.Champion, R.string.achievement_champion);
         map.put(Achievement.Ethernal, R.string.achievement_ethernal);
         map.put(Achievement.Immortal, R.string.achievement_immortal);
         map.put(Achievement.Keeper, R.string.achievement_keeper);
         map.put(Achievement.Trifty, R.string.achievement_trifty);
-        map.put(Achievement.Healty, R.string.achievement_heathy);
+        map.put(Achievement.Healty, R.string.achievement_healthy);
+        map.put(Achievement.Novice, R.string.achievement_novice);
+        map.put(Achievement.Jeweller, R.string.achievement_jeweller);
         return map;
     }
 
@@ -82,15 +86,29 @@ public class MainActivity extends LibgdxBaseGameActivity implements GameService 
 
     private void process() {
         if (isSignedIn() && !session.isEmpty()) {
-            showMessage(R.string.your_progress_will_be_uploaded);
+            //showMessage(R.string.your_progress_will_be_uploaded);
             for (int score : session.getScores()) {
-                getGamesClient().submitScore(getString(R.string.leaderboard_leaderboard), score);
+                getGamesClient().submitScore(getString(getLeaderboardType(application.getDifficulty())), score);
             }
             for (Achievement achievement : session.getAchievements()) {
                 getGamesClient().unlockAchievement(getString(achievemtsMap.get(achievement)));
             }
             session.clear();
         }
+    }
+
+    private int getLeaderboardType(Difficulty difficulty) {
+        switch (difficulty) {
+            case Easy:
+                return R.string.leaderboard_easy;
+            case Normal:
+                return R.string.leaderboard_normal;
+            case Hard:
+                return R.string.leaderboard_hard;
+            case Insane:
+                return R.string.leaderboard_insane;
+        }
+        return -1;
     }
 
     @Override
@@ -125,15 +143,16 @@ public class MainActivity extends LibgdxBaseGameActivity implements GameService 
                 leaderboardLoading = false;
             }
         };
-        getGamesClient().loadTopScores(listener, getString(R.string.leaderboard_leaderboard), span, leaderboardCollection,
-                results, true);
+        getGamesClient().loadTopScores(listener, getString(getLeaderboardType(application.getDifficulty())), span,
+                leaderboardCollection, results, true);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
-            cfg.useGL20 = detectOpenGLES20();
-        initialize(new App(this), cfg);
+        cfg.useGL20 = detectOpenGLES20();
+        application = new App(this);
+        initialize(application, cfg);
         super.onCreate(savedInstanceState);
     }
 

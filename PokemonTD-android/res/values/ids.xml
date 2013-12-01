@@ -8,6 +8,12 @@ Google Play game services IDs.
     <string name="achievement_immortal">CgkIhPS8x6cKEAIQAg</string>
     <string name="achievement_keeper">CgkIhPS8x6cKEAIQAw</string>
     <string name="achievement_trifty">CgkIhPS8x6cKEAIQBA</string>
-    <string name="achievement_heathy">CgkIhPS8x6cKEAIQBQ</string>
-    <string name="leaderboard_leaderboard">CgkIhPS8x6cKEAIQBw</string>
+    <string name="achievement_healthy">CgkIhPS8x6cKEAIQBQ</string>
+    <string name="achievement_champion">CgkIhPS8x6cKEAIQDA</string>
+    <string name="achievement_novice">CgkIhPS8x6cKEAIQDQ</string>
+    <string name="achievement_jeweller">CgkIhPS8x6cKEAIQDg</string>
+    <string name="leaderboard_easy">CgkIhPS8x6cKEAIQCA</string>
+    <string name="leaderboard_normal">CgkIhPS8x6cKEAIQCQ</string>
+    <string name="leaderboard_hard">CgkIhPS8x6cKEAIQCg</string>
+    <string name="leaderboard_insane">CgkIhPS8x6cKEAIQCw</string>
 </resources>
