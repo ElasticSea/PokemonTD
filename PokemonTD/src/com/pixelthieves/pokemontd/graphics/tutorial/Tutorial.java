@@ -60,6 +60,7 @@ public class Tutorial implements Renderable, Updateable {
         beforeStart.getControl().add(new BuyShop(this));
         beforeStart.getControl().add(new PlaceShop(this));
         beforeStart.getControl().add(new PickShop(this));
+        beforeStart.getControl().add(new CancelThat(this));
         beforeStart.getControl().add(new ConfirmThatUpgrade(this));
         beforeStart.getControl().add(new UpgradeThatTower(this));
         beforeStart.getControl().add(new BuyThatTower(this));

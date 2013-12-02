@@ -1,7 +1,7 @@
 package com.pixelthieves.pokemontd.graphics.tutorial.task;
 
-import com.badlogic.gdx.math.Vector2;
 import com.pixelthieves.pokemontd.App;
+import com.pixelthieves.pokemontd.entity.tower.TowerName;
 import com.pixelthieves.pokemontd.graphics.tutorial.Notice;
 import com.pixelthieves.pokemontd.graphics.tutorial.Tutorial;
 import com.pixelthieves.pokemontd.graphics.ui.Ui;
@@ -27,7 +27,9 @@ public class PlaceShop extends NoticeTask {
     @Override
     public boolean checkConditions(App entity) {
         TowerManager towerManager = entity.getTowerManager();
-        return towerManager.getSelectedTowerType() != null && entity.getTowerManager().getShop() == null;
+        return towerManager.getSelectedTowerType() != null &&
+                towerManager.getSelectedTowerType().getName().equals(TowerName.Shop) &&
+                entity.getTowerManager().getShop() == null;
     }
 
 }
