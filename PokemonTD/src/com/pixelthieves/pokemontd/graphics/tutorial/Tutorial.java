@@ -13,21 +13,18 @@ import com.pixelthieves.core.graphics.camera.CameraHandler;
 import com.pixelthieves.core.logic.Updateable;
 import com.pixelthieves.pokemontd.App;
 import com.pixelthieves.pokemontd.graphics.tutorial.task.*;
-import com.pixelthieves.pokemontd.graphics.ui.Button;
-import com.pixelthieves.pokemontd.graphics.ui.DisplayText;
-import com.pixelthieves.pokemontd.graphics.ui.GuiBox;
-import com.pixelthieves.pokemontd.graphics.ui.Ui;
+import com.pixelthieves.pokemontd.graphics.ui.*;
 
 
 /**
  * Created by Tomas on 11/7/13.
  */
-public class Tutorial implements Renderable, Updateable {
+public class Tutorial extends DisplayBlock implements Updateable {
 
     private final App app;
     private final Ui ui;
-    private final Selector<App> beforeStart;
-    private final Selector<App> afterStart;
+    private Selector<App> beforeStart;
+    private Selector<App> afterStart;
     private final Button leaveTutorial;
     private final DisplayText additionalText;
     private final CameraHandler cameraHandler;
@@ -36,11 +33,12 @@ public class Tutorial implements Renderable, Updateable {
     private boolean active;
 
     public Tutorial(App app, Ui ui, CameraHandler cameraHandler) {
+        super(ui);
         this.app = app;
         this.ui = ui;
         this.cameraHandler = cameraHandler;
 
-        int width = ui.getWidth() / 2;
+        int width = ui.getSquareSize() * 2;
         int height = ui.getStatusBarHeight() * 2;
         Rectangle buttonRectangle = new Rectangle(ui.getCenter().x - width / 2, ui.getHeight() - height, width, height);
         Rectangle additionalRectangle =
@@ -52,7 +50,7 @@ public class Tutorial implements Renderable, Updateable {
             }
         };
         additionalText = new DisplayText(ui, additionalRectangle, ui.getFont(), BitmapFont.HAlignment.CENTER);
-        leaveTutorial.setScale(1.6f);
+        additionalText.setScale(0.6f);
 
 
         beforeStart = new Selector<App>();
@@ -73,6 +71,7 @@ public class Tutorial implements Renderable, Updateable {
         afterStart.getControl().add(new TriggerFreeElement(this));
         afterStart.getControl().add(new EmptyNotice(this));
 
+        ui.addRefreshable(this);
     }
 
     @Override
@@ -86,6 +85,38 @@ public class Tutorial implements Renderable, Updateable {
             }
         }
     }
+
+    @Override
+    public void refresh() {
+        int width = ui.getSquareSize() * 2;
+        int height = ui.getStatusBarHeight() * 2;
+        Rectangle buttonRectangle = new Rectangle(ui.getCenter().x - width / 2, ui.getHeight() - height, width, height);
+        Rectangle additionalRectangle =
+                new Rectangle(buttonRectangle.x, buttonRectangle.y - height / 2, width, height / 2);
+        leaveTutorial.set(buttonRectangle);
+        additionalText.set(additionalRectangle);
+
+
+        beforeStart = new Selector<App>();
+        beforeStart.getControl().add(new FireFirstWave(this));
+        beforeStart.getControl().add(new BuyShop(this));
+        beforeStart.getControl().add(new PlaceShop(this));
+        beforeStart.getControl().add(new PickShop(this));
+        beforeStart.getControl().add(new CancelThat(this));
+        beforeStart.getControl().add(new ConfirmThatUpgrade(this));
+        beforeStart.getControl().add(new UpgradeThatTower(this));
+        beforeStart.getControl().add(new BuyThatTower(this));
+        beforeStart.getControl().add(new PlaceThatTower(this));
+        beforeStart.getControl().add(new PickYourGodDamnTowerNoob(this));
+        beforeStart.getControl().add(new EmptyNotice(this));
+
+        afterStart = new Selector<App>();
+        afterStart.getControl().add(new PickElement(this));
+        afterStart.getControl().add(new TriggerFreeElement(this));
+        afterStart.getControl().add(new EmptyNotice(this));
+    }
+
+
 
     @Override
     public void update(float delta) {

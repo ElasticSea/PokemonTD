@@ -24,7 +24,7 @@ public class Ui extends Gui {
     private final WaveInfo nextWaveInfo;
     private final GuiBox status;
     private final AbilityInfo abilityInfo;
-    private final List<GuiBox> boxes = new ArrayList<GuiBox>();
+    private final List<Refresheable> boxes = new ArrayList<Refresheable>();
     private final SpeedControlsBar speedControlsBar;
     private final int statusBarHeight;
     private float defaultSize;
@@ -59,7 +59,8 @@ public class Ui extends Gui {
                 new Rectangle(width - statusDimensions.x, height - statusBar.height - statusOffSet - statusDimensions.y,
                         statusDimensions.x, statusDimensions.y), waveManager, interestManager, font);
 
-       speedControlsBar = new SpeedControlsBar(this, status.x, status.y - status.height/4, status.width, status.height);
+        speedControlsBar =
+                new SpeedControlsBar(this, status.x, status.y - status.height / 4, status.width, status.height);
 
         abilityInfo = new AbilityInfo(this, pickTableRectangle);
 
@@ -146,8 +147,10 @@ public class Ui extends Gui {
         speedControlsBar.set(status.x, status.y - size - statusOffSet, status.width, size);
         nextWaveInfo.set(0, 0, squareSize, squareSize);
         entityInfo.set(squareSize - offset, 0, width - (squareSize - offset) * 2, stripHeight);
-        for (GuiBox guiBox : boxes) {
-            guiBox.setOffset(offset);
+        for (Refresheable guiBox : boxes) {
+            if (guiBox instanceof GuiBox) {
+                ((GuiBox) guiBox).setOffset(offset);
+            }
             guiBox.refresh();
         }
     }
@@ -180,5 +183,9 @@ public class Ui extends Gui {
 
     public int getHeight() {
         return height;
+    }
+
+    public void addRefreshable(Refresheable refresheable) {
+        boxes.add(refresheable);
     }
 }
