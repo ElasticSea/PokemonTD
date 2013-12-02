@@ -1,6 +1,8 @@
 package com.pixelthieves.pokemontd.graphics.tutorial;
 
 import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenEquation;
+import aurelienribon.tweenengine.TweenEquations;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -142,7 +144,7 @@ public class Notice extends DisplayBlock {
         if (placement.equals(Placement.RELATIVE)) {
             CameraHandler cameraHandler = gui.getApp().getCameraHandler();
             Tween.to(cameraHandler, CameraHandlerAccessor.SET, 1).target(target.x + target.width / 2,
-                    target.y + target.height / 2).start(App.getTweenManager());
+                    target.y + target.height / 2).ease(TweenEquations.easeOutCubic).start(App.getTweenManager());
            /* Tween.to(cameraHandler, CameraHandlerAccessor.ZOOM, 1).target(cameraHandler.getCamera().zoom / 2).start(
                     App.getTweenManager());    */
         }
