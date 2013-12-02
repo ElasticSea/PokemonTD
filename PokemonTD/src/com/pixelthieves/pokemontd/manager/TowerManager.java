@@ -180,6 +180,7 @@ public class TowerManager implements Clickable {
         soldTowers = 0;
         buildTowers = 0;
         upgraded = 0;
+        shop = null;
     }
 
     public enum Status {
@@ -255,7 +256,8 @@ public class TowerManager implements Clickable {
                 int goldWorthThoseUpgrades =
                         clickedTower.getComponent(UpgradeComponent.class).getGoldWorthThoseUpgrades();
                 player.getTreasure().addGold(towerTreasure.getTreasure().getGold() + goldWorthThoseUpgrades);
-                if (!clickedTower.getComponent(TowerTypeComponent.class).getTowerType().getName().equals(TowerName.Shop)) {
+                if (!clickedTower.getComponent(TowerTypeComponent.class).getTowerType().getName().equals(
+                        TowerName.Shop)) {
                     soldTowers++;
                 }
                 clickedTower.deleteFromWorld();
