@@ -1,7 +1,6 @@
 package com.pixelthieves.pokemontd.graphics.tutorial;
 
 import com.artemis.Entity;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
@@ -10,6 +9,7 @@ import com.pixelthieves.core.behavior.task.Selector;
 import com.pixelthieves.core.component.PositionComponent;
 import com.pixelthieves.core.component.SizeComponent;
 import com.pixelthieves.core.graphics.Renderable;
+import com.pixelthieves.core.graphics.camera.CameraHandler;
 import com.pixelthieves.core.logic.Updateable;
 import com.pixelthieves.pokemontd.App;
 import com.pixelthieves.pokemontd.graphics.tutorial.task.*;
@@ -17,7 +17,6 @@ import com.pixelthieves.pokemontd.graphics.ui.Button;
 import com.pixelthieves.pokemontd.graphics.ui.DisplayText;
 import com.pixelthieves.pokemontd.graphics.ui.GuiBox;
 import com.pixelthieves.pokemontd.graphics.ui.Ui;
-import com.pixelthieves.pokemontd.map.MapData;
 
 
 /**
@@ -31,25 +30,28 @@ public class Tutorial implements Renderable, Updateable {
     private final Selector<App> afterStart;
     private final Button leaveTutorial;
     private final DisplayText additionalText;
+    private final CameraHandler cameraHandler;
+    private Notice oldNotice;
     private Notice currentNotice;
     private boolean active;
 
-    public Tutorial(App app, Ui ui, MapData mapData, Camera camera) {
+    public Tutorial(App app, Ui ui, CameraHandler cameraHandler) {
         this.app = app;
         this.ui = ui;
+        this.cameraHandler = cameraHandler;
 
         int width = ui.getWidth() / 2;
         int height = ui.getStatusBarHeight() * 2;
         Rectangle buttonRectangle = new Rectangle(ui.getCenter().x - width / 2, ui.getHeight() - height, width, height);
-        Rectangle additionalRectangle = new Rectangle(buttonRectangle.x, buttonRectangle.y-height/2, width, height/2);
+        Rectangle additionalRectangle =
+                new Rectangle(buttonRectangle.x, buttonRectangle.y - height / 2, width, height / 2);
         leaveTutorial = new Button(ui, buttonRectangle, ui.getFont(), BitmapFont.HAlignment.CENTER) {
             @Override
             public void process(float x, float y) {
                 setActive(false);
             }
         };
-        additionalText =
-                new DisplayText(ui, additionalRectangle, ui.getFont(), BitmapFont.HAlignment.CENTER);
+        additionalText = new DisplayText(ui, additionalRectangle, ui.getFont(), BitmapFont.HAlignment.CENTER);
         leaveTutorial.setScale(2);
 
 
@@ -73,7 +75,8 @@ public class Tutorial implements Renderable, Updateable {
     public void render() {
         if (isActive()) {
             leaveTutorial.render("LEAVE INTERACTIVE TUTORIAL", Color.WHITE, GuiBox.lighterColor);
-            additionalText.render("You can access tutorial any time in help section in menu.", Color.WHITE, GuiBox.darkerColor);
+            additionalText.render("You can access tutorial any time in help section in menu.", Color.WHITE,
+                    GuiBox.darkerColor);
             if (currentNotice != null) {
                 currentNotice.render();
             }
@@ -101,15 +104,19 @@ public class Tutorial implements Renderable, Updateable {
     @Override
     public void setActive(boolean active) {
         this.active = active;
-        if(active){
+        if (active) {
             ui.register(leaveTutorial);
-        }   else{
+        } else {
             ui.unregister(leaveTutorial);
         }
     }
 
     public void setCurrentNotice(Notice currentNotice) {
-        this.currentNotice = currentNotice;
+        if (oldNotice != currentNotice) {
+            oldNotice = currentNotice;
+            currentNotice.animate();
+            this.currentNotice = currentNotice;
+        }
     }
 
     public Ui getUi() {
@@ -131,5 +138,9 @@ public class Tutorial implements Renderable, Updateable {
             }
         }
         return null;
+    }
+
+    public CameraHandler getCameraHandler() {
+        return cameraHandler;
     }
 }

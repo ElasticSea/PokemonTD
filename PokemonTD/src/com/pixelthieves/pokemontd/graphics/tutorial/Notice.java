@@ -1,14 +1,17 @@
 package com.pixelthieves.pokemontd.graphics.tutorial;
 
+import aurelienribon.tweenengine.Tween;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.pixelthieves.core.graphics.camera.CameraHandler;
 import com.pixelthieves.core.main.Assets;
 import com.pixelthieves.pokemontd.App;
 import com.pixelthieves.pokemontd.graphics.ui.*;
+import com.pixelthieves.pokemontd.tween.CameraHandlerAccessor;
 
 /**
  * Created by Tomas on 12/2/13.
@@ -134,4 +137,15 @@ public class Notice extends DisplayBlock {
         backgroud.set(text);
         text.refresh();
     }
+
+    public void animate() {
+        if (placement.equals(Placement.RELATIVE)) {
+            CameraHandler cameraHandler = gui.getApp().getCameraHandler();
+            Tween.to(cameraHandler, CameraHandlerAccessor.SET, 1).target(target.x + target.width / 2,
+                    target.y + target.height / 2).start(App.getTweenManager());
+           /* Tween.to(cameraHandler, CameraHandlerAccessor.ZOOM, 1).target(cameraHandler.getCamera().zoom / 2).start(
+                    App.getTweenManager());    */
+        }
+    }
+
 }

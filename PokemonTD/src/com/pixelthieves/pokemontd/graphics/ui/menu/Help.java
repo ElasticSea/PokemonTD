@@ -3,7 +3,6 @@ package com.pixelthieves.pokemontd.graphics.ui.menu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.pixelthieves.pokemontd.graphics.ui.Button;
-import org.hamcrest.core.IsNull;
 
 /**
  * Created by Tomas on 11/19/13.

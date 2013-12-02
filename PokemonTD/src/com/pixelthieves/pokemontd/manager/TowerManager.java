@@ -174,6 +174,12 @@ public class TowerManager implements Clickable {
         }
     }
 
+    public void restartTowerStats() {
+        soldTowers = 0;
+        buildTowers = 0;
+        upgraded = 0;
+    }
+
     public enum Status {
         NONE, PLACING_TOWER, MOVE_PLACEHOLDER;
     }

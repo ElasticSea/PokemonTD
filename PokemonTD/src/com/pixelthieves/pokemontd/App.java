@@ -44,6 +44,7 @@ import com.pixelthieves.pokemontd.system.resolve.ui.GetTower;
 import com.pixelthieves.pokemontd.system.trigger.ApplyBuffSystem;
 import com.pixelthieves.pokemontd.system.trigger.ApplySunbeamSystem;
 import com.pixelthieves.pokemontd.system.trigger.FireProjectilSystem;
+import com.pixelthieves.pokemontd.tween.CameraHandlerAccessor;
 import com.pixelthieves.pokemontd.tween.ColorAccessor;
 
 import java.util.ArrayList;
@@ -115,6 +116,7 @@ public class App extends Game2D {
         TweenManagerAdapter manager = new TweenManagerAdapter();
         Tween.registerAccessor(Color.class, new ColorAccessor());
         Tween.registerAccessor(Vector3.class, new Vector3Accessor());
+        Tween.registerAccessor(BoundedCameraHandler.class, new CameraHandlerAccessor());
         return manager;
     }
 
@@ -181,7 +183,7 @@ public class App extends Game2D {
             frozenGameRenderer = gameRenderer;
         }
         currentGameRenderer = mainMenuGaimRenderer;
-        tutorial = new Tutorial(this, ui, map, camera);
+        tutorial = new Tutorial(this, ui, cameraHandler);
         menuRenderer = new MenuRenderer();
         clock.addService(tutorial);
     }
@@ -362,6 +364,10 @@ public class App extends Game2D {
         tutorial.setActive(active);
     }
 
+    public CameraHandler getCameraHandler() {
+        return cameraHandler;
+    }
+
     private class MenuRenderer implements Renderable {
 
         @Override
@@ -467,6 +473,7 @@ public class App extends Game2D {
         initializeSystems();
         setSessionStarted(false);
         waveManager.setActive(false);
+        towerManager.restartTowerStats();
         interestManager.getFilter().reset();
     }
 

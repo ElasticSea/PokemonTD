@@ -26,7 +26,6 @@ public class UpgradeThatTower extends NoticeTask {
     @Override
     public boolean checkConditions(App entity) {
         TowerManager towerManager = entity.getTowerManager();
-        System.out.println(towerManager.getTowersCount() + " " + towerManager.getClicked());
         return towerManager.getTowersCount() > 0 && towerManager.getClicked() != null;
     }
 
