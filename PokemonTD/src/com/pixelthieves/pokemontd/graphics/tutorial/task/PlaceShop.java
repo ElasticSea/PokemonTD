@@ -28,8 +28,7 @@ public class PlaceShop extends NoticeTask {
     public boolean checkConditions(App entity) {
         TowerManager towerManager = entity.getTowerManager();
         return towerManager.getSelectedTowerType() != null &&
-                towerManager.getSelectedTowerType().getName().equals(TowerName.Shop) &&
-                entity.getTowerManager().getShop() == null;
+                towerManager.getSelectedTowerType().getName().equals(TowerName.Shop);
     }
 
 }

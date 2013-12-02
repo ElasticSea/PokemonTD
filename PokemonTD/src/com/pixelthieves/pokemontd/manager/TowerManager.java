@@ -34,7 +34,6 @@ public class TowerManager implements Clickable {
     private int soldTowers;
     private int buildTowers;
     private int upgraded;
-    private Entity shop;
 
     public void setPickedTower(TowerType towerType) {
         removePlaceholderTower();
@@ -139,9 +138,6 @@ public class TowerManager implements Clickable {
         if (!selectedTower.getName().equals(TowerName.Shop)) {
             buildTowers++;
         }
-        if (selectedTower.getName().equals(TowerName.Shop)) {
-            shop = clickedTower;
-        }
     }
 
     public Entity getPlaceholderTower() {
@@ -177,10 +173,11 @@ public class TowerManager implements Clickable {
     }
 
     public void restartTowerStats() {
+        placeholderTower = null;
+        clickedTower = null;
         soldTowers = 0;
         buildTowers = 0;
         upgraded = 0;
-        shop = null;
     }
 
     public enum Status {
@@ -299,10 +296,6 @@ public class TowerManager implements Clickable {
 
     public int getUpgraded() {
         return upgraded;
-    }
-
-    public Entity getShop() {
-        return shop;
     }
 }
 

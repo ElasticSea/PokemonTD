@@ -39,6 +39,7 @@ import com.pixelthieves.pokemontd.system.abilitySytems.damage.*;
 import com.pixelthieves.pokemontd.system.abilitySytems.damage.hit.*;
 import com.pixelthieves.pokemontd.system.autonomous.*;
 import com.pixelthieves.pokemontd.system.resolve.*;
+import com.pixelthieves.pokemontd.system.resolve.ui.FindShop;
 import com.pixelthieves.pokemontd.system.resolve.ui.GetCreep;
 import com.pixelthieves.pokemontd.system.resolve.ui.GetTower;
 import com.pixelthieves.pokemontd.system.trigger.ApplyBuffSystem;
@@ -246,6 +247,7 @@ public class App extends Game2D {
         world.setSystem(new InvisibleSystem(), true);
         world.setSystem(new GetTower(), true);
         world.setSystem(new GetCreep(), true);
+        world.setSystem(new FindShop(), true);
         world.setSystem(new FireTextInfo(ShopComponent.class), true);
 
         world.setSystem(new DamageOverPolySystem(), true);

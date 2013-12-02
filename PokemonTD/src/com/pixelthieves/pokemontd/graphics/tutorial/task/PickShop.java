@@ -24,7 +24,7 @@ public class PickShop extends NoticeTask {
 
     @Override
     public boolean checkConditions(App entity) {
-        return entity.getTowerManager().getShop() == null;
+        return tutorial.getShop() == null;
     }
 
 }

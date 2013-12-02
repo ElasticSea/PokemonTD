@@ -1,6 +1,7 @@
 package com.pixelthieves.pokemontd.graphics.tutorial;
 
 import com.artemis.Entity;
+import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
@@ -14,6 +15,7 @@ import com.pixelthieves.core.logic.Updateable;
 import com.pixelthieves.pokemontd.App;
 import com.pixelthieves.pokemontd.graphics.tutorial.task.*;
 import com.pixelthieves.pokemontd.graphics.ui.*;
+import com.pixelthieves.pokemontd.system.resolve.ui.FindShop;
 
 
 /**
@@ -160,8 +162,8 @@ public class Tutorial extends DisplayBlock implements Updateable {
         return ui;
     }
 
-    public Rectangle getShop() {
-        Entity shop = app.getTowerManager().getShop();
+    public Rectangle getShopRectangle() {
+        Entity shop = getShop();
         if (shop != null) {
             PositionComponent position = shop.getComponent(PositionComponent.class);
             SizeComponent size = shop.getComponent(SizeComponent.class);
@@ -175,5 +177,12 @@ public class Tutorial extends DisplayBlock implements Updateable {
 
     public CameraHandler getCameraHandler() {
         return cameraHandler;
+    }
+
+    public Entity getShop(){
+        FindShop system = app.getWorld().getSystem(FindShop.class);
+        system.process();
+        ImmutableBag<Entity> shops = system.getEntities();
+        return shops.size() == 0 ? null : shops.get(0);
     }
 }

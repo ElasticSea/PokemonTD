@@ -45,7 +45,7 @@ public class WaveInfo extends GuiBox {
         float offsetBlocks = height / 8;
 
         Rectangle nextWaveRectangle =
-                new Rectangle(scaled.x - offset * 2, scaled.y - offset * 2, width, offsetBlocks * 1.5f);
+                new Rectangle(0, 0, width, offsetBlocks * 1.5f);
         nextWave = new Button(ui, nextWaveRectangle, font, BitmapFont.HAlignment.CENTER) {
             @Override
             public void process(float x, float y) {

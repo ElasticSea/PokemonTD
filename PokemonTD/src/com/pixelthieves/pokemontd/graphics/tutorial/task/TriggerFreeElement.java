@@ -21,7 +21,7 @@ public class TriggerFreeElement extends NoticeTask {
     @Override
     protected Notice buildNotice() {
         Ui ui = tutorial.getUi();
-        Rectangle shop = tutorial.getShop();
+        Rectangle shop = tutorial.getShopRectangle();
         return new Notice(ui, shop != null ? shop : new Rectangle(), Notice.Orientation.BOTTOM_RIGHT,
                 "Click on the shop tower", Notice.Placement.RELATIVE);
     }

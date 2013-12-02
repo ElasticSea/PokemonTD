@@ -1,9 +1,12 @@
 package com.pixelthieves.pokemontd.graphics.tutorial.task;
 
+import com.artemis.Entity;
+import com.artemis.utils.ImmutableBag;
 import com.pixelthieves.pokemontd.App;
 import com.pixelthieves.pokemontd.graphics.tutorial.Notice;
 import com.pixelthieves.pokemontd.graphics.tutorial.Tutorial;
 import com.pixelthieves.pokemontd.graphics.ui.Ui;
+import com.pixelthieves.pokemontd.system.resolve.ui.FindShop;
 
 
 /**
@@ -24,7 +27,7 @@ public class BuyShop extends NoticeTask {
 
     @Override
     public boolean checkConditions(App entity) {
-        return entity.getTowerManager().getPlaceholderTower() != null && entity.getTowerManager().getShop() == null;
+        return entity.getTowerManager().getPlaceholderTower() != null && tutorial.getShop() == null;
     }
 
 }
