@@ -17,7 +17,7 @@ public class Menu extends Gui {
 
     private final LeaderboardTabClose leaderboard;
     private final int menuWidth;
-    private final int buttonHeight;
+    public static int BUTTON_HEIGHT;
     private Button menu;
 
     public void setMenu(Button menu) {
@@ -29,7 +29,7 @@ public class Menu extends Gui {
     }
 
     public enum Type {
-        BLANK, INGAME, MAIN, END, LEADERBOARD;
+        BLANK, INGAME, MAIN, END, LEADERBOARD, QUICK_TIP;
     }
 
     private final MenuTab signInBox;
@@ -37,6 +37,7 @@ public class Menu extends Gui {
     private final MenuTab inGameMenu;
     private final MenuTab endGame;
     private final MenuTab defaultCard;
+    private final MenuTab quicktip;
     private MenuTab pickedCard;
     private final List<MenuTab> guiDialogRoots = new ArrayList<MenuTab>();
 
@@ -45,7 +46,7 @@ public class Menu extends Gui {
         int height = (int) (squareSize * 1.5f);
         menuWidth = height / 3 * 4;
         int defaultButtonCount = 5;
-        buttonHeight = height / defaultButtonCount;
+        BUTTON_HEIGHT = height / defaultButtonCount;
         Rectangle rectangle = getRectangle(menuWidth, height);
         signInBox = new SignInBox(this, rectangle, defaultButtonCount);
         boolean canSignIn = getGameSevice().canSingIn();
@@ -54,11 +55,13 @@ public class Menu extends Gui {
         endGame = new ScoreTabClose(this, rectangle, defaultButtonCount);
         leaderboard = new LeaderboardTabClose(this, null, getRectangle(menuWidth, (int) (height * 1.5f)), 7,
                 CloseExitTab.Type.EXIT);
+        quicktip = new Basic(this, null, getRectangle((int) (menuWidth* 1.5f), (int) (height * 1.5f)));
 
         guiDialogRoots.add(signInBox);
         guiDialogRoots.add(inGameMenu);
         guiDialogRoots.add(menuBox);
         guiDialogRoots.add(endGame);
+        guiDialogRoots.add(quicktip);
 
         defaultCard = canSignIn ? signInBox : menuBox;
         pickedCard = defaultCard;
@@ -69,7 +72,7 @@ public class Menu extends Gui {
     }
 
     public Rectangle getRectangle(int buttons) {
-        return getRectangle(menuWidth, buttons * buttonHeight);
+        return getRectangle(menuWidth, buttons * BUTTON_HEIGHT);
     }
 
     @Override
@@ -107,11 +110,6 @@ public class Menu extends Gui {
         return pickedCard != null;
     }
 
-    public void triggerMenu(Type type) {
-        this.pickedCard = getPickedCardByType(type);
-    }
-
-
     private MenuTab getPickedCardByType(Type type) {
         switch (type) {
             case INGAME:
@@ -122,13 +120,15 @@ public class Menu extends Gui {
                 return endGame;
             case LEADERBOARD:
                 return leaderboard;
+            case QUICK_TIP:
+                return  quicktip;
             default:
                 return null;
         }
     }
 
 
-    void switchCard(Type type) {
+    public void switchCard(Type type) {
         switchCard(getPickedCardByType(type));
     }
 

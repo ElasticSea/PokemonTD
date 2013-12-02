@@ -23,7 +23,7 @@ abstract class TutorialTab extends ChildTab {
     }
 
     TutorialTab(Menu menu, MenuTab parent, Rectangle rectangle, String headerText) {
-        super(menu, parent, rectangle, 12);
+        super(menu, parent, rectangle, (int) (rectangle.height/ Menu.BUTTON_HEIGHT));
                this.headerText = headerText;
         if (headerText != null) {
             header = new MenuButton(menu, rects.get(0), headerText) {

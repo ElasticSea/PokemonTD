@@ -5,6 +5,7 @@ import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.pixelthieves.pokemontd.App;
+import com.pixelthieves.pokemontd.Configuration;
 import com.pixelthieves.pokemontd.entity.tower.TowerName;
 import com.pixelthieves.pokemontd.graphics.ui.menu.Menu;
 
@@ -16,7 +17,6 @@ import java.util.List;
  */
 public class Ui extends Gui {
 
-    public static final Preferences PREFERENCES = Gdx.app.getPreferences("my-preferences");
     private final int width;
     private final TowerIcons towerIcons;
     private final ShopIcons shopIcons;
@@ -82,7 +82,7 @@ public class Ui extends Gui {
         boxes.add(nextWaveInfo);
         boxes.add(entityInfo);
 
-        defaultSize = Gdx.app.getPreferences("my-preferences").getFloat("gui_scale");
+        defaultSize = Configuration.PREFERENCES.getFloat("gui_scale");
         resetSize();
     }
 
@@ -117,8 +117,8 @@ public class Ui extends Gui {
     }
 
     private void saveScale(float scale) {
-        PREFERENCES.putFloat("gui_scale", scale);
-        PREFERENCES.flush();
+        Configuration.PREFERENCES.putFloat("gui_scale", scale);
+        Configuration.PREFERENCES.flush();
     }
 
     public void scale(float scale) {

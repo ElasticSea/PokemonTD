@@ -20,11 +20,11 @@ class DifficultyTab extends ChildTab {
 
                 @Override
                 public void process(float x, float y) {
+                    menu.switchCard((MenuTab)null);
                     App app = menu.getApp();
                     app.setDifficulty(difficulty);
                     app.setSessionStarted(true);
                     app.freeze(false);
-                    menu.switchCard((MenuTab)null);
                 }
             };
             register(buttons[i++]);

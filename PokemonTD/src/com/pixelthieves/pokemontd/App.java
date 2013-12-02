@@ -175,6 +175,8 @@ public class App extends Game2D {
         }
         menuRenderer = new MenuRenderer();
         currentGameRenderer = mainMenuGaimRenderer;
+
+
     }
 
     private void initializeWorld() {
@@ -320,7 +322,7 @@ public class App extends Game2D {
     public void endGame(boolean survived) {
         finishedGame = true;
         freeze(true);
-        menu.triggerMenu(Menu.Type.END);
+        menu.switchCard(Menu.Type.END);
         if (survived) {
             if (player.getHealth() >= 100) {
                 gameService.submitAchievement(Achievement.Healty);
@@ -388,7 +390,7 @@ public class App extends Game2D {
     }
 
     public void triggerMenu(Menu.Type type) {
-        menu.triggerMenu(type);
+        menu.switchCard(type);
     }
 
     public ShapeRenderer getShapeRenderer() {
@@ -437,6 +439,10 @@ public class App extends Game2D {
         currentGameRenderer = sessionStarted ? gameRenderer : mainMenuGaimRenderer;
         if (sessionStarted && !waveManager.isActive()) {
             waveManager.init(difficulty);
+            if(!Configuration.PREFERENCES.getBoolean("tutorial_absolved")){
+                menu.switchCard(Menu.Type.QUICK_TIP);
+                System.out.println("LOOOL");
+            }
         }
     }
 
