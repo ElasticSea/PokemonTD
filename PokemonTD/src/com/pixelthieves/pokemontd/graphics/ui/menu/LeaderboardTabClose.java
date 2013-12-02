@@ -21,7 +21,7 @@ class LeaderboardTabClose extends CloseExitTab {
     private final Leaderboard leaderboard;
 
     LeaderboardTabClose(final Menu menu, MenuTab parent, Rectangle rectangle, int count, Type type) {
-        super(menu,parent, rectangle, type, false, count);
+        super(menu, parent, rectangle, type, false, count);
         leaderboardHeader = new DisplayText(menu, rects.get(0), menu.getFont());
         float buttonHeight2 = endButton != null ? endButton.height : closeButton.height;
         float leaderboardHeight = rectangle.height - (leaderboardHeader.height + buttonHeight2);
@@ -107,7 +107,13 @@ class LeaderboardTabClose extends CloseExitTab {
             public void render() {
                 if (entry != null) {
                     rank.render(id + "#");
-                    name.render(entry.getKey());
+                    String name = entry.getKey();
+                    int overflowChars = this.name.getOverflowChars(name);
+                    if (overflowChars > 0) {
+                        this.name.render(name.substring(0, (name.length() - overflowChars)/2));
+                    } else {
+                        this.name.render(name);
+                    }
                     score.render(entry.getValue());
                 }
             }
