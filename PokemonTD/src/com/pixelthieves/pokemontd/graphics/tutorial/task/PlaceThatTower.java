@@ -27,7 +27,7 @@ public class PlaceThatTower extends NoticeTask {
     @Override
     public boolean checkConditions(App entity) {
         TowerManager towerManager = entity.getTowerManager();
-        return towerManager.getSelectedTowerType() != null && towerManager.getTowersCount() == 0;
+        return towerManager.getSelectedTowerType() != null && tutorial.getTower() == null;
     }
 
 }

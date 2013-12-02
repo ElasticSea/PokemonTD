@@ -33,7 +33,6 @@ public class TowerManager implements Clickable {
     private Entity clickedTower;
     private int soldTowers;
     private int buildTowers;
-    private int upgraded;
 
     public void setPickedTower(TowerType towerType) {
         removePlaceholderTower();
@@ -114,7 +113,6 @@ public class TowerManager implements Clickable {
         transferEffects(clickedTower, entity);
         clickedTower.deleteFromWorld();
         clickedTower = entity;
-        upgraded++;
     }
 
     private void transferEffects(Entity from, Entity to) {
@@ -177,7 +175,6 @@ public class TowerManager implements Clickable {
         clickedTower = null;
         soldTowers = 0;
         buildTowers = 0;
-        upgraded = 0;
     }
 
     public enum Status {
@@ -288,14 +285,6 @@ public class TowerManager implements Clickable {
 
     public int getSoldTowers() {
         return soldTowers;
-    }
-
-    public int getTowersCount() {
-        return buildTowers - soldTowers;
-    }
-
-    public int getUpgraded() {
-        return upgraded;
     }
 }
 

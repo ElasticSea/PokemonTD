@@ -24,7 +24,7 @@ public class FireFirstWave extends NoticeTask {
 
     @Override
     public boolean checkConditions(App entity) {
-        return entity.getTowerManager().getUpgraded() != 0 && tutorial.getShop() != null;
+        return tutorial.getUpgrade() != null && tutorial.getShop() != null;
     }
 
 }

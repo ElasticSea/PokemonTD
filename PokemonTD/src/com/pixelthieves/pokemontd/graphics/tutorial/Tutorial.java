@@ -15,7 +15,9 @@ import com.pixelthieves.core.logic.Updateable;
 import com.pixelthieves.pokemontd.App;
 import com.pixelthieves.pokemontd.graphics.tutorial.task.*;
 import com.pixelthieves.pokemontd.graphics.ui.*;
+import com.pixelthieves.pokemontd.system.resolve.ui.FindAttackTower;
 import com.pixelthieves.pokemontd.system.resolve.ui.FindShop;
+import com.pixelthieves.pokemontd.system.resolve.ui.FindUpgradeTower;
 
 
 /**
@@ -33,6 +35,9 @@ public class Tutorial extends DisplayBlock implements Updateable {
     private Notice oldNotice;
     private Notice currentNotice;
     private boolean active;
+    private Entity shop;
+    private Entity tower;
+    private Entity upgrade;
 
     public Tutorial(App app, Ui ui, CameraHandler cameraHandler) {
         super(ui);
@@ -123,6 +128,7 @@ public class Tutorial extends DisplayBlock implements Updateable {
     @Override
     public void update(float delta) {
         if (!app.getPlayer().getTreasure().hasElements()) {
+            update();
             if (app.getWaveManager().getNextWave().getId() == 0) {
                 beforeStart.doAction(app);
             } else {
@@ -179,10 +185,32 @@ public class Tutorial extends DisplayBlock implements Updateable {
         return cameraHandler;
     }
 
+
+    public void update(){
+        FindShop findShop = app.getWorld().getSystem(FindShop.class);
+        findShop.process();
+        ImmutableBag<Entity> shops = findShop.getEntities();
+        shop =  shops.size() == 0 ? null : shops.get(0);
+
+        FindAttackTower findAttackTower = app.getWorld().getSystem(FindAttackTower.class);
+        findAttackTower.process();
+        ImmutableBag<Entity> towers = findAttackTower.getEntities();
+        tower =  towers.size() == 0 ? null : towers.get(0);
+
+        FindUpgradeTower findUpgradeTower = app.getWorld().getSystem(FindUpgradeTower.class);
+        findUpgradeTower.process();
+        ImmutableBag<Entity> upgrades = findUpgradeTower.getEntities();
+        upgrade =  upgrades.size() == 0 ? null : upgrades.get(0);
+    }
     public Entity getShop(){
-        FindShop system = app.getWorld().getSystem(FindShop.class);
-        system.process();
-        ImmutableBag<Entity> shops = system.getEntities();
-        return shops.size() == 0 ? null : shops.get(0);
+        return shop;
+    }
+
+    public Entity getTower(){
+        return tower;
+    }
+
+    public Entity getUpgrade() {
+        return upgrade;
     }
 }

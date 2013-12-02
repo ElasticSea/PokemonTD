@@ -24,7 +24,7 @@ public class PickYourGodDamnTowerNoob extends NoticeTask {
 
     @Override
     public boolean checkConditions(App entity) {
-        return entity.getTowerManager().getTowersCount() == 0 && entity.getTowerManager().getClicked() == null;
+        return entity.getTowerManager().getClicked() == null;
     }
 
 }
