@@ -136,7 +136,9 @@ public class TowerManager implements Clickable {
         purchaseTower(selectedTower);
         clickedTower = Tower.registerTower(app.getWorld(), selectedTower, placeholderPosition.x, placeholderPosition.y);
         removePlaceholderTower();
-        buildTowers++;
+        if (!selectedTower.getName().equals(TowerName.Shop)) {
+            buildTowers++;
+        }
         if (selectedTower.getName().equals(TowerName.Shop)) {
             shop = clickedTower;
         }
@@ -253,9 +255,12 @@ public class TowerManager implements Clickable {
                 int goldWorthThoseUpgrades =
                         clickedTower.getComponent(UpgradeComponent.class).getGoldWorthThoseUpgrades();
                 player.getTreasure().addGold(towerTreasure.getTreasure().getGold() + goldWorthThoseUpgrades);
+                if (!clickedTower.getComponent(TowerTypeComponent.class).getTowerType().getName().equals(TowerName.Shop)) {
+                    soldTowers++;
+                }
                 clickedTower.deleteFromWorld();
                 clickedTower = null;
-                soldTowers++;
+
             }
             return true;
         }

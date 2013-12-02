@@ -1,7 +1,6 @@
 package com.pixelthieves.pokemontd.graphics.ui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.pixelthieves.pokemontd.App;
@@ -159,8 +158,8 @@ public class Ui extends Gui {
 
 
     // Tutorial methods
-    public Rectangle getTowerIcon() {
-        return towerIcons.getFirstIcon();
+    public Rectangle getTowerIcon(int count) {
+        return towerIcons.getIcon(count);
     }
 
     public Rectangle getBuyButton() {

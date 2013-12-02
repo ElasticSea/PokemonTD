@@ -19,10 +19,8 @@ public class PlaceThatTower extends NoticeTask {
 
     @Override
     protected Notice buildNotice() {
-        Vector2 spot = tutorial.getSweetTowerSpot();
-
         Ui ui = tutorial.getUi();
-        return new Notice(ui, App.getTowerRectangleByBlock(spot.x, spot.y), Notice.Orientation.TOP_LEFT,
+        return new Notice(ui, App.getTowerRectangleByBlock(4,15), Notice.Orientation.TOP_LEFT,
                 "Place tower near the path", Notice.Placement.RELATIVE);
     }
 

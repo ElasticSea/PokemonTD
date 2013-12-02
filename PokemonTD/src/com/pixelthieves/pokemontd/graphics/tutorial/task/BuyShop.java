@@ -4,29 +4,27 @@ import com.pixelthieves.pokemontd.App;
 import com.pixelthieves.pokemontd.graphics.tutorial.Notice;
 import com.pixelthieves.pokemontd.graphics.tutorial.Tutorial;
 import com.pixelthieves.pokemontd.graphics.ui.Ui;
-import com.pixelthieves.pokemontd.manager.TowerManager;
 
 
 /**
  * Created by Tomas on 12/2/13.
  */
-public class UpgradeThatTower extends NoticeTask {
+public class BuyShop extends NoticeTask {
 
-    public UpgradeThatTower(Tutorial tutorial) {
+    public BuyShop(Tutorial tutorial) {
         super(tutorial);
     }
 
     @Override
     protected Notice buildNotice() {
         Ui ui = tutorial.getUi();
-        return new Notice(ui, ui.getTowerIcon(0), Notice.Orientation.BOTTOM_RIGHT, "Select a tower upgrade",
+        return new Notice(ui, ui.getBuyButton(), Notice.Orientation.BOTTOM_RIGHT, "Click to buy the tower",
                 Notice.Placement.STATIC);
     }
 
     @Override
     public boolean checkConditions(App entity) {
-        TowerManager towerManager = entity.getTowerManager();
-        return towerManager.getTowersCount() > 0 && towerManager.getClicked() != null && towerManager.getClicked() != towerManager.getShop();
+        return entity.getTowerManager().getPlaceholderTower() != null && entity.getTowerManager().getShop() == null;
     }
 
 }

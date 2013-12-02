@@ -57,6 +57,9 @@ public class Tutorial implements Renderable, Updateable {
 
         beforeStart = new Selector<App>();
         beforeStart.getControl().add(new FireFirstWave(this));
+        beforeStart.getControl().add(new BuyShop(this));
+        beforeStart.getControl().add(new PlaceShop(this));
+        beforeStart.getControl().add(new PickShop(this));
         beforeStart.getControl().add(new ConfirmThatUpgrade(this));
         beforeStart.getControl().add(new UpgradeThatTower(this));
         beforeStart.getControl().add(new BuyThatTower(this));
@@ -123,10 +126,6 @@ public class Tutorial implements Renderable, Updateable {
 
     public Ui getUi() {
         return ui;
-    }
-
-    public Vector2 getSweetTowerSpot() {
-        return new Vector2(4, 15);
     }
 
     public Rectangle getShop() {

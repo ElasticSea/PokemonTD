@@ -18,13 +18,13 @@ public class PickYourGodDamnTowerNoob extends NoticeTask {
     @Override
     protected Notice buildNotice() {
         Ui ui = tutorial.getUi();
-        return new Notice(ui, ui.getTowerIcon(), Notice.Orientation.BOTTOM_RIGHT, "Pick one of the towers",
+        return new Notice(ui, ui.getTowerIcon(0), Notice.Orientation.BOTTOM_RIGHT, "Pick one of the towers",
                 Notice.Placement.STATIC);
     }
 
     @Override
     public boolean checkConditions(App entity) {
-        return entity.getTowerManager().getTowersCount() == 0;
+        return entity.getTowerManager().getTowersCount() == 0 && entity.getTowerManager().getClicked() == null;
     }
 
 }

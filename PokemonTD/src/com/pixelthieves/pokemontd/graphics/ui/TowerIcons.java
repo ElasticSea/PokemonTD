@@ -52,7 +52,7 @@ public class TowerIcons extends PickTable<TowerIcon> {
         }
     }
 
-    public TowerIcon getFirstIcon(){
-        return pickIcons.get(0);
+    public TowerIcon getIcon(int count){
+        return pickIcons.get(count);
     }
 }
