@@ -114,7 +114,6 @@ class AbilityTab extends ScrollableChildTab {
             }
         }
 
-
         @Override
         public void render() {
             towerName.render(type.getName().name());

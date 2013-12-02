@@ -25,6 +25,7 @@ class ScrollableChildTab extends ChildTab {
             Vector2 overlap = new Vector2(content.getWidth() - width, content.getHeight() - (height - close.height));
             content.x = MathUtils.clamp(content.x, x, x + overlap.x);
             content.y = MathUtils.clamp(content.y, y, y + overlap.y);
+            System.out.println(content.y+" "+y+" "+overlap.y+" "+content.getHeight());
             content.refresh();
         }
     }

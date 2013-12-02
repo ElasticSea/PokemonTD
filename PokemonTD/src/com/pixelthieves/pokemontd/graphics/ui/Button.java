@@ -69,7 +69,7 @@ public abstract class Button extends InteractiveBlock {
         spriteBatch.begin();
         font.setColor(isEnabled() ? color : Color.GRAY);
         if (wrapped) {
-            fontBounds = font.drawWrapped(spriteBatch, text, x, y + height, width, alignment);
+            fontBounds =  font.drawWrapped(spriteBatch, text, x, y + height, width, alignment);
         } else {
             fontBounds = font.drawMultiLine(spriteBatch, text, x, y + position.y, width, alignment);
         }

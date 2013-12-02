@@ -45,14 +45,14 @@ public class Menu extends Gui {
         int height = (int) (squareSize * 1.5f);
         menuWidth = height / 3 * 4;
         int defaultButtonCount = 5;
-        buttonHeight = height/ defaultButtonCount;
+        buttonHeight = height / defaultButtonCount;
         Rectangle rectangle = getRectangle(menuWidth, height);
         signInBox = new SignInBox(this, rectangle, defaultButtonCount);
         boolean canSignIn = getGameSevice().canSingIn();
         inGameMenu = new InGameMenu(this, rectangle, defaultButtonCount);
         menuBox = new MenuBox(this, rectangle, defaultButtonCount);
         endGame = new ScoreTabClose(this, rectangle, defaultButtonCount);
-        leaderboard = new LeaderboardTabClose(this, null,getRectangle(menuWidth, (int) (height * 1.5f)), 7,
+        leaderboard = new LeaderboardTabClose(this, null, getRectangle(menuWidth, (int) (height * 1.5f)), 7,
                 CloseExitTab.Type.EXIT);
 
         guiDialogRoots.add(signInBox);
@@ -69,7 +69,7 @@ public class Menu extends Gui {
     }
 
     public Rectangle getRectangle(int buttons) {
-        return getRectangle(menuWidth, buttons*buttonHeight);
+        return getRectangle(menuWidth, buttons * buttonHeight);
     }
 
     @Override
@@ -97,8 +97,8 @@ public class Menu extends Gui {
 
     @Override
     public boolean pan(float x, float y, float deltaX, float deltaY) {
-        for (MenuTab menu : guiDialogRoots) {
-            menu.pan(x, y, deltaX, deltaY);
+        if (pickedCard != null) {
+            pickedCard.pan(x, y, deltaX, deltaY);
         }
         return isVisible();
     }
