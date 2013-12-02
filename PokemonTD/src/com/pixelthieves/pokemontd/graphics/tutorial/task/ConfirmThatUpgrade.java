@@ -19,7 +19,7 @@ public class ConfirmThatUpgrade extends NoticeTask {
     @Override
     protected Notice buildNotice() {
         Ui ui = tutorial.getUi();
-        return new Notice(ui, ui.getBuyButton(), Notice.Orientation.BOTTOM_RIGHT, "Click to buy the tower",
+        return new Notice(ui, ui.getBuyButton(), Notice.Orientation.BOTTOM_RIGHT, "Confirm buying the upgrade",
                 Notice.Placement.STATIC);
     }
 

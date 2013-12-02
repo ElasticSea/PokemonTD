@@ -18,7 +18,7 @@ public class PickYourGodDamnTowerNoob extends NoticeTask {
     @Override
     protected Notice buildNotice() {
         Ui ui = tutorial.getUi();
-        return new Notice(ui, ui.getTowerIcon(), Notice.Orientation.BOTTOM_RIGHT, "Pick on of the towers",
+        return new Notice(ui, ui.getTowerIcon(), Notice.Orientation.BOTTOM_RIGHT, "Pick one of the towers",
                 Notice.Placement.STATIC);
     }
 

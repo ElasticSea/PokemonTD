@@ -23,7 +23,7 @@ public class PlaceThatTower extends NoticeTask {
 
         Ui ui = tutorial.getUi();
         return new Notice(ui, App.getTowerRectangleByBlock(spot.x, spot.y), Notice.Orientation.TOP_LEFT,
-                "Place that tower!", Notice.Placement.RELATIVE);
+                "Place tower near the path", Notice.Placement.RELATIVE);
     }
 
     @Override

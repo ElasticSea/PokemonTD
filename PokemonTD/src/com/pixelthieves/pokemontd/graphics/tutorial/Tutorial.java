@@ -114,7 +114,9 @@ public class Tutorial implements Renderable, Updateable {
     public void setCurrentNotice(Notice currentNotice) {
         if (oldNotice != currentNotice) {
             oldNotice = currentNotice;
-            currentNotice.animate();
+            if (currentNotice != null) {
+                currentNotice.animate();
+            }
             this.currentNotice = currentNotice;
         }
     }
