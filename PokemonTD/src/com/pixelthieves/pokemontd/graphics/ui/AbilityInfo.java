@@ -111,7 +111,7 @@ public class AbilityInfo extends HeaderGuiBox {
                 IncreasingDamageData increaseDamage = (IncreasingDamageData) abilityCache;
                 return "While attacking the same creep tower gains damage by " +
                         (int) ((increaseDamage.getDamageIncreasing() - 1) * 100) + "% every " +
-                        (int) ((increaseDamage.getDuration() * 1000)) + " ms.";
+                        (int) ((increaseDamage.getDuration() * 1000)) + " ms to a maximum of +"+(int)(increaseDamage.getMax()* 100)+"% total damage.";
 
             case Stomp:
                 slow = (SlowData) abilityCache;
