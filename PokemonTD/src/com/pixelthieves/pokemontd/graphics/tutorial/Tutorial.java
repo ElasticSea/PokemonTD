@@ -52,7 +52,7 @@ public class Tutorial implements Renderable, Updateable {
             }
         };
         additionalText = new DisplayText(ui, additionalRectangle, ui.getFont(), BitmapFont.HAlignment.CENTER);
-        leaveTutorial.setScale(2);
+        leaveTutorial.setScale(1.6f);
 
 
         beforeStart = new Selector<App>();

@@ -1,7 +1,11 @@
 package com.pixelthieves.pokemontd.graphics.tutorial.task;
 
+import com.artemis.Entity;
 import com.badlogic.gdx.math.Rectangle;
 import com.pixelthieves.pokemontd.App;
+import com.pixelthieves.pokemontd.component.TowerTypeComponent;
+import com.pixelthieves.pokemontd.entity.tower.TowerName;
+import com.pixelthieves.pokemontd.entity.tower.TowerType;
 import com.pixelthieves.pokemontd.graphics.tutorial.Notice;
 import com.pixelthieves.pokemontd.graphics.tutorial.Tutorial;
 import com.pixelthieves.pokemontd.graphics.ui.Ui;
@@ -25,7 +29,14 @@ public class CancelThat extends NoticeTask {
 
     @Override
     public boolean checkConditions(App entity) {
-        return entity.getTowerManager().getShop() == null;
+        Entity clicked = entity.getTowerManager().getClicked();
+        if(clicked != null){
+            TowerTypeComponent component = clicked.getComponent(TowerTypeComponent.class);
+            if(component!= null){
+                return component.getTowerType().getName().equals(TowerName.Shop);
+            }
+        }
+        return false;
     }
 
 }
