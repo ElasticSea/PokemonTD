@@ -1,6 +1,5 @@
 package com.pixelthieves.pokemontd.graphics;
 
-import com.artemis.World;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -23,19 +22,19 @@ public class GameRenderer implements Renderable {
     private final App app;
     private final Ui ui;
     private final Camera camera;
-    private final SpriteBatch spriteBatch;
-    private final ShapeRenderer shapeRenderer;
     private final TileMap<TextureAtlas.AtlasRegion> tileMap;
     private final PathPack pathPack;
     private final TowerManager towerManager;
+    private final SpriteBatch gameSpriteBatch;
+    private final ShapeRenderer gameShapeRenderer;
 
     public GameRenderer(App app, Ui ui, MapData mapData, Camera camera) {
         this.app = app;
         this.ui = ui;
         this.camera = camera;
         this.towerManager = ui.getTowerManager();
-        this.spriteBatch = app.getSpriteBatch();
-        this.shapeRenderer = app.getShapeRenderer();
+        this.gameSpriteBatch = app.getGameSpriteBatch();
+        this.gameShapeRenderer = app.getGameShapeRenderer();
         this.tileMap = mapData.getTileMap();
         this.pathPack = mapData.getPathPack();
     }
@@ -48,46 +47,47 @@ public class GameRenderer implements Renderable {
         RenderDebugSystem renderDebugSystem = app.getWorld().getSystem(RenderDebugSystem.class);
         RenderHealthSystem renderHealthSystem = app.getWorld().getSystem(RenderHealthSystem.class);
 
-        spriteBatch.setProjectionMatrix(camera.combined);
-        spriteBatch.begin();
+        gameSpriteBatch.setProjectionMatrix(camera.combined);
+        gameShapeRenderer.setProjectionMatrix(camera.combined);
+
+        gameSpriteBatch.begin();
         drawMap(0);
         drawMap(1);
-        spriteBatch.end();
-        shapeRenderer.setProjectionMatrix(camera.combined);
-        towerManager.render(shapeRenderer);
-        spriteBatch.begin();
+        gameSpriteBatch.end();
+        towerManager.render(gameShapeRenderer);
+        gameSpriteBatch.begin();
         renderSpriteSystem.process();
         renderTextSystem.process();
         drawMap(2);
         drawMap(4);
         drawMap(3);
-        spriteBatch.end();
+        gameSpriteBatch.end();
 
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        gameShapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         renderRangeSystem.process();
         if (App.DEBUG != null) {
             renderDebugSystem.process();
-        drawPath();
-        drawGrid();
+            drawPath();
+            drawGrid();
         }
         if (!app.isFreezed()) {
             renderHealthSystem.process();
         }
-        shapeRenderer.end();
+        gameShapeRenderer.end();
         if (app.isSessionStarted()) {
             ui.render();
         }
     }
 
     private void drawGrid() {
-            int height = tileMap.getHeight(0) * tileMap.getTileSize(0);
-            int width = tileMap.getWidth(0) * tileMap.getTileSize(0);
-            for (int i = 0; i < height; i++) {
-                shapeRenderer.line(0, i * App.WORLD_SCALE, width * App.WORLD_SCALE, i * App.WORLD_SCALE);
-            }
-            for (int i = 0; i < width; i++) {
-                shapeRenderer.line(i * App.WORLD_SCALE, 0, i * App.WORLD_SCALE, height * App.WORLD_SCALE);
-            }
+        int height = tileMap.getHeight(0) * tileMap.getTileSize(0);
+        int width = tileMap.getWidth(0) * tileMap.getTileSize(0);
+        for (int i = 0; i < height; i++) {
+            gameShapeRenderer.line(0, i * App.WORLD_SCALE, width * App.WORLD_SCALE, i * App.WORLD_SCALE);
+        }
+        for (int i = 0; i < width; i++) {
+            gameShapeRenderer.line(i * App.WORLD_SCALE, 0, i * App.WORLD_SCALE, height * App.WORLD_SCALE);
+        }
     }
 
     private void drawMap(int level) {
@@ -96,7 +96,7 @@ public class GameRenderer implements Renderable {
                 int size = tileMap.getTileSize(level) * App.WORLD_SCALE;
                 TextureAtlas.AtlasRegion atlasRegion = tileMap.get(j, k, level);
                 if (atlasRegion != null) {
-                    spriteBatch.draw(atlasRegion, j * size, k * size, size, size);
+                    gameSpriteBatch.draw(atlasRegion, j * size, k * size, size, size);
                 }
             }
 
@@ -104,14 +104,14 @@ public class GameRenderer implements Renderable {
     }
 
     private void drawPath() {
-            for (Path path : pathPack.getPaths()) {
-                Vector3 lastPoint = null;
-                for (Vector3 point : path.getPath()) {
-                    if (lastPoint != null) {
-                        shapeRenderer.line(lastPoint.x, lastPoint.y, point.x, point.y);
-                    }
-                    lastPoint = point;
+        for (Path path : pathPack.getPaths()) {
+            Vector3 lastPoint = null;
+            for (Vector3 point : path.getPath()) {
+                if (lastPoint != null) {
+                    gameShapeRenderer.line(lastPoint.x, lastPoint.y, point.x, point.y);
                 }
+                lastPoint = point;
+            }
         }
     }
 

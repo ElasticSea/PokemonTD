@@ -124,4 +124,8 @@ class EntityInfo extends GuiBox {
             clickable.refresh();
         }
     }
+
+    public Button getBuyButton() {
+        return towerEntityInfo.getBuyButton();
+    }
 }

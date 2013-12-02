@@ -24,6 +24,7 @@ class InGameMenu extends CommonMenu {
         };
 
         register(pause);
+        this.setCloseTabWhenNotClicked(true);
     }
 
     @Override

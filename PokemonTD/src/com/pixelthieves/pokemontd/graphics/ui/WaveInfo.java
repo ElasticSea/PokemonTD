@@ -93,4 +93,8 @@ public class WaveInfo extends GuiBox {
         nextWave.refresh();
         header.refresh();
     }
+
+    public Rectangle getNextWaveButton() {
+        return nextWave;
+    }
 }

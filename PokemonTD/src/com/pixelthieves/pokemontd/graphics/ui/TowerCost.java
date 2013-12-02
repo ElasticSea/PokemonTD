@@ -19,7 +19,7 @@ public class TowerCost extends InteractiveBlock {
     private final ShapeRenderer shapeRenderer;
     private final SpriteBatch spriteBatch;
     private final BitmapFont font;
-    private  boolean showCost;
+    private boolean showCost;
     private float scale = 1;
     private Treasure cost;
     private float fontScale;
@@ -31,7 +31,7 @@ public class TowerCost extends InteractiveBlock {
         this.spriteBatch = gui.getSpriteBatch();
         this.font = gui.getFont();
         this.showCost = true;
-        this.setScale(0.5f);
+        this.setScale(0.75f);
     }
 
     public void setShowCost(boolean showCost) {
@@ -57,7 +57,7 @@ public class TowerCost extends InteractiveBlock {
         font.setScale(Math.max(Math.round(fontScale * scale), 1));
         if (!cost.equals(this.cost) || !this.equals(bounds)) {
             this.bounds = new Rectangle(this);
-            this.cost = cost;
+            this.cost = new Treasure(cost);
 
             caches = new ArrayList<costValueCache>();
             if (showCost) {
@@ -73,6 +73,7 @@ public class TowerCost extends InteractiveBlock {
                     caches.add(new costValueCache(element.getColor(), element.toString() + " "));
                 }
             }
+
             render();
 
         } else {

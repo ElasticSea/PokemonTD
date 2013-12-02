@@ -26,10 +26,8 @@ import com.pixelthieves.core.pathfinding.Blueprint;
 import com.pixelthieves.core.tween.TweenManagerAdapter;
 import com.pixelthieves.core.tween.Vector3Accessor;
 import com.pixelthieves.pokemontd.component.ShopComponent;
-import com.pixelthieves.pokemontd.graphics.CachedGaussianBlurRenderer;
-import com.pixelthieves.pokemontd.graphics.GameRenderer;
-import com.pixelthieves.pokemontd.graphics.GrayscaleRenderer;
-import com.pixelthieves.pokemontd.graphics.TileMap;
+import com.pixelthieves.pokemontd.graphics.*;
+import com.pixelthieves.pokemontd.graphics.tutorial.Tutorial;
 import com.pixelthieves.pokemontd.graphics.ui.Ui;
 import com.pixelthieves.pokemontd.graphics.ui.menu.Menu;
 import com.pixelthieves.pokemontd.input.InGameInputProcessor;
@@ -67,6 +65,8 @@ public class App extends Game2D {
     private Renderable menuRenderer;
     private ShapeRenderer shapeRenderer;
     private SpriteBatch spriteBatch;
+    private SpriteBatch gameSpriteBatch;
+    private ShapeRenderer gameShapeRenderer;
     private TileMap<TextureAtlas.AtlasRegion> tileMap;
     private CameraHandler cameraHandler;
     private World world;
@@ -102,9 +102,10 @@ public class App extends Game2D {
     private GestureDetector inGameInputProcessor;
     private GestureDetector cameraMovementProcessor;
     private InputMultiplexer inputMultiplexer;
-    private Difficulty difficulty = Difficulty.Easy;
+    public static Difficulty DIFFICULTY = null;
     private WorldUpdater worldUpdater;
     private boolean finishedGame;
+    private Tutorial tutorial;
 
     public static TweenManagerAdapter getTweenManager() {
         return tweenManager;
@@ -131,7 +132,9 @@ public class App extends Game2D {
             }
         }
         currentGameRenderer.render();
+        tutorial.render();
         menuRenderer.render();
+
     }
 
     @Override
@@ -146,6 +149,10 @@ public class App extends Game2D {
         new Assets().addAtlas(new TextureAtlas("data/textures/packed.atlas"));
         spriteBatch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
+
+
+        gameSpriteBatch = new SpriteBatch();
+        gameShapeRenderer = new ShapeRenderer();
 
         MapData map = createMap();
         tileMap = map.getTileMap();
@@ -173,10 +180,10 @@ public class App extends Game2D {
             mainMenuGaimRenderer = gameRenderer;
             frozenGameRenderer = gameRenderer;
         }
-        menuRenderer = new MenuRenderer();
         currentGameRenderer = mainMenuGaimRenderer;
-
-
+        tutorial = new Tutorial(this, ui, map, camera);
+        menuRenderer = new MenuRenderer();
+        clock.addService(tutorial);
     }
 
     private void initializeWorld() {
@@ -216,11 +223,11 @@ public class App extends Game2D {
 
     private void initializeSystems() {
         deathSystem = new DeathSystem(gameService, player);
-        renderSpriteSystem = new RenderSpriteSystem(cameraHandler.getCamera(), spriteBatch);
-        renderTextSystem = new RenderTextSystem(spriteBatch);
-        renderHealthSystem = new RenderHealthSystem(shapeRenderer);
-        renderDebugSystem = new RenderDebugSystem(shapeRenderer);
-        renderRangeSystem = new RenderRangeSystem(shapeRenderer, towerManager);
+        renderSpriteSystem = new RenderSpriteSystem(cameraHandler.getCamera(), gameSpriteBatch);
+        renderTextSystem = new RenderTextSystem(gameSpriteBatch);
+        renderHealthSystem = new RenderHealthSystem(gameShapeRenderer);
+        renderDebugSystem = new RenderDebugSystem(gameShapeRenderer);
+        renderRangeSystem = new RenderRangeSystem(gameShapeRenderer, towerManager);
 
         world.setSystem(renderSpriteSystem, true);
         world.setSystem(renderTextSystem, true);
@@ -344,11 +351,15 @@ public class App extends Game2D {
     }
 
     public void setDifficulty(Difficulty difficulty) {
-        this.difficulty = difficulty;
+        this.DIFFICULTY = difficulty;
     }
 
     public Difficulty getDifficulty() {
-        return difficulty;
+        return DIFFICULTY;
+    }
+
+    public void activateTutorial(boolean active) {
+        tutorial.setActive(active);
     }
 
     private class MenuRenderer implements Renderable {
@@ -401,8 +412,12 @@ public class App extends Game2D {
         return spriteBatch;
     }
 
-    public void setSpriteBatch(SpriteBatch spriteBatch) {
-        this.spriteBatch = spriteBatch;
+    public ShapeRenderer getGameShapeRenderer() {
+        return gameShapeRenderer;
+    }
+
+    public SpriteBatch getGameSpriteBatch() {
+        return gameSpriteBatch;
     }
 
     public void freeze(boolean freezed) {
@@ -438,15 +453,15 @@ public class App extends Game2D {
         this.sessionStarted = sessionStarted;
         currentGameRenderer = sessionStarted ? gameRenderer : mainMenuGaimRenderer;
         if (sessionStarted && !waveManager.isActive()) {
-            waveManager.init(difficulty);
-            if(!Configuration.PREFERENCES.getBoolean("tutorial_absolved")){
-                menu.switchCard(Menu.Type.QUICK_TIP);
-                System.out.println("LOOOL");
+            waveManager.init(DIFFICULTY);
+            if (!Configuration.PREFERENCES.getBoolean("tutorial_absolved")) {
+                tutorial.setActive(true);
             }
         }
     }
 
     public void restart() {
+        tutorial.setActive(false);
         player.reset();
         initializeWorld();
         initializeSystems();
@@ -464,6 +479,10 @@ public class App extends Game2D {
         float towerX = (blockX + .5f) * App.WORLD_SCALE;
         float towerY = (blockY + .5f) * App.WORLD_SCALE;
         return new Vector3(towerX, towerY, 0);
+    }
+
+    public static Rectangle getTowerRectangleByBlock(float blockX, float blockY) {
+        return new Rectangle(blockX*App.WORLD_SCALE,blockY*App.WORLD_SCALE,App.WORLD_SCALE,App.WORLD_SCALE );
     }
 
     public static Vector3 getBlockPosition(float worldX, float worldY) {

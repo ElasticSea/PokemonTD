@@ -175,6 +175,14 @@ public class Treasure {
         this.addGold(treasure.getGold());
     }
 
+    public boolean hasElements() {
+        for (Element element : ELEMENTS) {
+            if (this.hasElement(element, 1)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public void multiplyGold(float value) {
         this.setGold((int) (this.getGold() * value));

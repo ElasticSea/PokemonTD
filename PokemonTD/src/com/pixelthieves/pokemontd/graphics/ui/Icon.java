@@ -12,7 +12,6 @@ import com.badlogic.gdx.math.Vector2;
  */
 public abstract class Icon extends InteractiveBlock {
 
-    protected final SpriteBatch spriteBatch;
     private final BitmapFont font;
     private TextureAtlas.AtlasRegion texture;
     private float size;

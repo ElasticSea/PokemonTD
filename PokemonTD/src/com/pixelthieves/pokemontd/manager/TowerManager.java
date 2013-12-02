@@ -2,7 +2,6 @@ package com.pixelthieves.pokemontd.manager;
 
 import com.artemis.Component;
 import com.artemis.Entity;
-import com.artemis.World;
 import com.artemis.utils.Bag;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -33,6 +32,9 @@ public class TowerManager implements Clickable {
     private Entity placeholderTower;
     private Entity clickedTower;
     private int soldTowers;
+    private int buildTowers;
+    private int upgraded;
+    private Entity shop;
 
     public void setPickedTower(TowerType towerType) {
         removePlaceholderTower();
@@ -78,6 +80,7 @@ public class TowerManager implements Clickable {
     public void reset() {
         removePlaceholderTower();
         selectedTower = null;
+        // clickedTower = null;
         status = Status.NONE;
     }
 
@@ -112,6 +115,7 @@ public class TowerManager implements Clickable {
         transferEffects(clickedTower, entity);
         clickedTower.deleteFromWorld();
         clickedTower = entity;
+        upgraded++;
     }
 
     private void transferEffects(Entity from, Entity to) {
@@ -132,6 +136,10 @@ public class TowerManager implements Clickable {
         purchaseTower(selectedTower);
         clickedTower = Tower.registerTower(app.getWorld(), selectedTower, placeholderPosition.x, placeholderPosition.y);
         removePlaceholderTower();
+        buildTowers++;
+        if (selectedTower.getName().equals(TowerName.Shop)) {
+            shop = clickedTower;
+        }
     }
 
     public Entity getPlaceholderTower() {
@@ -164,10 +172,6 @@ public class TowerManager implements Clickable {
                 }
             }
         }
-    }
-
-    public int getSoldTowers() {
-        return soldTowers;
     }
 
     public enum Status {
@@ -272,6 +276,20 @@ public class TowerManager implements Clickable {
         this.status = status;
     }
 
+    public int getSoldTowers() {
+        return soldTowers;
+    }
 
+    public int getTowersCount() {
+        return buildTowers - soldTowers;
+    }
+
+    public int getUpgraded() {
+        return upgraded;
+    }
+
+    public Entity getShop() {
+        return shop;
+    }
 }
 

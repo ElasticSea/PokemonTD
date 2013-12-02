@@ -1,6 +1,7 @@
 package com.pixelthieves.pokemontd.graphics.ui;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.pixelthieves.core.graphics.Renderable;
@@ -10,8 +11,9 @@ import com.pixelthieves.pokemontd.App;
  * Created by Tomas on 10/8/13.
  */
 public abstract class DisplayBlock extends Rectangle implements Renderable, Refresheable {
-    private final ShapeRenderer shapeRenderer;
     protected final Gui gui;
+    protected ShapeRenderer shapeRenderer;
+    protected SpriteBatch spriteBatch;
 
     protected DisplayBlock(Gui gui) {
         this(gui, 0, 0, 0, 0);
@@ -21,10 +23,12 @@ public abstract class DisplayBlock extends Rectangle implements Renderable, Refr
         this(gui, new Rectangle(x, y, width, height));
 
     }
+
     protected DisplayBlock(Gui gui, Rectangle rect) {
         super(rect);
         this.gui = gui;
         this.shapeRenderer = gui.getShapeRenderer();
+        this.spriteBatch = gui.getSpriteBatch();
     }
 
     @Override
@@ -35,5 +39,13 @@ public abstract class DisplayBlock extends Rectangle implements Renderable, Refr
             shapeRenderer.rect(x, y, width, height);
             shapeRenderer.end();
         }
+    }
+
+    public void setShapeRenderer(ShapeRenderer shapeRenderer) {
+        this.shapeRenderer = shapeRenderer;
+    }
+
+    public void setSpriteBatch(SpriteBatch spriteBatch) {
+        this.spriteBatch = spriteBatch;
     }
 }

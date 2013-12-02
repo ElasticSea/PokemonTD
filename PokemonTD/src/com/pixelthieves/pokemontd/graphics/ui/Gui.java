@@ -131,8 +131,16 @@ public abstract class Gui extends GestureDetector.GestureAdapter implements Rend
         this.squareSize = Math.round(MathUtils.clamp(size, height / 5, height / 2));
     }
 
+    public int getSquareSize() {
+        return squareSize;
+    }
+
     public void scale(float size) {
         setSquareSize(size);
         scaleFont(Math.round(squareSize / 90));
+    }
+
+    public Vector2 getCenter() {
+        return center;
     }
 }

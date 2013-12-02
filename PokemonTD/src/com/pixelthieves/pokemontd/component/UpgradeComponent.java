@@ -26,7 +26,7 @@ public class UpgradeComponent extends Component {
     public int getGoldWorthThoseUpgrades() {
         int gold = 0;
         for (TowerType upgrade : pastUpgrades) {
-            gold += upgrade.getCost().getGold() * (upgrade.isElementTower() ? 0.75f : 1);
+            gold += upgrade.getCost().getGold() * (upgrade.getCost().hasElements() ? 0.75f : 1);
         }
         return gold;
     }

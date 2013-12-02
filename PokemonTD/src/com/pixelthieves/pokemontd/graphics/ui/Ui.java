@@ -22,17 +22,18 @@ public class Ui extends Gui {
     private final ShopIcons shopIcons;
     private final EntityInfo entityInfo;
     private final StatusBar statusBar;
-    private final GuiBox nextWaveInfo;
+    private final WaveInfo nextWaveInfo;
     private final GuiBox status;
     private final AbilityInfo abilityInfo;
     private final List<GuiBox> boxes = new ArrayList<GuiBox>();
     private final SpeedControlsBar speedControlsBar;
+    private final int statusBarHeight;
     private float defaultSize;
     private int offset;
 
     public Ui(App app, Menu menu) {
         super(app);
-        int statusBarHeight = squareSize / 5;
+        statusBarHeight = squareSize / 5;
         int statusHeight = statusBarHeight * 4;
 
         width = Gdx.graphics.getWidth();
@@ -154,5 +155,31 @@ public class Ui extends Gui {
 
     public AbilityInfo getAbilityInfo() {
         return abilityInfo;
+    }
+
+
+    // Tutorial methods
+    public Rectangle getTowerIcon() {
+        return towerIcons.getFirstIcon();
+    }
+
+    public Rectangle getBuyButton() {
+        return entityInfo.getBuyButton();
+    }
+
+    public Rectangle getWaveStartButton() {
+        return nextWaveInfo.getNextWaveButton();
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getStatusBarHeight() {
+        return statusBarHeight;
+    }
+
+    public int getHeight() {
+        return height;
     }
 }

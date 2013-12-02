@@ -16,4 +16,5 @@ Google Play game services IDs.
     <string name="leaderboard_normal">CgkIhPS8x6cKEAIQCQ</string>
     <string name="leaderboard_hard">CgkIhPS8x6cKEAIQCg</string>
     <string name="leaderboard_insane">CgkIhPS8x6cKEAIQCw</string>
+    <string name="leaderboard_classic">CgkIhPS8x6cKEAIQDw</string>
 </resources>

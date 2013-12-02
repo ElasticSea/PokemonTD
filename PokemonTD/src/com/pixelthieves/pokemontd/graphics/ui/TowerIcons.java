@@ -51,4 +51,8 @@ public class TowerIcons extends PickTable<TowerIcon> {
             update(lastHierarchy);
         }
     }
+
+    public TowerIcon getFirstIcon(){
+        return pickIcons.get(0);
+    }
 }

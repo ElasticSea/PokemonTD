@@ -180,12 +180,5 @@ public class TowerType implements CommonDataType {
 
     private static final Element[] elements = Element.values();
 
-    public boolean isElementTower() {
-        for (Element element : elements) {
-            if (this.cost.hasElement(element, 1)) {
-                return true;
-            }
-        }
-        return false;
-    }
+
 }

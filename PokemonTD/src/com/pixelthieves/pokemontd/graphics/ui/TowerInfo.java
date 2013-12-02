@@ -278,4 +278,8 @@ public class TowerInfo extends CommonInfo {
         return attack instanceof HitAbility ? ((HitAbility) attack).getAoe() : 0;
     }
 
+    public Button getBuyButton() {
+        return buy;
+    }
+
 }

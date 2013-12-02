@@ -98,7 +98,7 @@ public class MainActivity extends LibgdxBaseGameActivity implements GameService 
     }
 
     private int getLeaderboardType(Difficulty difficulty) {
-        switch (difficulty) {
+        /*switch (difficulty) {
             case Easy:
                 return R.string.leaderboard_easy;
             case Normal:
@@ -107,8 +107,8 @@ public class MainActivity extends LibgdxBaseGameActivity implements GameService 
                 return R.string.leaderboard_hard;
             case Insane:
                 return R.string.leaderboard_insane;
-        }
-        return -1;
+        }        */
+        return R.string.leaderboard_classic;
     }
 
     @Override

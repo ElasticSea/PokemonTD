@@ -12,12 +12,10 @@ import com.pixelthieves.pokemontd.App;
  * Created by Tomas on 10/8/13.
  */
 public abstract class Button extends InteractiveBlock {
-    private final SpriteBatch spriteBatch;
     private final BitmapFont.HAlignment alignment;
     private String text;
     private final BitmapFont font;
     private Vector2 position;
-    private final ShapeRenderer shapeRenderer;
     private Color color = Color.CLEAR;
     private Color backgroundColor = Color.CLEAR;
     private final boolean wrapped;
