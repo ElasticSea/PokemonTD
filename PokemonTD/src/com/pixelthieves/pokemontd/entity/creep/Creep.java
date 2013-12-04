@@ -19,10 +19,10 @@ public class Creep extends ConcreteEntity {
                   WaveComponent waveComponent, World world, float x, float y) {
         super(world);
         addComponent(new PositionComponent(x, y, 0));
-        addComponent(RotationComponent.getInstanceFromOffset(225, 0, 0));
+        // addComponent(new RotationComponent(0, 0, 0));
         addComponent(new PathComponent(path));
         addComponent(new NameComponent(creepType.getName().toString()));
-        addComponent(new SpriteComponent("creeps/animation/normal"));
+        addComponent(new SpriteComponent(creepType.getTexture()));
         addComponent(new SizeComponent(size, size, 0));
         addComponent(new BuffableSpeedComponent(speed));
         addComponent(new HealthComponent(new Health(health)));

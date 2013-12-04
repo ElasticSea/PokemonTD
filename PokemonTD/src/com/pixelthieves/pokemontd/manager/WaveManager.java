@@ -78,7 +78,7 @@ public class WaveManager implements Updateable {
     public void init(Difficulty difficulty) {
         creeps = Arrays.asList(CreepName.values()).iterator();
         creepTypeBuilder = new CreepTypeBuilder();
-        waveStore = creepTypeBuilder.build(App.WORLD_SCALE/2, CreepTypeBuilder.normal, difficulty);
+        waveStore = creepTypeBuilder.build(App.WORLD_SCALE, CreepTypeBuilder.normal, difficulty);
         elementWaves = getElementWave(difficulty);
         lastWaveId = waveStore.size() - 1;
         filter.reset(initialDelay);
