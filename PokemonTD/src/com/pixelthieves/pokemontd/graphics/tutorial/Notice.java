@@ -143,8 +143,13 @@ public class Notice extends DisplayBlock {
     public void animate() {
         if (placement.equals(Placement.RELATIVE)) {
             CameraHandler cameraHandler = gui.getApp().getCameraHandler();
-            Tween.to(cameraHandler, CameraHandlerAccessor.SET, 2).target(target.x + target.width / 2,
-                    target.y + target.height / 2).ease(TweenEquations.easeOutCubic).start(App.getTweenManager());
+
+            Vector2 targetPosition = new Vector2(target.x + target.width / 2,
+                    target.y + target.height / 2);
+            Vector2 cameraPosition = new Vector2(cameraHandler.getCamera().position.x, cameraHandler.getCamera().position.y);
+
+            float time = targetPosition.dst(cameraPosition)/(App.WORLD_SCALE*10);
+            Tween.to(cameraHandler, CameraHandlerAccessor.SET, Math.max(2f, time)).target(targetPosition.x,targetPosition.y).ease(TweenEquations.easeOutCubic).start(App.getTweenManager());
            /* Tween.to(cameraHandler, CameraHandlerAccessor.ZOOM, 1).target(cameraHandler.getCamera().zoom / 2).start(
                     App.getTweenManager());    */
         }

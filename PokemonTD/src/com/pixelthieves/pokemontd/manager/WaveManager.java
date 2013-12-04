@@ -1,6 +1,5 @@
 package com.pixelthieves.pokemontd.manager;
 
-import com.artemis.World;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.pixelthieves.core.logic.UpdateFilter;
@@ -11,6 +10,7 @@ import com.pixelthieves.pokemontd.entity.creep.*;
 import com.pixelthieves.pokemontd.map.Path;
 import com.pixelthieves.pokemontd.map.PathPack;
 import com.pixelthieves.pokemontd.system.resolve.FireTextInfo;
+import com.pixelthieves.pokemontd.system.resolve.ui.LightUpShops;
 
 import java.util.*;
 import java.util.Map;
@@ -78,7 +78,7 @@ public class WaveManager implements Updateable {
     public void init(Difficulty difficulty) {
         creeps = Arrays.asList(CreepName.values()).iterator();
         creepTypeBuilder = new CreepTypeBuilder();
-        waveStore = creepTypeBuilder.build(App.WORLD_SCALE, CreepTypeBuilder.normal, difficulty);
+        waveStore = creepTypeBuilder.build(App.WORLD_SCALE/2, CreepTypeBuilder.normal, difficulty);
         elementWaves = getElementWave(difficulty);
         lastWaveId = waveStore.size() - 1;
         filter.reset(initialDelay);
@@ -128,7 +128,8 @@ public class WaveManager implements Updateable {
             double angleToNextPoint = Math.atan2(nextPoint.y - startPoint.y, nextPoint.x - startPoint.x);
             float xOffset = (float) (Math.cos(angleToNextPoint + Math.PI) * next.getDistanceBetweenCreeps() * i);
             float yOffset = (float) (Math.sin(angleToNextPoint + Math.PI) * next.getDistanceBetweenCreeps() * i);
-            Creep.registerCreep(app.getWorld(), new Path(path), wave, next, startPoint.x + xOffset, startPoint.y + yOffset);
+            Creep.registerCreep(app.getWorld(), new Path(path), wave, next, startPoint.x + xOffset,
+                    startPoint.y + yOffset);
         }
         registerWave(wave);
         updateWave();
@@ -140,7 +141,7 @@ public class WaveManager implements Updateable {
     }
 
     private void unregisterWave(WaveComponent wave) {
-        if(wave.getId() == 0){
+        if (wave.getId() == 0) {
             app.getGameSevice().submitAchievement(Achievement.Novice);
         }
         if ((wave.getId() + 1) % 5 == 0) {

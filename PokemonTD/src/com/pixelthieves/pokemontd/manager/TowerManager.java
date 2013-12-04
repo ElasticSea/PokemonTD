@@ -48,19 +48,24 @@ public class TowerManager implements Clickable {
     @Override
     public boolean hit(float x, float y) {
         clickedTower = app.getWorld().getSystem(GetTower.class).getEntity(x, y);
-        if (clickedTower == null) {
-            switch (status) {
-                case NONE:
-                    reset();
-                case PLACING_TOWER:
+
+        switch (status) {
+            case NONE:
+                reset();
+            case PLACING_TOWER:
+                if (clickedTower == null) {
                     placeTower((int) x, (int) y);
-                    break;
-                case MOVE_PLACEHOLDER:
+                } else {
+                    reset();
+                }
+                break;
+            case MOVE_PLACEHOLDER:
+                if (clickedTower == null) {
                     movePlaceholder((int) x, (int) y);
-                    break;
-            }
-        } else {
-            reset();
+                } else {
+                    clickedTower = null;
+                }
+                break;
         }
         return clickedTower != null;
     }

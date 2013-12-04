@@ -6,11 +6,11 @@ import com.pixelthieves.pokemontd.component.attack.projectile.data.EffectData;
 /**
  * Created by Tomas on 10/25/13.
  */
-public class BuffAbility extends EffectData {
+public class BuffData extends EffectData {
     private final Type type;
     private final float duration;
 
-    public BuffAbility(Type type, float duration) {
+    public BuffData(Type type, float duration) {
         this.type = type;
         this.duration = duration;
     }
@@ -19,12 +19,12 @@ public class BuffAbility extends EffectData {
         SPEED, DAMAGE, RANGE;
     }
 
-    public static BuffAbility getSpeed(float duration) {
-        return new BuffAbility(Type.SPEED, duration);
+    public static BuffData getSpeed(float duration) {
+        return new BuffData(Type.SPEED, duration);
     }
 
-    public static BuffAbility getDamage(float duration) {
-        return new BuffAbility(Type.DAMAGE, duration);
+    public static BuffData getDamage(float duration) {
+        return new BuffData(Type.DAMAGE, duration);
     }
 
     public Type getType() {

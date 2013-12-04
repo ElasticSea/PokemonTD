@@ -112,14 +112,26 @@ public abstract class HitSystem<T extends EffectData> extends EntityProcessingSy
         ComponentMapper<PositionComponent> positionMapper;
         private float aoe;
         private Vector3 position;
+        private int hit;
 
         public AoeSystem() {
             super(Aspect.getAspectForAll(HealthComponent.class, PositionComponent.class));
         }
 
         @Override
+        protected void begin() {
+            hit = 0;
+        }
+
+        @Override
+        protected void end() {
+            System.out.println("Aoe hit: "+hit);
+        }
+
+        @Override
         protected void process(Entity e) {
             if (position.dst(positionMapper.get(e).getPoint()) <= aoe) {
+                hit++;
                 tryToHit(effectData, entity, e);
             }
         }

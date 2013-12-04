@@ -1,7 +1,7 @@
 package com.pixelthieves.pokemontd.component.attack.effects.buff;
 
 import com.pixelthieves.pokemontd.component.attack.effects.AbstractEffect;
-import com.pixelthieves.pokemontd.component.attack.projectile.BuffAbility;
+import com.pixelthieves.pokemontd.component.attack.projectile.BuffData;
 
 /**
  * Created by Tomas on 10/21/13.
@@ -9,7 +9,7 @@ import com.pixelthieves.pokemontd.component.attack.projectile.BuffAbility;
 public abstract class BuffEffect extends AbstractEffect<BuffEffect> {
     private float ratio;
 
-    public BuffEffect set(BuffAbility.Type type, float duration, float ratio) {
+    public BuffEffect set(BuffData.Type type, float duration, float ratio) {
         super.set(type.toString().toLowerCase(), duration, 1);
         this.ratio = ratio;
         return this;

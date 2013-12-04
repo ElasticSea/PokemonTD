@@ -55,6 +55,9 @@ public class MovementSystem extends EntityProcessingSystem {
                         return;
                     }
                 }
+                if (rotationComponent != null) {
+                    rotationComponent.addOffset();
+                }
             } else {
                 return;
             }

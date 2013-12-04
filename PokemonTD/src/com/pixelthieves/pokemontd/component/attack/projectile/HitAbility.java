@@ -76,6 +76,12 @@ public class HitAbility extends EffectData {
                 range * scale, new SlowData(texture, slowRatio, duration, chance));
     }
 
+    public static AbilityComponent getSlowDamage(String bulletTexture, String texture, float scale, float range,
+                                           float slowRatio, float duration, float chance) {
+        return new HitAbility(bulletTexture, Type.FOLLOW_TARGET, DEFAULT_SIZE * scale, NORMAL_SPEED * scale,
+                range * scale, new SlowData(texture, slowRatio, duration, chance), new NormalData());
+    }
+
     public static AbilityComponent getMoney(float scale, float ratio) {
         return new HitAbility("coinAttack", Type.FOLLOW_TARGET, BIG_SIZE * scale, NORMAL_SPEED * scale,
                 new MoneyData("", ratio));

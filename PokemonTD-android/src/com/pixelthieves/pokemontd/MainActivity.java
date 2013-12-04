@@ -49,7 +49,12 @@ public class MainActivity extends LibgdxBaseGameActivity implements GameService 
 
     @Override
     public void signIn() {
-        beginUserInitiatedSignIn();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                beginUserInitiatedSignIn();
+            }
+        });
     }
 
     @Override

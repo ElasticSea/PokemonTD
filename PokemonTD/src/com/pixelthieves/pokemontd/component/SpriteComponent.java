@@ -61,5 +61,10 @@ public class SpriteComponent extends Component {
         return values;
     }
 
+    public void clear(){
+        map = new LinkedHashMap<String, Animation>();
+        dirty = true;
+    }
+
 
 }

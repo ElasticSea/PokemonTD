@@ -246,6 +246,7 @@ public class App extends Game2D {
         world.setSystem(new GetTower(), true);
         world.setSystem(new GetCreep(), true);
         world.setSystem(new FindShop(), true);
+        world.setSystem(new LightUpShops(), true);
         world.setSystem(new FindUpgradeTower(), true);
         world.setSystem(new FindAttackTower(), true);
         world.setSystem(new FireTextInfo(ShopComponent.class), true);
@@ -463,6 +464,8 @@ public class App extends Game2D {
         if (sessionStarted && !waveManager.isActive()) {
             waveManager.init(DIFFICULTY);
             if (!Configuration.PREFERENCES.getBoolean("tutorial_absolved")) {
+                Configuration.PREFERENCES.putBoolean("tutorial_absolved", true);
+                Configuration.PREFERENCES.flush();
                 tutorial.setActive(true);
             }
         }

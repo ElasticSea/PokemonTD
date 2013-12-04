@@ -14,7 +14,7 @@ public class Score {
     }
 
     public int getScore() {
-        return (int) (score * App.DIFFICULTY.getMultiplyer());
+        return score;
     }
 
     @Override

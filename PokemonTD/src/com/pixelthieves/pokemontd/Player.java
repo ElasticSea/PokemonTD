@@ -1,5 +1,7 @@
 package com.pixelthieves.pokemontd;
 
+import com.pixelthieves.pokemontd.system.resolve.ui.LightUpShops;
+
 /**
  * Created by Tomas on 10/5/13.
  */
@@ -39,7 +41,7 @@ public class Player {
     }
 
     public int getScore() {
-        return score.getScore() + treasure.getGold();
+        return (int) ((score.getScore() + treasure.getGold()) * App.DIFFICULTY.getMultiplyer());
     }
 
     public void addScore(int value) {
@@ -52,15 +54,19 @@ public class Player {
 
     public void addFreeElement() {
         this.freeElements++;
+        app.getWorld().getSystem(LightUpShops.class).start(true);
     }
 
     public void subtractFreeElement() {
         this.freeElements--;
+        if (freeElements == 0) {
+            app.getWorld().getSystem(LightUpShops.class).start(false);
+        }
     }
 
     public void reset() {
         score.setScore(0);
         health.setHealth(Integer.MAX_VALUE, defaultHealth);
-        treasure.set(defaultGold);
+        treasure.set(defaultGold*100,3,3,3,3,3,1);
     }
 }

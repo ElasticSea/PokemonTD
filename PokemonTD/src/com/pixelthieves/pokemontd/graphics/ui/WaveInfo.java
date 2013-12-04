@@ -18,8 +18,7 @@ public class WaveInfo extends GuiBox {
     private final DisplayText abilityText;
     private final DisplayPicture creepTexture;
     private final Button nextWave;
-    public static final Color NEXTWAVE_COLOR = new Color(Color.GREEN).mul(0.6f);
-    public static final Color NEXTWAVE2_COLOR = new Color(Color.GRAY).mul(0.6f);
+    public static final Color NEXTWAVE_COLOR = new Color(Color.GREEN).mul(0.6f, 0.6f, 0.6f, 1);
     private final Header header;
 
     WaveInfo(final Ui ui, Rectangle rectangle, WaveManager waveManager, BitmapFont font) {
@@ -44,8 +43,7 @@ public class WaveInfo extends GuiBox {
 
         float offsetBlocks = height / 8;
 
-        Rectangle nextWaveRectangle =
-                new Rectangle(0, 0, width, offsetBlocks * 1.5f);
+        Rectangle nextWaveRectangle = new Rectangle(0, 0, width, offsetBlocks * 1.5f);
         nextWave = new Button(ui, nextWaveRectangle, font, BitmapFont.HAlignment.CENTER) {
             @Override
             public void process(float x, float y) {
@@ -65,8 +63,8 @@ public class WaveInfo extends GuiBox {
             creepTexture.render(nextWave.getTexture(), "");
             this.nextWave.render(nextWave.getId() == 0 ? "START GAME" : "NEXT WAVE", Color.WHITE, NEXTWAVE_COLOR);
             header.render("Next Wave", String.valueOf(nextWave.getId() + 1));
-        }else{
-            header.render("","");
+        } else {
+            header.render("", "");
         }
     }
 

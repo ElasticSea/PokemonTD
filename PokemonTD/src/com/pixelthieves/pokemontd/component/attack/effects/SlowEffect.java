@@ -41,7 +41,7 @@ public class SlowEffect extends AbstractEffect<SlowEffect> {
     }
 
     public String getDescription() {
-        return "Decreases creep movement speed.";
+        return "Decreases creep movement speed by "+(int)(slowRatio*100)+"%";
     }
 }
 

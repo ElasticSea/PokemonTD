@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
 import com.pixelthieves.pokemontd.component.attack.EffectName;
 import com.pixelthieves.pokemontd.component.attack.effects.AbstractEffect;
+import com.pixelthieves.pokemontd.component.attack.effects.buff.SpeedBuffEffect;
+import com.pixelthieves.pokemontd.component.attack.projectile.BuffData;
 import com.pixelthieves.pokemontd.component.attack.projectile.data.*;
 
 /**
@@ -92,7 +94,8 @@ public class AbilityInfo extends HeaderGuiBox {
                         (int) lifeSteal.getDuration() + "s.";
 
             case Haste:
-                return "Increases speed of nearby towers by " + (int) ((damage - 1) * 100) + "%.";
+                BuffData buffData = (BuffData) abilityCache;
+                return "Increases speed of nearby towers by " + (int) ((damage - 1) * 100) + "% for duration of "+(int)buffData.getDuration()+" s.";
 
             case Sunbeam:
                 return "Deals " + (int) damage + " every " + speed + " ms on contact with the light beam.";
@@ -105,7 +108,7 @@ public class AbilityInfo extends HeaderGuiBox {
             case Freeze:
                 slow = (SlowData) abilityCache;
                 return "Has " + (int) (slow.getChance() * 100) + "% chance to slow creep by " +
-                        (int) (((1 - slow.getSlowRatio()) * 100)) + "% for " + (int) slow.getDuration() + " seconds.";
+                        (int) (((slow.getSlowRatio()) * 100)) + "% for " + (int) slow.getDuration() + " seconds.";
 
             case Incinerate:
                 IncreasingDamageData increaseDamage = (IncreasingDamageData) abilityCache;
@@ -128,7 +131,8 @@ public class AbilityInfo extends HeaderGuiBox {
                         (int) (((1 - slow.getSlowRatio()) * 100)) + "% for " + (int) slow.getDuration() + " seconds.";
 
             case Charm:
-                return "Increases damage of nearby towers by " + (int) ((damage - 1) * 100) + "%.";
+                buffData = (BuffData) abilityCache;
+                return "Increases damage of nearby towers by " + (int) ((damage - 1) * 100) + "% for duration of "+(int)buffData.getDuration()+" s.";
 
             case Blaze:
                 bubble = (BubbleData) abilityCache;

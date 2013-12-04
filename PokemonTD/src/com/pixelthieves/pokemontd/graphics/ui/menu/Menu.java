@@ -52,10 +52,11 @@ public class Menu extends Gui {
         boolean canSignIn = getGameSevice().canSingIn();
         inGameMenu = new InGameMenu(this, rectangle, defaultButtonCount);
         menuBox = new MenuBox(this, rectangle, defaultButtonCount);
-        endGame = new ScoreTabClose(this, rectangle, defaultButtonCount);
+        endGame = canSignIn ? new SignInEndGame(this, rectangle, defaultButtonCount) :
+                new ScoreTabClose(this, rectangle, defaultButtonCount);
         leaderboard = new LeaderboardTabClose(this, null, getRectangle(menuWidth, (int) (height * 1.5f)), 7,
                 CloseExitTab.Type.EXIT);
-        quicktip = new Basic(this, null, getRectangle((int) (menuWidth* 1.5f), (int) (height * 1.5f)));
+        quicktip = new Basic(this, null, getRectangle((int) (menuWidth * 1.5f), (int) (height * 1.5f)));
 
         guiDialogRoots.add(signInBox);
         guiDialogRoots.add(inGameMenu);
@@ -121,7 +122,7 @@ public class Menu extends Gui {
             case LEADERBOARD:
                 return leaderboard;
             case QUICK_TIP:
-                return  quicktip;
+                return quicktip;
             default:
                 return null;
         }

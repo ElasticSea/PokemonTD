@@ -1,6 +1,6 @@
 package com.pixelthieves.pokemontd.component.attack.effects.buff;
 
-import com.pixelthieves.pokemontd.component.attack.projectile.BuffAbility;
+import com.pixelthieves.pokemontd.component.attack.projectile.BuffData;
 
 /**
  * Created by Tomas on 10/21/13.
@@ -8,7 +8,7 @@ import com.pixelthieves.pokemontd.component.attack.projectile.BuffAbility;
 public class DamageBuffEffect extends BuffEffect {
 
     public DamageBuffEffect set(float duration, float ratio) {
-        super.set(BuffAbility.Type.DAMAGE, duration, ratio);
+        super.set(BuffData.Type.DAMAGE, duration, ratio);
         return this;
     }
 
