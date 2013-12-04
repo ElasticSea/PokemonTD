@@ -11,17 +11,14 @@ import com.pixelthieves.pokemontd.Treasure;
 public class ShopIcons extends PickTable<ElementIcon> {
 
     private final Player player;
-    private final Treasure currentElements;
 
     ShopIcons(Gui ui, Rectangle rectangle) {
         super(ui, rectangle);
         this.player = ui.getPlayer();
-        this.currentElements = new Treasure(0);
         for (int i = 0; i < pickIcons.size(); i++) {
             ElementIcon elementIcon = pickIcons.get(i);
             elementIcon.setPlayer(player);
             elementIcon.setElement(i < Element.values().length ? Element.values()[i] : null);
-            elementIcon.setCurrentElements(currentElements);
         }
     }
 

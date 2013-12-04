@@ -13,6 +13,7 @@ public class Player {
     private final int defaultHealth;
     private final int defaultGold;
     private int freeElements;
+    private Treasure reservedElements = new Treasure();
 
     public Player(App app, int health, int gold) {
         this.app = app;
@@ -68,5 +69,10 @@ public class Player {
         score.setScore(0);
         health.setHealth(Integer.MAX_VALUE, defaultHealth);
         treasure.set(defaultGold);
+        reservedElements.set(0);
+    }
+
+    public Treasure getReservedElements() {
+        return reservedElements;
     }
 }

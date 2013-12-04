@@ -24,7 +24,6 @@ class ElementIcon extends InteractiveBlock {
     protected Element element;
     private Player player;
     private final SpriteBatch spriteBatch;
-    private Treasure currentElements;
 
     ElementIcon(Gui ui, Rectangle rectangle, SpriteBatch spriteBatch) {
         super(ui, rectangle);
@@ -36,7 +35,7 @@ class ElementIcon extends InteractiveBlock {
     @Override
     public void render() {
         if (element != null) {
-            int elementCount = currentElements.getElement(element) + 1;
+            int elementCount = player.getReservedElements().getElement(element) + 1;
             if (Treasure.LIMIT.getElement(element) < elementCount) {
                 picture.setColor(Color.DARK_GRAY);
                 picture.render(Assets.getTexture("gems/" + element.toString().toLowerCase()), "max", true);
@@ -44,7 +43,6 @@ class ElementIcon extends InteractiveBlock {
                 picture.setColor(player.getFreeElements() != 0 && elementAllowed() ? Color.WHITE : Color.DARK_GRAY);
                 picture.render(Assets.getTexture("gems/" + element.toString().toLowerCase()), "lvl " + elementCount,
                         true);
-
             }
         }
     }
@@ -56,7 +54,7 @@ class ElementIcon extends InteractiveBlock {
     @Override
     public void process(float x, float y) {
         if (player.getFreeElements() != 0) {
-            int elements = currentElements.getElement(element);
+            int elements = player.getReservedElements().getElement(element);
             if (Treasure.LIMIT.getElement(element) > elements && elementAllowed()) {
                 WaveComponent wave = waveManager.fireNextWave(WaveManager.getWave(element, elements));
                 for (Entity creep : wave.getWave()) {
@@ -64,7 +62,7 @@ class ElementIcon extends InteractiveBlock {
                     int newHealth = health.getMaxHealth() * waveManager.getNextWave().getHealth();
                     health.setHealth(newHealth, newHealth);
                 }
-                currentElements.addElement(element, 1);
+                player.getReservedElements().addElement(element, 1);
                 player.subtractFreeElement();
                 if (!Options.MUTE) {
                     Assets.getSound("roar").play();
@@ -83,10 +81,6 @@ class ElementIcon extends InteractiveBlock {
 
     public Element getElement() {
         return element;
-    }
-
-    public void setCurrentElements(Treasure currentElements) {
-        this.currentElements = currentElements;
     }
 
     @Override

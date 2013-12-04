@@ -17,6 +17,7 @@ public class HitAbility extends EffectData {
     public static final float NORMAL_SPEED = 6.0f;
     public static final float FAST_SPEED = 12.0f;
     public static final float DEFAULT_SIZE = 0.1f;
+    public static final float MEDIUM_SIZE= 0.15f;
     public static final float BIG_SIZE = 0.25f;
     public static final float SUPER_BIG_SIZE = 0.5f;
     private final float aoe;
@@ -113,14 +114,18 @@ public class HitAbility extends EffectData {
     }
 
 
-    public static AbilityComponent getBubble(String texture, float scale) {
+    public static AbilityComponent getPasThrough(String texture, float scale) {
         return new HitAbility(texture, Type.PASS_THROUGH, BIG_SIZE * scale, NORMAL_SPEED * scale,
-                new BubbleData(0.25f, 1f));
+                new BubbleData(0.25f, 0f));
+    }
+    public static AbilityComponent getSoundWave(String texture, float scale) {
+        return new HitAbility(texture, Type.PASS_THROUGH_ALL_DIRECTIONS, BIG_SIZE * scale, NORMAL_SPEED * scale,
+                new BubbleData(0.25f, 2.5f));
     }
 
     public static AbilityComponent getBubbleGrowing(float scale) {
-        return new HitAbility("bubble", Type.PASS_THROUGH, BIG_SIZE * scale, NORMAL_SPEED * scale,
-                new BubbleData(0.25f, 1f));
+        return new HitAbility("bubble", Type.PASS_THROUGH, MEDIUM_SIZE * scale, NORMAL_SPEED * scale,
+                new BubbleData(0.25f, 4f));
     }
 
 
@@ -130,7 +135,8 @@ public class HitAbility extends EffectData {
     }
 
     public enum Type {
-        FOLLOW_TARGET, LAST_KNOWN_PLACE, AHEAD_TARGET, PASS_THROUGH, IMMEDIATE_ATTACK, IMMEDIATE_NOCONTACT_DAMAGE;
+        FOLLOW_TARGET, LAST_KNOWN_PLACE, AHEAD_TARGET, PASS_THROUGH, IMMEDIATE_ATTACK, IMMEDIATE_NOCONTACT_DAMAGE,
+        PASS_THROUGH_ALL_DIRECTIONS;
     }
 
     public HitAbility(String texture, Type type, float size, float speed, EffectData... effectData) {

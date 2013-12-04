@@ -35,7 +35,6 @@ public class TowerTypeBuilder {
     public static final float N_SPEED = 2;
     public static final float S_SPEED = 4f;
     public static final float XS_SPEED = 8f;
-    public static final float XXS_SPEED = 16f;
     public static final int L_SPLASH = 2;
     public static final int BUFF_DURATION = 60;
     public static final int BUFF_SPEED = 15;
@@ -121,10 +120,12 @@ public class TowerTypeBuilder {
 
         /// ######################  TREE ELEMENT
         specs.add(Specs.getSpecs(TowerName.Grind, 3, Shatter, XS_SPEED, N_RANGE, HitAbility.getSplash("rock", scale, 3f,0.25f), Treasure.fromWater(1).addFire(1).addNature(1)));
-        specs.add(Specs.getSpecs(TowerName.Pulverize, 5, Shatter, XXS_SPEED, S_RANGE, HitAbility.getSplash("rock", scale, 6f,0.25f), Treasure.fromWater(1).addFire(1).addNature(1)));
+        specs.add(Specs.getSpecs(TowerName.Pulverize, 5, Shatter, XS_SPEED, S_RANGE, HitAbility.getSplash("rock", scale, 6f,0.25f), Treasure.fromWater(1).addFire(1).addNature(1)));
 
-        specs.add(Specs.getSpecsFromMultiplier(TowerName.Throttling, 3, Blaze, XXL_SPEED, S_RANGE, .45f, HitAbility.getBubble("fire", scale), Treasure.fromWater(1).addFire(1).addLight(1)));
-        specs.add(Specs.getSpecsFromMultiplier(TowerName.Galloping, 5, Blaze, XXL_SPEED, S_RANGE, .45f, HitAbility.getBubble("fire", scale), Treasure.fromWater(2).addFire(2).addLight(2)));
+        specs.add(Specs.getSpecsFromMultiplier(TowerName.Throttling, 3, Blaze, XXL_SPEED, S_RANGE, .45f, HitAbility.getPasThrough(
+                "fire", scale), Treasure.fromWater(1).addFire(1).addLight(1)));
+        specs.add(Specs.getSpecsFromMultiplier(TowerName.Galloping, 5, Blaze, XXL_SPEED, S_RANGE, .45f, HitAbility.getPasThrough(
+                "fire", scale), Treasure.fromWater(2).addFire(2).addLight(2)));
 
         specs.add(Specs.getSpecsFromMultiplier(TowerName.Vampire, 3, LifeSteal, N_SPEED, N_RANGE, .66f, HitAbility.getLife(scale, 1f, 0.5f), Treasure.fromWater(1).addNature(1).addLight(1)));
         specs.add(Specs.getSpecsFromMultiplier(TowerName.Dracula, 5, LifeSteal, N_SPEED, N_RANGE, .66f, HitAbility.getLife(scale, 1f, 1f), Treasure.fromWater(2).addNature(2).addLight(2)));
@@ -133,7 +134,8 @@ public class TowerTypeBuilder {
         specs.add(Specs.getSpecsFromMultiplier(TowerName.Epidemic, 5, Infect, XL_SPEED, L_RANGE, .33f, HitAbility.getAuraDmg(scale, L_RANGE), Treasure.fromWater(2).addLight(2).addDarkness(2)));
 
         specs.add(Specs.getSpecs(TowerName.Confused, 3, Normal, L_SPEED, N_RANGE, HitAbility.getDumbClaw(scale, 0f, 0), Treasure.fromWater(1).addLight(1).addDarkness(1)));
-        specs.add(Specs.getSpecsFromMultiplier(TowerName.Supersonic, 5, SoundWave, L_SPEED, N_RANGE, 0.5f, HitAbility.getBubble("bubble", scale), Treasure.fromWater(2).addLight(2).addDarkness(2)));
+        specs.add(Specs.getSpecsFromMultiplier(TowerName.Supersonic, 5, SoundWave, L_SPEED, N_RANGE, 0.25f, HitAbility.getSoundWave(
+                "soundwave", scale), Treasure.fromWater(2).addLight(2).addDarkness(2)));
 
         specs.add(Specs.getSpecs(TowerName.Charged, 3, Thunderbolt, S_SPEED, XL_RANGE, HitAbility.getCharge(scale), Treasure.fromFire(1).addNature(1).addLight(1)));
         specs.add(Specs.getSpecs(TowerName.Supercharged, 5, Thunderbolt, S_SPEED, XXL_RANGE, HitAbility.getCharge(scale * 2), Treasure.fromFire(2).addNature(2).addLight(2)));
@@ -141,8 +143,8 @@ public class TowerTypeBuilder {
         specs.add(Specs.getSpecsFromMultiplier(TowerName.Stomp, 3, Quake, N_SPEED, N_RANGE, .33f, HitAbility.getSlow("rock", "", scale, 0, 1f, 0.5f, 0.8f), Treasure.fromFire(1).addNature(1).addDarkness(1)));
         specs.add(Specs.getSpecsFromMultiplier(TowerName.Earthquake, 5, Quake, S_SPEED, N_RANGE, .33f, HitAbility.getSlow("rock", "", scale, 0, 1f, 1.5f, 1), Treasure.fromFire(2).addNature(2).addDarkness(2)));
 
-        specs.add(Specs.getSpecsFromMultiplier(TowerName.Erruption, 3, Magma, XS_SPEED, N_RANGE, .33f, HitAbility.getVolcano(scale, N_RANGE, 4, 0.25f), Treasure.fromFire(1).addLight(1).addDarkness(1)));
-        specs.add(Specs.getSpecsFromMultiplier(TowerName.Volcanic, 5, Magma, XXS_SPEED, S_RANGE, .33f, HitAbility.getVolcano(scale, S_RANGE, 16, 0.25f), Treasure.fromFire(2).addLight(2).addDarkness(2)));
+        specs.add(Specs.getSpecsFromMultiplier(TowerName.Erruption, 3, Magma, XS_SPEED, N_RANGE, .66f, HitAbility.getVolcano(scale, N_RANGE, 4, 0.25f), Treasure.fromFire(1).addLight(1).addDarkness(1)));
+        specs.add(Specs.getSpecsFromMultiplier(TowerName.Volcanic, 5, Magma, XS_SPEED, S_RANGE, .66f, HitAbility.getVolcano(scale, S_RANGE, 16, 0.25f), Treasure.fromFire(2).addLight(2).addDarkness(2)));
 
         specs.add(Specs.getSpecsFromNone(TowerName.Hypnotic, 3, Puzzle, N_SPEED, N_RANGE, HitAbility.getChangeDirection(scale, 1, 0.02f), Treasure.fromNature(1).addLight(1).addDarkness(1)));
         specs.add(Specs.getSpecsFromNone(TowerName.Illusion, 5, Puzzle, N_SPEED, N_RANGE, HitAbility.getChangeDirection(scale, 5, 0.03f), Treasure.fromNature(2).addLight(2).addDarkness(2)));
@@ -224,19 +226,25 @@ public class TowerTypeBuilder {
     static Map<Float, Float> rangeMap = new HashMap<Float, Float>();
 
     {
-        rangeMap.put(0f, 0f);
+        /*rangeMap.put(0f, 0f);
         rangeMap.put(XXL_RANGE, 0.25f);
         rangeMap.put(XL_RANGE, 0.5f);
         rangeMap.put(L_RANGE, 0.5f);
         rangeMap.put(N_RANGE, 1f);
-        rangeMap.put(S_RANGE, 1.5f);
+        rangeMap.put(S_RANGE, 1.5f);*/
+
+        rangeMap.put(0f, 0f);
+        rangeMap.put(XXL_RANGE, 0.60f);
+        rangeMap.put(XL_RANGE, 0.75f);
+        rangeMap.put(L_RANGE, 0.90f);
+        rangeMap.put(N_RANGE, 1f);
+        rangeMap.put(S_RANGE, 1.2f);
     }
 
     static Map<Float, Float> speedMap = new HashMap<Float, Float>();
 
     {
         speedMap.put(0f, 0f);
-        speedMap.put(XXS_SPEED, 8f);
         speedMap.put(XS_SPEED, 4f);
         speedMap.put(S_SPEED, 2f);
         speedMap.put(N_SPEED, 1f);
@@ -249,13 +257,13 @@ public class TowerTypeBuilder {
 
     {
         splashMap.put(0f, 1f);
-        splashMap.put(100f, 7f);
-        splashMap.put(200f, 12f);
-        splashMap.put(250f, 14f);
-        splashMap.put(300f, 16f);
-        splashMap.put(400f, 18f);
-        splashMap.put(500f, 20f);
-        splashMap.put(600f, 21f);
+        splashMap.put(100f, 6f);
+        splashMap.put(200f, 10f);
+        splashMap.put(250f, 11f);
+        splashMap.put(300f, 12f);
+        splashMap.put(400f, 13f);
+        splashMap.put(500f, 14f);
+        splashMap.put(600f, 15f);
     }
 
     static Map<Integer, Float> damageMultiplierMap = new HashMap<Integer, Float>();

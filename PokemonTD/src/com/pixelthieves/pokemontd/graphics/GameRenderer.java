@@ -20,7 +20,6 @@ import com.pixelthieves.pokemontd.system.autonomous.*;
 public class GameRenderer implements Renderable {
 
     private final App app;
-    private final Ui ui;
     private final Camera camera;
     private final TileMap<TextureAtlas.AtlasRegion> tileMap;
     private final PathPack pathPack;
@@ -28,11 +27,10 @@ public class GameRenderer implements Renderable {
     private final SpriteBatch gameSpriteBatch;
     private final ShapeRenderer gameShapeRenderer;
 
-    public GameRenderer(App app, Ui ui, MapData mapData, Camera camera) {
+    public GameRenderer(App app, MapData mapData, Camera camera) {
         this.app = app;
-        this.ui = ui;
         this.camera = camera;
-        this.towerManager = ui.getTowerManager();
+        this.towerManager = app.getTowerManager();
         this.gameSpriteBatch = app.getGameSpriteBatch();
         this.gameShapeRenderer = app.getGameShapeRenderer();
         this.tileMap = mapData.getTileMap();
@@ -75,7 +73,7 @@ public class GameRenderer implements Renderable {
         }
         gameShapeRenderer.end();
         if (app.isSessionStarted()) {
-            ui.render();
+            app.getUi().render();
         }
     }
 

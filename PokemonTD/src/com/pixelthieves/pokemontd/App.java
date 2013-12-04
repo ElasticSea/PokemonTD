@@ -169,11 +169,10 @@ public class App extends Game2D {
         initializeContent();
         initializeManagers();
         initializeSystems();
-        menu = new Menu(this);
-        ui = new Ui(this, menu);
+        initializeUserInterface();
         initializeInput();
         initializeTween();
-        gameRenderer = new GameRenderer(this, ui, map, camera);
+        gameRenderer = new GameRenderer(this,  map, camera);
         if (Gdx.graphics.isGL20Available()) {
             mainMenuGaimRenderer = new CachedGaussianBlurRenderer(gameRenderer, 20);
             frozenGameRenderer = new GrayscaleRenderer(gameRenderer);
@@ -185,6 +184,11 @@ public class App extends Game2D {
         tutorial = new Tutorial(this, ui, cameraHandler);
         menuRenderer = new MenuRenderer();
         clock.addService(tutorial);
+    }
+
+    private void initializeUserInterface() {
+        menu = new Menu(this);
+        ui = new Ui(this, menu);
     }
 
     private void initializeWorld() {
@@ -472,10 +476,12 @@ public class App extends Game2D {
     }
 
     public void restart() {
-        tutorial.setActive(false);
+       tutorial.setActive(false);
         player.reset();
         initializeWorld();
         initializeSystems();
+     /*   initializeUserInterface();
+        initializeInput();    */
         setSessionStarted(false);
         waveManager.setActive(false);
         towerManager.restartTowerStats();

@@ -51,6 +51,18 @@ public class FireProjectilSystem extends ApplyAbilitySystem<HitAbility> {
                 Projectile.registerProjectile(world, entity, projectileType, position.x, position.y, damage, speed,
                         direction, target);
                 break;
+            case PASS_THROUGH_ALL_DIRECTIONS:float ang = (float) Math.atan2(targetPosition.y - position.y, targetPosition.x - position.x);
+                int iterations = 16;
+                float step = (float) (Math.PI*2/iterations);
+                for (int i = 0; i < iterations; i++) {
+                    Vector3 point  = new Vector3();
+                    point.x = position.x + (float) (Math.cos(ang+i*step)* 5 * App.WORLD_SCALE);
+                    point.y = position.y + (float) (Math.sin(ang+i*step)* 5 * App.WORLD_SCALE);
+                    Projectile.registerProjectile(world, entity, projectileType, position.x, position.y, damage, speed,
+                            point, target);
+
+                }
+                break;
 
             case FOLLOW_TARGET:
             case IMMEDIATE_ATTACK:

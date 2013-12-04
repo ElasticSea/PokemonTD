@@ -29,6 +29,7 @@ public class TowerIcons extends PickTable<TowerIcon> {
         return new TowerIcon(ui, new Rectangle()) {
             @Override
             public void process(float x, float y) {
+                System.out.println("CLICK");
                 towerManager.setPickedTower(towerType);
             }
         };

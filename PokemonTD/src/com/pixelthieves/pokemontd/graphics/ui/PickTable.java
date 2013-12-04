@@ -33,6 +33,7 @@ public abstract class PickTable<E extends InteractiveBlock> extends HeaderGuiBox
 
     @Override
     public boolean hit(float x, float y) {
+        System.out.println("HIT");
         for (Clickable clickable : pickIcons) {
             if (clickable.hit(x, y)) {
                 return true;

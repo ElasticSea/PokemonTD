@@ -94,24 +94,24 @@ public class CreepTypeBuilder {
         list.add(new Specs(CreepName.Jumpluff, 75, Treasure.fromPure(1), CreepAbilityType.BOSS));
                                                                                                     */
         list.add(new Specs(CreepName.Flaaffy, 9, Treasure.fromFire(1), CreepAbilityType.BOSS));
-        list.add(new Specs(CreepName.Ampharos, 18, Treasure.fromFire(1), CreepAbilityType.BOSS));
-        list.add(new Specs(CreepName.Yanma, 38, Treasure.fromFire(1), CreepAbilityType.BOSS));
+        list.add(new Specs(CreepName.Ampharos, 13, Treasure.fromFire(1), CreepAbilityType.BOSS));
+        list.add(new Specs(CreepName.Yanma, 18, Treasure.fromFire(1), CreepAbilityType.BOSS));
 
         list.add(new Specs(CreepName.Bellossom, 9, Treasure.fromLight(1), CreepAbilityType.BOSS));
-        list.add(new Specs(CreepName.Politoed, 18, Treasure.fromLight(1), CreepAbilityType.BOSS));
-        list.add(new Specs(CreepName.Skiploom, 38, Treasure.fromLight(1), CreepAbilityType.BOSS));
+        list.add(new Specs(CreepName.Politoed, 13, Treasure.fromLight(1), CreepAbilityType.BOSS));
+        list.add(new Specs(CreepName.Skiploom, 18, Treasure.fromLight(1), CreepAbilityType.BOSS));
 
         list.add(new Specs(CreepName.Marill, 9, Treasure.fromWater(1), CreepAbilityType.BOSS));
-        list.add(new Specs(CreepName.Azumarill, 18, Treasure.fromWater(1), CreepAbilityType.BOSS));
-        list.add(new Specs(CreepName.Wooper, 38, Treasure.fromWater(1), CreepAbilityType.BOSS));
+        list.add(new Specs(CreepName.Azumarill, 13, Treasure.fromWater(1), CreepAbilityType.BOSS));
+        list.add(new Specs(CreepName.Wooper, 18, Treasure.fromWater(1), CreepAbilityType.BOSS));
 
         list.add(new Specs(CreepName.Sudowoodo, 9, Treasure.fromNature(1), CreepAbilityType.BOSS));
-        list.add(new Specs(CreepName.Sunkern, 18, Treasure.fromNature(1), CreepAbilityType.BOSS));
-        list.add(new Specs(CreepName.Sunflora, 38, Treasure.fromNature(1), CreepAbilityType.BOSS));
+        list.add(new Specs(CreepName.Sunkern, 13, Treasure.fromNature(1), CreepAbilityType.BOSS));
+        list.add(new Specs(CreepName.Sunflora, 18, Treasure.fromNature(1), CreepAbilityType.BOSS));
 
         list.add(new Specs(CreepName.Umbreon, 9, Treasure.fromDarkness(1), CreepAbilityType.BOSS));
-        list.add(new Specs(CreepName.Aipom, 18, Treasure.fromDarkness(1), CreepAbilityType.BOSS));
-        list.add(new Specs(CreepName.Hoppip, 38, Treasure.fromDarkness(1), CreepAbilityType.BOSS));
+        list.add(new Specs(CreepName.Aipom, 13, Treasure.fromDarkness(1), CreepAbilityType.BOSS));
+        list.add(new Specs(CreepName.Hoppip, 18, Treasure.fromDarkness(1), CreepAbilityType.BOSS));
 
         list.add(new Specs(CreepName.Electivire, 2955780, Treasure.fromSoul(1), CreepAbilityType.BOSS));
         return list;

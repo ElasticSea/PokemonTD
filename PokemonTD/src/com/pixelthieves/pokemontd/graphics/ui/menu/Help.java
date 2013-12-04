@@ -26,8 +26,10 @@ public class Help extends ChildTab {
         interactiveTutorialButton = new MenuButton(menu, rects.get(0)) {
             @Override
             public void process(float x, float y) {
+                if(menu.getApp().isSessionStarted()){
                 menu.getApp().activateTutorial(true);
                 menu.switchCard((MenuTab) null);
+                }
             }
         };
         basicButton = new MenuButton(menu, rects.get(1)) {
