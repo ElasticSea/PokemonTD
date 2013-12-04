@@ -43,7 +43,7 @@ public class CreepType implements CommonDataType {
         this.creepsInWave = creepsInWave;
         this.distanceBetweenCreeps = distanceBetweenCreeps;
         this.abilityType = abilityType;
-        this.texture  = Assets.getTexture("creeps/animation/normal");//" + name.toString().toLowerCase());
+        this.texture  = Assets.getTexture("creeps/" + name.toString().toLowerCase());
     }
 
     public AtlasRegion getTexture() {

@@ -67,6 +67,6 @@ public class Player {
     public void reset() {
         score.setScore(0);
         health.setHealth(Integer.MAX_VALUE, defaultHealth);
-        treasure.set(defaultGold*100,3,3,3,3,3,1);
+        treasure.set(defaultGold);
     }
 }
