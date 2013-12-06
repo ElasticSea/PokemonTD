@@ -18,7 +18,7 @@ public class DotData extends EffectData {
         super(effect);
         this.iterations = iterations;
         this.interval = interval;
-        this.damage = damageMultiplier * interval / iterations;;
+        this.damage = damageMultiplier / iterations;
     }
 
     public float getInterval() {

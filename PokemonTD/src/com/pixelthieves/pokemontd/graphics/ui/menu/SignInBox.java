@@ -15,7 +15,7 @@ class SignInBox extends MenuTab {
         signInButton = new MenuButton(menu, rects.get(0)) {
             @Override
             public void process(float x, float y) {
-                menu.getGameSevice().signIn();
+                menu.getGameSevice().signIn(null);
             }
         };
         skipButton = new MenuButton(menu, rects.get(rects.size() - 1)) {

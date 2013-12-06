@@ -3,6 +3,8 @@ package com.pixelthieves.pokemontd.graphics.ui.menu;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Rectangle;
 
+import java.util.concurrent.Callable;
+
 /**
  * Created by Tomas on 11/19/13.
  */
@@ -19,17 +21,28 @@ public class SignInEndGame extends ScoreTabClose {
         publishScoreButton = new MenuButton(menu, rects.get(rects.size() - 2)) {
             @Override
             public void process(float x, float y) {
-                if (!menu.getGameSevice().isSignedIn()) {
-                    menu.getGameSevice().signIn();
-                }
                 if (menu.getGameSevice().isSignedIn()) {
-                    menu.getGameSevice().submitScore(menu.getPlayer().getScore());
-                    menu.switchCard(Menu.Type.LEADERBOARD);
+                    submit();
+                } else {
+                    menu.getGameSevice().signIn(new Callable() {
+                        @Override
+                        public Object call() throws Exception {
+                            submit();
+                            return null;
+                        }
+                    });
                 }
+            }
+
+            private void submit() {
+                menu.getGameSevice().submitScore(menu.getPlayer().getScore());
+                menu.switchCard(Menu.Type.LEADERBOARD);
             }
         };
         register(publishScoreButton);
+        rateMe.setEnabled(!menu.getGameSevice().isSignedIn());
     }
+
 
     @Override
     public void render() {

@@ -38,6 +38,8 @@ public class Tutorial extends DisplayBlock implements Updateable {
     private Entity shop;
     private Entity tower;
     private Entity upgrade;
+    private Rectangle shopRectangle;
+    private Rectangle towerRectangle;
 
     public Tutorial(App app, Ui ui, CameraHandler cameraHandler) {
         super(ui);
@@ -70,6 +72,7 @@ public class Tutorial extends DisplayBlock implements Updateable {
         beforeStart.getControl().add(new UpgradeThatTower(this));
         beforeStart.getControl().add(new BuyThatTower(this));
         beforeStart.getControl().add(new PlaceThatTower(this));
+        beforeStart.getControl().add(new SelectInGameTower(this));
         beforeStart.getControl().add(new PickYourGodDamnTowerNoob(this));
         beforeStart.getControl().add(new EmptyNotice(this));
 
@@ -114,6 +117,7 @@ public class Tutorial extends DisplayBlock implements Updateable {
         beforeStart.getControl().add(new UpgradeThatTower(this));
         beforeStart.getControl().add(new BuyThatTower(this));
         beforeStart.getControl().add(new PlaceThatTower(this));
+        beforeStart.getControl().add(new SelectInGameTower(this));
         beforeStart.getControl().add(new PickYourGodDamnTowerNoob(this));
         beforeStart.getControl().add(new EmptyNotice(this));
 
@@ -169,10 +173,17 @@ public class Tutorial extends DisplayBlock implements Updateable {
     }
 
     public Rectangle getShopRectangle() {
-        Entity shop = getShop();
-        if (shop != null) {
-            PositionComponent position = shop.getComponent(PositionComponent.class);
-            SizeComponent size = shop.getComponent(SizeComponent.class);
+        return shopRectangle;
+    }
+
+    public Rectangle getTowerRectangle() {
+        return towerRectangle;
+    }
+
+    public Rectangle getRectangle(Entity entity) {
+        if (entity != null) {
+            PositionComponent position = entity.getComponent(PositionComponent.class);
+            SizeComponent size = entity.getComponent(SizeComponent.class);
             if (position != null && size != null) {
                 return new Rectangle(position.getPoint().x - size.getPoint().x / 2,
                         position.getPoint().y - size.getPoint().y / 2, size.getPoint().x, size.getPoint().y);
@@ -181,21 +192,18 @@ public class Tutorial extends DisplayBlock implements Updateable {
         return null;
     }
 
-    public CameraHandler getCameraHandler() {
-        return cameraHandler;
-    }
-
-
     public void update(){
         FindShop findShop = app.getWorld().getSystem(FindShop.class);
         findShop.process();
         ImmutableBag<Entity> shops = findShop.getEntities();
         shop =  shops.size() == 0 ? null : shops.get(0);
+        shopRectangle = getRectangle(shop);
 
         FindAttackTower findAttackTower = app.getWorld().getSystem(FindAttackTower.class);
         findAttackTower.process();
         ImmutableBag<Entity> towers = findAttackTower.getEntities();
         tower =  towers.size() == 0 ? null : towers.get(0);
+        towerRectangle = getRectangle(tower);
 
         FindUpgradeTower findUpgradeTower = app.getWorld().getSystem(FindUpgradeTower.class);
         findUpgradeTower.process();

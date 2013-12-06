@@ -8,11 +8,15 @@ import com.pixelthieves.core.utils.ParamHolder;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import static com.badlogic.gdx.tools.imagepacker.TexturePacker2.Settings;
 import static com.badlogic.gdx.tools.imagepacker.TexturePacker2.process;
 
 public class Main {
+
+    public static final boolean CAN_SIGN_IN = true;
+
     public static void main(String[] args) {
         ParamHolder params = new ParamHolder(args);
         if(params.getParam("-h","--h", "-help","--help") != null){
@@ -44,7 +48,7 @@ public class Main {
 
             @Override
             public boolean canSingIn() {
-                return true;
+                return CAN_SIGN_IN;
             }
 
             @Override
@@ -53,8 +57,14 @@ public class Main {
             }
 
             @Override
-            public void signIn() {
-
+            public void signIn(Callable handler) {
+                if(CAN_SIGN_IN && handler!=null){
+                    try {
+                        handler.call();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             @Override

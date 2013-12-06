@@ -5,12 +5,12 @@ package com.pixelthieves.pokemontd.component.attack.effects;
  */
 public class DotEffect extends AbstractEffect<DotEffect> {
     private float damage;
-    private float dps;
+    private float maxDamage;
 
-    public DotEffect set(String effect, float interval, int iterations, float dps) {
+    public DotEffect set(String effect, float interval, int iterations, float damage) {
         super.set(effect, interval, iterations);
-        this.dps = dps;
-        this.damage = dps * interval / iterations;
+        this.damage = damage;
+        this.maxDamage = damage *  iterations;
         return this;
     }
 
@@ -20,9 +20,9 @@ public class DotEffect extends AbstractEffect<DotEffect> {
 
     @Override
     public int compareTo(DotEffect o) {
-        if (this.dps > o.dps) {
+        if (this.maxDamage > o.maxDamage) {
             return 1;
-        } else if (this.dps < o.dps) {
+        } else if (this.maxDamage < o.maxDamage) {
             return -1;
         } else {
             return 0;

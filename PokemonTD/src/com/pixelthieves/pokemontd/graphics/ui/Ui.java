@@ -169,6 +169,10 @@ public class Ui extends Gui {
         return entityInfo.getBuyButton();
     }
 
+    public Rectangle getCancleButton() {
+        return entityInfo.getCancleButton();
+    }
+
     public Rectangle getWaveStartButton() {
         return nextWaveInfo.getNextWaveButton();
     }

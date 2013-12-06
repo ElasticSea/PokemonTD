@@ -11,6 +11,7 @@ import com.google.android.gms.games.leaderboard.*;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 public class MainActivity extends LibgdxBaseGameActivity implements GameService {
 
@@ -48,11 +49,18 @@ public class MainActivity extends LibgdxBaseGameActivity implements GameService 
     }
 
     @Override
-    public void signIn() {
+    public void signIn(final Callable handler) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 beginUserInitiatedSignIn();
+                if (handler != null) {
+                    try {
+                        handler.call();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         });
     }

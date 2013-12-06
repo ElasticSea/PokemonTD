@@ -1,8 +1,8 @@
 package com.pixelthieves.pokemontd;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
 /**
  * Created by Tomas on 10/8/13.

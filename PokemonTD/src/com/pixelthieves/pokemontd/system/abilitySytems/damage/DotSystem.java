@@ -34,7 +34,6 @@ public class DotSystem extends EffectSystem<DotEffect> {
     protected void processEffect(DotEffect effect, Entity e) {
         HealthComponent healthComponent = healthMapper.getSafe(e);
         if (healthComponent != null) {
-            System.out.println("DEAL DAMAGE: "+dotMapper.get(e).getDamage());
             healthComponent.getHealth().decease(dotMapper.get(e).getDamage());
         }
     }

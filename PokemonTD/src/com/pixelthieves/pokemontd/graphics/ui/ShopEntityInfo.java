@@ -25,7 +25,7 @@ public class ShopEntityInfo extends TowerTypeInfo {
                    Player player) {
         super(ui, rectangle, shapeRenderer, spriteBatch, font);
         this.player = player;
-        this.cost.setScale(1.25f);
+        this.cost.setScale(1f);
         this.cost.setShowCost(false);
         noElementsText = new DisplayText(ui, cost, ui.getFont(), BitmapFont.HAlignment.LEFT);
         freeElementsText = new DisplayText(ui, cost, ui.getFont(), BitmapFont.HAlignment.LEFT);

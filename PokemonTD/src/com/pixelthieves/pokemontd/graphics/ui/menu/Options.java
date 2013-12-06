@@ -62,7 +62,7 @@ public class Options extends ChildTab {
                     if (gameSevice.isSignedIn()) {
                         gameSevice.signOut();
                     } else {
-                        gameSevice.signIn();
+                        gameSevice.signIn(null);
                     }
                 }
             };

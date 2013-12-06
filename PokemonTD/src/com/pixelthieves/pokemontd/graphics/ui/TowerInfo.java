@@ -16,21 +16,21 @@ import com.pixelthieves.pokemontd.component.attack.projectile.data.NormalData;
 import com.pixelthieves.pokemontd.entity.tower.TowerType;
 
 /**
- * User: Seda
- * Date: 24.10.13
- * Time: 20:42
+ * User: Seda Date: 24.10.13 Time: 20:42
  */
 
 public class TowerInfo extends CommonInfo {
     public static final Color CANCEL_COLOR = new Color(Color.YELLOW).mul(0.6f);
     public static final Color SELL_COLOR = new Color(Color.RED).mul(0.6f);
     public static final Color BUY_COLOR = new Color(Color.GREEN).mul(0.6f);
+    public static final Color INACTIVE_COLOR = new Color(Color.WHITE).mul(0.6f);
     protected final DisplayText damage;
     protected final DisplayText speed;
     protected final DisplayText range;
     protected final Button buy;
     protected final Button sell;
     protected final Button cancel;
+    protected final Button cancel2;
     protected final TowerCost cost;
     private final Icon ability;
     private float damageCache;
@@ -51,10 +51,11 @@ public class TowerInfo extends CommonInfo {
     private float splashCache;
 
     /**
-     * public constuctor makes 3 text rectangles uses class DisplayText (damage,range,speed).
-     * Makes two anonymous classes  for buttons buy and sell these anonymous classes use public method process which
-     * allows sell or upgrade tower and because class TowerInfo extends class CommonInfo (which implements Clickable)
-     * there are clickables.add(buy) and clickables.add(sell) which makes function buy and sell.
+     * public constuctor makes 3 text rectangles uses class DisplayText (damage,range,speed). Makes two anonymous
+     * classes for buttons buy and sell these
+     * anonymous classes use public method process which allows sell or upgrade tower and because class TowerInfo
+     * extends class CommonInfo (which
+     * implements Clickable) there are clickables.add(buy) and clickables.add(sell) which makes function buy and sell.
      *
      * @param ui
      * @param rectangle
@@ -103,16 +104,26 @@ public class TowerInfo extends CommonInfo {
         cancel = new Button(ui, new Rectangle(), font, BitmapFont.HAlignment.CENTER) {
             @Override
             public void process(float x, float y) {
-                ui.getTowerManager().reset();
+                System.out.println("Cancel1");
+                ui.getTowerManager().cancel();
+            }
+        };
+        cancel2 = new Button(ui, new Rectangle(), font, BitmapFont.HAlignment.CENTER) {
+            @Override
+            public void process(float x, float y) {
+                System.out.println("Cancel2");
+                ui.getTowerManager().cancel();
             }
         };
         ui.register(sell);
         ui.register(buy);
         ui.register(cancel);
+        ui.register(cancel2);
         ui.register(ability);
         clickables.add(sell);
         clickables.add(buy);
         clickables.add(cancel);
+        clickables.add(cancel2);
         clickables.add(ability);
     }
 
@@ -124,11 +135,12 @@ public class TowerInfo extends CommonInfo {
         this.sell.setEnabled(sellCache);
         this.buy.setEnabled(buyCache);
         this.cancel.setEnabled(!sell.isEnabled());
+        this.cancel2.setEnabled(!buy.isEnabled());
         this.ability.setEnabled(effectNameCache != null);
         super.render();
 
         String damageText = "DMG: " + (int) (damageCache);
-        String speedText = "SPD: " + (speedCache >= 1 ? (int)speedCache + " s" : (int)(speedCache*1000)+" ms");
+        String speedText = "SPD: " + (speedCache >= 1 ? (int) speedCache + " s" : (int) (speedCache * 1000) + " ms");
         String rangeText = "RNG: " + (int) (rangeCache);
 
         if (damageCache != lastDamageCache || speedCache != lastSpeedCache || rangeCache != lastRangeCache) {
@@ -149,11 +161,21 @@ public class TowerInfo extends CommonInfo {
             this.range.render(rangeText, rangeColorCache);
         }
         this.cost.render(costCache);
-        this.cancel.render("CANCEL", Color.WHITE, CANCEL_COLOR);
+        if (!cancel.isEnabled()) {
+            this.cancel2.render("CANCEL", Color.WHITE, CANCEL_COLOR);
+        }
+        if (!cancel2.isEnabled()) {
+            this.cancel.render("CANCEL", Color.WHITE, CANCEL_COLOR);
+        }
+
         if (sell.isEnabled()) {
             this.sell.render("SELL", Color.WHITE, SELL_COLOR);
         }
-        this.buy.render("BUY", Color.WHITE, BUY_COLOR);
+        if (buy.isEnabled()) {
+            if (gui.getTowerManager().getPlaceholderTower() != null || gui.getTowerManager().getClicked() != null) {
+                this.buy.render("BUY", Color.WHITE, BUY_COLOR);
+            }
+        }
         if (effectNameCache != null) {
             this.ability.render(Assets.getTexture("abilities/" + effectNameCache.name().toLowerCase()), "");
         }
@@ -165,10 +187,9 @@ public class TowerInfo extends CommonInfo {
         this.range.width = largestBounds.width;
     }
 
-
     private void updateLargestBounds() {
         String damageText = "DMG: " + (int) (damageCache);
-        String speedText = "SPD: " + (speedCache >= 1 ? (int)speedCache + " s" : (int)(speedCache*1000)+" ms");
+        String speedText = "SPD: " + (speedCache >= 1 ? (int) speedCache + " s" : (int) (speedCache * 1000) + " ms");
         String rangeText = "RNG: " + (int) (rangeCache);
         largestBounds = getLargestBounds(damageText, speedText, rangeText);
     }
@@ -200,7 +221,7 @@ public class TowerInfo extends CommonInfo {
                        boolean sell, boolean buy) {
         this.damageCache = damage;
         this.damageColorCache = damageColor;
-        this.speedCache = speed ;
+        this.speedCache = speed;
         this.speedColorCache = speedColor;
         this.rangeCache = range;
         this.rangeColorCache = rangeColor;
@@ -242,8 +263,9 @@ public class TowerInfo extends CommonInfo {
                 height - offsetBlocks);
         int buttonWidth = (int) (offsetBlocks * 1.5f);
         sell.set(x + width - buttonWidth, y, buttonWidth, offsetBlocks);
-        cancel.set(x + width - buttonWidth, y, buttonWidth, offsetBlocks);
         buy.set(x + width - buttonWidth, y + offsetBlocks, buttonWidth, offsetBlocks);
+        cancel.set(sell);
+        cancel2.set(buy);
         cost.refresh();
         damage.refresh();
         speed.refresh();
@@ -251,6 +273,7 @@ public class TowerInfo extends CommonInfo {
         ability.refresh();
         sell.refresh();
         cancel.refresh();
+        cancel2.refresh();
         buy.refresh();
     }
 
@@ -280,6 +303,11 @@ public class TowerInfo extends CommonInfo {
 
     public Button getBuyButton() {
         return buy;
+    }
+
+    public Button getCancleButton() {
+        System.out.println("Enabled: "+cancel.isEnabled());
+        return cancel.isEnabled() ? cancel : cancel2;
     }
 
 }

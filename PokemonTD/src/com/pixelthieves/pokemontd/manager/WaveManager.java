@@ -10,7 +10,6 @@ import com.pixelthieves.pokemontd.entity.creep.*;
 import com.pixelthieves.pokemontd.map.Path;
 import com.pixelthieves.pokemontd.map.PathPack;
 import com.pixelthieves.pokemontd.system.resolve.FireTextInfo;
-import com.pixelthieves.pokemontd.system.resolve.ui.LightUpShops;
 
 import java.util.*;
 import java.util.Map;

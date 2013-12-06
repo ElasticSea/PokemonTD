@@ -1,5 +1,6 @@
 package com.pixelthieves.pokemontd.graphics.ui.menu;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
@@ -19,13 +20,25 @@ class LeaderboardTabClose extends CloseExitTab {
 
     private final DisplayText leaderboardHeader;
     private final Leaderboard leaderboard;
+    private final MenuButton rateMe;
 
     LeaderboardTabClose(final Menu menu, MenuTab parent, Rectangle rectangle, int count, Type type) {
         super(menu, parent, rectangle, type, false, count);
         leaderboardHeader = new DisplayText(menu, rects.get(0), menu.getFont());
-        float buttonHeight2 = endButton != null ? endButton.height : closeButton.height;
-        float leaderboardHeight = rectangle.height - (leaderboardHeader.height + buttonHeight2);
-        leaderboard = new Leaderboard(menu, new Rectangle(x, y + buttonHeight2, width, leaderboardHeight), 10);
+
+        rateMe = new MenuButton(menu, rects.get(rects.size()-2)){
+
+            @Override
+            public void process(float x, float y) {
+                Gdx.net.openURI("https://play.google.com/store/apps/details?id=com.pixelthieves.pokemontd");
+            }
+        };
+
+        register(rateMe);
+
+        float lowerBound = rateMe.y + rateMe.height;
+        float leaderboardHeight = leaderboardHeader.y - lowerBound;
+        leaderboard = new Leaderboard(menu, new Rectangle(x, lowerBound, width, leaderboardHeight), 10);
         this.setCloseTabWhenNotClicked(false);
         this.setRenderLines(false);
     }
@@ -35,6 +48,7 @@ class LeaderboardTabClose extends CloseExitTab {
         super.render();
         leaderboardHeader.render("Leaderboard");
         leaderboard.render();
+        rateMe.render("RATE THIS GAME");
     }
 
     private class Leaderboard extends DisplayBlock {
@@ -70,7 +84,7 @@ class LeaderboardTabClose extends CloseExitTab {
             shapeRenderer.setColor(GuiBox.darkerColor);
             shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
             for (int i = 0; i <= entries.length; i++) {
-                float offset = i * (height / entries.length);
+                float offset = i * (this.height / entries.length);
                 shapeRenderer.rect(x + segment, offset + y - LINE_HEIGHT / 2, width - segment * 2, LINE_HEIGHT);
             }
             shapeRenderer.end();
@@ -116,10 +130,6 @@ class LeaderboardTabClose extends CloseExitTab {
                     }
                     score.render(entry.getValue());
                 }
-            }
-
-            public Map.Entry<String, String> getEntry() {
-                return entry;
             }
 
             public void setEntry(Map.Entry<String, String> entry) {

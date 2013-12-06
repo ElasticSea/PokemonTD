@@ -54,7 +54,7 @@ public class Menu extends Gui {
         menuBox = new MenuBox(this, rectangle, defaultButtonCount);
         endGame = canSignIn ? new SignInEndGame(this, rectangle, defaultButtonCount) :
                 new ScoreTabClose(this, rectangle, defaultButtonCount);
-        leaderboard = new LeaderboardTabClose(this, null, getRectangle(menuWidth, (int) (height * 1.5f)), 7,
+        leaderboard = new LeaderboardTabClose(this, null, getRectangle(8),8,
                 CloseExitTab.Type.EXIT);
         quicktip = new Basic(this, null, getRectangle((int) (menuWidth * 1.5f), (int) (height * 1.5f)));
 

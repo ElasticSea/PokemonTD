@@ -1,6 +1,7 @@
 package com.pixelthieves.pokemontd;
 
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 /**
  * Created by Tomas on 11/18/13.
@@ -10,7 +11,7 @@ public interface GameService {
 
     public boolean isSignedIn();
 
-    public void signIn();
+    public void signIn(Callable handler);
 
     public void signOut();
 

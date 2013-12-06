@@ -10,30 +10,30 @@ import com.pixelthieves.pokemontd.graphics.ui.Ui;
 /**
  * Created by Tomas on 12/2/13.
  */
-public class TriggerFreeElement extends RebuildableNoticeTask {
+public class SelectInGameTower extends RebuildableNoticeTask {
 
-    private Rectangle shop;
+    private Rectangle tower;
 
-    public TriggerFreeElement(Tutorial tutorial) {
+    public SelectInGameTower(Tutorial tutorial) {
         super(tutorial);
     }
 
     @Override
     protected boolean needRebuild() {
-        return shop != tutorial.getShopRectangle();
+        return tower != tutorial.getTowerRectangle();
     }
 
     @Override
     protected Notice buildNotice() {
         Ui ui = tutorial.getUi();
-        shop = tutorial.getShopRectangle();
-        return new Notice(ui, shop != null ? shop : new Rectangle(), Notice.Orientation.BOTTOM_RIGHT,
-                "Click on the shop tower", Notice.Placement.RELATIVE);
+        tower = tutorial.getTowerRectangle();
+        return new Notice(ui, tower != null ? tower : new Rectangle(), Notice.Orientation.BOTTOM_RIGHT,
+                "Click on the tower", Notice.Placement.RELATIVE);
     }
 
     @Override
     public boolean checkConditions(App entity) {
-        return entity.getPlayer().getFreeElements() > 0 && tutorial.getShop() != null;
+        return tutorial.getTower() != null;
     }
 
 }

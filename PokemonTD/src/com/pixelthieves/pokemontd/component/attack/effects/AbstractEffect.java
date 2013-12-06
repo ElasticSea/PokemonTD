@@ -23,7 +23,7 @@ public abstract class AbstractEffect<T> extends Component implements Effect, Upd
         this.interval = interval;
         this.iterations = iterations;
         this.currentIterations = iterations;
-        if (this.getName() != null && !this.getName().isEmpty()) {
+        if (this.getName() != null && this.getName().length() != 0) {
             this.texture = Assets.getTexture("effects/" + this.getName().toLowerCase().replaceAll(" ", ""));
         }
     }

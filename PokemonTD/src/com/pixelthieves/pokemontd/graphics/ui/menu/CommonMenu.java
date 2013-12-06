@@ -31,7 +31,7 @@ class CommonMenu extends CloseExitTab {
             }
         };
         if (menu.getGameSevice().canSingIn()) {
-            leaderboard = new LeaderboardTabClose(menu, this, menu.getRectangle((int) width, (int) (height * 1.5f)), 7,
+            leaderboard = new LeaderboardTabClose(menu, this, menu.getRectangle((int) width, (int) (height * 1.5f)), 8,
                     Type.CLOSE);
             leaderboardButton = new MenuButton(menu, rects.get(3)) {
                 @Override

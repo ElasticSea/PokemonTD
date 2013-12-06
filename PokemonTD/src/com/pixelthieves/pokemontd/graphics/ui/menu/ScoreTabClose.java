@@ -1,5 +1,6 @@
 package com.pixelthieves.pokemontd.graphics.ui.menu;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
 import com.pixelthieves.pokemontd.graphics.ui.DisplayText;
@@ -9,6 +10,7 @@ import com.pixelthieves.pokemontd.graphics.ui.DisplayText;
  */
 class ScoreTabClose extends CloseExitTab {
 
+    protected final MenuButton rateMe;
     private Menu menu;
     private final DisplayText score;
     private final DisplayText congratulations;
@@ -21,6 +23,16 @@ class ScoreTabClose extends CloseExitTab {
 
         this.setCloseTabWhenNotClicked(false);
         this.setRenderLines(false);
+
+        rateMe = new MenuButton(menu, rects.get(2)){
+
+            @Override
+            public void process(float x, float y) {
+                Gdx.net.openURI("https://play.google.com/store/apps/details?id=com.pixelthieves.pokemontd");
+            }
+        };
+
+        register(rateMe);
     }
 
     @Override
@@ -28,5 +40,8 @@ class ScoreTabClose extends CloseExitTab {
         super.render();
         congratulations.render("Congratulations");
         score.render(menu.getPlayer().getScore() + "");
+        if(rateMe.isEnabled()){
+            rateMe.render("RATE THIS GAME");
+        }
     }
 }

@@ -128,4 +128,8 @@ class EntityInfo extends GuiBox {
     public Button getBuyButton() {
         return towerEntityInfo.getBuyButton();
     }
+
+    public Button getCancleButton() {
+        return towerEntityInfo.getCancleButton();
+    }
 }

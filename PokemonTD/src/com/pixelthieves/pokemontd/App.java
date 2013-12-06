@@ -250,7 +250,7 @@ public class App extends Game2D {
         world.setSystem(new GetTower(), true);
         world.setSystem(new GetCreep(), true);
         world.setSystem(new FindShop(), true);
-        world.setSystem(new LightUpShops(), true);
+        world.setSystem(new LightUpShops(player), true);
         world.setSystem(new FindUpgradeTower(), true);
         world.setSystem(new FindAttackTower(), true);
         world.setSystem(new FireTextInfo(ShopComponent.class), true);

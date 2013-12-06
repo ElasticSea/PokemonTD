@@ -2,6 +2,7 @@ package com.pixelthieves.pokemontd.manager;
 
 import com.artemis.Component;
 import com.artemis.Entity;
+import com.artemis.World;
 import com.artemis.utils.Bag;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -20,6 +21,7 @@ import com.pixelthieves.pokemontd.entity.tower.TowerName;
 import com.pixelthieves.pokemontd.entity.tower.TowerType;
 import com.pixelthieves.pokemontd.graphics.ui.Clickable;
 import com.pixelthieves.pokemontd.system.resolve.ui.GetTower;
+import com.pixelthieves.pokemontd.system.resolve.ui.LightUpShops;
 
 /**
  * Created by Tomas on 10/7/13.
@@ -32,7 +34,6 @@ public class TowerManager implements Clickable {
     private Entity placeholderTower;
     private Entity clickedTower;
     private int soldTowers;
-    private int buildTowers;
 
     public void setPickedTower(TowerType towerType) {
         removePlaceholderTower();
@@ -44,7 +45,6 @@ public class TowerManager implements Clickable {
         }
     }
 
-
     @Override
     public boolean hit(float x, float y) {
         clickedTower = app.getWorld().getSystem(GetTower.class).getEntity(x, y);
@@ -52,11 +52,13 @@ public class TowerManager implements Clickable {
         switch (status) {
             case NONE:
                 reset();
+                break;
             case PLACING_TOWER:
                 if (clickedTower == null) {
                     placeTower((int) x, (int) y);
                 } else {
-                    reset();
+                    clickedTower = null;
+                    //reset();
                 }
                 break;
             case MOVE_PLACEHOLDER:
@@ -83,8 +85,12 @@ public class TowerManager implements Clickable {
     public void reset() {
         removePlaceholderTower();
         selectedTower = null;
-        // clickedTower = null;
         status = Status.NONE;
+    }
+
+    public void cancel() {
+        reset();
+        clickedTower = null;
     }
 
     public Entity getClicked() {
@@ -111,10 +117,8 @@ public class TowerManager implements Clickable {
         purchaseTower(selectedTower);
         Vector3 towerPosition = clickedTower.getComponent(PositionComponent.class).getPoint();
         Entity entity = Tower.registerTower(app.getWorld(), selectedTower, towerPosition.x, towerPosition.y);
-        entity.getComponent(UpgradeComponent.class).add(clickedTower.getComponent(UpgradeComponent
-                .class));
-        entity.getComponent(UpgradeComponent.class).add(clickedTower.getComponent(TowerTypeComponent
-                .class).getTowerType());
+        entity.getComponent(UpgradeComponent.class).add(clickedTower.getComponent(UpgradeComponent.class));
+        entity.getComponent(UpgradeComponent.class).add(clickedTower.getComponent(TowerTypeComponent.class).getTowerType());
         transferEffects(clickedTower, entity);
         clickedTower.deleteFromWorld();
         clickedTower = entity;
@@ -138,8 +142,17 @@ public class TowerManager implements Clickable {
         purchaseTower(selectedTower);
         clickedTower = Tower.registerTower(app.getWorld(), selectedTower, placeholderPosition.x, placeholderPosition.y);
         removePlaceholderTower();
-        if (!selectedTower.getName().equals(TowerName.Shop)) {
-            buildTowers++;
+        notifyShop();
+    }
+
+    private void notifyShop() {
+        if (selectedTower.getName().equals(TowerName.Shop)) {
+            World world = app.getWorld();
+            float oldDelta = world.getDelta();
+            world.setDelta(0);
+            world.process();
+            world.setDelta(oldDelta);
+            world.getSystem(LightUpShops.class).start();
         }
     }
 
@@ -149,19 +162,19 @@ public class TowerManager implements Clickable {
 
     public void render(ShapeRenderer shapeRenderer) {
         if (placeholderTower != null) {
-         /*   Gdx.gl.glEnable(GL20.GL_BLEND);
-            int size = App.WORLD_SCALE;
-            int offset = size / 20;
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            shapeRenderer.setColor(new Color(Color.BLACK).sub(0, 0, 0, 0.8f));
-            drawFreeSlots(shapeRenderer, size, offset);
-            shapeRenderer.end();
+            /*   Gdx.gl.glEnable(GL20.GL_BLEND);
+               int size = App.WORLD_SCALE;
+               int offset = size / 20;
+               shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+               shapeRenderer.setColor(new Color(Color.BLACK).sub(0, 0, 0, 0.8f));
+               drawFreeSlots(shapeRenderer, size, offset);
+               shapeRenderer.end();
 
-            /*shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-            shapeRenderer.setColor(new Color(Color.BLACK).sub(0, 0, 0, 0.8f));
-            drawFreeSlots(shapeRenderer, size, offset);
-            shapeRenderer.end();               */
-          /*  Gdx.gl.glDisable(GL20.GL_BLEND);    */
+               /*shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+               shapeRenderer.setColor(new Color(Color.BLACK).sub(0, 0, 0, 0.8f));
+               drawFreeSlots(shapeRenderer, size, offset);
+               shapeRenderer.end();               */
+            /*  Gdx.gl.glDisable(GL20.GL_BLEND);    */
         }
     }
 
@@ -179,7 +192,6 @@ public class TowerManager implements Clickable {
         placeholderTower = null;
         clickedTower = null;
         soldTowers = 0;
-        buildTowers = 0;
     }
 
     public enum Status {
@@ -190,7 +202,6 @@ public class TowerManager implements Clickable {
 
     private final Player player;
     private TowerType selectedTower = null;
-
 
     public TowerManager(App app, Blueprint blueprint, Player player) {
         this.app = app;
@@ -227,8 +238,7 @@ public class TowerManager implements Clickable {
     }
 
     private void createPlaceholder(Vector3 towerPosition) {
-        this.placeholderTower =
-                StaticObject.registerFakeTower(app.getWorld(), selectedTower, towerPosition.x, towerPosition.y, TINT);
+        this.placeholderTower = StaticObject.registerFakeTower(app.getWorld(), selectedTower, towerPosition.x, towerPosition.y, TINT);
     }
 
     private void movePlaceholder(int x, int y) {
@@ -252,11 +262,9 @@ public class TowerManager implements Clickable {
         if (clickedTower != null) {
             TreasureComponent towerTreasure = clickedTower.getComponent(TreasureComponent.class);
             if (towerTreasure != null) {
-                int goldWorthThoseUpgrades =
-                        clickedTower.getComponent(UpgradeComponent.class).getGoldWorthThoseUpgrades();
+                int goldWorthThoseUpgrades = clickedTower.getComponent(UpgradeComponent.class).getGoldWorthThoseUpgrades();
                 player.getTreasure().addGold(towerTreasure.getTreasure().getGold() + goldWorthThoseUpgrades);
-                if (!clickedTower.getComponent(TowerTypeComponent.class).getTowerType().getName().equals(
-                        TowerName.Shop)) {
+                if (!clickedTower.getComponent(TowerTypeComponent.class).getTowerType().getName().equals(TowerName.Shop)) {
                     soldTowers++;
                 }
                 clickedTower.deleteFromWorld();
@@ -274,9 +282,7 @@ public class TowerManager implements Clickable {
 
     public TowerName getCurrentTowerName() {
         // FIXME get hierarchy working
-        TowerName towerName =
-                clickedTower != null ? clickedTower.getComponent(TowerTypeComponent.class).getTowerType().getName() :
-                        null;
+        TowerName towerName = clickedTower != null ? clickedTower.getComponent(TowerTypeComponent.class).getTowerType().getName() : null;
         return towerName;
     }
 
@@ -292,4 +298,3 @@ public class TowerManager implements Clickable {
         return soldTowers;
     }
 }
-

@@ -42,7 +42,7 @@ public class Player {
     }
 
     public int getScore() {
-        return (int) ((score.getScore() + treasure.getGold()) * App.DIFFICULTY.getMultiplyer());
+        return (int) ((score.getScore() + treasure.getGold()) * App.DIFFICULTY.getBonus());
     }
 
     public void addScore(int value) {
@@ -55,15 +55,18 @@ public class Player {
 
     public void addFreeElement() {
         this.freeElements++;
-        app.getWorld().getSystem(LightUpShops.class).start(true);
+        notifyShops();
     }
 
     public void subtractFreeElement() {
         this.freeElements--;
-        if (freeElements == 0) {
-            app.getWorld().getSystem(LightUpShops.class).start(false);
-        }
+        notifyShops();
     }
+
+    private void notifyShops() {
+        app.getWorld().getSystem(LightUpShops.class).start();
+    }
+
 
     public void reset() {
         score.setScore(0);
