@@ -2,7 +2,7 @@ package com.pixelthieves.pokemontd.graphics.ui.menu;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.pixelthieves.pokemontd.App;
-import com.pixelthieves.pokemontd.GameService;
+import com.pixelthieves.core.services.GameService;
 import com.pixelthieves.pokemontd.graphics.ui.Button;
 import com.pixelthieves.pokemontd.graphics.ui.Gui;
 import com.pixelthieves.pokemontd.graphics.ui.InteractiveBlockParent;

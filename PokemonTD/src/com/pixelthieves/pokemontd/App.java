@@ -23,6 +23,9 @@ import com.pixelthieves.core.logic.WorldUpdater;
 import com.pixelthieves.core.main.Assets;
 import com.pixelthieves.core.main.Game2D;
 import com.pixelthieves.core.pathfinding.Blueprint;
+import com.pixelthieves.core.services.Achievement;
+import com.pixelthieves.core.services.AdService;
+import com.pixelthieves.core.services.GameService;
 import com.pixelthieves.core.tween.TweenManagerAdapter;
 import com.pixelthieves.core.tween.Vector3Accessor;
 import com.pixelthieves.pokemontd.component.ShopComponent;
@@ -62,6 +65,7 @@ public class App extends Game2D {
     public static final int INVISIBLE_INTERVAL = 5;
     public static final int INTEREST_INTERVAL = 15;
     private final GameService gameService;
+    private final AdService adService;
     private Renderable menuRenderer;
     private ShapeRenderer shapeRenderer;
     private SpriteBatch spriteBatch;
@@ -119,9 +123,10 @@ public class App extends Game2D {
         return manager;
     }
 
-    public App(GameService gameService, String... args) {
+    public App(GameService gameService, AdService adService, String... args) {
         super(args);
         this.gameService = gameService;
+        this.adService = adService;
     }
 
     @Override
@@ -353,6 +358,7 @@ public class App extends Game2D {
                 gameService.submitAchievement(Achievement.Keeper);
             }
         }
+        adService.showAd();
     }
 
     public GameService getGameSevice() {

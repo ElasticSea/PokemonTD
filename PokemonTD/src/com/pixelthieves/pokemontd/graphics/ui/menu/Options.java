@@ -3,7 +3,7 @@ package com.pixelthieves.pokemontd.graphics.ui.menu;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.Rectangle;
 import com.pixelthieves.core.main.Assets;
-import com.pixelthieves.pokemontd.GameService;
+import com.pixelthieves.core.services.GameService;
 import com.pixelthieves.pokemontd.graphics.ui.Button;
 
 /**

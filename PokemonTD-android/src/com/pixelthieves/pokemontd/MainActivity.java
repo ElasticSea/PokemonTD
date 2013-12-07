@@ -7,13 +7,17 @@ import android.os.Bundle;
 import android.widget.Toast;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.google.android.gms.games.leaderboard.*;
+import com.pixelthieves.core.services.Achievement;
+import com.pixelthieves.core.services.AdService;
+import com.pixelthieves.core.services.GameService;
+import com.purplebrain.adbuddiz.sdk.AdBuddiz;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
-public class MainActivity extends LibgdxBaseGameActivity implements GameService {
+public class MainActivity extends LibgdxBaseGameActivity implements GameService, AdService {
 
     private final static java.util.Map<Achievement, Integer> achievemtsMap = getAchievemtsMap();
     private final GameServiceSession session;
@@ -162,6 +166,7 @@ public class MainActivity extends LibgdxBaseGameActivity implements GameService 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        cacheAds();
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
         cfg.useGL20 = detectOpenGLES20();
         application = new App(this);
@@ -193,5 +198,15 @@ public class MainActivity extends LibgdxBaseGameActivity implements GameService 
         ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         ConfigurationInfo info = am.getDeviceConfigurationInfo();
         return (info.reqGlEsVersion >= 0x20000);
+    }
+
+    @Override
+    public void cacheAds() {
+        AdBuddiz.cacheAds(this);
+    }
+
+    @Override
+    public void showAd() {
+        AdBuddiz.showAd(this);
     }
 }

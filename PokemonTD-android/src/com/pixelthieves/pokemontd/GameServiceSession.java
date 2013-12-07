@@ -1,5 +1,7 @@
 package com.pixelthieves.pokemontd;
 
+import com.pixelthieves.core.services.Achievement;
+
 import java.util.ArrayList;
 import java.util.List;
 

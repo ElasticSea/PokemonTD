@@ -1,7 +1,5 @@
 package com.pixelthieves.pokemontd.graphics.ui.menu;
 
-import com.badlogic.gdx.math.Rectangle;
-
 /**
  * Created by Tomas on 11/19/13.
  */
@@ -10,7 +8,7 @@ class EndTab extends ChildTab {
     protected final MenuButton restart;
     protected final MenuButton exit;
 
-    EndTab(final Menu menu, MenuTab parent, Rectangle rectangle) {
+    EndTab(final Menu menu, MenuTab parent) {
         super(menu, parent, menu.getRectangle(3), 3);
         restart = new MenuButton(menu, rects.get(0)) {
             @Override

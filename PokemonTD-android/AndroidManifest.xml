@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pixelthieves.pokemontd"
-    android:versionCode="13"
-    android:versionName="1.0.4.1" >
+    android:versionCode="15"
+    android:versionName="1.0.4.3" >
     <uses-sdk android:minSdkVersion="3" android:targetSdkVersion="17" />
+
+    <!-- AdBuddiz - Mandatory permission -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- AdBuddiz - Optional, but without them, you might get less ads and tracking could be less accurate -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
         android:icon="@drawable/ic_launcher"
@@ -22,5 +30,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data android:name="ADBUDDIZ_PUBLISHER_KEY"
+                   android:value="55a7d487-29e5-4a6b-aa96-61ae3a201b1b" />
+
+        <activity android:name="com.purplebrain.adbuddiz.sdk.AdBuddizActivity"
+                  android:theme="@android:style/Theme.Translucent" />
+
+
     </application>
 </manifest>
