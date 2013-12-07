@@ -22,7 +22,7 @@ public class Main {
 
     public static void main(String[] args) {
         ParamHolder params = new ParamHolder(args);
-        if(params.getParam("-h","--h", "-help","--help") != null){
+        if (params.getParam("-h", "--h", "-help", "--help") != null) {
             System.out.println("Usage: -fullscreen                   triggers fullscreen.");
             System.out.println("       -resolution [width] [height]  sets application resoltuion.");
             System.exit(0);
@@ -61,7 +61,7 @@ public class Main {
 
             @Override
             public void signIn(Callable handler) {
-                if(CAN_SIGN_IN && handler!=null){
+                if (CAN_SIGN_IN && handler != null) {
                     try {
                         handler.call();
                     } catch (Exception e) {
@@ -115,9 +115,15 @@ public class Main {
             }
 
             @Override
-            public void showAd() {
-
+            public void showAd(Callable handler) {
+                try {
+                    handler.call();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-        },args), cfg);
+
+        }, args
+        ), cfg);
     }
 }
