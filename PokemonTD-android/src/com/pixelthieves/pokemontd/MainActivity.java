@@ -11,6 +11,8 @@ import com.pixelthieves.core.services.Achievement;
 import com.pixelthieves.core.services.AdService;
 import com.pixelthieves.core.services.GameService;
 import com.purplebrain.adbuddiz.sdk.AdBuddiz;
+import com.purplebrain.adbuddiz.sdk.AdBuddizDelegate;
+import com.purplebrain.adbuddiz.sdk.AdBuddizError;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -166,10 +168,10 @@ public class MainActivity extends LibgdxBaseGameActivity implements GameService,
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        cacheAds();
+        initAds();
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
         cfg.useGL20 = detectOpenGLES20();
-        application = new App(this);
+        application = new App(this, this);
         initialize(application, cfg);
         super.onCreate(savedInstanceState);
     }
@@ -201,12 +203,41 @@ public class MainActivity extends LibgdxBaseGameActivity implements GameService,
     }
 
     @Override
-    public void cacheAds() {
+    public void initAds() {
         AdBuddiz.cacheAds(this);
     }
 
     @Override
-    public void showAd() {
+    public void showAd(final Callable handler) {
+        AdBuddiz.setDelegate(new AdBuddizDelegate() {
+            @Override
+            public void didShowAd() {
+
+            }
+
+            @Override
+            public void didFailToShowAd(AdBuddizError adBuddizError) {
+
+            }
+
+            @Override
+            public void didClick() {
+                try {
+                    handler.call();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void didHideAd() {
+                try {
+                    handler.call();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         AdBuddiz.showAd(this);
     }
 }

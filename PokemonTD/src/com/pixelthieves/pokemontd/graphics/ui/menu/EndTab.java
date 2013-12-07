@@ -20,7 +20,7 @@ class EndTab extends ChildTab {
         exit = new MenuButton(menu, rects.get(1)) {
             @Override
             public void process(float x, float y) {
-                System.exit(0);
+                menu.getApp().leaveGame();
             }
         };
         register(restart);

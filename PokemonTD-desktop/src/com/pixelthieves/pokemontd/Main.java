@@ -3,6 +3,7 @@ package com.pixelthieves.pokemontd;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.pixelthieves.core.services.Achievement;
+import com.pixelthieves.core.services.AdService;
 import com.pixelthieves.core.services.GameService;
 import com.pixelthieves.core.utils.Param;
 import com.pixelthieves.core.utils.ParamHolder;
@@ -107,6 +108,16 @@ public class Main {
                 return leaderboard;
             }
 
-        }, args), cfg);
+        }, new AdService() {
+            @Override
+            public void initAds() {
+
+            }
+
+            @Override
+            public void showAd() {
+
+            }
+        },args), cfg);
     }
 }

@@ -29,7 +29,10 @@ import com.pixelthieves.core.services.GameService;
 import com.pixelthieves.core.tween.TweenManagerAdapter;
 import com.pixelthieves.core.tween.Vector3Accessor;
 import com.pixelthieves.pokemontd.component.ShopComponent;
-import com.pixelthieves.pokemontd.graphics.*;
+import com.pixelthieves.pokemontd.graphics.CachedGaussianBlurRenderer;
+import com.pixelthieves.pokemontd.graphics.GameRenderer;
+import com.pixelthieves.pokemontd.graphics.GrayscaleRenderer;
+import com.pixelthieves.pokemontd.graphics.TileMap;
 import com.pixelthieves.pokemontd.graphics.tutorial.Tutorial;
 import com.pixelthieves.pokemontd.graphics.ui.Ui;
 import com.pixelthieves.pokemontd.graphics.ui.menu.Menu;
@@ -52,6 +55,7 @@ import com.pixelthieves.pokemontd.tween.ColorAccessor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.Callable;
 
 public class App extends Game2D {
 
@@ -177,7 +181,7 @@ public class App extends Game2D {
         initializeUserInterface();
         initializeInput();
         initializeTween();
-        gameRenderer = new GameRenderer(this,  map, camera);
+        gameRenderer = new GameRenderer(this, map, camera);
         if (Gdx.graphics.isGL20Available()) {
             mainMenuGaimRenderer = new CachedGaussianBlurRenderer(gameRenderer, 20);
             frozenGameRenderer = new GrayscaleRenderer(gameRenderer);
@@ -358,7 +362,6 @@ public class App extends Game2D {
                 gameService.submitAchievement(Achievement.Keeper);
             }
         }
-        adService.showAd();
     }
 
     public GameService getGameSevice() {
@@ -379,6 +382,21 @@ public class App extends Game2D {
 
     public CameraHandler getCameraHandler() {
         return cameraHandler;
+    }
+
+    public void leaveGame() {
+        Callable action = new Callable() {
+            @Override
+            public Object call() throws Exception {
+                Gdx.app.exit();
+                return null;
+            }
+
+        };
+
+        adService.showAd(action);
+
+
     }
 
     private class MenuRenderer implements Renderable {
@@ -482,7 +500,7 @@ public class App extends Game2D {
     }
 
     public void restart() {
-       tutorial.setActive(false);
+        tutorial.setActive(false);
         player.reset();
         initializeWorld();
         initializeSystems();
@@ -506,7 +524,7 @@ public class App extends Game2D {
     }
 
     public static Rectangle getTowerRectangleByBlock(float blockX, float blockY) {
-        return new Rectangle(blockX*App.WORLD_SCALE,blockY*App.WORLD_SCALE,App.WORLD_SCALE,App.WORLD_SCALE );
+        return new Rectangle(blockX * App.WORLD_SCALE, blockY * App.WORLD_SCALE, App.WORLD_SCALE, App.WORLD_SCALE);
     }
 
     public static Vector3 getBlockPosition(float worldX, float worldY) {

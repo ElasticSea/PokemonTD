@@ -19,7 +19,7 @@ class CloseExitTab extends MenuTab {
     CloseExitTab(final Menu menu, MenuTab parent, Rectangle rectangle, Type type, boolean restart, int count) {
         super(menu, parent, rectangle, count);
         this.restart = restart;
-        this.end = new EndTab(menu, this, rectangle);
+        this.end = new EndTab(menu, this);
         Rectangle center = rects.get(rects.size() - 1);
         Rectangle left = new Rectangle(center.x, center.y, center.width / 2, center.height);
         Rectangle right = new Rectangle(center.x + center.width / 2, center.y, center.width / 2, center.height);
@@ -55,7 +55,7 @@ class CloseExitTab extends MenuTab {
                     if (CloseExitTab.this.restart) {
                         menu.switchCard(end);
                     } else {
-                        System.exit(0);
+                        menu.getApp().leaveGame();
                     }
                 }
             };
