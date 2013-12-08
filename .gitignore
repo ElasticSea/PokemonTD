@@ -8,3 +8,4 @@ gen/
 test-output/
 */assets/data/textures/*.*
 *.properties
+unprocessed/archive/*
