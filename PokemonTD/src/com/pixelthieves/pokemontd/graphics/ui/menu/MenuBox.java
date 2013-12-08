@@ -13,7 +13,7 @@ class MenuBox extends CommonMenu {
 
     MenuBox(final Menu menu, Rectangle rectangle, int count) {
         super(menu, rectangle, Type.EXIT, false,count);
-        this.difficulty  = new DifficultyTab(menu, this, rectangle);
+        this.difficulty  = new DifficultyTab(menu, this);
         startGame = new MenuButton(menu, rects.get(0)) {
             @Override
             public void process(float x, float y) {
