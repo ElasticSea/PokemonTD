@@ -11,8 +11,8 @@ class DifficultyTab extends ChildTab {
 
     private final MenuButton[] buttons;
 
-    DifficultyTab(final Menu menu, MenuTab parent, Rectangle rectangle) {
-        super(menu, parent, rectangle, Difficulty.values().length + 1);
+    DifficultyTab(final Menu menu, MenuTab parent) {
+        super(menu, parent, menu.getRectangle(Difficulty.values().length + 1), Difficulty.values().length + 1);
         this.buttons = new MenuButton[Difficulty.values().length];
         int i = 0;
         for (final Difficulty difficulty : Difficulty.values()) {
