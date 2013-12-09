@@ -311,10 +311,10 @@ public class App extends Game2D {
                         5).addLeft().addStraight(6).addLeft().addStraight(2).addRight().addStraight().build();
             case Winter:
                 return new MapBuilder(1, 11, PATH_SIZE, MapBuilder.Direction.DOWN, 0.40f, new Rectangle(1, 2, 1, 2),
-                        mapType.name().toLowerCase()).addStraight().addLeft().addRight().addRight().addStraight().addLeft().addStraight(
-                        1).addLeft().addStraight().addLeft().addRight().addStraight().addRight().addStraight(
-                        2).addRight().addStraight(3).addLeft().addStraight().addLeft().addStraight(
-                        5).addLeft().addStraight(6).addLeft().addStraight(1).addRight().addStraight().build();
+                        mapType.name().toLowerCase()).addStraight(2).addLeft().addStraight(2).addRight().addStraight(2).addRight().addStraight().addRight().
+                        addLeft().
+                        addStraight().addLeft().addStraight(3).addLeft().addStraight(4).addLeft().addStraight().addRight().addLeft().addStraight(4).addLeft().addRight().
+                        addStraight().build();
         }
         return null;
     }
