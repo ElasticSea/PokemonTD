@@ -47,9 +47,13 @@ public class Options extends ChildTab {
             public void process(float x, float y) {
                 MUTE = !MUTE;
                 if (MUTE) {
-                    getTheme().stop();
+                    if (getTheme() != null) {
+                        getTheme().stop();
+                    }
                 } else {
-                    getTheme().play();
+                    if (getTheme() != null) {
+                        getTheme().play();
+                    }
                 }
             }
 
@@ -79,7 +83,9 @@ public class Options extends ChildTab {
     public void render() {
         super.render();
         guiButton.render("Graphical Interface");
-        musicButton.render(getTheme().isPlaying() ? "Mute Music" : "Play Music");
+        if (getTheme() != null) {
+            musicButton.render(getTheme().isPlaying() ? "Mute Music" : "Play Music");
+        }
         if (signInButton != null) {
             signInButton.render(menu.getGameSevice().isSignedIn() ? "Sign Out" : "Sign In");
         }

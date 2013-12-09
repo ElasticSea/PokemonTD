@@ -104,14 +104,12 @@ public class TowerInfo extends CommonInfo {
         cancel = new Button(ui, new Rectangle(), font, BitmapFont.HAlignment.CENTER) {
             @Override
             public void process(float x, float y) {
-                System.out.println("Cancel1");
                 ui.getTowerManager().cancel();
             }
         };
         cancel2 = new Button(ui, new Rectangle(), font, BitmapFont.HAlignment.CENTER) {
             @Override
             public void process(float x, float y) {
-                System.out.println("Cancel2");
                 ui.getTowerManager().cancel();
             }
         };
