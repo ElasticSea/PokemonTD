@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.pixelthieves.core.component.PositionComponent;
-import com.pixelthieves.core.pathfinding.Blueprint;
 import com.pixelthieves.pokemontd.App;
 import com.pixelthieves.pokemontd.Player;
 import com.pixelthieves.pokemontd.component.TowerTypeComponent;
@@ -117,7 +116,8 @@ public class TowerManager implements Clickable {
         Vector3 towerPosition = clickedTower.getComponent(PositionComponent.class).getPoint();
         Entity entity = Tower.registerTower(app.getWorld(), selectedTower, towerPosition.x, towerPosition.y);
         entity.getComponent(UpgradeComponent.class).add(clickedTower.getComponent(UpgradeComponent.class));
-        entity.getComponent(UpgradeComponent.class).add(clickedTower.getComponent(TowerTypeComponent.class).getTowerType());
+        entity.getComponent(UpgradeComponent.class).add(
+                clickedTower.getComponent(TowerTypeComponent.class).getTowerType());
         transferEffects(clickedTower, entity);
         clickedTower.deleteFromWorld();
         clickedTower = entity;
@@ -236,7 +236,8 @@ public class TowerManager implements Clickable {
     }
 
     private void createPlaceholder(Vector3 towerPosition) {
-        this.placeholderTower = StaticObject.registerFakeTower(app.getWorld(), selectedTower, towerPosition.x, towerPosition.y, TINT);
+        this.placeholderTower =
+                StaticObject.registerFakeTower(app.getWorld(), selectedTower, towerPosition.x, towerPosition.y, TINT);
     }
 
     private void movePlaceholder(int x, int y) {
@@ -260,9 +261,11 @@ public class TowerManager implements Clickable {
         if (clickedTower != null) {
             TreasureComponent towerTreasure = clickedTower.getComponent(TreasureComponent.class);
             if (towerTreasure != null) {
-                int goldWorthThoseUpgrades = clickedTower.getComponent(UpgradeComponent.class).getGoldWorthThoseUpgrades();
+                int goldWorthThoseUpgrades =
+                        clickedTower.getComponent(UpgradeComponent.class).getGoldWorthThoseUpgrades();
                 player.getTreasure().addGold(towerTreasure.getTreasure().getGold() + goldWorthThoseUpgrades);
-                if (!clickedTower.getComponent(TowerTypeComponent.class).getTowerType().getName().equals(TowerName.Shop)) {
+                if (!clickedTower.getComponent(TowerTypeComponent.class).getTowerType().getName().equals(
+                        TowerName.Shop)) {
                     soldTowers++;
                 }
                 clickedTower.deleteFromWorld();
@@ -280,12 +283,14 @@ public class TowerManager implements Clickable {
 
     public TowerName getCurrentTowerName() {
         // FIXME get hierarchy working
-        TowerName towerName = clickedTower != null ? clickedTower.getComponent(TowerTypeComponent.class).getTowerType().getName() : null;
+        TowerName towerName =
+                clickedTower != null ? clickedTower.getComponent(TowerTypeComponent.class).getTowerType().getName() :
+                        null;
         return towerName;
     }
 
     public boolean canAfford(TowerType towerType) {
-        return player.getTreasure().includes(towerType.getCost());
+        return selectedTower != null ? player.getTreasure().includes(towerType.getCost()) : false;
     }
 
     private void setStatus(Status status) {
