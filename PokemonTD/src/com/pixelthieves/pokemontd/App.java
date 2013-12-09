@@ -18,11 +18,11 @@ import com.pixelthieves.core.graphics.camera.CameraHandler;
 import com.pixelthieves.core.input.EnhancedGestureDetector;
 import com.pixelthieves.core.input.GestureProcessor;
 import com.pixelthieves.core.logic.Clock;
+import com.pixelthieves.core.logic.UpdateFilter;
 import com.pixelthieves.core.logic.Updateable;
 import com.pixelthieves.core.logic.WorldUpdater;
 import com.pixelthieves.core.main.Assets;
 import com.pixelthieves.core.main.Game2D;
-import com.pixelthieves.core.pathfinding.Blueprint;
 import com.pixelthieves.core.services.Achievement;
 import com.pixelthieves.core.services.AdService;
 import com.pixelthieves.core.services.GameService;
@@ -32,7 +32,6 @@ import com.pixelthieves.pokemontd.component.ShopComponent;
 import com.pixelthieves.pokemontd.graphics.CachedGaussianBlurRenderer;
 import com.pixelthieves.pokemontd.graphics.GameRenderer;
 import com.pixelthieves.pokemontd.graphics.GrayscaleRenderer;
-import com.pixelthieves.pokemontd.graphics.TileMap;
 import com.pixelthieves.pokemontd.graphics.tutorial.Tutorial;
 import com.pixelthieves.pokemontd.graphics.ui.Ui;
 import com.pixelthieves.pokemontd.graphics.ui.menu.Menu;
@@ -40,7 +39,6 @@ import com.pixelthieves.pokemontd.input.InGameInputProcessor;
 import com.pixelthieves.pokemontd.manager.*;
 import com.pixelthieves.pokemontd.map.MapBuilder;
 import com.pixelthieves.pokemontd.map.MapData;
-import com.pixelthieves.pokemontd.map.PathPack;
 import com.pixelthieves.pokemontd.system.abilitySytems.damage.*;
 import com.pixelthieves.pokemontd.system.abilitySytems.damage.hit.*;
 import com.pixelthieves.pokemontd.system.autonomous.*;
@@ -62,12 +60,10 @@ public class App extends Game2D {
     public static final Random RANDOM = new Random();
     public static final Chance CHANCE = new Chance(RANDOM);
     public static final int WORLD_SCALE = 100;
-    public static int WORLD_WIDTH;
-    public static int WORLD_HEIGHT;
-    public static Rectangle WORLD_RECT;
     public static final int PATH_SIZE = 2;
     public static final int INVISIBLE_INTERVAL = 5;
     public static final int INTEREST_INTERVAL = 15;
+    public static final MapType defaultMapType = MapType.Winter;
     private final GameService gameService;
     private final AdService adService;
     private Renderable menuRenderer;
@@ -75,28 +71,23 @@ public class App extends Game2D {
     private SpriteBatch spriteBatch;
     private SpriteBatch gameSpriteBatch;
     private ShapeRenderer gameShapeRenderer;
-    private TileMap<TextureAtlas.AtlasRegion> tileMap;
-    private CameraHandler cameraHandler;
+    private BoundedCameraHandler cameraHandler;
     private World world;
     private Clock clock;
     private WaveManager waveManager;
     private TowerManager towerManager;
     private CreepManager creepManager;
-    private InvisibleManager invisibleManager;
     private RenderSpriteSystem renderSpriteSystem;
     private RenderTextSystem renderTextSystem;
     private RenderHealthSystem renderHealthSystem;
     private RenderDebugSystem renderDebugSystem;
     private RenderRangeSystem renderRangeSystem;
-    private PathPack pathPack;
-    private Blueprint blueprint;
     private Player player;
     private Ui ui;
     private InterestManager interestManager;
     private List<Updateable> filters = new ArrayList<Updateable>();
     // Tweens
     private static TweenManagerAdapter tweenManager = initTweenManager();
-    private Blueprint gameBlueprint;
     private Menu menu;
     private boolean freezed = false;
     private boolean sessionStarted = false;
@@ -114,6 +105,7 @@ public class App extends Game2D {
     private WorldUpdater worldUpdater;
     private boolean finishedGame;
     private Tutorial tutorial;
+    private MapData map;
 
     public static TweenManagerAdapter getTweenManager() {
         return tweenManager;
@@ -164,15 +156,10 @@ public class App extends Game2D {
         gameSpriteBatch = new SpriteBatch();
         gameShapeRenderer = new ShapeRenderer();
 
-        MapData map = createMap();
-        tileMap = map.getTileMap();
-        blueprint = map.getBlueprint();
-        gameBlueprint = map.getGameBlueprint();
-        pathPack = map.getPathPack();
-        WORLD_WIDTH = blueprint.getWidth();
-        WORLD_HEIGHT = blueprint.getHeight();
-        WORLD_RECT = new Rectangle(0, 0, WORLD_WIDTH * WORLD_SCALE, WORLD_HEIGHT * WORLD_SCALE);
-        cameraHandler = new BoundedCameraHandler(camera, WORLD_RECT, 0.2f);
+        map = createMap(defaultMapType);
+        cameraHandler = new BoundedCameraHandler(camera,
+                new Rectangle(0, 0, map.getBlueprint().getWidth() * WORLD_SCALE,
+                        map.getBlueprint().getHeight() * WORLD_SCALE), 0.2f);
         cameraHandler.move(0, Float.MAX_VALUE);
         initializeWorld();
         initializeContent();
@@ -181,7 +168,7 @@ public class App extends Game2D {
         initializeUserInterface();
         initializeInput();
         initializeTween();
-        gameRenderer = new GameRenderer(this, map, camera);
+        gameRenderer = new GameRenderer(this, camera);
         if (Gdx.graphics.isGL20Available()) {
             mainMenuGaimRenderer = new CachedGaussianBlurRenderer(gameRenderer, 20);
             frozenGameRenderer = new GrayscaleRenderer(gameRenderer);
@@ -216,13 +203,14 @@ public class App extends Game2D {
 
     private void initializeManagers() {
         if (STRESS_TEST != null) {
-            this.waveManager = new WaveManager(this, pathPack, 0.01f, 0.01f, 0f);
+            this.waveManager = new WaveManager(this, 0.01f, 0.01f, 0f);
         } else {
-            this.waveManager = new WaveManager(this, pathPack, 75, 30, 120);
+            this.waveManager = new WaveManager(this, 75, 30, 120);
         }
-        this.towerManager = new TowerManager(this, blueprint, player);
+        this.towerManager = new TowerManager(this, player);
         this.creepManager = new CreepManager(this);
-        this.invisibleManager = new InvisibleManager(this, clock, INVISIBLE_INTERVAL);
+
+        clock.addService(new UpdateFilter(new InvisibleManager(this), INVISIBLE_INTERVAL));
         this.interestManager = new InterestManager(this, player.getTreasure(), 2, INTEREST_INTERVAL);
 
         filters.add(waveManager.getFilter());
@@ -278,7 +266,7 @@ public class App extends Game2D {
         world.setSystem(new DamageBuffSystem());
         world.setSystem(new SpeedBuffSystem());
         world.setSystem(new MovementSystem());
-        world.setSystem(new IndestructibilitySystem(gameBlueprint));
+        world.setSystem(new IndestructibilitySystem(this));
 
         world.setSystem(new HitTempLifeSystem());
         world.setSystem(new HitDotSystem());
@@ -313,12 +301,22 @@ public class App extends Game2D {
         clock.addService(tweenManager);
     }
 
-    private MapData createMap() {
-        return new MapBuilder(1, 11, PATH_SIZE, MapBuilder.Direction.DOWN, 0.40f,
-                new Rectangle(1, 2, 1, 2)).addStraight().addRight().addLeft().addStraight(
-                2).addLeft().addStraight().addLeft().addRight().addStraight().addRight().addStraight(
-                2).addRight().addStraight(3).addLeft().addStraight().addLeft().addStraight(5).addLeft().addStraight(
-                6).addLeft().addStraight(2).addRight().addStraight().build();
+    private MapData createMap(MapType mapType) {
+        switch (mapType) {
+            case Summer:
+                return new MapBuilder(1, 11, PATH_SIZE, MapBuilder.Direction.DOWN, 0.40f, new Rectangle(1, 2, 1, 2),
+                        mapType.name().toLowerCase()).addStraight().addRight().addLeft().addStraight(
+                        2).addLeft().addStraight().addLeft().addRight().addStraight().addRight().addStraight(
+                        2).addRight().addStraight(3).addLeft().addStraight().addLeft().addStraight(
+                        5).addLeft().addStraight(6).addLeft().addStraight(2).addRight().addStraight().build();
+            case Winter:
+                return new MapBuilder(1, 11, PATH_SIZE, MapBuilder.Direction.DOWN, 0.40f, new Rectangle(1, 2, 1, 2),
+                        mapType.name().toLowerCase()).addStraight().addLeft().addRight().addRight().addStraight().addLeft().addStraight(
+                        1).addLeft().addStraight().addLeft().addRight().addStraight().addRight().addStraight(
+                        2).addRight().addStraight(3).addLeft().addStraight().addLeft().addStraight(
+                        5).addLeft().addStraight(6).addLeft().addStraight(1).addRight().addStraight().build();
+        }
+        return null;
     }
 
     public void updateFilters(float delta) {
@@ -399,6 +397,13 @@ public class App extends Game2D {
 
     }
 
+    public void switchMap(MapType mapType) {
+        map = createMap(mapType);
+        cameraHandler.setBounds(new Rectangle(0, 0, map.getBlueprint().getWidth() * WORLD_SCALE,
+                map.getBlueprint().getHeight() * WORLD_SCALE));
+        cameraHandler.move(0, Float.MAX_VALUE);
+    }
+
     private class MenuRenderer implements Renderable {
 
         @Override
@@ -455,6 +460,10 @@ public class App extends Game2D {
 
     public SpriteBatch getGameSpriteBatch() {
         return gameSpriteBatch;
+    }
+
+    public MapData getMap() {
+        return map;
     }
 
     public void freeze(boolean freezed) {

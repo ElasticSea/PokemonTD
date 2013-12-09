@@ -18,9 +18,8 @@ public class InvisibleManager implements Updateable {
     private final App app;
     private boolean visibility;
 
-    public InvisibleManager(App app, Clock clock, float interval) {
+    public InvisibleManager(App app) {
         this.app = app;
-        clock.addService(new UpdateFilter(this, interval));
     }
 
     @Override

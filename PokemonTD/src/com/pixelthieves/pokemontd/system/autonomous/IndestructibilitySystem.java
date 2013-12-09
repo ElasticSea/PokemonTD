@@ -17,16 +17,16 @@ import com.pixelthieves.pokemontd.component.WaveComponent;
  */
 public class IndestructibilitySystem extends EntityProcessingSystem {
 
+    private final App app;
     public Vector3 STORE = new Vector3();
-    private final Blueprint blueprint;
     @Mapper
     ComponentMapper<PositionComponent> positionMapper;
     @Mapper
     ComponentMapper<HealthComponent> healthMapper;
 
-    public IndestructibilitySystem(Blueprint blueprint) {
+    public IndestructibilitySystem(App app) {
         super(Aspect.getAspectForAll(WaveComponent.class));
-        this.blueprint = blueprint;
+        this.app = app;
         this.STORE = new Vector3();
     }
 
@@ -34,6 +34,6 @@ public class IndestructibilitySystem extends EntityProcessingSystem {
     protected void process(Entity e) {
         Vector3 position = positionMapper.get(e).getPoint();
         App.getBlockPositionOptimized(position.x, position.y, STORE);
-        healthMapper.get(e).getHealth().setDestructible(blueprint.isWalkable((int) STORE.x, (int) STORE.y));
+        healthMapper.get(e).getHealth().setDestructible(app.getMap().getGameBlueprint().isWalkable((int) STORE.x, (int) STORE.y));
     }
 }

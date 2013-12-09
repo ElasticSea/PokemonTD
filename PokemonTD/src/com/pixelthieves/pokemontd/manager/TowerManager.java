@@ -29,7 +29,6 @@ import com.pixelthieves.pokemontd.system.resolve.ui.LightUpShops;
 public class TowerManager implements Clickable {
 
     public static final Color TINT = new Color(1, 1, 1, 0.5f);
-    private final Blueprint blueprint;
     private final App app;
     private Entity placeholderTower;
     private Entity clickedTower;
@@ -179,9 +178,9 @@ public class TowerManager implements Clickable {
     }
 
     private void drawFreeSlots(ShapeRenderer shapeRenderer, int size, int offset) {
-        for (int i = 0; i < blueprint.getWidth(); i++) {
-            for (int j = 0; j < blueprint.getHeight(); j++) {
-                if (blueprint.isWalkable(i, j)) {
+        for (int i = 0; i < app.getMap().getBlueprint().getWidth(); i++) {
+            for (int j = 0; j < app.getMap().getBlueprint().getHeight(); j++) {
+                if (app.getMap().getBlueprint().isWalkable(i, j)) {
                     shapeRenderer.rect(i * size + offset, j * size + offset, size - offset * 2, size - offset * 2);
                 }
             }
@@ -203,14 +202,13 @@ public class TowerManager implements Clickable {
     private final Player player;
     private TowerType selectedTower = null;
 
-    public TowerManager(App app, Blueprint blueprint, Player player) {
+    public TowerManager(App app, Player player) {
         this.app = app;
-        this.blueprint = blueprint;
         this.player = player;
         if (App.STRESS_TEST != null) {
-            for (int i = 0; i < blueprint.getWidth(); i++) {
-                for (int j = 0; j < blueprint.getHeight(); j++) {
-                    if (blueprint.isWalkable(i, j)) {
+            for (int i = 0; i < app.getMap().getBlueprint().getWidth(); i++) {
+                for (int j = 0; j < app.getMap().getBlueprint().getHeight(); j++) {
+                    if (app.getMap().getBlueprint().isWalkable(i, j)) {
                         TowerType tower;
                         do {
                             TowerName name = TowerName.values()[App.RANDOM.nextInt(TowerName.values().length)];
@@ -227,7 +225,7 @@ public class TowerManager implements Clickable {
     private boolean placeTower(int x, int y) {
         if (selectedTower != null && status != Status.MOVE_PLACEHOLDER) {
             Vector3 block = App.getBlockPosition(x, y);
-            if (canAfford(selectedTower) && blueprint.isWalkable((int) block.x, (int) block.y)) {
+            if (canAfford(selectedTower) && app.getMap().getBlueprint().isWalkable((int) block.x, (int) block.y)) {
                 status = Status.MOVE_PLACEHOLDER;
                 Vector3 towerPosition = App.getTowerPosition(x, y);
                 createPlaceholder(towerPosition);
@@ -243,7 +241,7 @@ public class TowerManager implements Clickable {
 
     private void movePlaceholder(int x, int y) {
         Vector3 block = App.getBlockPosition(x, y);
-        if (blueprint.isWalkable((int) block.x, (int) block.y)) {
+        if (app.getMap().getBlueprint().isWalkable((int) block.x, (int) block.y)) {
             Vector3 desiredPosition = App.getTowerPosition(x, y);
             placeholderTower.getComponent(PositionComponent.class).getPoint().set(desiredPosition);
         }

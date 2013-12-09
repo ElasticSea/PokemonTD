@@ -32,6 +32,7 @@ public class MapBuilder {
     public static final float SEGMENT = (float) (QUADRANT / SEGMENTS);
     public static final int DEFAULT_MAP_OFFSET = 20;
     private final Rectangle mapOffset;
+    private final String tileSet;
     private TileMap<TextureAtlas.AtlasRegion> textureMap;
     private Blueprint blueprint;
     private List<Vector3> centerPath;
@@ -39,12 +40,12 @@ public class MapBuilder {
     private final int pathWidth;
     private Vector3 position;
     private double direction;
-    private final List<List<Vector3>> paths = createPats(PATHS);
+    private final List<List<Vector3>> paths = createPaths(PATHS);
     private int width;
     private int height;
     private Blueprint gameBlueprint;
 
-    private List<List<Vector3>> createPats(int pathsCount) {
+    private List<List<Vector3>> createPaths(int pathsCount) {
         List<List<Vector3>> paths = new ArrayList<List<Vector3>>();
         for (int i = 0; i < pathsCount; i++) {
             paths.add(new ArrayList<Vector3>());
@@ -63,22 +64,22 @@ public class MapBuilder {
         LeftDownRound("pathRound3", false, false, true, true),
         RightUpRound("pathRound1", true, true, false, false),
         RightDownRound("pathRound2", true, false, false, true);
-        private final TextureAtlas.AtlasRegion texture;
+        private final String name;
         private final boolean right;
         private final boolean up;
         private final boolean left;
         private final boolean down;
 
         MapTextures(String name, boolean right, boolean up, boolean left, boolean down) {
-            this.texture = Assets.getTexture(name);
+            this.name = name;
             this.right = right;
             this.up = up;
             this.left = left;
             this.down = down;
         }
 
-        public TextureAtlas.AtlasRegion getTexture() {
-            return texture;
+        public String getName() {
+            return name;
         }
 
         public boolean match(boolean right, boolean up, boolean left, boolean down) {
@@ -121,12 +122,14 @@ public class MapBuilder {
      * @param pathOffset path offset within a path block. Larger offset leads to smaller path width.
      * @param mapOffset  creates an offset that will be populated with trees textures.
      */
-    public MapBuilder(int x, int y, int pathWidth, Direction direction, float pathOffset, Rectangle mapOffset) {
+    public MapBuilder(int x, int y, int pathWidth, Direction direction, float pathOffset, Rectangle mapOffset,
+                      String tileSet) {
         this.position = new Vector3(x, y, 0);
         this.direction = direction.getAngle();
         this.pathOffset = pathOffset;
         this.pathWidth = pathWidth;
         this.mapOffset = mapOffset;
+        this.tileSet = tileSet;
     }
 
     /**
@@ -220,8 +223,9 @@ public class MapBuilder {
     }
 
     private void createEntrance(Vector3 position) {
-        setTexture((int) position.x * pathWidth, (int) position.y * pathWidth, 3, Assets.getTexture("entrance"));
-        setTexture((int) position.x * pathWidth, (int) position.y * pathWidth, 0, MapTextures.Vertical.getTexture());
+        setTexture((int) position.x * pathWidth, (int) position.y * pathWidth, 3, getTexture("entrance"));
+        setTexture((int) position.x * pathWidth, (int) position.y * pathWidth, 0,
+                getTexture(MapTextures.Vertical.getName()));
     }
 
     private Vector3 computeMapDimensions(double direction, List<BuilderCommand> commands) {
@@ -269,7 +273,7 @@ public class MapBuilder {
             for (int j = 0; j < height; j++) {
                 int x = i * pathWidth;
                 int y = j * pathWidth;
-                setTextureSafe(x, y, 0, Assets.getTexture("grass"));
+                setTextureSafe(x, y, 0, getTexture("grass"));
                 if (!blueprint.isWalkable(x, y)) {
                     for (MapTextures mapTextures : MapTextures.values()) {
                         boolean right = !blueprint.isWalkable(x + pathWidth, y);
@@ -277,7 +281,7 @@ public class MapBuilder {
                         boolean left = !blueprint.isWalkable(x - pathWidth, y);
                         boolean down = !blueprint.isWalkable(x, y - pathWidth);
                         if (mapTextures.match(right, up, left, down)) {
-                            setTexture(x, y, 0, mapTextures.getTexture());
+                            setTexture(x, y, 0, getTexture(mapTextures.getName()));
                         }
                     }
                 }
@@ -290,16 +294,16 @@ public class MapBuilder {
                         j < mapOffset.y * pathWidth || j >= blueprint.getHeight() - mapOffset.height * pathWidth) {
                     int level = 4;
                     if (getTexture(i, j, level - 1) == null) {
-                        setTextureSafe(i, j, 2, Assets.getTexture("grass"));
+                        setTextureSafe(i, j, 2, getTexture("grass"));
                     }
                     if (blueprint.isWalkable(i, j - 1)) {
-                        setTextureSmallSafe(i, j, level, Assets.getTexture("treeSub"));
+                        setTextureSmallSafe(i, j, level, getTexture("treeSub"));
 
                     } else if (gameBlueprint.isWalkable(i, j + 1)) {
-                        setTextureSmallSafe(i, j, level, Assets.getTexture("treeTop"));
+                        setTextureSmallSafe(i, j, level, getTexture("treeTop"));
                     } else if (getTexture(i, j - 1, level - 1) != null || getTexture(i, j, level - 1) == null) {
-                        setTextureSmallSafe(i, j, level, Assets.getTexture("tree"));
-                        setTextureSmallSafe(i, j, level, Assets.getTexture("tree"));
+                        setTextureSmallSafe(i, j, level, getTexture("tree"));
+                        setTextureSmallSafe(i, j, level, getTexture("tree"));
                     }
                     blueprint.setWalkable(false, i, j);
                 }
@@ -308,6 +312,16 @@ public class MapBuilder {
 
         }
 
+    }
+
+    private TextureAtlas.AtlasRegion getTexture(String name) {
+        TextureAtlas.AtlasRegion texture;
+        try {
+            texture = Assets.getTexture("map/" + tileSet + "/" + name);
+        } catch (IllegalArgumentException ex) {
+            return Assets.getTexture("map/default/" + name);
+        }
+        return texture;
     }
 
 

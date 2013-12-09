@@ -19,7 +19,6 @@ import java.util.Map;
  * Created by Tomas on 10/5/13.
  */
 public class WaveManager implements Updateable {
-    private final PathPack pathPack;
     private final float initialDelay;
 
     private Iterator<CreepName> creeps;
@@ -65,10 +64,9 @@ public class WaveManager implements Updateable {
     }
 
 
-    public WaveManager(App app, PathPack pathPack, float waveInterval, float betweenWaveInterval, float initialDelay) {
+    public WaveManager(App app,  float waveInterval, float betweenWaveInterval, float initialDelay) {
         this.app = app;
         this.player = app.getPlayer();
-        this.pathPack = pathPack;
         this.waveInterval = waveInterval;
         this.betweenWaveInterval = betweenWaveInterval;
         this.initialDelay = initialDelay;
@@ -122,7 +120,7 @@ public class WaveManager implements Updateable {
     public WaveComponent fireNextWave(CreepType next) {
         WaveComponent wave = new WaveComponent(this, next.getId());
         for (int i = 0; i < next.getCreepsInWave(); i++) {
-            Path path = getAppropriatePath(pathPack, next);
+            Path path = getAppropriatePath(app.getMap().getPathPack(), next);
             Vector3 startPoint = path.getPath().get(0);
             Vector3 nextPoint = path.getPath().get(1);
             double angleToNextPoint = Math.atan2(nextPoint.y - startPoint.y, nextPoint.x - startPoint.x);

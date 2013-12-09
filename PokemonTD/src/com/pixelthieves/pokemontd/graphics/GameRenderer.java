@@ -21,20 +21,16 @@ public class GameRenderer implements Renderable {
 
     private final App app;
     private final Camera camera;
-    private final TileMap<TextureAtlas.AtlasRegion> tileMap;
-    private final PathPack pathPack;
     private final TowerManager towerManager;
     private final SpriteBatch gameSpriteBatch;
     private final ShapeRenderer gameShapeRenderer;
 
-    public GameRenderer(App app, MapData mapData, Camera camera) {
+    public GameRenderer(App app,  Camera camera) {
         this.app = app;
         this.camera = camera;
         this.towerManager = app.getTowerManager();
         this.gameSpriteBatch = app.getGameSpriteBatch();
         this.gameShapeRenderer = app.getGameShapeRenderer();
-        this.tileMap = mapData.getTileMap();
-        this.pathPack = mapData.getPathPack();
     }
 
     @Override
@@ -78,6 +74,7 @@ public class GameRenderer implements Renderable {
     }
 
     private void drawGrid() {
+       TileMap<TextureAtlas.AtlasRegion> tileMap = app.getMap().getTileMap();
         int height = tileMap.getHeight(0) * tileMap.getTileSize(0);
         int width = tileMap.getWidth(0) * tileMap.getTileSize(0);
         for (int i = 0; i < height; i++) {
@@ -89,6 +86,7 @@ public class GameRenderer implements Renderable {
     }
 
     private void drawMap(int level) {
+        TileMap<TextureAtlas.AtlasRegion> tileMap = app.getMap().getTileMap();
         for (int j = 0; j < tileMap.getWidth(level); j++) {
             for (int k = 0; k < tileMap.getHeight(level); k++) {
                 int size = tileMap.getTileSize(level) * App.WORLD_SCALE;
@@ -102,6 +100,7 @@ public class GameRenderer implements Renderable {
     }
 
     private void drawPath() {
+         PathPack pathPack = app.getMap().getPathPack();
         for (Path path : pathPack.getPaths()) {
             Vector3 lastPoint = null;
             for (Vector3 point : path.getPath()) {
