@@ -10,9 +10,6 @@ import com.google.android.gms.games.leaderboard.*;
 import com.pixelthieves.core.services.Achievement;
 import com.pixelthieves.core.services.AdService;
 import com.pixelthieves.core.services.GameService;
-import com.purplebrain.adbuddiz.sdk.AdBuddiz;
-import com.purplebrain.adbuddiz.sdk.AdBuddizDelegate;
-import com.purplebrain.adbuddiz.sdk.AdBuddizError;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -204,12 +201,17 @@ public class MainActivity extends LibgdxBaseGameActivity implements GameService,
 
     @Override
     public void initAds() {
-        AdBuddiz.cacheAds(this);
+        //AdBuddiz.cacheAds(this);
     }
 
     @Override
     public void showAd(final Callable handler) {
-        AdBuddiz.setDelegate(new AdBuddizDelegate() {
+        try {
+            handler.call();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+       /* AdBuddiz.setDelegate(new AdBuddizDelegate() {
             @Override
             public void didShowAd() {
 
@@ -238,6 +240,6 @@ public class MainActivity extends LibgdxBaseGameActivity implements GameService,
                 }
             }
         });
-        AdBuddiz.showAd(this);
+        AdBuddiz.showAd(this);   */
     }
 }
