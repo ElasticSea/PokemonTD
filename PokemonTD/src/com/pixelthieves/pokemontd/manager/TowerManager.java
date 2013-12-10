@@ -290,7 +290,7 @@ public class TowerManager implements Clickable {
     }
 
     public boolean canAfford(TowerType towerType) {
-        return selectedTower != null ? player.getTreasure().includes(towerType.getCost()) : false;
+        return towerType != null ? player.getTreasure().includes(towerType.getCost()) : false;
     }
 
     private void setStatus(Status status) {
