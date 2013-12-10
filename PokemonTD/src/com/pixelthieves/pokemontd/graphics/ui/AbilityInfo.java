@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
 import com.pixelthieves.pokemontd.component.attack.EffectName;
 import com.pixelthieves.pokemontd.component.attack.effects.AbstractEffect;
-import com.pixelthieves.pokemontd.component.attack.effects.buff.SpeedBuffEffect;
 import com.pixelthieves.pokemontd.component.attack.projectile.BuffData;
 import com.pixelthieves.pokemontd.component.attack.projectile.data.*;
 
@@ -102,8 +101,8 @@ public class AbilityInfo extends HeaderGuiBox {
 
             case Weaken:
                 data = (DotData) abilityCache;
-                return "Deals " + data.getIterations() + "X " + (int) (damage) + " every " + (int) data.getInterval() +
-                        " ms.";
+                return "Deals " + data.getIterations() + "X " + (int) (damage) + " in " + (int) (data.getInterval()*1000) +
+                        " ms interval.";
 
             case Freeze:
                 slow = (SlowData) abilityCache;
@@ -116,12 +115,11 @@ public class AbilityInfo extends HeaderGuiBox {
                         (int) ((increaseDamage.getDamageIncreasing() - 1) * 100) + "% every " +
                         (int) ((increaseDamage.getDuration() * 1000)) + " ms to a maximum of +"+(int)(increaseDamage.getMax()* 100)+"% total damage.";
 
-            case Stomp:
-                slow = (SlowData) abilityCache;
-                return "Has " + (int) (slow.getChance() * 100) + "% chance to slow creep by " +
-                        (int) (((1 - slow.getSlowRatio()) * 100)) + "% for " + (int) slow.getDuration() + " seconds.";
+            case Cut:
+                BonusAttack bonus = (BonusAttack) abilityCache;
+                return "Has " + (int) (bonus.getChance() * 100) + "% chance to " + bonus.getIterations() +"X  deal additional " +  (int)(damage);
 
-            case Steal:
+            case Earn:
                 MoneyData money = (MoneyData) abilityCache;
                 return "Killed creeps earn " + (int) ((money.getEarnRatio() - 1) * 100) + "% more money.";
 
@@ -130,7 +128,7 @@ public class AbilityInfo extends HeaderGuiBox {
                 return "Has " + (int) (slow.getChance() * 100) + "% chance to slow creep by " +
                         (int) (((1 - slow.getSlowRatio()) * 100)) + "% for " + (int) slow.getDuration() + " seconds.";
 
-            case Charm:
+            case Power:
                 buffData = (BuffData) abilityCache;
                 return "Increases damage of nearby towers by " + (int) ((damage - 1) * 100) + "% for duration of "+(int)buffData.getDuration()+" s.";
 

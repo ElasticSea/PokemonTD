@@ -38,9 +38,9 @@ class AbilityTab extends ScrollableChildTab {
 
         protected EntryTable(Gui gui, Rectangle rectangle) {
             super(gui, rectangle);
-            createTowers("DUAL TOWERS", Noble, Sunny, Poison, Ice, Burst, Punch, Sneaky, Pebble, Dizzy, Spell);
+            createTowers("DUAL TOWERS", Noble, Sunny, Poison, Ice, Burst, Blow, Money, Pebble, Dizzy, Spell);
             addTextEntry("");
-            createTowers("TRIPLE TOWERS", Grind, Throttling, Vampire, Disease, Confused, Charged, Stomp, Erruption, Hypnotic);
+            createTowers("TRIPLE TOWERS", Grind, Meteor, Vampire, Disease, Confused, Charged, Stomp, Erruption, Hypnotic);
         }
 
         private void createTowers(String header, TowerName... names) {

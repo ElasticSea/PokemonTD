@@ -149,13 +149,11 @@ public class App extends Game2D {
     protected void init(OrthographicCamera camera) {
         this.clock = Clock.createInstance("Logic", true, true);
         new Assets().addAtlas(new TextureAtlas("data/textures/packed.atlas"));
+
         spriteBatch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
-
-
         gameSpriteBatch = new SpriteBatch();
         gameShapeRenderer = new ShapeRenderer();
-
         map = createMap(defaultMapType);
         cameraHandler = new BoundedCameraHandler(camera,
                 new Rectangle(0, 0, map.getBlueprint().getWidth() * WORLD_SCALE,

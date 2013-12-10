@@ -102,26 +102,26 @@ public class TowerType implements CommonDataType {
             map.put(Splash, getTypes(Ripple, Noble, Sunny, Poison, Ice));
             map.put(Ripple, getTypes(Tsunami));
 
-            map.put(Sparkle, getTypes(Burning, Noble, Burst, Punch, Sneaky));
+            map.put(Sparkle, getTypes(Burning, Noble, Burst, Blow, Money));
             map.put(Burning, getTypes(Inferno));
 
             map.put(Flower, getTypes(Forest, Sunny, Burst, Pebble, Dizzy));
             map.put(Forest, getTypes(Nature));
 
-            map.put(Chicken, getTypes(Screech, Poison, Punch, Pebble, Spell));
+            map.put(Chicken, getTypes(Screech, Poison, Blow, Pebble, Spell));
             map.put(Screech, getTypes(Claw));
 
-            map.put(Spooky, getTypes(Haunted, Ice, Sneaky, Dizzy, Spell));
+            map.put(Spooky, getTypes(Haunted, Ice, Money, Dizzy, Spell));
             map.put(Haunted, getTypes(Nightmare));
 
             // 2 Element
-            map.put(Noble, getTypes(Majestic, Grind, Throttling, Slime));
+            map.put(Noble, getTypes(Majestic, Grind, Meteor, Slime));
             map.put(Majestic, getTypes(Magnificent));
 
             map.put(Sunny, getTypes(Solar, Grind, Vampire, Disease));
             map.put(Solar, getTypes(Photonic));
 
-            map.put(Poison, getTypes(Toxic, Throttling, Vampire, Confused));
+            map.put(Poison, getTypes(Toxic, Meteor, Vampire, Confused));
             map.put(Toxic, getTypes(Venom));
 
             map.put(Ice, getTypes(Freezing, Slime, Disease, Confused));
@@ -130,11 +130,11 @@ public class TowerType implements CommonDataType {
             map.put(Burst, getTypes(Pyro, Grind, Charged, Stomp));
             map.put(Pyro, getTypes(Flamethrower));
 
-            map.put(Punch, getTypes(Takedown, Throttling, Charged, Erruption));
-            map.put(Takedown, getTypes(Knockout));
+            map.put(Blow, getTypes(Chop, Meteor, Charged, Erruption));
+            map.put(Chop, getTypes(Carving));
 
-            map.put(Sneaky, getTypes(Stealth, Slime, Stomp, Erruption));
-            map.put(Stealth, getTypes(Thief));
+            map.put(Money, getTypes(Gold, Slime, Stomp, Erruption));
+            map.put(Gold, getTypes(Treasure));
 
             map.put(Pebble, getTypes(Rocky, Vampire, Charged, Hypnotic));
             map.put(Rocky, getTypes(Massive));
@@ -147,7 +147,7 @@ public class TowerType implements CommonDataType {
 
             // 3 Element
             map.put(Grind, getTypes(Pulverize));
-            map.put(Throttling, getTypes(Galloping));
+            map.put(Meteor, getTypes(Asteroid));
             map.put(Slime, getTypes(Acid));
             map.put(Vampire, getTypes(Dracula));
             map.put(Disease, getTypes(Epidemic));
