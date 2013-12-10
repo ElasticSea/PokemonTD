@@ -24,8 +24,6 @@ public abstract class PickEntitySystem extends EntitySystem implements PickEntit
     @Mapper
     ComponentMapper<PositionComponent> positionMapper;
     @Mapper
-    ComponentMapper<SizeComponent> sizeMapper;
-    @Mapper
     ComponentMapper<VisibleComponent> visibilityMapper;
     @Mapper
     ComponentMapper<HealthComponent> healthMapper;
