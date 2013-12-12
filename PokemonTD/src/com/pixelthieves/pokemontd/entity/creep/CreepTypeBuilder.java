@@ -21,6 +21,7 @@ public class CreepTypeBuilder {
     private static final int ELEMENT_LVL1_MULTIPLIER = 4;
     private static final int ELEMENT_LVL2_MULTIPLIER = 8;
     private static final int ELEMENT_LVL3_MULTIPLIER = 12;
+    private static final int ELEMENT_LVL4_MULTIPLIER = 20;
 
     public static List<Specs> getNormal() {
         List<Specs> list = new ArrayList<Specs>();
@@ -114,7 +115,7 @@ public class CreepTypeBuilder {
         list.add(new Specs(CreepName.Aipom, ELEMENT_LVL2_MULTIPLIER, Treasure.fromDarkness(1), CreepAbilityType.BOSS));
         list.add(new Specs(CreepName.Hoppip, ELEMENT_LVL3_MULTIPLIER, Treasure.fromDarkness(1), CreepAbilityType.BOSS));
 
-        list.add(new Specs(CreepName.Electivire, 2955780, Treasure.fromSoul(1), CreepAbilityType.BOSS));
+        list.add(new Specs(CreepName.Electivire, ELEMENT_LVL4_MULTIPLIER, Treasure.fromSoul(1), CreepAbilityType.BOSS));
         return list;
     }
 

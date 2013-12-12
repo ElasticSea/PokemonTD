@@ -34,6 +34,7 @@ public class WaveManager implements Updateable {
 
     public static CreepTypeBuilder creepTypeBuilder;
     private static Map<CreepName, CreepType> waveStore;
+    private CreepType lastWave;
 
 
     public static CreepType getWave(Element element, int count) {
@@ -146,6 +147,14 @@ public class WaveManager implements Updateable {
             player.addFreeElement();
             app.getWorld().getSystem(FireTextInfo.class).fireText("FREE ELEMENT", Color.GREEN);
         }
+        switch (wave.getId()+1){
+            case 10:   app.getGameSevice().submitAchievement(Achievement.Novice); break;
+            case 20:   app.getGameSevice().submitAchievement(Achievement.Apprentice); break;
+            case 30:   app.getGameSevice().submitAchievement(Achievement.Journeyman); break;
+            case 40:   app.getGameSevice().submitAchievement(Achievement.Expert); break;
+            case 50:   app.getGameSevice().submitAchievement(Achievement.Adept); break;
+            case 60:   app.getGameSevice().submitAchievement(Achievement.Master); break;
+        }
         waves.remove(wave);
     }
 
@@ -158,6 +167,7 @@ public class WaveManager implements Updateable {
     }
 
     private void updateWave() {
+        lastWave = nextWave;
         nextWave = creeps.hasNext() ? waveStore.get(creeps.next()) : null;
     }
 
@@ -173,6 +183,10 @@ public class WaveManager implements Updateable {
 
     public int getRemainingTime() {
         return (int) filter.getRemainingTime() + 1;
+    }
+
+    public CreepType getLastWave() {
+        return lastWave;
     }
 
     public CreepType getNextWave() {

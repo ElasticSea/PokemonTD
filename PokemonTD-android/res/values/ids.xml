@@ -10,11 +10,13 @@ Google Play game services IDs.
     <string name="achievement_trifty">CgkIhPS8x6cKEAIQBA</string>
     <string name="achievement_healthy">CgkIhPS8x6cKEAIQBQ</string>
     <string name="achievement_champion">CgkIhPS8x6cKEAIQDA</string>
-    <string name="achievement_novice">CgkIhPS8x6cKEAIQDQ</string>
+    <string name="achievement_beginner">CgkIhPS8x6cKEAIQDQ</string>
     <string name="achievement_jeweller">CgkIhPS8x6cKEAIQDg</string>
-    <string name="leaderboard_easy">CgkIhPS8x6cKEAIQCA</string>
-    <string name="leaderboard_normal">CgkIhPS8x6cKEAIQCQ</string>
-    <string name="leaderboard_hard">CgkIhPS8x6cKEAIQCg</string>
-    <string name="leaderboard_insane">CgkIhPS8x6cKEAIQCw</string>
+    <string name="achievement_novice">CgkIhPS8x6cKEAIQEA</string>
+    <string name="achievement_apprentice">CgkIhPS8x6cKEAIQEQ</string>
+    <string name="achievement_journeyman">CgkIhPS8x6cKEAIQEg</string>
+    <string name="achievement_expert">CgkIhPS8x6cKEAIQEw</string>
+    <string name="achievement_adept">CgkIhPS8x6cKEAIQFA</string>
+    <string name="achievement_master">CgkIhPS8x6cKEAIQFQ</string>
     <string name="leaderboard_classic">CgkIhPS8x6cKEAIQDw</string>
 </resources>

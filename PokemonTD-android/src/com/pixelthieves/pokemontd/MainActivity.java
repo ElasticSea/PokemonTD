@@ -8,21 +8,24 @@ import android.widget.Toast;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.google.android.gms.games.leaderboard.*;
 import com.pixelthieves.core.services.Achievement;
+import com.pixelthieves.core.services.AdHandler;
 import com.pixelthieves.core.services.AdService;
 import com.pixelthieves.core.services.GameService;
+import com.pixelthieves.pokemontd.ads.Chartboost;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
-public class MainActivity extends LibgdxBaseGameActivity implements GameService, AdService {
+public class MainActivity extends LibgdxBaseGameActivity implements GameService {
 
     private final static java.util.Map<Achievement, Integer> achievemtsMap = getAchievemtsMap();
     private final GameServiceSession session;
     private Map<String, String> leaderboard;
     private boolean leaderboardLoading;
     private App application;
+    private Chartboost adService;
 
     public MainActivity() {
         session = new GameServiceSession();
@@ -36,8 +39,14 @@ public class MainActivity extends LibgdxBaseGameActivity implements GameService,
         map.put(Achievement.Keeper, R.string.achievement_keeper);
         map.put(Achievement.Trifty, R.string.achievement_trifty);
         map.put(Achievement.Healty, R.string.achievement_healthy);
-        map.put(Achievement.Novice, R.string.achievement_novice);
         map.put(Achievement.Jeweller, R.string.achievement_jeweller);
+        map.put(Achievement.Beginner, R.string.achievement_beginner);
+        map.put(Achievement.Novice, R.string.achievement_novice);
+        map.put(Achievement.Apprentice, R.string.achievement_apprentice);
+        map.put(Achievement.Journeyman, R.string.achievement_journeyman);
+        map.put(Achievement.Expert, R.string.achievement_expert);
+        map.put(Achievement.Adept, R.string.achievement_adept);
+        map.put(Achievement.Master, R.string.achievement_master);
         return map;
     }
 
@@ -165,12 +174,24 @@ public class MainActivity extends LibgdxBaseGameActivity implements GameService,
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        initAds();
+        adService = new Chartboost(this);
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
         cfg.useGL20 = detectOpenGLES20();
-        application = new App(this, this);
+        application = new App(this, adService);
         initialize(application, cfg);
         super.onCreate(savedInstanceState);
+        adService.initAds();
+        adService.onCreate();
+       /*while (true) {
+            synchronized (this) {
+                adService.update();
+                try {
+                    wait(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }   */
     }
 
     @Override
@@ -200,46 +221,32 @@ public class MainActivity extends LibgdxBaseGameActivity implements GameService,
     }
 
     @Override
-    public void initAds() {
-        //AdBuddiz.cacheAds(this);
+    protected void onResume() {
+        adService.resume();
+        super.onResume();
     }
 
     @Override
-    public void showAd(final Callable handler) {
-        try {
-            handler.call();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-       /* AdBuddiz.setDelegate(new AdBuddizDelegate() {
-            @Override
-            public void didShowAd() {
+    protected void onPause() {
+        adService.pause();
+        super.onPause();
+    }
 
-            }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adService.onStart();
+    }
 
-            @Override
-            public void didFailToShowAd(AdBuddizError adBuddizError) {
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adService.onStop();
+    }
 
-            }
-
-            @Override
-            public void didClick() {
-                try {
-                    handler.call();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void didHideAd() {
-                try {
-                    handler.call();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        AdBuddiz.showAd(this);   */
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        adService.onDestroy();
     }
 }

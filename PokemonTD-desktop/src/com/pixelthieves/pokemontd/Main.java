@@ -3,6 +3,7 @@ package com.pixelthieves.pokemontd;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.pixelthieves.core.services.Achievement;
+import com.pixelthieves.core.services.AdHandler;
 import com.pixelthieves.core.services.AdService;
 import com.pixelthieves.core.services.GameService;
 import com.pixelthieves.core.utils.Param;
@@ -109,18 +110,37 @@ public class Main {
             }
 
         }, new AdService() {
+            public AdHandler handler;
+
             @Override
             public void initAds() {
 
             }
 
             @Override
-            public void showAd(Callable handler) {
-                try {
-                    handler.call();
-                } catch (Exception e) {
-                    e.printStackTrace();
+            public void resume() {
+
+            }
+
+            @Override
+            public void pause() {
+
+            }
+
+            @Override
+            public void showAd(AdType adType) {
+                if (handler != null) {
+                    try {
+                        handler.onAdClicked();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
+            }
+
+            @Override
+            public void setHandler(AdHandler handler) {
+                this.handler = handler;
             }
 
         }, args

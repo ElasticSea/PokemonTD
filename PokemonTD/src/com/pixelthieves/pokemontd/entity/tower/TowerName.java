@@ -5,7 +5,7 @@ package com.pixelthieves.pokemontd.entity.tower;
  */
 
 public enum TowerName {
-    Shop, Needle, Pinch, Sting, Scratch, Bite, Smash, Splash, Ripple, Tsunami, Sparkle, Burning, Inferno, Flower,
+    Shop, Needle, Arrow, Spear, Bombard, Mortar, Cannon, Splash, Ripple, Tsunami, Sparkle, Burning, Inferno, Flower,
     Forest,
     Nature, Chicken, Screech, Claw, Spooky, Haunted, Nightmare, Noble, Majestic, Magnificent, Sunny, Solar, Photonic,
     Poison, Toxic, Venom, Ice, Freezing, Polar, Burst, Pyro, Flamethrower, Blow, Chop, Carving, Money, Gold,

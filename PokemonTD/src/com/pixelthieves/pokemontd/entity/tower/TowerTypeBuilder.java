@@ -46,11 +46,11 @@ public class TowerTypeBuilder {
         /// ######################  PURES
         // Basic
         specs.add(Specs.getSpecs(TowerName.Needle, -3, Normal, N_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale,0.1f), Treasure.fromNone()));
-        specs.add(Specs.getSpecs(TowerName.Pinch, -2, Normal, N_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale,0.1f), Treasure.fromNone()));
-        specs.add(Specs.getSpecs(TowerName.Sting, -1, Normal, N_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale,0.1f), Treasure.fromNone()));
-        specs.add(Specs.getSpecs(TowerName.Scratch, -3, Splash, S_SPEED, N_RANGE, HitAbility.getSplash("bullet", scale, L_SPLASH,0.1f), Treasure.fromNone()));
-        specs.add(Specs.getSpecs(TowerName.Bite, -2, Splash, S_SPEED, N_RANGE, HitAbility.getSplash("bullet", scale, L_SPLASH,0.1f), Treasure.fromNone()));
-        specs.add(Specs.getSpecs(TowerName.Smash, -1, Splash, S_SPEED, N_RANGE, HitAbility.getSplash("bullet", scale, L_SPLASH,0.1f), Treasure.fromNone()));
+        specs.add(Specs.getSpecs(TowerName.Arrow, -2, Normal, N_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale,0.1f), Treasure.fromNone()));
+        specs.add(Specs.getSpecs(TowerName.Spear, -1, Normal, N_SPEED, N_RANGE, HitAbility.getNormal("bullet", scale,0.1f), Treasure.fromNone()));
+        specs.add(Specs.getSpecs(TowerName.Bombard, -3, Splash, S_SPEED, N_RANGE, HitAbility.getSplash("bullet", scale, L_SPLASH,0.1f), Treasure.fromNone()));
+        specs.add(Specs.getSpecs(TowerName.Mortar, -2, Splash, S_SPEED, N_RANGE, HitAbility.getSplash("bullet", scale, L_SPLASH,0.1f), Treasure.fromNone()));
+        specs.add(Specs.getSpecs(TowerName.Cannon, -1, Splash, S_SPEED, N_RANGE, HitAbility.getSplash("bullet", scale, L_SPLASH,0.1f), Treasure.fromNone()));
         // blue
         specs.add(Specs.getSpecs(TowerName.Splash, 1, Splash, L_SPEED, N_RANGE, HitAbility.getSplash("waterdrop", scale, L_SPLASH,0.2f), Treasure.fromWater(1)));
         specs.add(Specs.getSpecs(TowerName.Ripple, 2, Splash, L_SPEED, N_RANGE, HitAbility.getSplash("waterdrop", scale, L_SPLASH,0.2f), Treasure.fromWater(2)));

@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pixelthieves.pokemontd"
-    android:versionCode="15"
-    android:versionName="1.0.4.3" >
+    android:versionCode="19"
+    android:versionName="1.1.0-a3" >
     <uses-sdk android:minSdkVersion="3" android:targetSdkVersion="17" />
 
-    <!-- AdBuddiz - Mandatory permission -->
+    <!-- Millennial media ads -->
     <uses-permission android:name="android.permission.INTERNET" />
-
-    <!-- AdBuddiz - Optional, but without them, you might get less ads and tracking could be less accurate -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />   -->
+    <!-- Millennial media ads -->
 
     <application
         android:icon="@drawable/ic_launcher"
@@ -31,12 +32,17 @@
             </intent-filter>
         </activity>
 
-        <meta-data android:name="ADBUDDIZ_PUBLISHER_KEY"
-                   android:value="55a7d487-29e5-4a6b-aa96-61ae3a201b1b" />
+        <!-- Millennial media ads -->
+        <!--  <activity android:name="com.millennialmedia.android.MMActivity"
+                    android:theme="@android:style/Theme.Translucent.NoTitleBar"
+                    android:configChanges="keyboardHidden|orientation|keyboard" ></activity>        -->
+          <!-- Millennial media ads -->
 
-        <activity android:name="com.purplebrain.adbuddiz.sdk.AdBuddizActivity"
-                  android:theme="@android:style/Theme.Translucent" />
 
-
+        <!-- Chartboost Add this if you implement cb.setImpressionsUseActivities(true) -->
+        <activity android:name="com.chartboost.sdk.CBImpressionActivity"
+                  android:excludeFromRecents="true"
+                  android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- Chartboost  -->
     </application>
 </manifest>

@@ -90,14 +90,14 @@ public class TowerType implements CommonDataType {
         if (map == null) {
             // Pures
             map = new HashMap<TowerName, List<TowerType>>();
-            map.put(null, getTypes(Needle, Scratch, Shop, Splash, Sparkle, Flower, Chicken, Spooky));
-            map.put(Needle, getTypes(Pinch));
-            map.put(Pinch, getTypes(Sting));
-            map.put(Sting, getTypes());
+            map.put(null, getTypes(Needle, Bombard, Shop, Splash, Sparkle, Flower, Chicken, Spooky));
+            map.put(Needle, getTypes(Arrow));
+            map.put(Arrow, getTypes(Spear));
+            map.put(Spear, getTypes());
 
-            map.put(Scratch, getTypes(Bite));
-            map.put(Bite, getTypes(Smash));
-            map.put(Smash, getTypes());
+            map.put(Bombard, getTypes(Mortar));
+            map.put(Mortar, getTypes(Cannon));
+            map.put(Cannon, getTypes());
 
             map.put(Splash, getTypes(Ripple, Noble, Sunny, Poison, Ice));
             map.put(Ripple, getTypes(Tsunami));

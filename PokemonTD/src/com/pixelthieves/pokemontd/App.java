@@ -24,6 +24,7 @@ import com.pixelthieves.core.logic.WorldUpdater;
 import com.pixelthieves.core.main.Assets;
 import com.pixelthieves.core.main.Game2D;
 import com.pixelthieves.core.services.Achievement;
+import com.pixelthieves.core.services.AdHandler;
 import com.pixelthieves.core.services.AdService;
 import com.pixelthieves.core.services.GameService;
 import com.pixelthieves.core.tween.TweenManagerAdapter;
@@ -147,6 +148,7 @@ public class App extends Game2D {
 
     @Override
     protected void init(OrthographicCamera camera) {
+        adService.showAd( AdService.AdType.Interestial);
         this.clock = Clock.createInstance("Logic", true, true);
         new Assets().addAtlas(new TextureAtlas("data/textures/packed.atlas"));
         spriteBatch = new SpriteBatch();
@@ -383,18 +385,26 @@ public class App extends Game2D {
     }
 
     public void leaveGame() {
-        Callable action = new Callable() {
+        adService.setHandler(new AdHandler() {
             @Override
-            public Object call() throws Exception {
+            public void onAdClicked() {
+                System.out.println("Ad Clicked");
                 Gdx.app.exit();
-                return null;
             }
 
-        };
+            @Override
+            public void onAdClosed() {
+                System.out.println("Ad Closed");
+                Gdx.app.exit();
+            }
 
-        adService.showAd(action);
-
-
+            @Override
+            public void onAdFailed(String s) {
+                System.out.println("onAdFailed : " + s);
+                Gdx.app.exit();
+            }
+        });
+        adService.showAd(AdService.AdType.Interestial);
     }
 
     public void switchMap(MapType mapType) {
@@ -402,6 +412,10 @@ public class App extends Game2D {
         cameraHandler.setBounds(new Rectangle(0, 0, map.getBlueprint().getWidth() * WORLD_SCALE,
                 map.getBlueprint().getHeight() * WORLD_SCALE));
         cameraHandler.move(0, Float.MAX_VALUE);
+    }
+
+    public AdService getAdService() {
+        return adService;
     }
 
     private class MenuRenderer implements Renderable {
