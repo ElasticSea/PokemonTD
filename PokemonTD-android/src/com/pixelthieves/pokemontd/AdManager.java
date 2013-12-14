@@ -13,7 +13,6 @@ public abstract class AdManager implements AdService {
 
     private final ArrayList<AdService> services = new ArrayList<AdService>();
     protected final Activity activity;
-    protected AdHandler handler;
 
     public AdManager(Activity activity) {
         this.activity = activity;
@@ -66,9 +65,9 @@ public abstract class AdManager implements AdService {
     }
 
     @Override
-    public void setHandler(AdHandler handler) {
+    public void setAdHandler(AdHandler handler) {
         for (AdService service : services) {
-            service.setHandler(handler != null ? handler : getDummyHandler());
+            service.setAdHandler(handler != null ? handler : getDummyHandler());
         }
     }
 

@@ -65,7 +65,12 @@ public class ShittyAdManager implements AdService {
     }
 
     @Override
-    public void setHandler(AdHandler handler) {
+    public void cacheAd(AdType adType) {
+
+    }
+
+    @Override
+    public void setAdHandler(AdHandler handler) {
          this.handler = handler;
     }
 

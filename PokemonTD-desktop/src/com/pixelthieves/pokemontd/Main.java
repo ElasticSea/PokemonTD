@@ -154,7 +154,7 @@ public class Main {
             }
 
             @Override
-            public void setHandler(AdHandler handler) {
+            public void setAdHandler(AdHandler handler) {
                 this.handler = handler;
             }
 

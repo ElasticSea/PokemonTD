@@ -22,6 +22,18 @@ public class CustomAdManager extends AdManager {
     }
 
     @Override
+    public void cacheAd(AdType adType) {
+        switch (adType) {
+            case Interestial:
+                revmob.cacheAd(adType);
+                break;
+            case MoreApps:
+                chartBoost.cacheAd(adType);
+                break;
+        }
+    }
+
+    @Override
     public void showAd(AdType adType) {
         switch (adType) {
             case Interestial:

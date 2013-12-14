@@ -172,14 +172,14 @@ public class MainActivity extends LibgdxBaseGameActivity implements GameService 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-       // adService = new CustomAdManager(this);
-        adService = new DummyAdService(this);
+        adService = new CustomAdManager(this);
+        adService.onCreate();
+        // adService = new DummyAdService(this);
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
         cfg.useGL20 = detectOpenGLES20();
         application = new App(this, adService);
         initialize(application, cfg);
         super.onCreate(savedInstanceState);
-        adService.onCreate();
        /*while (true) {
             synchronized (this) {
                 adService.update();
@@ -220,31 +220,31 @@ public class MainActivity extends LibgdxBaseGameActivity implements GameService 
 
     @Override
     protected void onResume() {
-        adService.onResume();
         super.onResume();
+        adService.onResume();
     }
 
     @Override
     protected void onPause() {
-        adService.onPause();
         super.onPause();
+        adService.onPause();
     }
 
     @Override
     protected void onStart() {
-        adService.onStart();
         super.onStart();
+        adService.onStart();
     }
 
     @Override
     protected void onStop() {
-        adService.onStop();
         super.onStop();
+        adService.onStop();
     }
 
     @Override
     protected void onDestroy() {
-        adService.onDestroy();
         super.onDestroy();
+        adService.onDestroy();
     }
 }

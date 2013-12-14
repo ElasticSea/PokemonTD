@@ -43,6 +43,11 @@ public class DummyAdService implements AdService {
     }
 
     @Override
+    public void cacheAd(AdType adType) {
+
+    }
+
+    @Override
     public void showAd(AdType adType) {
         if(handler!=null){
         handler.onAdClosed();
@@ -50,7 +55,7 @@ public class DummyAdService implements AdService {
     }
 
     @Override
-    public void setHandler(AdHandler handler) {
+    public void setAdHandler(AdHandler handler) {
               this.handler = handler;
     }
 }

@@ -7,8 +7,6 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Rectangle;
@@ -127,6 +125,11 @@ public class App extends Game2D {
         super(args);
         this.gameService = gameService;
         this.adService = adService;
+        cacheAds();
+    }
+
+    private void cacheAds() {
+        adService.cacheAd(AdService.AdType.Interestial);
     }
 
     @Override
@@ -389,7 +392,7 @@ public class App extends Game2D {
     }
 
     public void leaveGame() {
-        adService.setHandler(new AdHandler() {
+        adService.setAdHandler(new AdHandler() {
             @Override
             public void onAdDisplayed() {
                 System.out.println("Ad Displayed");
@@ -543,8 +546,9 @@ public class App extends Game2D {
     }
 
     public void restart() {
-        if (CHANCE.happens(1f)) {
+        if (CHANCE.happens(0.33333f)) {
             this.getAdService().showAd(AdService.AdType.Interestial);
+            cacheAds();
         }
         tutorial.setActive(false);
         player.reset();

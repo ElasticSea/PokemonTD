@@ -12,9 +12,10 @@ import com.revmob.ads.fullscreen.RevMobFullscreen;
  */
 public class RevMobAdService implements AdService {
     private final Activity activity;
-    private AdHandler handler;
     private RevMob revmob;
-    private RevMobFullscreen fullscreen;
+    private RevMobFullscreen cache;
+    private LiveListener listener;
+    private AdHandler adHandler;
 
     public RevMobAdService(Activity activity) {
         this.activity = activity;
@@ -24,6 +25,7 @@ public class RevMobAdService implements AdService {
     public void onCreate() {
         // Starting RevMob session
         revmob = RevMob.start(activity);
+        listener = new LiveListener();
     }
 
     @Override
@@ -52,50 +54,60 @@ public class RevMobAdService implements AdService {
     }
 
     @Override
-    public void showAd(AdType adType) {
-        if(adType.equals(AdType.Interestial)){
-            activity.runOnUiThread(new Runnable() {
-
-                @Override
-                public void run() {
-                    fullscreen.show();
-                    setHandler(handler);
-                }
-            });
+    public void cacheAd(AdType adType) {
+        if (adType.equals(AdType.Interestial)) {
+            cache = revmob.createFullscreen(activity, listener);
         }
     }
 
     @Override
-    public void setHandler(final AdHandler handler) {
-        this.handler = handler;
-        if(fullscreen == null){
-            fullscreen = revmob.createFullscreen(activity, new RevMobAdsListener() {
-                @Override
-                public void onRevMobAdReceived() {
-                }
+    public void showAd(AdType adType) {
+        if (adType.equals(AdType.Interestial)) {
+            if (cache != null) {
+                cache.show();
+            } else {
+                revmob.showFullscreen(activity, listener);
+            }
+        }
+    }
 
-                @Override
-                public void onRevMobAdNotReceived(String s) {
-                    handler.onAdFailed(s);
-                }
+    @Override
+    public void setAdHandler(AdHandler adHandler) {
+        this.adHandler = adHandler;
+    }
 
-                @Override
-                public void onRevMobAdDisplayed() {
-                    handler.onAdDisplayed();
-                }
+    private class LiveListener implements RevMobAdsListener {
+        @Override
+        public void onRevMobAdReceived() {
 
-                @Override
-                public void onRevMobAdDismiss() {
-                    handler.onAdClosed();
-                }
+        }
 
-                @Override
-                public void onRevMobAdClicked() {
-                    handler.onAdClicked();
-                }
+        @Override
+        public void onRevMobAdNotReceived(String s) {
+            if (adHandler != null) {
+                adHandler.onAdFailed(s);
+            }
+        }
 
-            });
-            System.out.println("THIS IS FULLSCREEN: "+fullscreen);
+        @Override
+        public void onRevMobAdDisplayed() {
+            if (adHandler != null) {
+                adHandler.onAdDisplayed();
+            }
+        }
+
+        @Override
+        public void onRevMobAdDismiss() {
+            if (adHandler != null) {
+                adHandler.onAdClosed();
+            }
+        }
+
+        @Override
+        public void onRevMobAdClicked() {
+            if (adHandler != null) {
+                adHandler.onAdClicked();
+            }
         }
     }
 }

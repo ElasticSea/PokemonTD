@@ -28,7 +28,7 @@ public class ChartboostAdService implements AdService {
     }
 
     @Override
-    public void setHandler(AdHandler handler) {
+    public void setAdHandler(AdHandler handler) {
         this.cb.setDelegate(new CustomChartboostDelegate(handler));
     }
 
@@ -136,6 +136,11 @@ public class ChartboostAdService implements AdService {
      */
     public void onDestroy() {
         this.cb.onDestroy(activity);
+    }
+
+    @Override
+    public void cacheAd(AdType adType) {
+
     }
 
 }
