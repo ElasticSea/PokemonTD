@@ -143,6 +143,11 @@ public class Main {
             }
 
             @Override
+            public void cacheAd(AdType adType) {
+
+            }
+
+            @Override
             public void showAd(AdType adType) {
                 if (handler != null) {
                     try {
