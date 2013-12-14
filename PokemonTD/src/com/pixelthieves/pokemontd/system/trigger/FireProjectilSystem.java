@@ -77,7 +77,7 @@ public class FireProjectilSystem extends ApplyAbilitySystem<HitAbility> {
 
     private void playSound() {
         if (!Options.MUTE) {
-            Assets.getSound("shot").play();
+            App.getAssets().getSound("shot").play();
         }
     }
 

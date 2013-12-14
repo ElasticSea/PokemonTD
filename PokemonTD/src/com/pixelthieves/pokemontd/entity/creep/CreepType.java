@@ -2,14 +2,8 @@ package com.pixelthieves.pokemontd.entity.creep;
 
 import com.pixelthieves.core.main.Assets;
 import com.pixelthieves.pokemontd.App;
-import com.pixelthieves.pokemontd.Element;
 import com.pixelthieves.pokemontd.Treasure;
 import com.pixelthieves.pokemontd.entity.datatypes.CommonDataType;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import static com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 
@@ -17,7 +11,6 @@ import static com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
  * Created by Tomas on 10/5/13.
  */
 public class CreepType implements CommonDataType {
-
 
 
     private final CreepName name;
@@ -31,9 +24,10 @@ public class CreepType implements CommonDataType {
     private final CreepAbilityType abilityType;
     private final int id;
     private final AtlasRegion texture;
+    private Assets assets;
 
-    public CreepType(int id, CreepName name, float speed, float size, int health, Treasure treasure, int creepsInWave,
-                     float distanceBetweenCreeps, CreepAbilityType abilityType) {
+    public CreepType(Assets assets, int id, CreepName name, float speed, float size, int health, Treasure treasure,
+                     int creepsInWave, float distanceBetweenCreeps, CreepAbilityType abilityType) {
         this.id = id;
         this.name = name;
         this.speed = speed;
@@ -43,7 +37,8 @@ public class CreepType implements CommonDataType {
         this.creepsInWave = creepsInWave;
         this.distanceBetweenCreeps = distanceBetweenCreeps;
         this.abilityType = abilityType;
-        this.texture  = Assets.getTexture("creeps/" + name.toString().toLowerCase());
+        this.assets = assets;
+        this.texture = assets.getTexture("creeps/" + name.toString().toLowerCase());
     }
 
     public AtlasRegion getTexture() {
@@ -98,4 +93,7 @@ public class CreepType implements CommonDataType {
         new FileHandle("json").writeString(new Gson().toJson(list), false);   */
     }
 
+    public Assets getAssets() {
+        return assets;
+    }
 }

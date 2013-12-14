@@ -14,17 +14,19 @@ import java.util.Map;
  */
 public class SpriteComponent extends Component {
 
+    private final Assets assets;
     Map<String, Animation> map = new LinkedHashMap<String, Animation>();
     private Animation defaultAnimation;
     private boolean dirty = true;
     private Animation[] values;
 
-    public SpriteComponent(String type) {
+    public SpriteComponent(Assets assets,String type) {
+        this.assets = assets;
         add(type);
     }
 
-    public SpriteComponent(TextureAtlas.AtlasRegion texture) {
-        this(texture.name);
+    public SpriteComponent(Assets assets,TextureAtlas.AtlasRegion texture) {
+        this(assets,texture.name);
     }
 
     public TextureAtlas.AtlasRegion getSprite() {
@@ -32,7 +34,7 @@ public class SpriteComponent extends Component {
     }
 
     public void add(String type) {
-        Animation a = new Animation(Assets.getTextureArray(type));
+        Animation a = new Animation(assets.getTextureArray(type));
         if (map.isEmpty()) {
             defaultAnimation = a;
         }

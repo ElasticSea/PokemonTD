@@ -5,6 +5,6 @@ package com.pixelthieves.pokemontd.component.attack;
  */
 public enum EffectName {
     Normal, Splash, Wave, Burn, Entangle, Peck, Terrify, Haste, Sunbeam, Weaken, Freeze, Incinerate,
-    Cut, Earn, Boulder, Impair, Power, Shatter, Blaze, Corrode, LifeSteal, Infect,
+    Strike, Steal, Boulder, Impair, Power, Shatter, Blaze, Corrode, LifeSteal, Infect,
     SoundWave, Thunderbolt, Quake, Magma, Puzzle
 }

@@ -2,6 +2,7 @@ package com.pixelthieves.pokemontd.graphics.ui;
 
 import com.badlogic.gdx.audio.Music;
 import com.pixelthieves.core.main.Assets;
+import com.pixelthieves.pokemontd.App;
 
 /**
  * Created by Tomas on 11/6/13.
@@ -30,6 +31,6 @@ public class MuteButton extends Icon {
 
     @Override
     public void render() {
-        super.render(Assets.getTexture(mute ? "unmute" : "mute"), "", height * 0.5f, true);
+        super.render(App.getAssets().getTexture(mute ? "unmute" : "mute"), "", height * 0.5f, true);
     }
 }

@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.pixelthieves.core.component.PositionComponent;
 import com.pixelthieves.core.component.SizeComponent;
 import com.pixelthieves.core.main.Assets;
+import com.pixelthieves.pokemontd.App;
 import com.pixelthieves.pokemontd.component.TextComponent;
 import com.pixelthieves.pokemontd.component.TintComponent;
 
@@ -19,7 +20,7 @@ import com.pixelthieves.pokemontd.component.TintComponent;
  */
 public class RenderTextSystem extends EntityProcessingSystem {
     private final SpriteBatch spriteBatch;
-    private final BitmapFont font = Assets.createFont("pixelFont");
+    private final BitmapFont font;
 
     @Mapper
     ComponentMapper<PositionComponent> positionMapper;
@@ -30,6 +31,7 @@ public class RenderTextSystem extends EntityProcessingSystem {
 
     public RenderTextSystem(SpriteBatch spriteBatch) {
         super(Aspect.getAspectForAll(PositionComponent.class, SizeComponent.class, TextComponent.class));
+        this.font = App.getAssets().createFont("pixelFont");
         this.spriteBatch = spriteBatch;
         font.setScale(5);
     }

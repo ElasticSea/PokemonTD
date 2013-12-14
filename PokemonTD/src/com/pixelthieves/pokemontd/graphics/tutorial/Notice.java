@@ -86,7 +86,7 @@ public class Notice extends DisplayBlock {
         super.render();
         backgroud.render();
         text.render(message);
-        arrow.render(Assets.getTexture(("arrow_" + orientation).toLowerCase().replaceAll("_", "")), "");
+        arrow.render(gui.getApp().getAssets().getTexture(("arrow_" + orientation).toLowerCase().replaceAll("_", "")), "");
 
         this.shapeRenderer.setColor(Color.WHITE);
         this.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);

@@ -8,7 +8,6 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.pixelthieves.core.graphics.Renderable;
-import com.pixelthieves.core.main.Assets;
 import com.pixelthieves.pokemontd.App;
 import com.pixelthieves.pokemontd.Player;
 import com.pixelthieves.pokemontd.manager.CreepManager;
@@ -23,7 +22,6 @@ import java.util.ArrayList;
  */
 public abstract class Gui extends GestureDetector.GestureAdapter implements Renderable {
     private final ArrayList<InteractiveElement> clickables = new ArrayList<InteractiveElement>();
-    protected final BitmapFont font = Assets.createFont("pixelFont");
     protected final ShapeRenderer shapeRenderer;
     protected final SpriteBatch spriteBatch;
     protected final TowerManager towerManager;
@@ -35,12 +33,14 @@ public abstract class Gui extends GestureDetector.GestureAdapter implements Rend
     protected final int width;
     protected final Vector2 center;
     protected final float recommendedSize;
+    protected final BitmapFont font;
     protected int squareSize;
     private int offset;
     protected Player player;
 
     public Gui(App app) {
         this.app = app;
+        this.font = app.getAssets().createFont("pixelFont");
         this.player = app.getPlayer();
         this.creepManager = app.getCreepManager();
         this.towerManager = app.getTowerManager();
@@ -63,7 +63,7 @@ public abstract class Gui extends GestureDetector.GestureAdapter implements Rend
 
     @Override
     public void render() {
-        for (int i = 0; i < clickables.size(); i++){
+        for (int i = 0; i < clickables.size(); i++) {
             clickables.get(i).render();
         }
     }
@@ -75,7 +75,7 @@ public abstract class Gui extends GestureDetector.GestureAdapter implements Rend
 
     protected boolean checkUiHit(float x, float y) {
         boolean condition = false;
-        for (int i = 0; i < clickables.size(); i++){
+        for (int i = 0; i < clickables.size(); i++) {
             if (clickables.get(i).hit(x, y)) {
                 condition = true;
             }

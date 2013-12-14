@@ -2,6 +2,7 @@ package com.pixelthieves.pokemontd.component.attack.projectile;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.pixelthieves.core.main.Assets;
+import com.pixelthieves.pokemontd.App;
 import com.pixelthieves.pokemontd.component.attack.AbilityComponent;
 import com.pixelthieves.pokemontd.component.attack.EffectName;
 import com.pixelthieves.pokemontd.component.attack.projectile.data.*;
@@ -145,7 +146,7 @@ public class HitAbility extends EffectData {
 
     public HitAbility(String texture, Type type, float size, float speed, float aoe, EffectData... effectData) {
         this.effectData = Arrays.asList(effectData);
-        this.texture = Assets.getTexture(texture);
+        this.texture = App.getAssets().getTexture(texture);
         this.type = type;
         this.speed = speed;
         this.size = size;

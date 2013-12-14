@@ -8,10 +8,8 @@ import android.widget.Toast;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.google.android.gms.games.leaderboard.*;
 import com.pixelthieves.core.services.Achievement;
-import com.pixelthieves.core.services.AdHandler;
 import com.pixelthieves.core.services.AdService;
 import com.pixelthieves.core.services.GameService;
-import com.pixelthieves.pokemontd.ads.Chartboost;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -25,7 +23,7 @@ public class MainActivity extends LibgdxBaseGameActivity implements GameService 
     private Map<String, String> leaderboard;
     private boolean leaderboardLoading;
     private App application;
-    private Chartboost adService;
+    private AdService adService;
 
     public MainActivity() {
         session = new GameServiceSession();
@@ -174,13 +172,13 @@ public class MainActivity extends LibgdxBaseGameActivity implements GameService 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        adService = new Chartboost(this);
+       // adService = new CustomAdManager(this);
+        adService = new DummyAdService(this);
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
         cfg.useGL20 = detectOpenGLES20();
         application = new App(this, adService);
         initialize(application, cfg);
         super.onCreate(savedInstanceState);
-        adService.initAds();
         adService.onCreate();
        /*while (true) {
             synchronized (this) {
@@ -222,31 +220,31 @@ public class MainActivity extends LibgdxBaseGameActivity implements GameService 
 
     @Override
     protected void onResume() {
-        adService.resume();
+        adService.onResume();
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        adService.pause();
+        adService.onPause();
         super.onPause();
     }
 
     @Override
     protected void onStart() {
-        super.onStart();
         adService.onStart();
+        super.onStart();
     }
 
     @Override
     protected void onStop() {
-        super.onStop();
         adService.onStop();
+        super.onStop();
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         adService.onDestroy();
+        super.onDestroy();
     }
 }

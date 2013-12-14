@@ -18,9 +18,12 @@ import com.pixelthieves.pokemontd.entity.StaticObject;
 import com.pixelthieves.pokemontd.entity.tower.Tower;
 import com.pixelthieves.pokemontd.entity.tower.TowerName;
 import com.pixelthieves.pokemontd.entity.tower.TowerType;
+import com.pixelthieves.pokemontd.entity.tower.TowerTypeResolver;
 import com.pixelthieves.pokemontd.graphics.ui.Clickable;
 import com.pixelthieves.pokemontd.system.resolve.ui.GetTower;
 import com.pixelthieves.pokemontd.system.resolve.ui.LightUpShops;
+
+import java.util.List;
 
 /**
  * Created by Tomas on 10/7/13.
@@ -29,6 +32,7 @@ public class TowerManager implements Clickable {
 
     public static final Color TINT = new Color(1, 1, 1, 0.5f);
     private final App app;
+    private final TowerTypeResolver resolver;
     private Entity placeholderTower;
     private Entity clickedTower;
     private int soldTowers;
@@ -187,10 +191,12 @@ public class TowerManager implements Clickable {
         }
     }
 
-    public void restartTowerStats() {
-        placeholderTower = null;
-        clickedTower = null;
-        soldTowers = 0;
+    public List<TowerType> getHierarchy(TowerName towerName) {
+        return resolver.getHierarchy(towerName);
+    }
+
+    public TowerType getType(TowerName name) {
+        return resolver.getType(name);
     }
 
     public enum Status {
@@ -205,6 +211,13 @@ public class TowerManager implements Clickable {
     public TowerManager(App app, Player player) {
         this.app = app;
         this.player = player;
+        this.resolver = new TowerTypeResolver(app.getAssets());
+    }
+
+    public void init(){
+        placeholderTower = null;
+        clickedTower = null;
+        soldTowers = 0;
         if (App.STRESS_TEST != null) {
             for (int i = 0; i < app.getMap().getBlueprint().getWidth(); i++) {
                 for (int j = 0; j < app.getMap().getBlueprint().getHeight(); j++) {
@@ -212,7 +225,7 @@ public class TowerManager implements Clickable {
                         TowerType tower;
                         do {
                             TowerName name = TowerName.values()[App.RANDOM.nextInt(TowerName.values().length)];
-                            tower = TowerType.getType(name);
+                            tower = resolver.getType(name);
                         } while (tower == null);
                         Vector3 towerPosition = App.getTowerPositionByBlock(i, j);
                         Tower.registerTower(app.getWorld(), tower, towerPosition.x, towerPosition.y);

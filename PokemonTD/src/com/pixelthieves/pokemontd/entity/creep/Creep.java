@@ -22,7 +22,7 @@ public class Creep extends ConcreteEntity {
         // addComponent(new RotationComponent(0, 0, 0));
         addComponent(new PathComponent(path));
         addComponent(new NameComponent(creepType.getName().toString()));
-        addComponent(new SpriteComponent(creepType.getTexture()));
+        addComponent(new SpriteComponent(creepType.getAssets(),creepType.getTexture()));
         addComponent(new SizeComponent(size, size, 0));
         addComponent(new BuffableSpeedComponent(speed));
         addComponent(new HealthComponent(new Health(health)));

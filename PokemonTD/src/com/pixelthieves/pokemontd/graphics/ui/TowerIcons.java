@@ -47,8 +47,8 @@ public class TowerIcons extends PickTable<TowerIcon> {
     }
 
     public void update(TowerName towerName) {
-        if (lastHierarchy != TowerType.getHierarchy(towerName)) {
-            lastHierarchy = TowerType.getHierarchy(towerName);
+        if (lastHierarchy != towerManager.getHierarchy(towerName)) {
+            lastHierarchy = towerManager.getHierarchy(towerName);
             update(lastHierarchy);
         }
     }

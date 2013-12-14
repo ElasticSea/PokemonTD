@@ -6,7 +6,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.pixelthieves.core.graphics.Renderable;
-import com.pixelthieves.core.graphics.Shader;
+import com.pixelthieves.core.graphics.Shaders;
+import com.pixelthieves.pokemontd.App;
 
 /**
  * Created by Tomas on 11/6/13.
@@ -29,7 +30,7 @@ public class BoxBlurRenderer implements Renderable {
         height = Gdx.graphics.getHeight();
         fboWidth = (int) (width * FBO_SCALE);
         fboHeight = (int) (height * FBO_SCALE);
-        blurShader = Shader.getShader("boxBlur");
+        blurShader = App.getShaders().getShader("boxBlur");
         fbo = new FrameBuffer(Pixmap.Format.RGBA8888, fboWidth, fboHeight, false);
     }
 

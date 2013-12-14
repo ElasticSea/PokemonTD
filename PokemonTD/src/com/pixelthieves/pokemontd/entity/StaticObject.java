@@ -8,6 +8,7 @@ import com.pixelthieves.core.component.RangeComponent;
 import com.pixelthieves.core.component.RotationComponent;
 import com.pixelthieves.core.component.SizeComponent;
 import com.pixelthieves.core.entity.ConcreteEntity;
+import com.pixelthieves.pokemontd.App;
 import com.pixelthieves.pokemontd.component.PathComponent;
 import com.pixelthieves.pokemontd.component.SpriteComponent;
 import com.pixelthieves.pokemontd.component.TintComponent;
@@ -25,7 +26,7 @@ public class StaticObject extends ConcreteEntity {
         addComponent(new PositionComponent(x, y, 0));
         addComponent(new RotationComponent(0, 0, 0));
         addComponent(new PathComponent(null));
-        addComponent(new SpriteComponent(commonDataType.getTexture()));
+        addComponent(new SpriteComponent(App.getAssets(),commonDataType.getTexture()));
         addComponent(new SizeComponent(commonDataType.getSize(), commonDataType.getSize(), 0));
     }
 

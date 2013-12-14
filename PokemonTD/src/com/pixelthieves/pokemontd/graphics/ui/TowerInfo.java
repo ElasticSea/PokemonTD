@@ -175,7 +175,7 @@ public class TowerInfo extends CommonInfo {
             }
         }
         if (effectNameCache != null) {
-            this.ability.render(Assets.getTexture("abilities/" + effectNameCache.name().toLowerCase()), "");
+            this.ability.render(gui.getApp().getAssets().getTexture("abilities/" + effectNameCache.name().toLowerCase()), "");
         }
     }
 

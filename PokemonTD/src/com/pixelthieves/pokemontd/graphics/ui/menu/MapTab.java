@@ -81,7 +81,7 @@ class MapTab extends ChildTab {
             back.render();
             title.render(mapType.toString());
             spriteBatch.begin();
-            spriteBatch.draw(mapType.getTexture(), x+offset, y+offset, width-offset*2, width-offset*2);
+            spriteBatch.draw(mapType.getTexture(App.getAssets()), x+offset, y+offset, width-offset*2, width-offset*2);
             spriteBatch.end();
         }
     }

@@ -317,9 +317,9 @@ public class MapBuilder {
     private TextureAtlas.AtlasRegion getTexture(String name) {
         TextureAtlas.AtlasRegion texture;
         try {
-            texture = Assets.getTexture("map/" + tileSet + "/" + name);
+            texture =  App.getAssets().getTexture("map/" + tileSet + "/" + name);
         } catch (IllegalArgumentException ex) {
-            return Assets.getTexture("map/default/" + name);
+            return  App.getAssets().getTexture("map/default/" + name);
         }
         return texture;
     }

@@ -7,7 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.pixelthieves.core.graphics.Renderable;
-import com.pixelthieves.core.graphics.Shader;
+import com.pixelthieves.core.graphics.Shaders;
+import com.pixelthieves.pokemontd.App;
 
 /**
  * Created by Tomas on 11/6/13.
@@ -30,7 +31,7 @@ public class AggresiveGaussianBlurRenderer implements Renderable {
         this.spriteBatch = new SpriteBatch();
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
-        blurShader = Shader.getShader("gaussianBlur");
+        blurShader = App.getShaders().getShader("gaussianBlur");
         fboA = new FrameBuffer(Pixmap.Format.RGBA8888, width, height, false);
         fboB = new FrameBuffer(Pixmap.Format.RGBA8888, width, height, false);
         scale = Math.min(width, height) / 1000f;

@@ -4,6 +4,7 @@ import com.artemis.Component;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.pixelthieves.core.logic.Updateable;
 import com.pixelthieves.core.main.Assets;
+import com.pixelthieves.pokemontd.App;
 
 /**
  * Created by Tomas on 10/21/13.
@@ -24,7 +25,7 @@ public abstract class AbstractEffect<T> extends Component implements Effect, Upd
         this.iterations = iterations;
         this.currentIterations = iterations;
         if (this.getName() != null && this.getName().length() != 0) {
-            this.texture = Assets.getTexture("effects/" + this.getName().toLowerCase().replaceAll(" ", ""));
+            this.texture = App.getAssets().getTexture("effects/" + this.getName().toLowerCase().replaceAll(" ", ""));
         }
     }
 

@@ -5,6 +5,7 @@ import com.artemis.World;
 import com.badlogic.gdx.math.Vector3;
 import com.pixelthieves.core.component.*;
 import com.pixelthieves.core.entity.ConcreteEntity;
+import com.pixelthieves.pokemontd.App;
 import com.pixelthieves.pokemontd.component.PathComponent;
 import com.pixelthieves.pokemontd.component.SpriteComponent;
 import com.pixelthieves.pokemontd.component.attack.AbilityComponent;
@@ -24,7 +25,7 @@ public class Projectile extends ConcreteEntity {
         addComponent(new PositionComponent(x, y, 0));
         addComponent(new RotationComponent(0, 0, 0));
         addComponent(new PathComponent(new Path(new Vector3(x, y, 0), targetPosition)));
-        addComponent(new SpriteComponent(projectileType.getTexture()));
+        addComponent(new SpriteComponent(App.getAssets(),projectileType.getTexture()));
         addComponent(new SizeComponent(projectileType.getSize(), projectileType.getSize(), 0));
         addComponent(new BuffableSpeedComponent(projectileType.getSpeed()));
         addComponent(new BuffableDamageComponent(damage, speed));

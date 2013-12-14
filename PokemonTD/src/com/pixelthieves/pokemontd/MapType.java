@@ -9,7 +9,7 @@ import com.pixelthieves.core.main.Assets;
 public enum MapType {
     Summer, Winter;
 
-    public TextureAtlas.AtlasRegion getTexture() {
-        return Assets.getTexture("map/" + this.name().toLowerCase() + "/thumbnail");
+    public TextureAtlas.AtlasRegion getTexture(Assets assets) {
+        return assets.getTexture("map/" + this.name().toLowerCase() + "/thumbnail");
     }
 }

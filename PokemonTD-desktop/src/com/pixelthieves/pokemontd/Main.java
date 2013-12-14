@@ -113,17 +113,32 @@ public class Main {
             public AdHandler handler;
 
             @Override
-            public void initAds() {
+            public void onCreate() {
 
             }
 
             @Override
-            public void resume() {
+            public void onStart() {
 
             }
 
             @Override
-            public void pause() {
+            public void onResume() {
+
+            }
+
+            @Override
+            public void onPause() {
+
+            }
+
+            @Override
+            public void onStop() {
+
+            }
+
+            @Override
+            public void onDestroy() {
 
             }
 

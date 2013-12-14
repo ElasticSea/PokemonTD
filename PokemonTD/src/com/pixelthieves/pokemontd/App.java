@@ -8,11 +8,13 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.pixelthieves.core.graphics.Renderable;
+import com.pixelthieves.core.graphics.Shaders;
 import com.pixelthieves.core.graphics.camera.BoundedCameraHandler;
 import com.pixelthieves.core.graphics.camera.CameraHandler;
 import com.pixelthieves.core.input.EnhancedGestureDetector;
@@ -54,7 +56,6 @@ import com.pixelthieves.pokemontd.tween.ColorAccessor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.Callable;
 
 public class App extends Game2D {
 
@@ -107,6 +108,8 @@ public class App extends Game2D {
     private boolean finishedGame;
     private Tutorial tutorial;
     private MapData map;
+    private static Assets assets;
+    private static Shaders shaders;
 
     public static TweenManagerAdapter getTweenManager() {
         return tweenManager;
@@ -148,25 +151,22 @@ public class App extends Game2D {
 
     @Override
     protected void init(OrthographicCamera camera) {
-        adService.showAd( AdService.AdType.Interestial);
         this.clock = Clock.createInstance("Logic", true, true);
-        new Assets().addAtlas(new TextureAtlas("data/textures/packed.atlas"));
+        assets = new Assets("data/textures/packed.atlas");
+        shaders = new Shaders();
         spriteBatch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
-
-
         gameSpriteBatch = new SpriteBatch();
         gameShapeRenderer = new ShapeRenderer();
-
         map = createMap(defaultMapType);
         cameraHandler = new BoundedCameraHandler(camera,
                 new Rectangle(0, 0, map.getBlueprint().getWidth() * WORLD_SCALE,
                         map.getBlueprint().getHeight() * WORLD_SCALE), 0.2f);
         cameraHandler.move(0, Float.MAX_VALUE);
-        initializeWorld();
+        //initializeWorld();
         initializeContent();
         initializeManagers();
-        initializeSystems();
+        // initializeSystems();
         initializeUserInterface();
         initializeInput();
         initializeTween();
@@ -182,6 +182,8 @@ public class App extends Game2D {
         tutorial = new Tutorial(this, ui, cameraHandler);
         menuRenderer = new MenuRenderer();
         clock.addService(tutorial);
+
+        this.restart();
     }
 
     private void initializeUserInterface() {
@@ -313,9 +315,11 @@ public class App extends Game2D {
                         5).addLeft().addStraight(6).addLeft().addStraight(2).addRight().addStraight().build();
             case Winter:
                 return new MapBuilder(1, 11, PATH_SIZE, MapBuilder.Direction.DOWN, 0.40f, new Rectangle(1, 2, 1, 2),
-                        mapType.name().toLowerCase()).addStraight(2).addLeft().addStraight(2).addRight().addStraight(2).addRight().addStraight().addRight().
+                        mapType.name().toLowerCase()).addStraight(2).addLeft().addStraight(2).addRight().addStraight(
+                        2).addRight().addStraight().addRight().
                         addLeft().
-                        addStraight().addLeft().addStraight(3).addLeft().addStraight(4).addLeft().addStraight().addRight().addLeft().addStraight(4).addLeft().addRight().
+                        addStraight().addLeft().addStraight(3).addLeft().addStraight(
+                        4).addLeft().addStraight().addRight().addLeft().addStraight(4).addLeft().addRight().
                         addStraight().build();
         }
         return null;
@@ -387,6 +391,12 @@ public class App extends Game2D {
     public void leaveGame() {
         adService.setHandler(new AdHandler() {
             @Override
+            public void onAdDisplayed() {
+                System.out.println("Ad Displayed");
+                Gdx.app.exit();
+            }
+
+            @Override
             public void onAdClicked() {
                 System.out.println("Ad Clicked");
                 Gdx.app.exit();
@@ -418,6 +428,14 @@ public class App extends Game2D {
         return adService;
     }
 
+    public static Assets getAssets() {
+        return assets;
+    }
+
+    public static Shaders getShaders() {
+        return shaders;
+    }
+
     private class MenuRenderer implements Renderable {
 
         @Override
@@ -429,7 +447,9 @@ public class App extends Game2D {
 
     @Override
     public void dispose() {
-
+        super.dispose();
+        assets.dispose();
+        shaders.dispose();
     }
 
     public Player getPlayer() {
@@ -523,6 +543,9 @@ public class App extends Game2D {
     }
 
     public void restart() {
+        if (CHANCE.happens(1f)) {
+            this.getAdService().showAd(AdService.AdType.Interestial);
+        }
         tutorial.setActive(false);
         player.reset();
         initializeWorld();
@@ -531,7 +554,7 @@ public class App extends Game2D {
         initializeInput();    */
         setSessionStarted(false);
         waveManager.setActive(false);
-        towerManager.restartTowerStats();
+        towerManager.init();
         interestManager.getFilter().reset();
     }
 

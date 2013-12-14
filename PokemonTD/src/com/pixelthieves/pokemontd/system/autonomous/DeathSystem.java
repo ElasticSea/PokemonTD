@@ -36,6 +36,8 @@ public class DeathSystem extends EntityProcessingSystem {
 
     private final Player player;
     private final GameService gameService;
+    private final Assets assets;
+    private final StaticObjectType graveType;
     @Mapper
     ComponentMapper<PositionComponent> positionMapper;
     @Mapper
@@ -58,8 +60,11 @@ public class DeathSystem extends EntityProcessingSystem {
     public DeathSystem(GameService gameService, Player player) {
         super(Aspect.getAspectForAll(HealthComponent.class, TreasureComponent.class, CreepAbilityComponent.class,
                 DamageComponent.class));
+        this.assets = App.getAssets();
         this.gameService = gameService;
         this.player = player;
+
+        this.graveType = new StaticObjectType(assets,"grave", App.WORLD_SCALE / 2f);
     }
 
     @Override
@@ -103,7 +108,7 @@ public class DeathSystem extends EntityProcessingSystem {
         final WaveComponent waveComponent = waveMapper.get(e);
         final CreepType creepType = creepTypeMapper.get(e).getCreepType();
         e.deleteFromWorld();
-        final Entity grave = StaticObject.registerStaticObject(world, StaticObjectType.GRAVE, position.x, position.y);
+        final Entity grave = StaticObject.registerStaticObject(world, graveType, position.x, position.y);
 
         Runnable task = new Runnable() {
             public void run() {
@@ -196,7 +201,7 @@ public class DeathSystem extends EntityProcessingSystem {
     private void die(Entity e) {
         // FIXME tested so far on resurrect and does not work.
         if (!Options.MUTE) {
-            Assets.getSound("pickup").play(0.10f);
+            assets.getSound("pickup").play(0.10f);
         }
         waveMapper.get(e).removeCreep(e);
         e.deleteFromWorld();

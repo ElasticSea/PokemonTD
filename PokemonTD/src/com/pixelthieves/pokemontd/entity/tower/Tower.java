@@ -7,6 +7,7 @@ import com.pixelthieves.core.component.RangeComponent;
 import com.pixelthieves.core.component.SizeComponent;
 import com.pixelthieves.core.component.TimeComponent;
 import com.pixelthieves.core.entity.ConcreteEntity;
+import com.pixelthieves.pokemontd.App;
 import com.pixelthieves.pokemontd.Treasure;
 import com.pixelthieves.pokemontd.component.*;
 import com.pixelthieves.pokemontd.component.attack.effects.buff.BuffableDamageComponent;
@@ -20,7 +21,7 @@ public class Tower extends ConcreteEntity {
     private Tower(TowerType towerType, World world, float x, float y) {
         super(world);
         addComponent(new PositionComponent(x, y, 0));
-        addComponent(new SpriteComponent(towerType.getTexture()));
+        addComponent(new SpriteComponent(App.getAssets(),towerType.getTexture()));
         addComponent(new SizeComponent(towerType.getSize(), towerType.getSize(), 0));
         addComponent(new BuffableSpeedComponent(towerType.getSpeed()));
         addComponent(new NameComponent(towerType.getName().toString()));

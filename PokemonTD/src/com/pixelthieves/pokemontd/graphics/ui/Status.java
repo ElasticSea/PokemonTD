@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.pixelthieves.core.main.Assets;
+import com.pixelthieves.pokemontd.App;
 import com.pixelthieves.pokemontd.Player;
 import com.pixelthieves.pokemontd.manager.InterestManager;
 import com.pixelthieves.pokemontd.manager.WaveManager;
@@ -85,9 +86,9 @@ public class Status extends GuiBox {
         waveText.render("Wave in");
         waveTimeText.render(String.valueOf(waveManager.getRemainingTime()));
         livesText.render(String.valueOf(player.getHealth()));
-        livesPicture.render(Assets.getTexture("hearth"), "", textSize.y * 0.7f, true);
+        livesPicture.render(App.getAssets().getTexture("hearth"), "", textSize.y * 0.7f, true);
         moneyText.render(String.valueOf(player.getTreasure().getGold()));
-        moneyPicture.render(Assets.getTexture("coin"), "", textSize.y * 0.7f, true);
+        moneyPicture.render(App.getAssets().getTexture("coin"), "", textSize.y * 0.7f, true);
     }
 
     @Override

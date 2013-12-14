@@ -5,10 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.pixelthieves.core.main.Assets;
-import com.pixelthieves.pokemontd.Element;
-import com.pixelthieves.pokemontd.Health;
-import com.pixelthieves.pokemontd.Player;
-import com.pixelthieves.pokemontd.Treasure;
+import com.pixelthieves.pokemontd.*;
 import com.pixelthieves.pokemontd.component.HealthComponent;
 import com.pixelthieves.pokemontd.component.WaveComponent;
 import com.pixelthieves.pokemontd.entity.creep.CreepType;
@@ -39,10 +36,10 @@ class ElementIcon extends InteractiveBlock {
             int elementCount = player.getReservedElements().getElement(element) + 1;
             if (Treasure.LIMIT.getElement(element) < elementCount) {
                 picture.setColor(Color.DARK_GRAY);
-                picture.render(Assets.getTexture("gems/" + element.toString().toLowerCase()), "max", true);
+                picture.render(App.getAssets().getTexture("gems/" + element.toString().toLowerCase()), "max", true);
             } else {
                 picture.setColor(player.getFreeElements() != 0 && elementAllowed() ? Color.WHITE : Color.DARK_GRAY);
-                picture.render(Assets.getTexture("gems/" + element.toString().toLowerCase()), "lvl " + elementCount,
+                picture.render(App.getAssets().getTexture("gems/" + element.toString().toLowerCase()), "lvl " + elementCount,
                         true);
             }
         }
@@ -68,7 +65,7 @@ class ElementIcon extends InteractiveBlock {
                 player.getReservedElements().addElement(element, 1);
                 player.subtractFreeElement();
                 if (!Options.MUTE) {
-                    Assets.getSound("roar").play();
+                    gui.getApp().getAssets().getSound("roar").play();
                 }
             }
         }

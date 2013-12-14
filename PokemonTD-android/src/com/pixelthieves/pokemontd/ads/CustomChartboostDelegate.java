@@ -10,22 +10,7 @@ public class CustomChartboostDelegate implements ChartboostDelegate {
     private final AdHandler adHandler;
 
     public CustomChartboostDelegate(AdHandler adHandler) {
-        this.adHandler = adHandler == null ? new AdHandler() {
-            @Override
-            public void onAdClicked() {
-                System.out.println("Dummy Ad Handler : onAdClicked");
-            }
-
-            @Override
-            public void onAdClosed() {
-                System.out.println("Dummy Ad Handler : onAdClosed");
-            }
-
-            @Override
-            public void onAdFailed(String message) {
-                System.out.println("Dummy Ad Handler : onAdFailed");
-            }
-        } : adHandler;
+        this.adHandler = adHandler;
     }
 
     /*
