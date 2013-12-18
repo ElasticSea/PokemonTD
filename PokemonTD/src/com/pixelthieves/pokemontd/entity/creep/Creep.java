@@ -1,12 +1,14 @@
 package com.pixelthieves.pokemontd.entity.creep;
 
 import com.artemis.World;
-import com.pixelthieves.core.component.*;
+import com.pixelthieves.core.component.DamageComponent;
+import com.pixelthieves.core.component.PositionComponent;
+import com.pixelthieves.core.component.SizeComponent;
+import com.pixelthieves.core.component.TimeComponent;
 import com.pixelthieves.core.entity.ConcreteEntity;
 import com.pixelthieves.pokemontd.Health;
 import com.pixelthieves.pokemontd.Treasure;
 import com.pixelthieves.pokemontd.component.*;
-import com.pixelthieves.pokemontd.component.VisibleComponent;
 import com.pixelthieves.pokemontd.component.attack.effects.buff.BuffableSpeedComponent;
 import com.pixelthieves.pokemontd.map.Path;
 
@@ -15,14 +17,14 @@ import com.pixelthieves.pokemontd.map.Path;
  */
 public class Creep extends ConcreteEntity {
 
-    private Creep(CreepType creepType, CreepAbilityType creepAbilityType, float speed, float size, int health, Path path,
-                  WaveComponent waveComponent, World world, float x, float y) {
+    private Creep(CreepType creepType, CreepAbilityType creepAbilityType, float speed, float size, int health,
+                  Path path, WaveComponent waveComponent, World world, float x, float y, boolean endless) {
         super(world);
         addComponent(new PositionComponent(x, y, 0));
         // addComponent(new RotationComponent(0, 0, 0));
         addComponent(new PathComponent(path));
         addComponent(new NameComponent(creepType.getName().toString()));
-        addComponent(new SpriteComponent(creepType.getAssets(),creepType.getTexture()));
+        addComponent(new SpriteComponent(creepType.getAssets(), creepType.getTexture()));
         addComponent(new SizeComponent(size, size, 0));
         addComponent(new BuffableSpeedComponent(speed));
         addComponent(new HealthComponent(new Health(health)));
@@ -33,18 +35,23 @@ public class Creep extends ConcreteEntity {
         addComponent(new CreepTypeComponent(creepType));
         addComponent(new VisibleComponent(true));
         addComponent(new TintComponent());
+        if (endless) {
+            addComponent(new EndlessWaveComponent());
+        }
         addComponent(waveComponent);
     }
 
     public static void registerCreep(World world, Path path, WaveComponent waveComponent, CreepType creepType, float x,
-                                     float y) {
+                                     float y, float lifeMultiplier, boolean endless) {
         registerCreep(world, path, waveComponent, creepType, creepType.getAbilityType(), creepType.getSpeed(),
-                creepType.getSize(), creepType.getHealth(), x, y);
+                creepType.getSize(), (int) (creepType.getHealth() * lifeMultiplier), x, y, endless);
     }
 
     public static void registerCreep(World world, Path path, WaveComponent waveComponent, CreepType creepType,
-                                     CreepAbilityType creepAbilityType, float speed, float size, int health, float x, float y) {
-        Creep creep = new Creep(creepType, creepAbilityType, speed, size, health, path, waveComponent, world, x, y);
+                                     CreepAbilityType creepAbilityType, float speed, float size, int health, float x,
+                                     float y, boolean endless) {
+        Creep creep =
+                new Creep(creepType, creepAbilityType, speed, size, health, path, waveComponent, world, x, y, endless);
         creep.register();
         waveComponent.addCreep(creep.entity);
     }

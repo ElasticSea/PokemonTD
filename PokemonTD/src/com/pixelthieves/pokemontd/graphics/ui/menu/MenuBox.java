@@ -9,15 +9,13 @@ import com.pixelthieves.pokemontd.graphics.ui.Button;
 class MenuBox extends CommonMenu {
 
     private final Button startGame;
-    private final DifficultyTab difficulty;
 
     MenuBox(final Menu menu, Rectangle rectangle, int count) {
         super(menu, rectangle, Type.EXIT, false,count);
-        this.difficulty  = new DifficultyTab(menu, this);
         startGame = new MenuButton(menu, rects.get(0)) {
             @Override
             public void process(float x, float y) {
-                menu.switchCard(difficulty);
+                menu.switchCard(Menu.Type.RESTART);
             }
         };
         register(startGame);

@@ -15,7 +15,7 @@ class MenuTab extends GuiBox {
     private static final float LINE_HEIGHT = 2;
     protected final List<Rectangle> rects;
     protected final int count;
-    private final MenuTab parent;
+    protected final MenuTab parent;
     protected float segment;
     protected final Menu menu;
     protected final float buttonHeight;

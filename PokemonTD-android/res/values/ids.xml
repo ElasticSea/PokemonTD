@@ -19,4 +19,5 @@ Google Play game services IDs.
     <string name="achievement_adept">CgkIhPS8x6cKEAIQFA</string>
     <string name="achievement_master">CgkIhPS8x6cKEAIQFQ</string>
     <string name="leaderboard_classic">CgkIhPS8x6cKEAIQDw</string>
+    <string name="leaderboard_endless">CgkIhPS8x6cKEAIQFg</string>
 </resources>

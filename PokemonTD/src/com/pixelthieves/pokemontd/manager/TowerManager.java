@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.pixelthieves.core.component.PositionComponent;
 import com.pixelthieves.pokemontd.App;
+import com.pixelthieves.pokemontd.Element;
 import com.pixelthieves.pokemontd.Player;
 import com.pixelthieves.pokemontd.component.TowerTypeComponent;
 import com.pixelthieves.pokemontd.component.TreasureComponent;
@@ -50,7 +51,6 @@ public class TowerManager implements Clickable {
     @Override
     public boolean hit(float x, float y) {
         clickedTower = app.getWorld().getSystem(GetTower.class).getEntity(x, y);
-
         switch (status) {
             case NONE:
                 reset();
@@ -214,7 +214,7 @@ public class TowerManager implements Clickable {
         this.resolver = new TowerTypeResolver(app.getAssets());
     }
 
-    public void init(){
+    public void init() {
         placeholderTower = null;
         clickedTower = null;
         soldTowers = 0;
@@ -277,6 +277,7 @@ public class TowerManager implements Clickable {
                 int goldWorthThoseUpgrades =
                         clickedTower.getComponent(UpgradeComponent.class).getGoldWorthThoseUpgrades();
                 player.getTreasure().addGold(towerTreasure.getTreasure().getGold() + goldWorthThoseUpgrades);
+                player.getTreasure().addElement(Element.SOUL, towerTreasure.getTreasure().getElement(Element.SOUL));
                 if (!clickedTower.getComponent(TowerTypeComponent.class).getTowerType().getName().equals(
                         TowerName.Shop)) {
                     soldTowers++;

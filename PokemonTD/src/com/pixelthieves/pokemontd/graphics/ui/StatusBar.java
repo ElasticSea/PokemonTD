@@ -16,7 +16,7 @@ public class StatusBar extends GuiBox {
     private final Button menuButton;
     private final GuiBox menuBackground;
     private Rectangle square;
-    private int scoreCache;
+    private int scoreCache = -1;
     private String scoreTextCache;
 
     StatusBar(final Ui ui, final Menu otherUi, Rectangle rectangle, Rectangle square, BitmapFont font) {

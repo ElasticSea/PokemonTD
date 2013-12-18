@@ -111,7 +111,7 @@ public class MainActivity extends LibgdxBaseGameActivity implements GameService 
         if (isSignedIn() && !session.isEmpty()) {
             //showMessage(R.string.your_progress_will_be_uploaded);
             for (int score : session.getScores()) {
-                getGamesClient().submitScore(getString(getLeaderboardType(application.getDifficulty())), score);
+                getGamesClient().submitScore(getString(getLeaderboardType(application.getMode())), score);
             }
             for (Achievement achievement : session.getAchievements()) {
                 getGamesClient().unlockAchievement(getString(achievemtsMap.get(achievement)));
@@ -120,18 +120,14 @@ public class MainActivity extends LibgdxBaseGameActivity implements GameService 
         }
     }
 
-    private int getLeaderboardType(Difficulty difficulty) {
-        /*switch (difficulty) {
-            case Easy:
-                return R.string.leaderboard_easy;
-            case Normal:
-                return R.string.leaderboard_normal;
-            case Hard:
-                return R.string.leaderboard_hard;
-            case Insane:
-                return R.string.leaderboard_insane;
-        }        */
-        return R.string.leaderboard_classic;
+    private int getLeaderboardType(Mode mode) {
+        switch (mode) {
+            case Classic:
+                return R.string.leaderboard_classic;
+            case Endless:
+                return R.string.leaderboard_endless;
+        }
+        return 0;
     }
 
     @Override
@@ -166,13 +162,14 @@ public class MainActivity extends LibgdxBaseGameActivity implements GameService 
                 leaderboardLoading = false;
             }
         };
-        getGamesClient().loadTopScores(listener, getString(getLeaderboardType(application.getDifficulty())), span,
+        getGamesClient().loadTopScores(listener, getString(getLeaderboardType(application.getMode())), span,
                 leaderboardCollection, results, true);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        adService = new CustomAdManager(this);
+        // adService = new CustomAdManager(this);
+        adService = new RevmobVungleAdManager(this);
         adService.onCreate();
         // adService = new DummyAdService(this);
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();

@@ -1,7 +1,6 @@
 package com.pixelthieves.pokemontd.component.attack.projectile;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.pixelthieves.core.main.Assets;
 import com.pixelthieves.pokemontd.App;
 import com.pixelthieves.pokemontd.component.attack.AbilityComponent;
 import com.pixelthieves.pokemontd.component.attack.EffectName;
@@ -18,7 +17,7 @@ public class HitAbility extends EffectData {
     public static final float NORMAL_SPEED = 6.0f;
     public static final float FAST_SPEED = 12.0f;
     public static final float DEFAULT_SIZE = 0.1f;
-    public static final float MEDIUM_SIZE= 0.15f;
+    public static final float MEDIUM_SIZE = 0.15f;
     public static final float BIG_SIZE = 0.25f;
     public static final float SUPER_BIG_SIZE = 0.5f;
     private final float aoe;
@@ -29,8 +28,7 @@ public class HitAbility extends EffectData {
     private final List<EffectData> effectData;
 
     public static AbilityComponent getNormal(String texture, float scale, float size) {
-        return new HitAbility(texture, Type.FOLLOW_TARGET, size * scale, NORMAL_SPEED * scale,
-                new NormalData());
+        return new HitAbility(texture, Type.FOLLOW_TARGET, size * scale, NORMAL_SPEED * scale, new NormalData());
     }
 
     public static AbilityComponent getSplash(String texture, float scale, float range, float size) {
@@ -38,8 +36,8 @@ public class HitAbility extends EffectData {
                 new NormalData());
     }
 
-    public static AbilityComponent getTemLifeSteal(float scale, float duration) {
-        return new HitAbility("bullet", Type.FOLLOW_TARGET, DEFAULT_SIZE * scale, NORMAL_SPEED * scale,
+    public static AbilityComponent getTemLifeSteal(float scale, float duration, float aoe) {
+        return new HitAbility("bullet", Type.FOLLOW_TARGET, DEFAULT_SIZE * scale, NORMAL_SPEED * scale, aoe * scale,
                 new TempLifeData(duration));
     }
 
@@ -79,7 +77,7 @@ public class HitAbility extends EffectData {
     }
 
     public static AbilityComponent getSlowDamage(String bulletTexture, String texture, float scale, float range,
-                                           float slowRatio, float duration, float chance) {
+                                                 float slowRatio, float duration, float chance) {
         return new HitAbility(bulletTexture, Type.FOLLOW_TARGET, DEFAULT_SIZE * scale, NORMAL_SPEED * scale,
                 range * scale, new SlowData(texture, slowRatio, duration, chance), new NormalData());
     }
@@ -119,6 +117,7 @@ public class HitAbility extends EffectData {
         return new HitAbility(texture, Type.PASS_THROUGH, BIG_SIZE * scale, NORMAL_SPEED * scale,
                 new BubbleData(0.25f, 0f));
     }
+
     public static AbilityComponent getSoundWave(String texture, float scale) {
         return new HitAbility(texture, Type.PASS_THROUGH_ALL_DIRECTIONS, BIG_SIZE * scale, NORMAL_SPEED * scale,
                 new BubbleData(0.25f, 2.5f));

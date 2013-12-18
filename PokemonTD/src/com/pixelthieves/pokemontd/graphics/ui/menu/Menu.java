@@ -29,7 +29,7 @@ public class Menu extends Gui {
     }
 
     public enum Type {
-        BLANK, INGAME, MAIN, END, LEADERBOARD, QUICK_TIP;
+        BLANK, INGAME, MAIN, END, LEADERBOARD, QUICK_TIP, RESTART;
     }
 
     private final MenuTab signInBox;
@@ -38,6 +38,7 @@ public class Menu extends Gui {
     private final MenuTab endGame;
     private final MenuTab defaultCard;
     private final MenuTab quicktip;
+    private final MenuTab restart;
     private MenuTab pickedCard;
     private final List<MenuTab> guiDialogRoots = new ArrayList<MenuTab>();
 
@@ -57,12 +58,14 @@ public class Menu extends Gui {
         leaderboard = new LeaderboardTabClose(this, null, getRectangle(8),8,
                 CloseExitTab.Type.EXIT);
         quicktip = new Basic(this, null, getRectangle((int) (menuWidth * 1.5f), (int) (height * 1.5f)));
+        restart = new DifficultyTab(this, menuBox);
 
         guiDialogRoots.add(signInBox);
         guiDialogRoots.add(inGameMenu);
         guiDialogRoots.add(menuBox);
         guiDialogRoots.add(endGame);
         guiDialogRoots.add(quicktip);
+        guiDialogRoots.add(restart);
 
         defaultCard = canSignIn ? signInBox : menuBox;
         pickedCard = defaultCard;
@@ -123,6 +126,8 @@ public class Menu extends Gui {
                 return leaderboard;
             case QUICK_TIP:
                 return quicktip;
+            case RESTART:
+                return restart;
             default:
                 return null;
         }

@@ -44,7 +44,7 @@ public class InterestManager implements Updateable {
     }
 
     public int getRemainingTime() {
-        return (int) filter.getRemainingTime();
+        return (int) filter.getRemainingTime() + 1;
     }
 
     public UpdateFilter getFilter() {

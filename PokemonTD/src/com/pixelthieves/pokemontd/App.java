@@ -108,6 +108,7 @@ public class App extends Game2D {
     private MapData map;
     private static Assets assets;
     private static Shaders shaders;
+    private Mode mode;
 
     public static TweenManagerAdapter getTweenManager() {
         return tweenManager;
@@ -231,7 +232,7 @@ public class App extends Game2D {
     }
 
     private void initializeSystems() {
-        deathSystem = new DeathSystem(gameService, player);
+        deathSystem = new DeathSystem(new ScoreManager(this), gameService, player);
         renderSpriteSystem = new RenderSpriteSystem(cameraHandler.getCamera(), gameSpriteBatch);
         renderTextSystem = new RenderTextSystem(gameSpriteBatch);
         renderHealthSystem = new RenderHealthSystem(gameShapeRenderer);
@@ -362,7 +363,7 @@ public class App extends Game2D {
             if (player.getHealth() >= 50) {
                 gameService.submitAchievement(Achievement.Champion);
             }
-            if (player.getTreasure().getGold() >= 200000) {
+            if (player.getTreasure().getGold() >= 100000) {
                 gameService.submitAchievement(Achievement.Trifty);
             }
             if (towerManager.getSoldTowers() == 0) {
@@ -417,7 +418,7 @@ public class App extends Game2D {
                 Gdx.app.exit();
             }
         });
-        adService.showAd(AdService.AdType.Interestial);
+        adService.showAd(AdService.AdType.Video);
     }
 
     public void switchMap(MapType mapType) {
@@ -437,6 +438,22 @@ public class App extends Game2D {
 
     public static Shaders getShaders() {
         return shaders;
+    }
+
+    public void setMode(Mode mode) {
+        this.mode = mode;
+    }
+
+    public Mode getMode() {
+        return mode;
+    }
+
+    public void register(Updateable updateable) {
+        clock.addService(updateable);
+    }
+
+    public void unregister(Updateable updateable) {
+        clock.removeService(updateable);
     }
 
     private class MenuRenderer implements Renderable {
@@ -547,7 +564,11 @@ public class App extends Game2D {
 
     public void restart() {
         if (CHANCE.happens(0.33333f)) {
-            this.getAdService().showAd(AdService.AdType.Interestial);
+            if (CHANCE.happens(0.7f)) {
+                this.getAdService().showAd(AdService.AdType.Interestial);
+            } else {
+                this.getAdService().showAd(AdService.AdType.Video);
+           }
             cacheAds();
         }
         tutorial.setActive(false);

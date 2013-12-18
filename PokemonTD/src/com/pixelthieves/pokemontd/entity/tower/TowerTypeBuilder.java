@@ -76,7 +76,7 @@ public class TowerTypeBuilder {
         //purple
         specs.add(Specs.getSpecs(TowerName.Spooky, 1, Normal, N_SPEED, XL_RANGE, HitAbility.getNormal("slime", scale,0.2f), Treasure.fromDarkness(1)));
         specs.add(Specs.getSpecs(TowerName.Haunted, 2, Normal, N_SPEED, XL_RANGE, HitAbility.getNormal("slime", scale,0.2f), Treasure.fromDarkness(2)));
-        specs.add(Specs.getSpecsFromNone(TowerName.Nightmare, 6, Terrify, N_SPEED, XL_RANGE, HitAbility.getTemLifeSteal(scale, 5f), Treasure.fromDarkness(3).addSoul(1)));
+        specs.add(Specs.getSpecsFromDamage(TowerName.Nightmare, 6, Terrify, N_SPEED, XL_RANGE,0.3f, HitAbility.getTemLifeSteal(scale, 5f, L_SPLASH), Treasure.fromDarkness(3).addSoul(1)));
 
         /// ######################  TWO ELEMENT
         specs.add(Specs.getSpecsFromDamage(TowerName.Noble, 2, Haste, BUFF_SPEED, BUFF_RANGE, 1.25f, BuffData.getSpeed(BUFF_DURATION), Treasure.fromWater(1).addFire(1)));

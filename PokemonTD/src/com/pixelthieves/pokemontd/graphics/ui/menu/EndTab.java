@@ -14,7 +14,7 @@ class EndTab extends ChildTab {
             @Override
             public void process(float x, float y) {
                 menu.getApp().restart();
-                menu.switchCard(Menu.Type.MAIN);
+                menu.switchCard(Menu.Type.RESTART);
             }
         };
         exit = new MenuButton(menu, rects.get(1)) {

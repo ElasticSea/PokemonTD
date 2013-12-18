@@ -14,6 +14,7 @@ public class Player {
     private final int defaultGold;
     private int freeElements;
     private Treasure reservedElements = new Treasure();
+    private int endless;
 
     public Player(App app, int health, int gold) {
         this.app = app;
@@ -42,7 +43,16 @@ public class Player {
     }
 
     public int getScore() {
-        return (int) ((score.getScore() + treasure.getGold()) * App.DIFFICULTY.getBonus());
+        int score = this.score.getScore();
+        switch (app.getMode()) {
+            case Classic:
+                score += treasure.getGold();
+                break;
+            case Endless:
+                score /= 40;
+                break;
+        }
+        return (int) (score * App.DIFFICULTY.getBonus());
     }
 
     public void addScore(int value) {
@@ -73,9 +83,19 @@ public class Player {
         health.setHealth(Integer.MAX_VALUE, defaultHealth);
         treasure.set(defaultGold);
         reservedElements.set(0);
+        endless = 0;
+        freeElements = 0;
     }
 
     public Treasure getReservedElements() {
         return reservedElements;
+    }
+
+    public void addEndlessKill() {
+        endless++;
+    }
+
+    public int getEndless() {
+        return endless;
     }
 }

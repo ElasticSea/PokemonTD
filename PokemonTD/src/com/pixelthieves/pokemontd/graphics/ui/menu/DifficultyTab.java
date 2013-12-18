@@ -8,12 +8,12 @@ import com.pixelthieves.pokemontd.Difficulty;
 class DifficultyTab extends ChildTab {
 
     private final MenuButton[] buttons;
-    private final MenuTab menuTab;
+    private final ModeTab modeTab;
 
     DifficultyTab(final Menu menu, MenuTab parent) {
         super(menu, parent, menu.getRectangle(Difficulty.values().length + 1), Difficulty.values().length + 1);
         this.buttons = new MenuButton[Difficulty.values().length];
-        this.menuTab = new MapTab(menu, this, this);
+        this.modeTab = new ModeTab(menu, this);
         int i = 0;
         for (final Difficulty difficulty : Difficulty.values()) {
             buttons[i] = new MenuButton(menu, rects.get(i), difficulty.toString()) {
@@ -21,11 +21,12 @@ class DifficultyTab extends ChildTab {
                 @Override
                 public void process(float x, float y) {
                     menu.getApp().setDifficulty(difficulty);
-                    menu.switchCard(menuTab);
+                    menu.switchCard(modeTab);
                 }
             };
             register(buttons[i++]);
         }
+        this.setCloseTabWhenNotClicked(false);
     }
 
     @Override

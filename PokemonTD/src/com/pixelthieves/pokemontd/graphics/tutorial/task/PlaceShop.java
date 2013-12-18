@@ -20,7 +20,7 @@ public class PlaceShop extends NoticeTask {
     @Override
     protected Notice buildNotice() {
         Ui ui = tutorial.getUi();
-        return new Notice(ui, App.getTowerRectangleByBlock(6, 17), Notice.Orientation.TOP_LEFT,
+        return new Notice(ui, App.getTowerRectangleByBlock(7, 18), Notice.Orientation.TOP_LEFT,
                 "Place the shop somewhere on the map", Notice.Placement.RELATIVE);
     }
 

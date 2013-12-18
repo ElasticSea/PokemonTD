@@ -48,10 +48,7 @@ public class Treasure {
     }
 
     public void addElement(Element element, int count) {
-        int add = getElement(element) + count;
-        if (add > 0) {
-            setElement(element, add);
-        }
+        setElement(element, getElement(element) + count);
     }
 
     private void setElement(Element element, int value) {

@@ -21,7 +21,7 @@ public class Options extends ChildTab {
     private Music getTheme() {
         if (theme == null) {
             theme = Assets.getMusic("theme.ogg");
-            if (theme == null) {
+            if (theme != null) {
                 theme.setLooping(true);
                 theme.setVolume(0.4f);
                 theme.play();

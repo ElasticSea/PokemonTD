@@ -6,6 +6,7 @@ import com.pixelthieves.core.services.AdService;
 import com.revmob.RevMob;
 import com.revmob.RevMobAdsListener;
 import com.revmob.ads.fullscreen.RevMobFullscreen;
+import com.revmob.ads.link.RevMobLink;
 
 /**
  * Created by Tomas on 12/13/13.
@@ -13,7 +14,8 @@ import com.revmob.ads.fullscreen.RevMobFullscreen;
 public class RevMobAdService implements AdService {
     private final Activity activity;
     private RevMob revmob;
-    private RevMobFullscreen cache;
+    private RevMobFullscreen interestialCache;
+    private RevMobLink linkCache;
     private LiveListener listener;
     private AdHandler adHandler;
 
@@ -55,19 +57,27 @@ public class RevMobAdService implements AdService {
 
     @Override
     public void cacheAd(AdType adType) {
-        if (adType.equals(AdType.Interestial)) {
-            cache = revmob.createFullscreen(activity, listener);
-        }
+                interestialCache = revmob.createFullscreen(activity, listener);
+                linkCache = revmob.createAdLink(activity, listener);
     }
 
     @Override
     public void showAd(AdType adType) {
-        if (adType.equals(AdType.Interestial)) {
-            if (cache != null) {
-                cache.show();
-            } else {
-                revmob.showFullscreen(activity, listener);
-            }
+        switch (adType) {
+            case Interestial:
+                if (interestialCache != null) {
+                    interestialCache.show();
+                } else {
+                    revmob.showFullscreen(activity, listener);
+                }
+                break;
+            case MoreApps:
+                if (linkCache != null) {
+                    linkCache.open();
+                } else {
+                    revmob.openAdLink(activity,listener);
+                }
+                break;
         }
     }
 

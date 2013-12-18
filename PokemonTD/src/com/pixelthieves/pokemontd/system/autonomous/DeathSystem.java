@@ -21,6 +21,7 @@ import com.pixelthieves.pokemontd.entity.creep.CreepAbilityType;
 import com.pixelthieves.pokemontd.entity.creep.CreepType;
 import com.pixelthieves.pokemontd.entity.datatypes.StaticObjectType;
 import com.pixelthieves.pokemontd.graphics.ui.menu.Options;
+import com.pixelthieves.pokemontd.manager.ScoreManager;
 import com.pixelthieves.pokemontd.map.Path;
 
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public class DeathSystem extends EntityProcessingSystem {
     private final GameService gameService;
     private final Assets assets;
     private final StaticObjectType graveType;
+    private final ScoreManager scoreManager;
     @Mapper
     ComponentMapper<PositionComponent> positionMapper;
     @Mapper
@@ -54,17 +56,20 @@ public class DeathSystem extends EntityProcessingSystem {
     ComponentMapper<CreepTypeComponent> creepTypeMapper;
     @Mapper
     ComponentMapper<DamageComponent> damageMapper;
+    @Mapper
+    ComponentMapper<EndlessWaveComponent> endlessMapper;
 
     private final List<ResurrectTrigger> deathsToProcess = new ArrayList<ResurrectTrigger>();
 
-    public DeathSystem(GameService gameService, Player player) {
+    public DeathSystem(ScoreManager scoreManager, GameService gameService, Player player) {
         super(Aspect.getAspectForAll(HealthComponent.class, TreasureComponent.class, CreepAbilityComponent.class,
                 DamageComponent.class));
         this.assets = App.getAssets();
+        this.scoreManager = scoreManager;
         this.gameService = gameService;
         this.player = player;
 
-        this.graveType = new StaticObjectType(assets,"grave", App.WORLD_SCALE / 2f);
+        this.graveType = new StaticObjectType(assets, "grave", App.WORLD_SCALE / 2f);
     }
 
     @Override
@@ -141,7 +146,7 @@ public class DeathSystem extends EntityProcessingSystem {
         public void run() {
             grave.deleteFromWorld();
             Creep.registerCreep(world, path, waveComponent, creepType, CreepAbilityType.NORMAL, creepType.getSpeed(),
-                    creepType.getSize(), creepType.getHealth(), position.x, position.y);
+                    creepType.getSize(), creepType.getHealth(), position.x, position.y, false);
             waveComponent.removeCreep(e);
         }
     }
@@ -159,13 +164,14 @@ public class DeathSystem extends EntityProcessingSystem {
             float x = position.x + (float) (Math.cos(circleSegment * i) * radius);
             float y = position.y + (float) (Math.sin(circleSegment * i) * radius);
             Creep.registerCreep(world, new Path(path), waveComponent, creepType, CreepAbilityType.NORMAL,
-                    creepType.getSpeed(), creepType.getSize() / 4f, health, x, y);
+                    creepType.getSpeed(), creepType.getSize() / 4f, health, x, y, false);
         }
         die(e);
     }
 
 
     private void earn(Entity e) {
+        scoreManager.addHealth(healthMapper.get(e).getHealth().getMaxHealth());
         Vector3 position = positionMapper.get(e).getPoint();
         if (healthMapper.get(e).getHealth().isEarnTreasure()) {
             earnTreasure(e, position);
@@ -176,17 +182,26 @@ public class DeathSystem extends EntityProcessingSystem {
     }
 
     private void earnTreasure(Entity e, Vector3 position) {
+        if (endlessMapper.has(e)) {
+            player.addEndlessKill();
+            if (player.getEndless() == 100) {
+                gameService.submitAchievement(Achievement.Ethernal);
+            } else if (player.getEndless() == 300) {
+                gameService.submitAchievement(Achievement.Immortal);
+
+            }
+        }
         Treasure treasure = treasureMapper.get(e).getTreasure();
         int gold = treasure.getGold();
         if (gold != 0) {
             TextInfo.registerMoneyInfo(world, gold, position.x, position.y);
-            player.addScore(gold);
+            scoreManager.addGold(gold);
         }
         for (Element element : Element.values()) {
             if (treasure.hasElement(element, 1)) {
                 gameService.submitAchievement(Achievement.Jeweller);
                 TextInfo.registerElementInfo(world, treasure.getElement(element), element, position.x, position.y);
-                player.addScore(treasure.getElement(element) * (element.equals(Element.SOUL) ? 500 : 100));
+                scoreManager.addElement(element, treasure.getElement(element));
             }
         }
         treasure.transferTo(player.getTreasure());

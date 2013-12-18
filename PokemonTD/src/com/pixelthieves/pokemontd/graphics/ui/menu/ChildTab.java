@@ -24,6 +24,6 @@ class ChildTab extends MenuTab {
     @Override
     public void render() {
         super.render();
-        close.render("Close");
+        close.render(parent == null ? "Close" : "Back");
     }
 }

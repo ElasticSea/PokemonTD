@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.pixelthieves.core.graphics.Renderable;
-import com.pixelthieves.core.graphics.Shaders;
 import com.pixelthieves.pokemontd.App;
 
 /**
@@ -63,9 +62,11 @@ public class CachedGaussianBlurRenderer implements Renderable {
         fboB.begin();
         spriteBatch.setShader(blurShader);
         spriteBatch.begin();
-        blurShader.setUniformf("resolution", width);
-        blurShader.setUniformf("radius", i);
-        blurShader.setUniformf("dir", 1, 0);
+        if (blurShader != null) {
+            blurShader.setUniformf("resolution", width);
+            blurShader.setUniformf("radius", i);
+            blurShader.setUniformf("dir", 1, 0);
+        }
         texture.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
         spriteBatch.draw(texture, 0, 0, width, height);
         spriteBatch.end();
@@ -73,9 +74,11 @@ public class CachedGaussianBlurRenderer implements Renderable {
         fboA.begin();
         spriteBatch.setShader(blurShader);
         spriteBatch.begin();
-        blurShader.setUniformf("resolution", height);
-        blurShader.setUniformf("radius", i);
-        blurShader.setUniformf("dir", 0, 1);
+        if (blurShader != null) {
+            blurShader.setUniformf("resolution", height);
+            blurShader.setUniformf("radius", i);
+            blurShader.setUniformf("dir", 0, 1);
+        }
         fboB.getColorBufferTexture().setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
         spriteBatch.draw(fboB.getColorBufferTexture(), 0, 0, width, height);
         spriteBatch.end();

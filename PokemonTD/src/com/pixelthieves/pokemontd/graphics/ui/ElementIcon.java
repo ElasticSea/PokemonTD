@@ -54,7 +54,7 @@ class ElementIcon extends InteractiveBlock {
         if (player.getFreeElements() != 0) {
             int elements = player.getReservedElements().getElement(element);
             if (Treasure.LIMIT.getElement(element) > elements && elementAllowed()) {
-                WaveComponent wave = waveManager.fireNextWave(WaveManager.getWave(element, elements));
+                WaveComponent wave = waveManager.registerWave(WaveManager.getWave(element, elements),false);
                 for (Entity creep : wave.getWave()) {
                     Health health = creep.getComponent(HealthComponent.class).getHealth();
                     CreepType waveType =
