@@ -4,12 +4,15 @@ import com.artemis.Component;
 import com.artemis.Entity;
 import com.artemis.World;
 import com.artemis.utils.Bag;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.pixelthieves.core.component.PositionComponent;
 import com.pixelthieves.pokemontd.App;
 import com.pixelthieves.pokemontd.Element;
+import com.pixelthieves.pokemontd.MapType;
 import com.pixelthieves.pokemontd.Player;
 import com.pixelthieves.pokemontd.component.TowerTypeComponent;
 import com.pixelthieves.pokemontd.component.TreasureComponent;
@@ -164,20 +167,17 @@ public class TowerManager implements Clickable {
     }
 
     public void render(ShapeRenderer shapeRenderer) {
-        if (placeholderTower != null) {
-            /*   Gdx.gl.glEnable(GL20.GL_BLEND);
+        if (selectedTower != null) {
                int size = App.WORLD_SCALE;
-               int offset = size / 20;
-               shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+             /*  shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
                shapeRenderer.setColor(new Color(Color.BLACK).sub(0, 0, 0, 0.8f));
                drawFreeSlots(shapeRenderer, size, offset);
-               shapeRenderer.end();
+               shapeRenderer.end();   */
 
-               /*shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-               shapeRenderer.setColor(new Color(Color.BLACK).sub(0, 0, 0, 0.8f));
-               drawFreeSlots(shapeRenderer, size, offset);
-               shapeRenderer.end();               */
-            /*  Gdx.gl.glDisable(GL20.GL_BLEND);    */
+               shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+               shapeRenderer.setColor(app.getMapType().equals(MapType.Summer) ? Color.WHITE: Color.BLACK);
+               drawFreeSlots(shapeRenderer, size, 0);
+               shapeRenderer.end();
         }
     }
 

@@ -93,6 +93,7 @@ public class Player {
 
     public void addEndlessKill() {
         endless++;
+        System.out.println("Endless: "+endless);
     }
 
     public int getEndless() {

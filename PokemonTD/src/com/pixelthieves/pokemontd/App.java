@@ -109,6 +109,7 @@ public class App extends Game2D {
     private static Assets assets;
     private static Shaders shaders;
     private Mode mode;
+    private MapType mapType;
 
     public static TweenManagerAdapter getTweenManager() {
         return tweenManager;
@@ -255,7 +256,7 @@ public class App extends Game2D {
         world.setSystem(new GetTower(), true);
         world.setSystem(new GetCreep(), true);
         world.setSystem(new FindShop(), true);
-        world.setSystem(new LightUpShops(player), true);
+        world.setSystem(new LightUpShops(this, player), true);
         world.setSystem(new FindUpgradeTower(), true);
         world.setSystem(new FindAttackTower(), true);
         world.setSystem(new FireTextInfo(ShopComponent.class), true);
@@ -422,6 +423,7 @@ public class App extends Game2D {
     }
 
     public void switchMap(MapType mapType) {
+        this.mapType = mapType;
         map = createMap(mapType);
         cameraHandler.setBounds(new Rectangle(0, 0, map.getBlueprint().getWidth() * WORLD_SCALE,
                 map.getBlueprint().getHeight() * WORLD_SCALE));
@@ -454,6 +456,10 @@ public class App extends Game2D {
 
     public void unregister(Updateable updateable) {
         clock.removeService(updateable);
+    }
+
+    public MapType getMapType() {
+        return mapType;
     }
 
     private class MenuRenderer implements Renderable {
@@ -564,7 +570,7 @@ public class App extends Game2D {
 
     public void restart() {
         if (CHANCE.happens(0.33333f)) {
-            if (CHANCE.happens(0.7f)) {
+            if (CHANCE.happens(0.6f)) {
                 this.getAdService().showAd(AdService.AdType.Interestial);
             } else {
                 this.getAdService().showAd(AdService.AdType.Video);

@@ -121,11 +121,14 @@ public class MainActivity extends LibgdxBaseGameActivity implements GameService 
     }
 
     private int getLeaderboardType(Mode mode) {
+        if (mode == null) {
+            return R.string.leaderboard_classic;
+        }
         switch (mode) {
-            case Classic:
-                return R.string.leaderboard_classic;
             case Endless:
                 return R.string.leaderboard_endless;
+            case Classic:
+                return R.string.leaderboard_classic;
         }
         return 0;
     }

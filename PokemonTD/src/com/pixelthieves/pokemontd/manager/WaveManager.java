@@ -1,5 +1,6 @@
 package com.pixelthieves.pokemontd.manager;
 
+import com.artemis.World;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.pixelthieves.core.logic.UpdateFilter;
@@ -129,48 +130,26 @@ public class WaveManager implements Updateable {
             } else {
                 registerWave(nextWave, false);
             }
+            updateWave();
         } else {
             if (waves.isEmpty() && App.STRESS_TEST == null) {
                 app.endGame(true);
-                if(app.getMode().equals(Mode.Classic)){
+                if (app.getMode().equals(Mode.Classic)) {
                     app.getGameSevice().submitAchievement(Achievement.Champion);
                 }
             }
         }
     }
 
-  /*  public WaveComponent fireWave(CreepType next) {
+    public WaveComponent registerWave(CreepType next, boolean endless) {
+        return registerWave(next, 1, endless);
+    }
 
-        WaveComponent wave = new WaveComponent(this, next.getId());
-        for (int i = 0; i < next.getCreepsInWave(); i++) {
-            Path path = getAppropriatePath(app.getMap().getPathPack(), next);
-            Vector3 startPoint = path.getPath().get(0);
-            Vector3 nextPoint = path.getPath().get(1);
-            double angleToNextPoint = Math.atan2(nextPoint.y - startPoint.y, nextPoint.x - startPoint.x);
-            float xOffset = (float) (Math.cos(angleToNextPoint + Math.PI) * next.getDistanceBetweenCreeps() * i);
-            float yOffset = (float) (Math.sin(angleToNextPoint + Math.PI) * next.getDistanceBetweenCreeps() * i);
-            Creep.registerCreep(app.getWorld(), new Path(path), wave, next, startPoint.x + xOffset,
-                    startPoint.y + yOffset);
-        }
-        registerWave(wave);
-        updateWave();
-        return wave;
-    }                    */
-
-    public WaveComponent registerWave(final CreepType next, final boolean endless) {
+    public WaveComponent registerWave(CreepType next, float lifeMultiplier, boolean endless) {
         final WaveComponent wave = new WaveComponent(this, next.getId());
-        Updateable action = new UpdateableAdapter() {
-            private static final float LifeGrowCoefficient = 1.01f;
-            public float multiplier = 1;
 
-            @Override
-            public void update(float delta) {
-                Path path = getAppropriatePath(app.getMap().getPathPack(), next);
-                Vector3 startPoint = path.getPath().get(0);
-                Creep.registerCreep(app.getWorld(), new Path(path), wave, next, startPoint.x, startPoint.y, endless ? multiplier : 1,endless);
-                multiplier*= LifeGrowCoefficient;
-            }
-        };
+        Updateable action =
+                new WaveUpdater(app.getWorld(), app.getMap().getPathPack(), next, wave, lifeMultiplier, endless);
 
         float interval = (next.getDistanceBetweenCreeps() / App.WORLD_SCALE) / (next.getSpeed() / App.WORLD_SCALE);
         final UpdateFilter emmiter = endless ? new UpdateFilter(action, interval) :
@@ -184,21 +163,6 @@ public class WaveManager implements Updateable {
         });
         app.register(emmiter);
         registerWave(wave);
-        updateWave();
-
-
-    /*    for (int i = 0; i < next.getCreepsInWave(); i++) {
-            Path path = getAppropriatePath(app.getMap().getPathPack(), next);
-            Vector3 startPoint = path.getPath().get(0);
-            Vector3 nextPoint = path.getPath().get(1);
-            double angleToNextPoint = Math.atan2(nextPoint.y - startPoint.y, nextPoint.x - startPoint.x);
-            float xOffset = (float) (Math.cos(angleToNextPoint + Math.PI) * next.getDistanceBetweenCreeps() * i);
-            float yOffset = (float) (Math.sin(angleToNextPoint + Math.PI) * next.getDistanceBetweenCreeps() * i);
-            Creep.registerCreep(app.getWorld(), new Path(path), wave, next, startPoint.x + xOffset,
-                    startPoint.y + yOffset);
-        }
-        registerWave(wave);
-        updateWave();  */
         return wave;
     }
 
@@ -236,14 +200,6 @@ public class WaveManager implements Updateable {
                 break;
         }
         waves.remove(wave);
-    }
-
-    private Path getAppropriatePath(PathPack pathPack, CreepType next) {
-        if (next.getAbilityType() == CreepAbilityType.SWARM) {
-            return pathPack.get(App.RANDOM.nextInt(pathPack.size()));
-        } else {
-            return pathPack.getMain();
-        }
     }
 
     private void updateWave() {
@@ -289,5 +245,44 @@ public class WaveManager implements Updateable {
 
     public UpdateFilter getFilter() {
         return filter;
+    }
+
+    private static class WaveUpdater extends UpdateableAdapter {
+        private static final float LifeGrowCoefficient = 1.005f;
+        private final World world;
+        private final PathPack pathPack;
+        private final CreepType next;
+        private final WaveComponent wave;
+        private final boolean endless;
+        private float lifeMultiplier;
+
+
+        public WaveUpdater(World world, PathPack pathPack, CreepType next, WaveComponent wave, float lifeMultiplier,
+                           boolean endless) {
+            this.world = world;
+            this.pathPack = pathPack;
+            this.next = next;
+            this.wave = wave;
+            this.lifeMultiplier = lifeMultiplier;
+            this.endless = endless;
+        }
+
+        @Override
+        public void update(float delta) {
+            Path path = getAppropriatePath(pathPack, next);
+            Vector3 startPoint = path.getPath().get(0);
+            Creep.registerCreep(world, new Path(path), wave, next, startPoint.x, startPoint.y, lifeMultiplier, endless);
+            if (endless) {
+                lifeMultiplier *= LifeGrowCoefficient;
+            }
+        }
+
+        private Path getAppropriatePath(PathPack pathPack, CreepType next) {
+            if (next.getAbilityType() == CreepAbilityType.SWARM) {
+                return pathPack.get(App.RANDOM.nextInt(pathPack.size()));
+            } else {
+                return pathPack.getMain();
+            }
+        }
     }
 }

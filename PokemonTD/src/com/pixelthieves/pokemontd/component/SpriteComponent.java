@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.pixelthieves.core.main.Assets;
 import com.pixelthieves.pokemontd.Animation;
 
-import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -20,13 +19,13 @@ public class SpriteComponent extends Component {
     private boolean dirty = true;
     private Animation[] values;
 
-    public SpriteComponent(Assets assets,String type) {
+    public SpriteComponent(Assets assets, String type) {
         this.assets = assets;
         add(type);
     }
 
-    public SpriteComponent(Assets assets,TextureAtlas.AtlasRegion texture) {
-        this(assets,texture.name);
+    public SpriteComponent(Assets assets, TextureAtlas.AtlasRegion texture) {
+        this(assets, texture.name);
     }
 
     public TextureAtlas.AtlasRegion getSprite() {
@@ -34,12 +33,14 @@ public class SpriteComponent extends Component {
     }
 
     public void add(String type) {
-        Animation a = new Animation(assets.getTextureArray(type));
-        if (map.isEmpty()) {
-            defaultAnimation = a;
+        if (type != null && !type.isEmpty()) {
+            Animation a = new Animation(assets.getTextureArray(type));
+            if (map.isEmpty()) {
+                defaultAnimation = a;
+            }
+            map.put(type, a);
+            this.dirty = true;
         }
-        map.put(type, a);
-        this.dirty = true;
     }
 
     public Animation remove(String type) {
@@ -63,7 +64,7 @@ public class SpriteComponent extends Component {
         return values;
     }
 
-    public void clear(){
+    public void clear() {
         map = new LinkedHashMap<String, Animation>();
         dirty = true;
     }

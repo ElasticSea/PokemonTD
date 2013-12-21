@@ -5,18 +5,21 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
+import com.pixelthieves.pokemontd.App;
 import com.pixelthieves.pokemontd.Player;
 import com.pixelthieves.pokemontd.component.ShopComponent;
 import com.pixelthieves.pokemontd.component.SpriteComponent;
 
 public class LightUpShops extends EntityProcessingSystem {
     private final Player player;
+    private final App app;
     @Mapper
     ComponentMapper<SpriteComponent> spriteMapper;
     private boolean lightUp;
 
-    public LightUpShops(Player player) {
+    public LightUpShops(App app, Player player) {
         super(Aspect.getAspectForAll(ShopComponent.class));
+        this.app = app;
         this.player = player;
     }
 
@@ -24,7 +27,8 @@ public class LightUpShops extends EntityProcessingSystem {
     protected void process(Entity e) {
         SpriteComponent spriteComponent = spriteMapper.get(e);
         spriteComponent.clear();
-        spriteComponent.add(lightUp ? "towers/litshop" : "towers/shop");
+        String mapType = app.getMapType().toString().toLowerCase();
+        spriteComponent.add("towers/" + mapType + (lightUp ? "on" : "off"));
 
     }
 

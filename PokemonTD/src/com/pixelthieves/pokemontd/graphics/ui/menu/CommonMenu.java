@@ -1,7 +1,7 @@
 package com.pixelthieves.pokemontd.graphics.ui.menu;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
-import com.pixelthieves.core.services.AdService;
 
 /**
  * Created by Tomas on 11/19/13.
@@ -38,7 +38,11 @@ class CommonMenu extends CloseExitTab {
             leaderboardButton = new MenuButton(menu, rects.get(3)) {
                 @Override
                 public void process(float x, float y) {
-                    menu.switchCard(leaderboard);
+                    if (menu.getGameSevice().isSignedIn()) {
+                        menu.switchCard(leaderboard);
+                    } else {
+                        menu.getGameSevice().signIn(null);
+                    }
                 }
             };
             register(leaderboardButton);
@@ -47,7 +51,8 @@ class CommonMenu extends CloseExitTab {
         moreGames = new MenuButton(menu, rects.get(4)) {
             @Override
             public void process(float x, float y) {
-                menu.getApp().getAdService().showAd(AdService.AdType.MoreApps);
+                Gdx.net.openURI("https://play.google.com/store/apps/developer?id=PixelThieves");
+                // menu.getApp().getAdService().showAd(AdService.AdType.MoreApps);
             }
         };
         register(optionsButton);
@@ -64,7 +69,7 @@ class CommonMenu extends CloseExitTab {
         moreGames.render("More Games");
         helpButton.render("Help");
         if (leaderboardButton != null) {
-            leaderboardButton.render("Leaderboard");
+            leaderboardButton.render(menu.getGameSevice().isSignedIn() ? "Leaderboard" : "Sign In");
         }
     }
 }

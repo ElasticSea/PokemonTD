@@ -90,7 +90,7 @@ public class AbilityInfo extends HeaderGuiBox {
 
             case Terrify:
                 TempLifeData lifeSteal = (TempLifeData) abilityCache;
-                return "Temporary steal " + (int) (damage * 100) + "% of creeps health for " + formatSpeed( lifeSteal.getDuration());
+                return "Temporary steal " + (int) (damage * 100) + "% of creeps health for " + formatSpeed( lifeSteal.getDuration()) +" in "+ (int) splash + " radius.";
 
             case Haste:
                 BuffData buffData = (BuffData) abilityCache;
@@ -111,8 +111,7 @@ public class AbilityInfo extends HeaderGuiBox {
             case Incinerate:
                 IncreasingDamageData increaseDamage = (IncreasingDamageData) abilityCache;
                 return "While attacking the same creep tower gains damage by " +
-                        (int) ((increaseDamage.getDamageIncreasing() - 1) * 100) + "% every " +
-                        (int) ((increaseDamage.getDuration() * 1000)) + " ms to a maximum of "+(int)(increaseDamage.getMax()* 100)+"% total damage.";
+                        (int) ((increaseDamage.getDamageIncreasing() - 1) * 100) + "% every  hit to a maximum of "+(int)(increaseDamage.getMax()* 100)+"% total damage. Hits must be applied within smaller interval than "+ formatSpeed(increaseDamage.getDuration() * 1000);
 
             case Strike:
                 BonusAttack bonus = (BonusAttack) abilityCache;

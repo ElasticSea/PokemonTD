@@ -1,14 +1,12 @@
 package com.pixelthieves.pokemontd.graphics.ui;
 
-import com.artemis.Entity;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.pixelthieves.core.main.Assets;
-import com.pixelthieves.pokemontd.*;
-import com.pixelthieves.pokemontd.component.HealthComponent;
-import com.pixelthieves.pokemontd.component.WaveComponent;
-import com.pixelthieves.pokemontd.entity.creep.CreepType;
+import com.pixelthieves.pokemontd.App;
+import com.pixelthieves.pokemontd.Element;
+import com.pixelthieves.pokemontd.Player;
+import com.pixelthieves.pokemontd.Treasure;
 import com.pixelthieves.pokemontd.graphics.ui.menu.Options;
 import com.pixelthieves.pokemontd.manager.WaveManager;
 
@@ -39,8 +37,8 @@ class ElementIcon extends InteractiveBlock {
                 picture.render(App.getAssets().getTexture("gems/" + element.toString().toLowerCase()), "max", true);
             } else {
                 picture.setColor(player.getFreeElements() != 0 && elementAllowed() ? Color.WHITE : Color.DARK_GRAY);
-                picture.render(App.getAssets().getTexture("gems/" + element.toString().toLowerCase()), "lvl " + elementCount,
-                        true);
+                picture.render(App.getAssets().getTexture("gems/" + element.toString().toLowerCase()),
+                        "lvl " + elementCount, true);
             }
         }
     }
@@ -54,14 +52,14 @@ class ElementIcon extends InteractiveBlock {
         if (player.getFreeElements() != 0) {
             int elements = player.getReservedElements().getElement(element);
             if (Treasure.LIMIT.getElement(element) > elements && elementAllowed()) {
-                WaveComponent wave = waveManager.registerWave(WaveManager.getWave(element, elements),false);
-                for (Entity creep : wave.getWave()) {
+                float lifeMultiplier = (waveManager.getNextWave() != null ? waveManager.getNextWave() :
+                        waveManager.getLastWave()).getHealth();
+                waveManager.registerWave(WaveManager.getWave(element, elements), lifeMultiplier, false);
+                /*for (Entity creep : wave.getWave()) {
                     Health health = creep.getComponent(HealthComponent.class).getHealth();
-                    CreepType waveType =
-                            waveManager.getNextWave() != null ? waveManager.getNextWave() : waveManager.getLastWave();
                     int newHealth = health.getMaxHealth() * waveType.getHealth();
                     health.setHealth(newHealth, newHealth);
-                }
+                }   */
                 player.getReservedElements().addElement(element, 1);
                 player.subtractFreeElement();
                 if (!Options.MUTE) {
