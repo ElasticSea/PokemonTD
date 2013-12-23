@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Pokemon TD</string>
+    <string name="app_name">Element TD</string>
     <string name="sign_in_why">Sign in with Google to share your scores and achievements with your friends.</string>
     <string name="your_progress_will_be_uploaded">Your existing achievements and score will be uploaded shortly.</string>
 </resources>
